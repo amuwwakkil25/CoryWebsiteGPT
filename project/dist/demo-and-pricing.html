@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo & Pricing - Agent Cory AI Admissions Assistant</title>
+    <meta name="description" content="Try Agent Cory with a live demo and explore flexible pricing plans for AI-powered admissions automation." />
+    
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXX');
+    </script>
+  <script type="module" crossorigin src="/assets/main-DN7jreOg.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-HCvf6I1k.css">
+</head>
+<body>
+    <div id="cookie-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-content">
+            <p>We use cookies to improve your experience and analyze site usage. <a href="/privacy.html">Learn more</a></p>
+            <button id="accept-cookies" class="btn btn-sm">Accept</button>
+        </div>
+    </div>
+
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="/" class="nav-brand">
+                    <svg class="nav-logo" viewBox="0 0 32 32" aria-label="Agent Cory">
+                        <circle cx="16" cy="16" r="14" fill="var(--brand)" stroke="var(--bg)" stroke-width="2"/>
+                        <circle cx="12" cy="12" r="2" fill="white"/>
+                        <circle cx="20" cy="12" r="2" fill="white"/>
+                        <path d="M10 20 Q16 24 22 20" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    </svg>
+                    <span>Agent Cory</span>
+                </a>
+                
+                <button class="nav-toggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <ul class="nav-menu">
+                    <li><a href="/" class="nav-link">Home</a></li>
+                    <li><a href="/how-it-works.html" class="nav-link">How It Works</a></li>
+                    <li><a href="/features.html" class="nav-link">Features</a></li>
+                    <li><a href="/roi-and-case-studies.html" class="nav-link">ROI & Cases</a></li>
+                    <li><a href="/demo-and-pricing.html" class="nav-link active">Demo & Pricing</a></li>
+                    <li><a href="/resources.html" class="nav-link">Resources</a></li>
+                    <li><button class="btn btn-primary nav-cta">Try Cory Now</button></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <h1>Experience Cory, Then Choose Your Plan</h1>
+                <p class="lead">Get hands-on with our AI assistant and find the perfect solution for your admissions team.</p>
+            </div>
+        </section>
+
+        <!-- Demo Section -->
+        <section class="demo-section section">
+            <div class="container">
+                <h2 class="section-title">Book Your Live Demo</h2>
+                <div class="demo-content">
+                    <div class="demo-info">
+                        <h3>What You'll See in 20 Minutes</h3>
+                        <ul class="demo-checklist">
+                            <li>
+                                <svg class="check-icon" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                                Live AI conversation demonstration
+                            </li>
+                            <li>
+                                <svg class="check-icon" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                                Multi-channel outreach in action
+                            </li>
+                            <li>
+                                <svg class="check-icon" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                                CRM integration walkthrough
+                            </li>
+                            <li>
+                                <svg class="check-icon" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                                Custom ROI projection for your institution
+                            </li>
+                            <li>
+                                <svg class="check-icon" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                                Implementation timeline and support
+                            </li>
+                        </ul>
+                        
+                        <div class="demo-ctas">
+                            <button class="btn btn-primary btn-lg" id="request-call-demo-btn">Request a Call from Cory</button>
+                            <button class="btn btn-secondary btn-lg" id="try-chat-demo-btn">Try Chat Demo</button>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-form-card">
+                        <form id="demo-request-form" class="demo-form">
+                            <h3>Book Your 20-Minute Demo</h3>
+                            
+                            <div class="form-group">
+                                <label for="demo-name">Full Name *</label>
+                                <input type="text" id="demo-name" name="name" required />
+                                <div class="form-error" id="demo-name-error"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="demo-email">Email Address *</label>
+                                <input type="email" id="demo-email" name="email" required />
+                                <div class="form-error" id="demo-email-error"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="demo-organization">Institution/Organization *</label>
+                                <input type="text" id="demo-organization" name="organization" required />
+                                <div class="form-error" id="demo-organization-error"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="demo-phone">Phone Number *</label>
+                                <input type="tel" id="demo-phone" name="phone" required placeholder="+1 (555) 123-4567" />
+                                <div class="form-error" id="demo-phone-error"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="demo-crm">Current CRM System</label>
+                                <select id="demo-crm" name="crm">
+                                    <option value="">Select your CRM</option>
+                                    <option value="slate">Slate</option>
+                                    <option value="salesforce">Salesforce</option>
+                                    <option value="ellucian">Ellucian Banner</option>
+                                    <option value="other">Other</option>
+                                    <option value="none">No CRM currently</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="demo-inquiries">Monthly Inquiries (Approximate)</label>
+                                <select id="demo-inquiries" name="inquiries">
+                                    <option value="">Select range</option>
+                                    <option value="0-100">0-100</option>
+                                    <option value="101-300">101-300</option>
+                                    <option value="301-500">301-500</option>
+                                    <option value="501-1000">501-1,000</option>
+                                    <option value="1001+">1,000+</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Honeypot field -->
+                            <input type="text" name="website" style="display: none;" />
+                            
+                            <button type="submit" class="btn btn-primary btn-lg btn-full">Book My Demo</button>
+                        </form>
+                        
+                        <div id="demo-success" class="demo-success" style="display: none;">
+                            <svg class="success-icon" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                            </svg>
+                            <h3>Demo Scheduled!</h3>
+                            <p>Thank you! We'll contact you within 2 business hours to schedule your personalized demo.</p>
+                            <p><strong>Next Steps:</strong></p>
+                            <ul>
+                                <li>Check your email for confirmation</li>
+                                <li>Our team will call to schedule your demo</li>
+                                <li>We'll send calendar invite with demo details</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section class="pricing-section section bg-light">
+            <div class="container">
+                <h2 class="section-title">Choose Your Plan</h2>
+                <p class="section-subtitle">Flexible options that scale with your admissions volume</p>
+                
+                <div class="pricing-toggle">
+                    <span class="pricing-label">Monthly</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="pricing-toggle" />
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="pricing-label">Annual <span class="pricing-badge">Save 20%</span></span>
+                </div>
+                
+                <div class="pricing-grid">
+                    
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Starter</h3>
+                            <p class="pricing-description">Perfect for smaller institutions</p>
+                            <div class="pricing-price">
+                                <span class="price-amount monthly">$497</span>
+                                <span class="price-amount annual" style="display: none;">$397</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                        </div>
+                        
+                        <div class="pricing-features">
+                            <div class="feature-group">
+                                <h4>Included Features</h4>
+                                <ul>
+                                    <li><span class="check-icon">✓</span> Up to 500 inquiries/month</li>
+                                    <li><span class="check-icon">✓</span> Phone, SMS, Email outreach</li>
+                                    <li><span class="check-icon">✓</span> Basic CRM integration</li>
+                                    <li><span class="check-icon">✓</span> Standard FAQ training</li>
+                                    <li><span class="check-icon">✓</span> Email support</li>
+                                    <li><span class="check-icon">✓</span> Basic analytics dashboard</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="pricing-footer">
+                            <button class="btn btn-secondary btn-full">Start Free Trial</button>
+                            <p class="pricing-note">14-day free trial, no credit card required</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pricing-card popular">
+                        <div class="pricing-badge">Most Popular</div>
+                        <div class="pricing-header">
+                            <h3>Professional</h3>
+                            <p class="pricing-description">For growing admissions teams</p>
+                            <div class="pricing-price">
+                                <span class="price-amount monthly">$997</span>
+                                <span class="price-amount annual" style="display: none;">$797</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                        </div>
+                        
+                        <div class="pricing-features">
+                            <div class="feature-group">
+                                <h4>Everything in Starter, plus:</h4>
+                                <ul>
+                                    <li><span class="check-icon">✓</span> Up to 1,500 inquiries/month</li>
+                                    <li><span class="check-icon">✓</span> WhatsApp & Live Chat</li>
+                                    <li><span class="check-icon">✓</span> Advanced CRM sync (Slate, Salesforce)</li>
+                                    <li><span class="check-icon">✓</span> Custom FAQ training</li>
+                                    <li><span class="check-icon">✓</span> Lead scoring & routing</li>
+                                    <li><span class="check-icon">✓</span> Advanced analytics & reports</li>
+                                    <li><span class="check-icon">✓</span> Phone & email support</li>
+                                    <li><span class="check-icon">✓</span> Dedicated success manager</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="pricing-footer">
+                            <button class="btn btn-primary btn-full">Start Free Trial</button>
+                            <p class="pricing-note">14-day free trial, no credit card required</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Enterprise</h3>
+                            <p class="pricing-description">For large institutions & systems</p>
+                            <div class="pricing-price">
+                                <span class="price-amount">Custom</span>
+                                <span class="price-period">pricing</span>
+                            </div>
+                        </div>
+                        
+                        <div class="pricing-features">
+                            <div class="feature-group">
+                                <h4>Everything in Professional, plus:</h4>
+                                <ul>
+                                    <li><span class="check-icon">✓</span> Unlimited inquiries</li>
+                                    <li><span class="check-icon">✓</span> Multi-campus support</li>
+                                    <li><span class="check-icon">✓</span> Custom integrations</li>
+                                    <li><span class="check-icon">✓</span> White-label options</li>
+                                    <li><span class="check-icon">✓</span> Advanced security & compliance</li>
+                                    <li><span class="check-icon">✓</span> Priority support & SLA</li>
+                                    <li><span class="check-icon">✓</span> Custom reporting & dashboards</li>
+                                    <li><span class="check-icon">✓</span> On-site training available</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="pricing-footer">
+                            <button class="btn btn-secondary btn-full">Contact Sales</button>
+                            <p class="pricing-note">Custom implementation & pricing</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="pricing-guarantee">
+                    <div class="guarantee-icon">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
+                        </svg>
+                    </div>
+                    <div class="guarantee-content">
+                        <h3>30-Day Money-Back Guarantee</h3>
+                        <p>Not satisfied with results? Get a full refund within 30 days, no questions asked.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section section">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <div class="faq-grid">
+                    <div class="faq-column">
+                        <div class="faq-item">
+                            <button class="faq-question" data-target="#faq-1">
+                                <span>How long does implementation take?</span>
+                                <svg class="faq-icon" viewBox="0 0 24 24">
+                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                            </button>
+                            <div id="faq-1" class="faq-answer">
+                                <p>Most institutions are up and running within 2-3 weeks. This includes CRM integration, FAQ training, and team onboarding. Enterprise implementations may take 4-6 weeks depending on customization needs.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <button class="faq-question" data-target="#faq-2">
+                                <span>What CRM systems do you integrate with?</span>
+                                <svg class="faq-icon" viewBox="0 0 24 24">
+                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                            </button>
+                            <div id="faq-2" class="faq-answer">
+                                <p>We have native integrations with Slate, Salesforce Education Cloud, and Ellucian Banner. We also support custom API connections and can integrate with most CRM/SIS systems through Zapier or direct API development.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <button class="faq-question" data-target="#faq-3">
+                                <span>Is there a setup fee?</span>
+                                <svg class="faq-icon" viewBox="0 0 24 24">
+                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                            </button>
+                            <div id="faq-3" class="faq-answer">
+                                <p>Starter and Professional plans include setup at no extra charge. Enterprise plans may have a one-time implementation fee depending on customization requirements, which will be discussed during your consultation.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <button class="faq-question" data-target="#faq-4">
+                                <span>Can I customize the AI's responses?</span>
+                                <svg class="faq-icon" viewBox="0 0 24 24">
+                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                            </button>
+                            <div id="faq-4" class="faq-answer">
+                                <p>Yes! Cory is trained on your specific programs, policies, and messaging. You can customize responses, add program-specific information, and update the knowledge base anytime through our admin portal.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-column">
+                        <div class="faq-item">
+                            <button class="faq-question" data-target="#faq-5">
+                                <span>What happens if I exceed my inquiry limit?</span>
+                                <svg class="faq-icon" viewBox="0 0 24 24">
+                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                            </button>
+                            <div id="faq-5" class="faq-answer">
+                                <p>We'll alert you as you approach your limit and help you upgrade if needed. Overage rates are reasonable and we never stop service abruptly – we'll work with you to find the right plan for your volume.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <button class="faq-question" data-target="#faq-6">
+                                <span>Is my data secure?</span>
+                                <svg class="faq-icon" viewBox="0 0 24 24">
+                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                            </button>
+                            <div id="faq-6" class="faq-answer">
+                                <p>Absolutely. We're SOC 2 certified with bank-level security. All data is encrypted in transit and at rest. We're also FERPA and CCPA compliant, with regular security audits and penetration testing.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <button class="faq-question" data-target="#faq-7">
+                                <span>Can I cancel anytime?</span>
+                                <svg class="faq-icon" viewBox="0 0 24 24">
+                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                            </button>
+                            <div id="faq-7" class="faq-answer">
+                                <p>Yes, you can cancel anytime with 30 days notice. We'll help you export your data and ensure a smooth transition. No cancellation fees or long-term contracts required.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <button class="faq-question" data-target="#faq-8">
+                                <span>What kind of support do you provide?</span>
+                                <svg class="faq-icon" viewBox="0 0 24 24">
+                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                            </button>
+                            <div id="faq-8" class="faq-answer">
+                                <p>All plans include email support and access to our knowledge base. Professional and Enterprise plans include phone support and dedicated success managers. We also provide training webinars and documentation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="final-cta-section section">
+            <div class="container text-center">
+                <h2>Ready to Transform Your Admissions Process?</h2>
+                <p class="lead">Join hundreds of institutions already using Agent Cory to boost conversions</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary btn-lg" id="final-try-cory-btn">Try Cory Now</button>
+                    <button class="btn btn-secondary btn-lg" id="final-request-call-btn">Request a Call from Cory</button>
+                </div>
+                <p class="cta-guarantee">30-day money-back guarantee • No setup fees • Cancel anytime</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Agent Cory</h3>
+                    <p>AI-powered admissions assistant that boosts conversions with lightning-fast, multi-channel outreach.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Twitter">
+                            <svg viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="/features.html">Features</a></li>
+                        <li><a href="/how-it-works.html">How It Works</a></li>
+                        <li><a href="/demo-and-pricing.html">Pricing</a></li>
+                        <li><a href="/roi-and-case-studies.html">Case Studies</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="/resources.html">Blog</a></li>
+                        <li><a href="/resources.html">Guides</a></li>
+                        <li><a href="/resources.html">Webinars</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>
+                        <strong>Phone:</strong> +1-555-CORY-AI<br>
+                        <strong>Email:</strong> hello@agentcory.com<br>
+                        <strong>Address:</strong> 123 Innovation Drive<br>
+                        Suite 100, Tech City, TC 12345
+                    </p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Agent Cory. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div id="chat-widget" class="chat-widget">
+        <button id="chat-toggle" class="chat-toggle" aria-label="Open chat">
+            <svg class="chat-icon" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-width="2" fill="none" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            <svg class="close-icon" viewBox="0 0 24 24">
+                <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/>
+                <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </button>
+        
+        <div id="chat-window" class="chat-window">
+            <div class="chat-header">
+                <div class="chat-avatar">
+                    <svg viewBox="0 0 32 32">
+                        <circle cx="16" cy="16" r="14" fill="var(--brand)"/>
+                        <circle cx="12" cy="12" r="2" fill="white"/>
+                        <circle cx="20" cy="12" r="2" fill="white"/>
+                        <path d="M10 20 Q16 24 22 20" stroke="white" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                <div class="chat-info">
+                    <h4>Cory (AI)</h4>
+                    <span class="status">Online</span>
+                </div>
+            </div>
+            
+            <div id="chat-messages" class="chat-messages">
+                <div class="message bot">
+                    <p>Hi! I'm Cory, your AI admissions assistant. I can help answer questions about our platform. How can I help you today?</p>
+                </div>
+            </div>
+            
+            <div class="chat-quick-replies" id="chat-quick-replies">
+                <button class="quick-reply" data-message="How do you work?">How do you work?</button>
+                <button class="quick-reply" data-message="Do you integrate with CRM systems?">Do you integrate with CRM systems?</button>
+                <button class="quick-reply" data-message="Schedule a demo">Schedule a demo</button>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" id="chat-input-field" placeholder="Type your message..." />
+                <button id="chat-send" aria-label="Send message">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="22" y1="2" x2="11" y2="13" stroke="currentColor" stroke-width="2"/>
+                        <polygon points="22,2 15,22 11,13 2,9 22,2" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call Demo Modal -->
+    <div id="call-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Experience Cory's Call Capabilities</h3>
+                <button class="modal-close" aria-label="Close modal">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/>
+                        <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <p>Get a live demonstration of how Cory makes outbound calls to engage prospects.</p>
+                
+                <form id="call-demo-form">
+                    <div class="form-group">
+                        <label for="call-name">Full Name *</label>
+                        <input type="text" id="call-name" name="name" required />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="call-phone">Phone Number *</label>
+                        <input type="tel" id="call-phone" name="phone" required placeholder="+1 (555) 123-4567" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="call-time">When would you like Cory to call?</label>
+                        <select id="call-time" name="callTime">
+                            <option value="now">Right now</option>
+                            <option value="1min">In 1 minute</option>
+                            <option value="custom">Pick a specific time</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="call-consent" name="consent" required />
+                            I consent to receive a demonstration call from Agent Cory AI system
+                        </label>
+                    </div>
+                    
+                    <input type="text" name="website" style="display: none;" />
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Request Demo Call</button>
+                    </div>
+                </form>
+                
+                <div id="call-success" style="display: none;">
+                    <div class="success-message">
+                        <svg class="success-icon" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                        <h4>Demo Call Scheduled!</h4>
+                        <p>Cory will call you shortly to demonstrate our AI capabilities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
