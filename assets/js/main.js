@@ -898,9 +898,13 @@ class ButtonHandlers {
             if (isVisible) {
                 container.style.display = 'none';
                 button.textContent = 'Try Voice Demo';
+                button.classList.remove('btn-secondary');
+                button.classList.add('btn-primary');
             } else {
                 container.style.display = 'block';
                 button.textContent = 'Close Voice Demo';
+                button.classList.remove('btn-primary');
+                button.classList.add('btn-secondary');
             }
         }
     }

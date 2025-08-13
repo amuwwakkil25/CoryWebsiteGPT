@@ -466,8 +466,53 @@ p {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-8);
-    max-width: 1200px;
-    margin: 0 auto;
+    margin-bottom: var(--space-12);
+}
+
+.benefit-card {
+    background-color: #fff;
+    padding: var(--space-8);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.benefit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.benefit-icon {
+    width: 64px;
+    height: 64px;
+    background-color: var(--brand);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-4);
+}
+
+.benefit-icon svg {
+    width: 32px;
+    height: 32px;
+    color: #fff;
+}
+
+.benefit-card h3 {
+    margin-bottom: var(--space-3);
+    font-size: var(--font-size-xl);
+    color: var(--ink);
+}
+
+.benefit-card p {
+    color: var(--muted);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    margin-bottom: 0;
 }
 
 @media (max-width: 1024px) {
@@ -479,81 +524,8 @@ p {
 @media (max-width: 768px) {
     .benefits-grid {
         grid-template-columns: 1fr;
+        gap: var(--space-6);
     }
-}
-
-/* Voice demo section styles */
-.voice-demo-section {
-    background-color: #fff;
-    padding: var(--space-8);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    margin-bottom: var(--space-12);
-    text-align: center;
-}
-
-.voice-demo-intro h3 {
-    color: var(--brand);
-    margin-bottom: var(--space-4);
-}
-
-.voice-demo-intro p {
-    color: var(--muted);
-    margin-bottom: var(--space-6);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.voice-demo-container {
-    margin-top: var(--space-6);
-    display: flex;
-    justify-content: center;
-}
-
-.voice-demo-container iframe {
-    border-radius: 12px;
-    box-shadow: var(--shadow-lg);
-}
-
-.benefit-card {
-    background-color: white;
-    padding: var(--space-6);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-}
-
-.benefit-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-.benefit-icon {
-    width: 48px;
-    height: 48px;
-    background-color: var(--bg);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: var(--space-4);
-}
-
-.benefit-icon svg {
-    width: 24px;
-    height: 24px;
-    color: var(--brand);
-}
-
-.benefit-card h3 {
-    margin-bottom: var(--space-3);
-    font-size: var(--font-size-lg);
-}
-
-.benefit-card p {
-    color: var(--muted);
-    font-size: var(--font-size-sm);
 }
 
 /* ROI Calculator */
@@ -3102,6 +3074,7 @@ input:checked + .toggle-slider:before {
     
     .benefits-grid {
         grid-template-columns: 1fr;
+        gap: var(--space-6);
     }
     
     .testimonials {
