@@ -99,21 +99,25 @@ export class ROIService {
   static async saveCalculation(inputs: ROIInputs, results: ROIResults): Promise<ROICalculation> {
     const sessionId = this.getSessionId()
     
-    // Set session ID for RLS policy
-    await supabase.rpc('set_config', {
-      setting_name: 'app.session_id',
-      setting_value: sessionId,
-      is_local: true
-    })
+    try {
+      // Set session ID for RLS policy
+      await supabase.rpc('set_config', {
+        setting_name: 'app.session_id',
+        setting_value: sessionId,
+        is_local: true
+      })
+    } catch (error) {
+      console.warn('Could not set session config:', error)
+    }
 
     const { data, error } = await supabase
       .from('roi_calculations')
-      .upsert({
+      .upsert([{
         session_id: sessionId,
         user_inputs: inputs,
         calculated_results: results,
         updated_at: new Date().toISOString()
-      }, {
+      }], {
         onConflict: 'session_id'
       })
       .select()
@@ -126,12 +130,16 @@ export class ROIService {
   static async getCalculation(): Promise<ROICalculation | null> {
     const sessionId = this.getSessionId()
     
-    // Set session ID for RLS policy
-    await supabase.rpc('set_config', {
-      setting_name: 'app.session_id',
-      setting_value: sessionId,
-      is_local: true
-    })
+    try {
+      // Set session ID for RLS policy
+      await supabase.rpc('set_config', {
+        setting_name: 'app.session_id',
+        setting_value: sessionId,
+        is_local: true
+      })
+    } catch (error) {
+      console.warn('Could not set session config:', error)
+    }
 
     const { data, error } = await supabase
       .from('roi_calculations')
