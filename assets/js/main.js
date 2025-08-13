@@ -1,5 +1,5 @@
 // Main JavaScript for Agent Cory Marketing Site
-import { WebsiteIntegration } from '../../src/utils/websiteIntegration.js'
+import { WebsiteIntegration } from '../../src/utils/websiteIntegration.ts'
 
 // Global state
 let leadBus = {
