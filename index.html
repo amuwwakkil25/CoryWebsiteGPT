@@ -194,6 +194,20 @@
                     <div class="demo-card">
                         <div class="demo-card-icon">
                             <svg viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                <line x1="12" y1="19" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
+                                <line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h3>Live Voice AI Demo</h3>
+                        <p>Talk directly with our AI agent and experience real conversation</p>
+                        <button class="btn btn-primary" id="voice-demo-btn">Start Voice Demo</button>
+                    </div>
+                    
+                    <div class="demo-card">
+                        <div class="demo-card-icon">
+                            <svg viewBox="0 0 24 24">
                                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
                                 <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
                                 <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
@@ -699,6 +713,10 @@
     </div>
 
     <!-- Scripts -->
+    
+    <!-- Voice AI Agent -->
+    <iframe id="audio_iframe" src="https://widget.synthflow.ai/widget/v2/eeb1bf36-fbad-43f1-9756-3f912273e4e9/1755114458133x115862416629315840" allow="microphone" width="400px" height="550px" style="position: fixed; background: transparent; border: none; z-index: 999; bottom: 20px; right: 20px; display: none;"></iframe>
+    
     <script src="/assets/js/main.js" type="module"></script>
 </body>
 </html>

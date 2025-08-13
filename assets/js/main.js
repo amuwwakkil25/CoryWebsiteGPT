@@ -878,6 +878,28 @@ class ButtonHandlers {
                 }
             });
         });
+        
+        // Voice demo buttons
+        const voiceButtons = document.querySelectorAll('[id*="voice-demo"]');
+        voiceButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.toggleVoiceDemo();
+            });
+        });
+    }
+    
+    toggleVoiceDemo() {
+        const iframe = document.getElementById('audio_iframe');
+        if (iframe) {
+            const isVisible = iframe.style.display !== 'none';
+            iframe.style.display = isVisible ? 'none' : 'block';
+            
+            // Update button text
+            const voiceButtons = document.querySelectorAll('[id*="voice-demo"]');
+            voiceButtons.forEach(btn => {
+                btn.textContent = isVisible ? 'Start Voice Demo' : 'Close Voice Demo';
+            });
+        }
     }
 
     bindResourceButtons() {
