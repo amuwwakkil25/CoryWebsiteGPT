@@ -879,33 +879,12 @@ class ButtonHandlers {
             });
         });
         
-        // Voice demo buttons
-        const voiceButtons = document.querySelectorAll('[id*="voice-demo"]');
-        voiceButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
+        // Voice demo toggle button
+        const voiceDemoToggle = document.getElementById('voice-demo-toggle');
+        if (voiceDemoToggle) {
+            voiceDemoToggle.addEventListener('click', () => {
                 this.toggleVoiceDemo();
             });
-        });
-        
-        // Add voice demo button to existing demo cards
-        this.addVoiceDemoButton();
-    }
-    
-    addVoiceDemoButton() {
-        // Find the "Have Cory call you" demo card and add voice demo option
-        const callDemoCard = document.querySelector('#demo-call-btn')?.closest('.demo-card');
-        if (callDemoCard) {
-            const voiceButton = document.createElement('button');
-            voiceButton.className = 'btn btn-secondary';
-            voiceButton.id = 'voice-demo-btn';
-            voiceButton.textContent = 'Try Voice Demo';
-            voiceButton.style.marginTop = 'var(--space-2)';
-            voiceButton.addEventListener('click', () => this.toggleVoiceDemo());
-            
-            const existingButton = callDemoCard.querySelector('.btn');
-            if (existingButton && existingButton.parentNode) {
-                existingButton.parentNode.insertBefore(voiceButton, existingButton.nextSibling);
-            }
         }
     }
     
@@ -914,10 +893,15 @@ class ButtonHandlers {
         const button = document.getElementById('voice-demo-toggle');
         
         if (container && button) {
-            const isVisible = container.style.display === 'none';
-            container.style.display = isVisible ? 'block' : 'none';
+            const isVisible = container.style.display !== 'none';
             
-            button.textContent = isVisible ? 'Close Voice Demo' : 'Try Voice Demo';
+            if (isVisible) {
+                container.style.display = 'none';
+                button.textContent = 'Try Voice Demo';
+            } else {
+                container.style.display = 'block';
+                button.textContent = 'Close Voice Demo';
+            }
         }
     }
 
