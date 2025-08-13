@@ -1,5 +1,6 @@
 // Main JavaScript for Agent Cory Marketing Site
 import { WebsiteIntegration } from '../../src/utils/websiteIntegration.ts'
+import { ROICalculator as DatabaseROICalculator } from '../../src/components/ROICalculator.ts'
 
 // Global state
 let leadBus = {
@@ -223,143 +224,20 @@ class ChatWidget {
 // ROI Calculator Implementation
 class ROICalculator {
     constructor() {
-        this.inputs = {
-            monthlyInquiries: 500,
-            contactRate: 45,
-            conversionRate: 25,
-            avgTuition: 25000,
-            staffCost: 35,
-            touchesPerLead: 8,
-            coryContactRate: 92,
-            responseUplift: 25,
-            automationCoverage: 85
-        };
+        // Initialize database-powered calculator
+        this.databaseCalculator = new DatabaseROICalculator();
         this.init();
     }
 
     init() {
-        this.bindInputs();
-        this.bindSliders();
-        this.calculate();
+        // The database calculator handles all the binding and calculation
+        // This class now just provides backward compatibility
+        console.log('ROI Calculator initialized with database integration');
     }
 
-    bindInputs() {
-        const inputs = [
-            'monthly-inquiries',
-            'contact-rate', 
-            'conversion-rate',
-            'avg-tuition',
-            'staff-cost',
-            'touches-per-lead'
-        ];
-
-        inputs.forEach(id => {
-            const element = document.getElementById(id);
-            if (element) {
-                element.addEventListener('input', () => {
-                    this.updateInput(id, parseFloat(element.value) || 0);
-                    this.calculate();
-                });
-            }
-        });
-    }
-
-    bindSliders() {
-        const sliders = [
-            { id: 'cory-contact-rate', valueId: 'cory-contact-rate-value', suffix: '%' },
-            { id: 'response-uplift', valueId: 'response-uplift-value', prefix: '+', suffix: '%' },
-            { id: 'automation-coverage', valueId: 'automation-coverage-value', suffix: '%' }
-        ];
-
-        sliders.forEach(slider => {
-            const element = document.getElementById(slider.id);
-            const valueElement = document.getElementById(slider.valueId);
-            
-            if (element && valueElement) {
-                element.addEventListener('input', () => {
-                    const value = parseFloat(element.value);
-                    const displayValue = `${slider.prefix || ''}${value}${slider.suffix || ''}`;
-                    valueElement.textContent = displayValue;
-                    
-                    this.updateInput(slider.id.replace('-', ''), value);
-                    this.calculate();
-                });
-            }
-        });
-    }
-
-    updateInput(key, value) {
-        const camelKey = key.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
-        this.inputs[camelKey] = value;
-    }
-
-    calculate() {
-        const {
-            monthlyInquiries,
-            contactRate,
-            conversionRate,
-            avgTuition,
-            staffCost,
-            touchesPerLead,
-            coryContactRate,
-            responseUplift,
-            automationCoverage
-        } = this.inputs;
-
-        // Current state calculations
-        const currentContacts = monthlyInquiries * (contactRate / 100);
-        const currentApplications = currentContacts * (conversionRate / 100);
-        const currentEnrollments = currentApplications * 0.3; // Assume 30% app to enrollment rate
-
-        // With Cory calculations
-        const coryContacts = monthlyInquiries * (coryContactRate / 100);
-        const improvedConversionRate = conversionRate * (1 + responseUplift / 100);
-        const coryApplications = coryContacts * (improvedConversionRate / 100);
-        const coryEnrollments = coryApplications * 0.3;
-
-        // Annual projections
-        const additionalApps = Math.round((coryApplications - currentApplications) * 12);
-        const additionalEnrollments = Math.round((coryEnrollments - currentEnrollments) * 12);
-        const tuitionLift = additionalEnrollments * avgTuition;
-        
-        // Staff savings
-        const currentStaffHours = monthlyInquiries * touchesPerLead * 0.1; // 6 minutes per touch
-        const savedHours = currentStaffHours * (automationCoverage / 100);
-        const annualSavedHours = Math.round(savedHours * 12);
-        const staffSavings = annualSavedHours * staffCost;
-
-        // ROI calculation (assuming $36K annual platform cost)
-        const platformCost = 36000;
-        const totalBenefit = tuitionLift + staffSavings;
-        const roi = Math.round(((totalBenefit - platformCost) / platformCost) * 100);
-
-        // Update display
-        this.updateResults({
-            additionalApps,
-            additionalEnrollments,
-            tuitionLift: this.formatCurrency(tuitionLift),
-            staffHoursSaved: annualSavedHours.toLocaleString(),
-            annualROI: `${roi}%`
-        });
-    }
-
-    updateResults(results) {
-        Object.entries(results).forEach(([key, value]) => {
-            const element = document.getElementById(key.replace(/([A-Z])/g, '-$1').toLowerCase());
-            if (element) {
-                element.textContent = value;
-            }
-        });
-    }
-
-    formatCurrency(amount) {
-        if (amount >= 1000000) {
-            return `$${(amount / 1000000).toFixed(1)}M`;
-        } else if (amount >= 1000) {
-            return `$${(amount / 1000).toFixed(0)}K`;
-        } else {
-            return `$${amount.toLocaleString()}`;
-        }
+    // Provide access to database calculator for external use
+    getDatabaseCalculator() {
+        return this.databaseCalculator;
     }
 }
 
@@ -1010,6 +888,284 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Make website integration available globally
     window.websiteIntegration = websiteIntegration;
+    
+    // Add ROI calculator reset functionality
+    const resetButton = document.getElementById('roi-reset-btn');
+    if (resetButton) {
+            this.bindInputs();
+            this.bindSliders();
+            
+            // Calculate and display initial results
+            await this.calculate();
+            
+            this.isInitialized = true;
+            console.log('ROI Calculator initialized with database integration');
+        } catch (error) {
+            console.error('Failed to initialize ROI calculator:', error);
+            // Fall back to local calculation
+            this.bindInputs();
+            this.bindSliders();
+            this.calculate();
+        }
+    }
+
+    async loadSavedCalculation() {
+        try {
+            // This would load from database in production
+            const saved = localStorage.getItem('roi_calculation');
+            if (saved) {
+                const data = JSON.parse(saved);
+                this.inputs = { ...this.inputs, ...data.user_inputs };
+                this.updateInputFields();
+            }
+        } catch (error) {
+            console.error('Error loading saved calculation:', error);
+        }
+    }
+
+    updateInputFields() {
+        const inputMappings = {
+            'monthly-inquiries': 'monthlyInquiries',
+            'contact-rate': 'contactRate',
+            'conversion-rate': 'conversionRate',
+            'avg-tuition': 'avgTuition',
+            'staff-cost': 'staffCost',
+            'touches-per-lead': 'touchesPerLead',
+            'cory-contact-rate': 'coryContactRate',
+            'response-uplift': 'responseUplift',
+            'automation-coverage': 'automationCoverage'
+        };
+
+        Object.entries(inputMappings).forEach(([elementId, inputKey]) => {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.value = this.inputs[inputKey].toString();
+            }
+        });
+
+        this.updateSliderDisplays();
+    }
+
+    updateSliderDisplays() {
+        const sliderMappings = [
+            { valueId: 'cory-contact-rate-value', key: 'coryContactRate', suffix: '%' },
+            { valueId: 'response-uplift-value', key: 'responseUplift', prefix: '+', suffix: '%' },
+            { valueId: 'automation-coverage-value', key: 'automationCoverage', suffix: '%' }
+        ];
+
+        sliderMappings.forEach(({ valueId, key, prefix = '', suffix = '' }) => {
+            const valueElement = document.getElementById(valueId);
+            if (valueElement) {
+                const value = this.inputs[key];
+                valueElement.textContent = `${prefix}${value}${suffix}`;
+            }
+        });
+    }
+
+    bindInputs() {
+        const inputMappings = {
+            'monthly-inquiries': 'monthlyInquiries',
+            'contact-rate': 'contactRate',
+            'conversion-rate': 'conversionRate',
+            'avg-tuition': 'avgTuition',
+            'staff-cost': 'staffCost',
+            'touches-per-lead': 'touchesPerLead'
+        };
+
+        Object.entries(inputMappings).forEach(([elementId, inputKey]) => {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.addEventListener('input', async () => {
+                    const value = parseFloat(element.value) || 0;
+                    this.inputs[inputKey] = value;
+                    await this.calculate();
+                });
+            }
+        });
+    }
+
+    bindSliders() {
+        const sliderMappings = [
+            { id: 'cory-contact-rate', valueId: 'cory-contact-rate-value', key: 'coryContactRate', suffix: '%' },
+            { id: 'response-uplift', valueId: 'response-uplift-value', key: 'responseUplift', prefix: '+', suffix: '%' },
+            { id: 'automation-coverage', valueId: 'automation-coverage-value', key: 'automationCoverage', suffix: '%' }
+        ];
+
+        sliderMappings.forEach(({ id, valueId, key, prefix = '', suffix = '' }) => {
+            const element = document.getElementById(id);
+            const valueElement = document.getElementById(valueId);
+            
+            if (element && valueElement) {
+                element.addEventListener('input', async () => {
+                    const value = parseFloat(element.value);
+                    this.inputs[key] = value;
+                    
+                    // Update display
+                    valueElement.textContent = `${prefix}${value}${suffix}`;
+                    
+                    // Recalculate
+                    await this.calculate();
+                });
+            }
+        });
+    }
+
+    async calculate() {
+        try {
+            const results = this.calculateROI(this.inputs);
+            
+            // Save to localStorage (database integration would go here)
+            localStorage.setItem('roi_calculation', JSON.stringify({
+                user_inputs: this.inputs,
+                calculated_results: results,
+                updated_at: new Date().toISOString()
+            }));
+            
+            // Update display
+            this.updateResults(results);
+            this.updateChart(results);
+            
+        } catch (error) {
+            console.error('ROI calculation error:', error);
+        }
+    }
+
+    calculateROI(inputs) {
+        const {
+            monthlyInquiries,
+            contactRate,
+            conversionRate,
+            avgTuition,
+            staffCost,
+            touchesPerLead,
+            coryContactRate,
+            responseUplift,
+            automationCoverage
+        } = inputs;
+
+        // Current state calculations
+        const currentContacts = monthlyInquiries * (contactRate / 100);
+        const currentApplications = currentContacts * (conversionRate / 100);
+        const currentEnrollments = currentApplications * 0.3; // Assume 30% app to enrollment rate
+
+        // With Cory calculations
+        const coryContacts = monthlyInquiries * (coryContactRate / 100);
+        const improvedConversionRate = conversionRate * (1 + responseUplift / 100);
+        const coryApplications = coryContacts * (improvedConversionRate / 100);
+        const coryEnrollments = coryApplications * 0.3;
+
+        // Annual projections
+        const additionalApps = Math.round((coryApplications - currentApplications) * 12);
+        const additionalEnrollments = Math.round((coryEnrollments - currentEnrollments) * 12);
+        const tuitionLift = additionalEnrollments * avgTuition;
+        
+        // Staff savings
+        const currentStaffHours = monthlyInquiries * touchesPerLead * 0.1; // 6 minutes per touch
+        const savedHours = currentStaffHours * (automationCoverage / 100);
+        const annualSavedHours = Math.round(savedHours * 12);
+        const staffSavings = annualSavedHours * staffCost;
+
+        // ROI calculation (assuming $36K annual platform cost)
+        const platformCost = 36000;
+        const totalBenefit = tuitionLift + staffSavings;
+        const netBenefit = totalBenefit - platformCost;
+        const annualROI = Math.round((netBenefit / platformCost) * 100);
+
+        return {
+            additionalApps,
+            additionalEnrollments,
+            tuitionLift,
+            staffHoursSaved: annualSavedHours,
+            annualROI,
+            totalBenefit,
+            platformCost,
+            netBenefit,
+            staffSavings
+        };
+    }
+
+    updateResults(results) {
+        const resultMappings = {
+            'additional-apps': this.formatNumber(results.additionalApps),
+            'additional-enrollments': this.formatNumber(results.additionalEnrollments),
+            'tuition-lift': this.formatCurrency(results.tuitionLift),
+            'staff-hours-saved': this.formatNumber(results.staffHoursSaved),
+            'annual-roi': this.formatPercentage(results.annualROI)
+        };
+
+        Object.entries(resultMappings).forEach(([elementId, value]) => {
+            const element = document.getElementById(elementId);
+            if (element) {
+                // Add animation effect
+                element.style.transform = 'scale(1.1)';
+                element.style.transition = 'transform 0.2s ease-out';
+                
+                setTimeout(() => {
+                    element.textContent = value;
+                    element.style.transform = 'scale(1)';
+                }, 100);
+            }
+        });
+    }
+
+    updateChart(results) {
+        const chartContainer = document.querySelector('.roi-chart .chart-bars');
+        if (!chartContainer) return;
+
+        const maxValue = Math.max(results.tuitionLift, results.platformCost);
+        const staffSavings = results.staffSavings || (results.staffHoursSaved * this.inputs.staffCost);
+
+        const chartData = [
+            {
+                label: 'Tuition Revenue',
+                value: results.tuitionLift,
+                percentage: (results.tuitionLift / maxValue) * 100,
+                formatted: this.formatCurrency(results.tuitionLift),
+                positive: true
+            },
+            {
+                label: 'Staff Cost Savings',
+                value: staffSavings,
+                percentage: (staffSavings / maxValue) * 100,
+                formatted: this.formatCurrency(staffSavings),
+                positive: true
+            },
+            {
+                label: 'Platform Investment',
+                value: results.platformCost,
+                percentage: (results.platformCost / maxValue) * 100,
+                formatted: `-${this.formatCurrency(results.platformCost)}`,
+                positive: false
+            }
+        ];
+
+        chartContainer.innerHTML = chartData.map(item => `
+            <div class="chart-bar">
+                <div class="bar-label">${item.label}</div>
+                <div class="bar-visual ${item.positive ? '' : 'negative'}">
+                    <div class="bar-fill" style="width: ${item.percentage}%; transition: width 0.5s ease-out;"></div>
+                </div>
+                <div class="bar-value">${item.formatted}</div>
+            </div>
+        `).join('');
+    }
+
+    formatCurrency(amount) {
+        if (amount >= 1000000) {
+            return `$${(amount / 1000000).toFixed(1)}M`;
+        } else if (amount >= 1000) {
+            return `$${(amount / 1000).toFixed(0)}K`;
+        } else {
+            return `$${amount.toLocaleString()}`;
+        }
+    }
+
+    formatNumber(num) {
+        return num.toLocaleString();
+    }
+
+    formatPercentage(num) {
+        return `${num}%`;
 
     // Add CSS animations
     const style = document.createElement('style');
@@ -1046,3 +1202,28 @@ window.AgentCory = {
         }
     }
 };
+    // Public methods for external access
+    getInputs() {
+        return { ...this.inputs };
+    }
+
+    async updateInput(key, value) {
+        this.inputs[key] = value;
+        await this.calculate();
+    }
+
+    async resetToDefaults() {
+        this.inputs = {
+            monthlyInquiries: 500,
+            contactRate: 45,
+            conversionRate: 25,
+            avgTuition: 25000,
+            staffCost: 35,
+            touchesPerLead: 8,
+            coryContactRate: 92,
+            responseUplift: 25,
+            automationCoverage: 85
+        };
+        
+        this.updateInputFields();
+        await this.calculate();
