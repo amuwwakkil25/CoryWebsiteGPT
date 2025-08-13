@@ -16,8 +16,8 @@
         gtag('js', new Date());
         gtag('config', 'G-XXXXXXX');
     </script>
-  <script type="module" crossorigin src="/assets/main-C4BJRnuJ.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/main-HCvf6I1k.css">
+  <script type="module" crossorigin src="/assets/main-CcZghVIb.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-DEgXDC6Q.css">
 </head>
 <body>
     <div id="cookie-banner" class="cookie-banner" style="display: none;">
@@ -71,6 +71,27 @@
         <section class="timeline-section section">
             <div class="container">
                 <h2 class="section-title">The Cory Process Timeline</h2>
+                
+                <!-- Voice Demo Integration -->
+                <div class="voice-demo-section" style="text-align: center; margin-bottom: var(--space-12); padding: var(--space-8); background-color: #fff; border-radius: 16px; box-shadow: var(--shadow);">
+                    <div class="voice-demo-intro">
+                        <h3>Experience Cory's Voice Capabilities</h3>
+                        <p>Try our live AI voice assistant to see how Cory engages prospects with natural conversation. Click below to start a voice demo.</p>
+                        <button id="voice-demo-toggle" class="btn btn-primary">Try Voice Demo</button>
+                    </div>
+                    
+                    <div id="voice-demo-container" class="voice-demo-container" style="display: none; margin-top: var(--space-6); text-align: center;">
+                        <iframe 
+                            id="audio_iframe" 
+                            src="https://widget.synthflow.ai/widget/v2/eeb1bf36-fbad-43f1-9756-3f912273e4e9/1755114458133x115862416629315840" 
+                            allow="microphone" 
+                            width="400" 
+                            height="550" 
+                            style="border: none; border-radius: 12px; box-shadow: var(--shadow-lg); background: white; max-width: 100%;">
+                        </iframe>
+                    </div>
+                </div>
+                
                 <div class="timeline">
                     <div class="timeline-item">
                         <div class="timeline-marker">
@@ -614,5 +635,21 @@
         </div>
     </div>
 
+    <script>
+        // Voice demo toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const voiceToggle = document.getElementById('voice-demo-toggle');
+            const voiceContainer = document.getElementById('voice-demo-container');
+            
+            if (voiceToggle && voiceContainer) {
+                voiceToggle.addEventListener('click', function() {
+                    const isVisible = voiceContainer.style.display !== 'none';
+                    voiceContainer.style.display = isVisible ? 'none' : 'block';
+                    voiceToggle.textContent = isVisible ? 'Try Voice Demo' : 'Close Voice Demo';
+                });
+            }
+        });
+    </script>
+    
 </body>
 </html>
