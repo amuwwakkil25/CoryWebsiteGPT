@@ -464,8 +464,10 @@ p {
 /* Benefits Grid */
 .benefits-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--space-8);
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .benefit-card {
@@ -2773,6 +2775,18 @@ input:checked + .toggle-slider:before {
 
 .cookie-content a:hover {
     text-decoration: underline;
+}
+
+/* Voice AI Widget */
+#audio_iframe {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 998 !important;
+    display: block !important;
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: var(--shadow-xl) !important;
 }
 
 /* Footer */
