@@ -886,18 +886,39 @@ class ButtonHandlers {
                 this.toggleVoiceDemo();
             });
         });
+        
+        // Add voice demo button to existing demo cards
+        this.addVoiceDemoButton();
+    }
+    
+    addVoiceDemoButton() {
+        // Find the "Have Cory call you" demo card and add voice demo option
+        const callDemoCard = document.querySelector('#demo-call-btn')?.closest('.demo-card');
+        if (callDemoCard) {
+            const voiceButton = document.createElement('button');
+            voiceButton.className = 'btn btn-secondary';
+            voiceButton.id = 'voice-demo-btn';
+            voiceButton.textContent = 'Try Voice Demo';
+            voiceButton.style.marginTop = 'var(--space-2)';
+            voiceButton.addEventListener('click', () => this.toggleVoiceDemo());
+            
+            const existingButton = callDemoCard.querySelector('.btn');
+            if (existingButton && existingButton.parentNode) {
+                existingButton.parentNode.insertBefore(voiceButton, existingButton.nextSibling);
+            }
+        }
     }
     
     toggleVoiceDemo() {
         const iframe = document.getElementById('audio_iframe');
         if (iframe) {
-            const isVisible = iframe.style.display !== 'none';
-            iframe.style.display = isVisible ? 'none' : 'block';
+            const isVisible = iframe.style.display === 'none';
+            iframe.style.display = isVisible ? 'block' : 'none';
             
             // Update button text
             const voiceButtons = document.querySelectorAll('[id*="voice-demo"]');
             voiceButtons.forEach(btn => {
-                btn.textContent = isVisible ? 'Start Voice Demo' : 'Close Voice Demo';
+                btn.textContent = isVisible ? 'Close Voice Demo' : 'Try Voice Demo';
             });
         }
     }
