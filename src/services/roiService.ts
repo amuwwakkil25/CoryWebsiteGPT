@@ -106,25 +106,34 @@ export class ROIService {
         setting_value: sessionId,
         is_local: true
       })
-    } catch (error) {
-      console.warn('Could not set session config:', error)
-    }
 
-    const { data, error } = await supabase
-      .from('roi_calculations')
-      .upsert([{
+      const { data, error } = await supabase
+        .from('roi_calculations')
+        .upsert([{
+          session_id: sessionId,
+          user_inputs: inputs,
+          calculated_results: results,
+          updated_at: new Date().toISOString()
+        }], {
+          onConflict: 'session_id'
+        })
+        .select()
+        .single()
+
+      if (error) throw error
+      return data as ROICalculation
+    } catch (error) {
+      console.warn('Could not save ROI calculation to database:', error)
+      // Return a mock calculation object for local operation
+      return {
+        id: crypto.randomUUID(),
         session_id: sessionId,
         user_inputs: inputs,
         calculated_results: results,
+        created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
-      }], {
-        onConflict: 'session_id'
-      })
-      .select()
-      .single()
-
-    if (error) throw error
-    return data as ROICalculation
+      }
+    }
   }
 
   static async getCalculation(): Promise<ROICalculation | null> {
@@ -137,20 +146,21 @@ export class ROIService {
         setting_value: sessionId,
         is_local: true
       })
+
+      const { data, error } = await supabase
+        .from('roi_calculations')
+        .select('*')
+        .eq('session_id', sessionId)
+        .order('updated_at', { ascending: false })
+        .limit(1)
+        .maybeSingle()
+
+      if (error) throw error
+      return data as ROICalculation | null
     } catch (error) {
-      console.warn('Could not set session config:', error)
+      console.warn('Could not load ROI calculation from database:', error)
+      return null
     }
-
-    const { data, error } = await supabase
-      .from('roi_calculations')
-      .select('*')
-      .eq('session_id', sessionId)
-      .order('updated_at', { ascending: false })
-      .limit(1)
-      .maybeSingle()
-
-    if (error) throw error
-    return data as ROICalculation | null
   }
 
   static formatCurrency(amount: number): string {
