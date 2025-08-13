@@ -2921,6 +2921,36 @@ input:checked + .toggle-slider:before {
     font-size: var(--font-size-sm);
 }
 
+.voice-demo-section {
+    background-color: white;
+    padding: var(--space-8);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: var(--space-12);
+    text-align: center;
+}
+
+.voice-demo-intro h3 {
+    margin-bottom: var(--space-3);
+    color: var(--ink);
+}
+
+.voice-demo-intro p {
+    color: var(--muted);
+    margin-bottom: var(--space-6);
+}
+
+.voice-demo-container {
+    margin-top: var(--space-6);
+    display: flex;
+    justify-content: center;
+}
+
+.voice-demo-container iframe {
+    max-width: 100%;
+    height: auto;
+}
+
 /* Animations */
 @keyframes fadeIn {
     from { opacity: 0; }

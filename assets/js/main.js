@@ -910,16 +910,14 @@ class ButtonHandlers {
     }
     
     toggleVoiceDemo() {
-        const iframe = document.getElementById('audio_iframe');
-        if (iframe) {
-            const isVisible = iframe.style.display === 'none';
-            iframe.style.display = isVisible ? 'block' : 'none';
+        const container = document.getElementById('voice-demo-container');
+        const button = document.getElementById('voice-demo-toggle');
+        
+        if (container && button) {
+            const isVisible = container.style.display === 'none';
+            container.style.display = isVisible ? 'block' : 'none';
             
-            // Update button text
-            const voiceButtons = document.querySelectorAll('[id*="voice-demo"]');
-            voiceButtons.forEach(btn => {
-                btn.textContent = isVisible ? 'Close Voice Demo' : 'Try Voice Demo';
-            });
+            button.textContent = isVisible ? 'Close Voice Demo' : 'Try Voice Demo';
         }
     }
 
