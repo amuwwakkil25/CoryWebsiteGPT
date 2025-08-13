@@ -16,7 +16,7 @@ export class WebsiteService {
   // Pages
   static async getPages() {
     const { data, error } = await supabase
-      .from('Website_Pages')
+      .from('website_pages')
       .select('*')
       .eq('is_published', true)
       .order('sort_order')
@@ -27,7 +27,7 @@ export class WebsiteService {
 
   static async getPageBySlug(slug: string) {
     const { data, error } = await supabase
-      .from('Website_Pages')
+      .from('website_pages')
       .select('*')
       .eq('slug', slug)
       .eq('is_published', true)
@@ -40,7 +40,7 @@ export class WebsiteService {
   // Features
   static async getFeatures(category?: string) {
     let query = supabase
-      .from('Website_Features')
+      .from('website_features')
       .select('*')
       .eq('is_active', true)
       .order('sort_order')
@@ -56,7 +56,7 @@ export class WebsiteService {
 
   static async getFeaturedFeatures() {
     const { data, error } = await supabase
-      .from('Website_Features')
+      .from('website_features')
       .select('*')
       .eq('is_active', true)
       .eq('is_highlighted', true)
@@ -69,7 +69,7 @@ export class WebsiteService {
   // Testimonials
   static async getTestimonials() {
     const { data, error } = await supabase
-      .from('Website_Testimonials')
+      .from('website_testimonials')
       .select('*')
       .eq('is_active', true)
       .order('sort_order')
@@ -80,7 +80,7 @@ export class WebsiteService {
 
   static async getFeaturedTestimonials() {
     const { data, error } = await supabase
-      .from('Website_Testimonials')
+      .from('website_testimonials')
       .select('*')
       .eq('is_active', true)
       .eq('is_featured', true)
@@ -92,7 +92,7 @@ export class WebsiteService {
 
   static async getCaseStudies() {
     const { data, error } = await supabase
-      .from('Website_Testimonials')
+      .from('website_testimonials')
       .select('*')
       .eq('is_active', true)
       .eq('is_case_study', true)
@@ -109,7 +109,7 @@ export class WebsiteService {
     featured?: boolean
   }) {
     let query = supabase
-      .from('Website_Resources')
+      .from('website_resources')
       .select('*')
       .eq('is_published', true)
       .order('created_at', { ascending: false })
@@ -134,7 +134,7 @@ export class WebsiteService {
   // FAQ
   static async getFAQs(category?: string) {
     let query = supabase
-      .from('Website_FAQ')
+      .from('website_faq')
       .select('*')
       .eq('is_active', true)
       .order('sort_order')
@@ -151,7 +151,7 @@ export class WebsiteService {
   // Pricing Plans
   static async getPricingPlans() {
     const { data, error } = await supabase
-      .from('Website_Pricing_Plans')
+      .from('website_pricing_plans')
       .select('*')
       .eq('is_active', true)
       .order('sort_order')
@@ -163,7 +163,7 @@ export class WebsiteService {
   // Lead Magnets
   static async getLeadMagnets() {
     const { data, error } = await supabase
-      .from('Website_Lead_Magnets')
+      .from('website_lead_magnets')
       .select('*')
       .eq('is_active', true)
     
@@ -173,7 +173,7 @@ export class WebsiteService {
 
   static async getLeadMagnetById(id: string) {
     const { data, error } = await supabase
-      .from('Website_Lead_Magnets')
+      .from('website_lead_magnets')
       .select('*')
       .eq('id', id)
       .eq('is_active', true)
@@ -186,7 +186,7 @@ export class WebsiteService {
   // Demo Requests
   static async createDemoRequest(request: Omit<WebsiteDemoRequest, 'id' | 'created_at' | 'updated_at'>) {
     const { data, error } = await supabase
-      .from('Website_Demo_Requests')
+      .from('website_demo_requests')
       .insert(request)
       .select()
       .single()
@@ -197,7 +197,7 @@ export class WebsiteService {
 
   static async getDemoRequests(status?: string) {
     let query = supabase
-      .from('Website_Demo_Requests')
+      .from('website_demo_requests')
       .select('*')
       .order('created_at', { ascending: false })
     
@@ -213,7 +213,7 @@ export class WebsiteService {
   // Analytics
   static async trackEvent(event: Omit<WebsiteAnalytics, 'id' | 'created_at'>) {
     const { data, error } = await supabase
-      .from('Website_Analytics')
+      .from('website_analytics')
       .insert(event)
       .select()
       .single()
@@ -229,7 +229,7 @@ export class WebsiteService {
     end_date?: string
   }) {
     let query = supabase
-      .from('Website_Analytics')
+      .from('website_analytics')
       .select('*')
       .order('created_at', { ascending: false })
     
@@ -257,7 +257,7 @@ export class WebsiteService {
   // Settings
   static async getSettings(publicOnly = true) {
     let query = supabase
-      .from('Website_Settings')
+      .from('website_settings')
       .select('*')
     
     if (publicOnly) {
@@ -271,7 +271,7 @@ export class WebsiteService {
 
   static async getSetting(key: string) {
     const { data, error } = await supabase
-      .from('Website_Settings')
+      .from('website_settings')
       .select('*')
       .eq('setting_key', key)
       .single()
@@ -282,7 +282,7 @@ export class WebsiteService {
 
   static async updateSetting(key: string, value: any, description?: string) {
     const { data, error } = await supabase
-      .from('Website_Settings')
+      .from('website_settings')
       .upsert({
         setting_key: key,
         setting_value: value,
