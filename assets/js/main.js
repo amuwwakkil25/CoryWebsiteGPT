@@ -1,4 +1,5 @@
 // Main JavaScript for Agent Cory Marketing Site
+import { WebsiteIntegration } from '../../src/utils/websiteIntegration.js'
 
 // Global state
 let leadBus = {
@@ -962,6 +963,10 @@ class AnimationObserver {
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize database integration
+    const websiteIntegration = new WebsiteIntegration()
+    websiteIntegration.initialize().catch(console.error)
+    
     // Initialize all components
     window.chatWidget = new ChatWidget();
     window.roiCalculator = new ROICalculator();
@@ -973,6 +978,9 @@ document.addEventListener('DOMContentLoaded', function() {
     window.cookieBanner = new CookieBanner();
     window.buttonHandlers = new ButtonHandlers();
     window.animationObserver = new AnimationObserver();
+    
+    // Make website integration available globally
+    window.websiteIntegration = websiteIntegration;
 
     // Add CSS animations
     const style = document.createElement('style');
