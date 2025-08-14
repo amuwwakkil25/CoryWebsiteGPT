@@ -89,60 +89,19 @@ export class ROIService {
       additionalEnrollments,
       tuitionLift,
       staffHoursSaved: annualSavedHours,
-      annualROI,
-      totalBenefit,
-      platformCost,
-      netBenefit
-    }
-  }
-
-  static async saveCalculation(inputs: ROIInputs, results: ROIResults): Promise<ROICalculation> {
-    const sessionId = this.getSessionId()
-    
-    try {
-      // Store in localStorage instead of database to avoid RLS issues
-      const calculation = {
-        id: crypto.randomUUID(),
-        session_id: sessionId,
-        user_inputs: inputs,
-        calculated_results: results,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      }
-      
-      localStorage.setItem('roi_calculation', JSON.stringify(calculation))
-      return calculation as ROICalculation
-    } catch (error) {
-      console.warn('Could not save ROI calculation to database:', error)
-      // Return a mock calculation object for local operation
-      return {
-        id: crypto.randomUUID(),
-        session_id: sessionId,
-        user_inputs: inputs,
-        calculated_results: results,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+    // Store in localStorage to avoid database issues
+    const calculation = {
+      id: crypto.randomUUID(),
+      session_id: sessionId,
+    // Load from localStorage
+    const saved = localStorage.getItem('roi_calculation')
+    if (saved) {
+      const calculation = JSON.parse(saved)
+      if (calculation.session_id === sessionId) {
+        return calculation as ROICalculation
       }
     }
-  }
-
-  static async getCalculation(): Promise<ROICalculation | null> {
-    const sessionId = this.getSessionId()
-    
-    try {
-      // Load from localStorage instead of database
-      const saved = localStorage.getItem('roi_calculation')
-      if (saved) {
-        const calculation = JSON.parse(saved)
-        if (calculation.session_id === sessionId) {
-          return calculation as ROICalculation
-        }
-      }
       return null
-    } catch (error) {
-      console.warn('Could not load ROI calculation from database:', error)
-      return null
-    }
   }
 
   static formatCurrency(amount: number): string {
