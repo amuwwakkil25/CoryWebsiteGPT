@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Demo & Pricing - Agent Cory AI Admissions Assistant</title>
-    <meta name="description" content="Try Agent Cory with a live demo and explore flexible pricing plans for AI-powered admissions automation." />
+    <title>Demo - Agent Cory AI Admissions Assistant</title>
+    <meta name="description" content="Experience Agent Cory's AI-powered admissions automation and explore custom AI solutions for your institution." />
     
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -58,7 +58,7 @@
                     <li><a href="/how-it-works.html" class="nav-link">How It Works</a></li>
                     <li><a href="/features.html" class="nav-link">Features</a></li>
                     <li><a href="/roi-and-case-studies.html" class="nav-link">ROI & Cases</a></li>
-                    <li><a href="/demo-and-pricing.html" class="nav-link active">Demo & Pricing</a></li>
+                    <li><a href="/demo-and-pricing.html" class="nav-link active">Demo</a></li>
                     <li><a href="/resources.html" class="nav-link">Resources</a></li>
                     <li><button class="btn btn-primary nav-cta">Try Cory Now</button></li>
                 </ul>
@@ -70,419 +70,387 @@
         <section class="page-hero">
             <div class="container">
                 <h1>Experience Agent Cory Live</h1>
-                <p class="lead">Try our AI admissions assistant right now and see how it can transform your enrollment process. Plus, discover our custom AI solutions for your organization.</p>
+                <p class="lead">Get instant access to our AI admissions assistant and discover custom AI solutions for your institution.</p>
             </div>
         </section>
 
-        <!-- Live Demo Section -->
+        <!-- Demo Section -->
         <section class="demo-section section">
             <div class="container">
-                <h2 class="section-title">Try Agent Cory Right Now</h2>
                 <div class="demo-content">
                     <div class="demo-info">
-                        <h3>Experience Cory's AI Capabilities</h3>
-                        <p>Click the demo button below to have a live conversation with Agent Cory. You'll experience:</p>
+                        <h2>Get Agent Cory to Call You</h2>
+                        <p>Experience our AI admissions assistant firsthand. Fill out the form and Cory will call you within minutes to demonstrate:</p>
+                        
                         <ul class="demo-checklist">
-                            <li>🎯 Natural AI conversation flow</li>
-                            <li>📞 Intelligent qualification questions</li>
-                            <li>📅 Appointment booking capabilities</li>
-                            <li>🤖 Real-time response and engagement</li>
+                            <li>
+                                <svg class="check-icon" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                                Natural AI conversation and qualification
+                            </li>
+                            <li>
+                                <svg class="check-icon" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                                Intelligent FAQ responses about your programs
+                            </li>
+                            <li>
+                                <svg class="check-icon" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                                Appointment booking capabilities
+                            </li>
+                            <li>
+                                <svg class="check-icon" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                                Multi-channel follow-up coordination
+                            </li>
                         </ul>
                         
-                        <div class="demo-ctas">
-                            <button class="btn btn-primary btn-lg" id="try-live-demo-btn">Try Live Demo Now</button>
-                            <button class="btn btn-secondary btn-lg" id="schedule-consultation-btn">Schedule 30-Min Consultation</button>
-                        </div>
-                        
-                        <div class="custom-ai-section" style="margin-top: var(--space-8); padding: var(--space-6); background-color: var(--bg); border-radius: 12px;">
-                            <h4>Custom AI Solutions Available</h4>
-                            <p>Beyond admissions automation, we create custom AI solutions for your organization's unique needs. From student support chatbots to administrative automation, we can build AI that fits your specific requirements.</p>
-                            <button class="btn btn-secondary" id="custom-ai-btn">Learn About Custom AI Projects</button>
+                        <div class="demo-note">
+                            <p><strong>What happens next:</strong> After you submit the form, Cory will call you within 2-3 minutes to demonstrate our AI capabilities. You'll experience exactly how we engage your prospects.</p>
                         </div>
                     </div>
                     
                     <div class="demo-form-card">
-                        <form id="consultation-form" class="demo-form">
-                            <h3>Schedule Your 30-Minute Consultation</h3>
-                            <p style="color: var(--muted); font-size: var(--font-size-sm); margin-bottom: var(--space-6);">Discuss how Agent Cory and custom AI solutions can help your organization</p>
+                        <form id="demo-request-form" class="demo-form">
+                            <h3>Get Called by Agent Cory</h3>
                             
                             <div class="form-group">
-                                <label for="consultation-name">Full Name *</label>
-                                <input type="text" id="consultation-name" name="name" required />
-                                <div class="form-error" id="consultation-name-error"></div>
+                                <label for="demo-first-name">First Name *</label>
+                                <input type="text" id="demo-first-name" name="firstName" required />
+                                <div class="form-error" id="demo-first-name-error"></div>
                             </div>
                             
                             <div class="form-group">
-                                <label for="consultation-email">Email Address *</label>
-                                <input type="email" id="consultation-email" name="email" required />
-                                <div class="form-error" id="consultation-email-error"></div>
+                                <label for="demo-last-name">Last Name *</label>
+                                <input type="text" id="demo-last-name" name="lastName" required />
+                                <div class="form-error" id="demo-last-name-error"></div>
                             </div>
                             
                             <div class="form-group">
-                                <label for="consultation-organization">Institution/Organization *</label>
-                                <input type="text" id="consultation-organization" name="organization" required />
-                                <div class="form-error" id="consultation-organization-error"></div>
+                                <label for="demo-email">Email Address *</label>
+                                <input type="email" id="demo-email" name="email" required />
+                                <div class="form-error" id="demo-email-error"></div>
                             </div>
                             
                             <div class="form-group">
-                                <label for="consultation-phone">Phone Number *</label>
-                                <input type="tel" id="consultation-phone" name="phone" required placeholder="+1 (555) 123-4567" />
-                                <div class="form-error" id="consultation-phone-error"></div>
+                                <label for="demo-phone">Phone Number *</label>
+                                <input type="tel" id="demo-phone" name="phone" required placeholder="+1 (555) 123-4567" />
+                                <div class="form-error" id="demo-phone-error"></div>
                             </div>
                             
                             <div class="form-group">
-                                <label for="consultation-interest">Primary Interest</label>
-                                <select id="consultation-interest" name="interest">
-                                    <option value="">Select your interest</option>
-                                    <option value="admissions-automation">Admissions Automation</option>
-                                    <option value="custom-ai">Custom AI Solutions</option>
-                                    <option value="both">Both Admissions & Custom AI</option>
-                                </select>
+                                <label for="demo-institution">Institution/Organization *</label>
+                                <input type="text" id="demo-institution" name="institution" required />
+                                <div class="form-error" id="demo-institution-error"></div>
                             </div>
                             
                             <div class="form-group">
-                                <label for="consultation-crm">Current CRM System (Optional)</label>
-                                <select id="consultation-crm" name="crm">
-                                    <option value="">Select your CRM</option>
-                                    <option value="slate">Slate</option>
-                                    <option value="salesforce">Salesforce</option>
-                                    <option value="ellucian">Ellucian Banner</option>
+                                <label for="demo-occupation">Occupation/Role *</label>
+                                <select id="demo-occupation" name="occupation" required>
+                                    <option value="">Select your role</option>
+                                    <option value="director-admissions">Director of Admissions</option>
+                                    <option value="vp-enrollment">VP of Enrollment</option>
+                                    <option value="admissions-counselor">Admissions Counselor</option>
+                                    <option value="marketing-director">Marketing Director</option>
+                                    <option value="president-ceo">President/CEO</option>
+                                    <option value="dean">Dean</option>
+                                    <option value="it-director">IT Director</option>
                                     <option value="other">Other</option>
-                                    <option value="none">No CRM currently</option>
                                 </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="consultation-inquiries">Monthly Inquiries (Optional)</label>
-                                <select id="consultation-inquiries" name="inquiries">
-                                    <option value="">Select range</option>
-                                    <option value="0-100">0-100</option>
-                                    <option value="101-300">101-300</option>
-                                    <option value="301-500">301-500</option>
-                                    <option value="501-1000">501-1,000</option>
-                                    <option value="1001+">1,000+</option>
-                                </select>
+                                <div class="form-error" id="demo-occupation-error"></div>
                             </div>
                             
                             <!-- Honeypot field -->
                             <input type="text" name="website" style="display: none;" />
                             
-                            <button type="submit" class="btn btn-primary btn-lg btn-full">Schedule Consultation</button>
+                            <button type="submit" class="btn btn-primary btn-lg btn-full">Get Called by Cory Now</button>
                         </form>
                         
-                        <div id="consultation-success" class="demo-success" style="display: none;">
+                        <div id="demo-success" class="demo-success" style="display: none;">
                             <svg class="success-icon" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
                                 <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
                             </svg>
-                            <h3>Consultation Scheduled!</h3>
-                            <p>Thank you! We'll contact you within 2 business hours to schedule your personalized consultation.</p>
-                            <p><strong>Next Steps:</strong></p>
-                            <ul>
-                                <li>Check your email for confirmation</li>
-                                <li>Our team will call to schedule your consultation</li>
-                                <li>We'll send calendar invite with meeting details</li>
-                            </ul>
+                            <h3>Cory is Calling You Now!</h3>
+                            <p>Thank you! Agent Cory will call you within the next 2-3 minutes to demonstrate our AI capabilities.</p>
+                            <div class="call-expectations">
+                                <h4>What to expect in the call:</h4>
+                                <ul>
+                                    <li>Cory will introduce herself as an AI assistant</li>
+                                    <li>She'll ask about your institution and current challenges</li>
+                                    <li>You'll experience how she qualifies leads and answers questions</li>
+                                    <li>She'll offer to schedule a meeting with our team</li>
+                                    <li>The call demonstrates our quick response and natural flow</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Services Section -->
-        <section class="services-section section bg-light">
+        <!-- Custom AI Solutions -->
+        <section class="custom-ai-section section bg-light">
             <div class="container">
-                <h2 class="section-title">Our AI Solutions</h2>
-                <p class="section-subtitle">From admissions automation to custom AI projects tailored to your needs</p>
+                <h2 class="section-title">Custom AI Solutions for Education</h2>
+                <p class="section-subtitle">Beyond admissions, we build custom AI automation for every aspect of your institution</p>
                 
-                <div class="services-grid">
-                    
-                    <div class="service-card">
-                        <div class="service-header">
-                            <div class="service-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                                </svg>
-                            </div>
-                            <h3>Agent Cory - Admissions Automation</h3>
-                            <p class="service-description">AI-powered admissions assistant that engages prospects in under 60 seconds</p>
-                        </div>
-                        
-                        <div class="service-features">
-                            <div class="feature-group">
-                                <h4>Key Capabilities</h4>
-                                <ul>
-                                    <li><span class="check-icon">✓</span> Instant phone, SMS, and email outreach</li>
-                                    <li><span class="check-icon">✓</span> Natural AI conversation and qualification</li>
-                                    <li><span class="check-icon">✓</span> CRM integration (Slate, Salesforce, Banner)</li>
-                                    <li><span class="check-icon">✓</span> 24/7 availability and lead capture</li>
-                                    <li><span class="check-icon">✓</span> Appointment booking and calendar sync</li>
-                                    <li><span class="check-icon">✓</span> Advanced analytics and reporting</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="service-footer">
-                            <button class="btn btn-primary btn-full" id="try-cory-demo-btn">Try Live Demo</button>
-                            <p class="service-note">Experience the full capabilities right now</p>
-                        </div>
-                    </div>
-                    
-                    <div class="service-card featured">
-                        <div class="service-badge">Custom Solutions</div>
-                        <div class="service-header">
-                            <div class="service-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                </svg>
-                            </div>
-                            <h3>Custom AI Development</h3>
-                            <p class="service-description">Tailored AI solutions designed specifically for your organization's unique needs</p>
-                        </div>
-                        
-                        <div class="service-features">
-                            <div class="feature-group">
-                                <h4>What We Can Build</h4>
-                                <ul>
-                                    <li><span class="check-icon">✓</span> Student support and FAQ chatbots</li>
-                                    <li><span class="check-icon">✓</span> Administrative process automation</li>
-                                    <li><span class="check-icon">✓</span> Custom voice AI for specific workflows</li>
-                                    <li><span class="check-icon">✓</span> Integration with existing systems</li>
-                                    <li><span class="check-icon">✓</span> Multi-language AI assistants</li>
-                                    <li><span class="check-icon">✓</span> Specialized industry AI solutions</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="service-footer">
-                            <button class="btn btn-secondary btn-full" id="custom-ai-consultation-btn">Discuss Custom Project</button>
-                            <p class="service-note">Custom development and implementation</p>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-        </section>
-
-        <!-- Demo Widget Section -->
-        <section class="demo-widget-section section">
-            <div class="container text-center">
-                <h2 class="section-title">Try Agent Cory Right Now</h2>
-                <p class="section-subtitle">Experience a live conversation with our AI admissions assistant</p>
-                
-                <div class="demo-widget-container" style="display: flex; justify-content: center; margin: var(--space-8) 0;">
-                    <div id="demo-widget-placeholder" style="width: 400px; height: 550px; background-color: var(--bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 2px dashed var(--border);">
-                        <div style="text-align: center; padding: var(--space-6);">
-                            <svg style="width: 64px; height: 64px; color: var(--brand); margin-bottom: var(--space-4);" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                <div class="ai-solutions-grid">
+                    <div class="solution-card">
+                        <div class="solution-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <line x1="20" y1="8" x2="20" y2="14" stroke="currentColor" stroke-width="2"/>
+                                <line x1="23" y1="11" x2="17" y2="11" stroke="currentColor" stroke-width="2"/>
                             </svg>
-                            <h3>Live Demo Ready</h3>
-                            <p style="color: var(--muted); margin-bottom: var(--space-4);">Click the button above to start your conversation with Agent Cory</p>
-                            <button class="btn btn-primary" id="activate-demo-btn">Activate Demo</button>
                         </div>
+                        <h3>Student Support & Retention</h3>
+                        <p>AI-powered student success systems that identify at-risk students and provide proactive support.</p>
+                        <ul class="solution-features">
+                            <li>Dropout detection and re-engagement</li>
+                            <li>Academic nudging and motivation</li>
+                            <li>Homework grading and feedback automation</li>
+                            <li>24/7 student support chatbots</li>
+                        </ul>
                     </div>
-                </div>
-                
-                <p style="color: var(--muted); font-size: var(--font-size-sm);">
-                    This is a live AI assistant - you can ask questions about admissions, request information, or even book a consultation directly through the conversation.
-                </p>
-            </div>
-        </section>
-
-        <!-- Why Choose Us -->
-        <section class="why-choose section">
-            <div class="container">
-                <h2 class="section-title">Why Choose Our AI Solutions</h2>
-                <div class="benefits-grid">
-                    <div class="benefit-card">
-                        <div class="benefit-icon">
+                    
+                    <div class="solution-card">
+                        <div class="solution-icon">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h3>Onboarding & Enrollment</h3>
+                        <p>Streamline the student journey from application to first day with intelligent automation.</p>
+                        <ul class="solution-features">
+                            <li>Automated application follow-up</li>
+                            <li>Document collection and verification</li>
+                            <li>Personalized onboarding sequences</li>
+                            <li>First-day preparation and check-ins</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <div class="solution-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2"/>
+                                <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2"/>
+                                <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h3>Academic & Administrative AI</h3>
+                        <p>Custom AI solutions for faculty, staff, and administrative processes.</p>
+                        <ul class="solution-features">
+                            <li>Intelligent assignment grading and feedback</li>
+                            <li>Course calendar and behavior tracking</li>
+                            <li>Administrative workflow automation</li>
+                            <li>Faculty assistant chatbots</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <div class="solution-icon">
                             <svg viewBox="0 0 24 24">
                                 <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
-                                <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2"/>
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17" stroke="currentColor" stroke-width="2"/>
                             </svg>
                         </div>
-                        <h3>Proven Results</h3>
-                        <p>Our clients see 90-95% contact rates and 5-10x ROI within the first year of implementation.</p>
+                        <h3>Student Services Automation</h3>
+                        <p>AI-powered support for financial aid, registrar, and student life departments.</p>
+                        <ul class="solution-features">
+                            <li>Financial aid application assistance</li>
+                            <li>Registration and scheduling support</li>
+                            <li>Campus life and event coordination</li>
+                            <li>Multi-department FAQ automation</li>
+                        </ul>
                     </div>
-                        
-                    <div class="benefit-card">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                        </div>
-                        <h3>Custom Development</h3>
-                        <p>Beyond admissions, we create custom AI solutions for any organizational need - from student support to administrative automation.</p>
+                </div>
+                
+                <div class="custom-ai-cta">
+                    <h3>Need Something Specific?</h3>
+                    <p>We build custom AI solutions tailored to your institution's unique needs. From student success to administrative efficiency, our team can automate any workflow.</p>
+                    <button class="btn btn-secondary btn-lg" id="custom-ai-consultation">Discuss Custom AI Project</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Voice Demo -->
+        <section class="voice-demo-section section">
+            <div class="container">
+                <h2 class="section-title">Try Our Voice AI Demo</h2>
+                <p class="section-subtitle">Experience Cory's conversational AI capabilities with this interactive demo</p>
+                
+                <div class="voice-demo-container">
+                    <div class="demo-instructions">
+                        <h3>How to Use the Demo</h3>
+                        <ol>
+                            <li>Click the microphone button below to start</li>
+                            <li>Allow microphone access when prompted</li>
+                            <li>Speak naturally with Cory about admissions</li>
+                            <li>Ask questions about programs, requirements, or costs</li>
+                            <li>Experience how Cory qualifies and engages prospects</li>
+                        </ol>
                     </div>
                     
-                    <div class="benefit-card">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M9 9h6v6H9z"/>
-                            </svg>
-                        </div>
-                        <h3>Seamless Integration</h3>
-                        <p>Native integrations with major CRM systems and custom API development for any platform you use.</p>
+                    <div class="voice-widget-container">
+                        <iframe 
+                            id="audio_iframe" 
+                            src="https://widget.synthflow.ai/widget/v2/eeb1bf36-fbad-43f1-9756-3f912273e4e9/1755114458133x115862416629315840" 
+                            allow="microphone" 
+                            width="400" 
+                            height="550" 
+                            style="border: none; border-radius: 12px; box-shadow: var(--shadow-lg); background: white; max-width: 100%;">
+                        </iframe>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Custom AI Examples -->
-        <section class="custom-ai-examples section bg-light">
+        <!-- Workflow Examples -->
+        <section class="workflow-examples section bg-light">
             <div class="container">
-                <h2 class="section-title">Custom AI Project Examples</h2>
-                <div class="examples-grid">
-                    <div class="example-card">
-                        <h3>Student Support Chatbot</h3>
-                        <p>24/7 AI assistant for current students to get help with course registration, financial aid questions, and campus resources.</p>
-                        <div class="example-features">
-                            <span class="feature-tag">Multi-language</span>
-                            <span class="feature-tag">SIS Integration</span>
-                            <span class="feature-tag">Escalation to humans</span>
+                <h2 class="section-title">AI Workflow Examples</h2>
+                <p class="section-subtitle">See how AI can transform every aspect of your institution</p>
+                
+                <div class="workflow-grid">
+                    <div class="workflow-card">
+                        <div class="workflow-header">
+                            <h3>Admissions Inquiry & Follow-Up</h3>
+                            <div class="workflow-metrics">
+                                <span class="metric-badge">3-4x faster response</span>
+                                <span class="metric-badge">+20-30% conversion</span>
+                            </div>
+                        </div>
+                        <div class="workflow-steps">
+                            <div class="workflow-step">
+                                <span class="step-number">1</span>
+                                <span class="step-text">Prospect submits inquiry</span>
+                            </div>
+                            <div class="workflow-step">
+                                <span class="step-number">2</span>
+                                <span class="step-text">Cora (Voice AI) calls and qualifies leads instantly</span>
+                            </div>
+                            <div class="workflow-step">
+                                <span class="step-number">3</span>
+                                <span class="step-text">Web & SMS chatbot for FAQ + appointment booking</span>
+                            </div>
+                            <div class="workflow-step">
+                                <span class="step-number">4</span>
+                                <span class="step-text">CRM-based SQL triggers for new inquiries</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="example-card">
-                        <h3>Administrative Automation</h3>
-                        <p>AI-powered workflow automation for repetitive administrative tasks, document processing, and data entry.</p>
-                        <div class="example-features">
-                            <span class="feature-tag">Document processing</span>
-                            <span class="feature-tag">Data validation</span>
-                            <span class="feature-tag">Workflow automation</span>
+                    <div class="workflow-card">
+                        <div class="workflow-header">
+                            <h3>Student Onboarding & Retention</h3>
+                            <div class="workflow-metrics">
+                                <span class="metric-badge">-21% melt rate</span>
+                                <span class="metric-badge">+First-day readiness</span>
+                            </div>
+                        </div>
+                        <div class="workflow-steps">
+                            <div class="workflow-step">
+                                <span class="step-number">1</span>
+                                <span class="step-text">Student admitted</span>
+                            </div>
+                            <div class="workflow-step">
+                                <span class="step-number">2</span>
+                                <span class="step-text">CAI sends personalized SMS nudges</span>
+                            </div>
+                            <div class="workflow-step">
+                                <span class="step-number">3</span>
+                                <span class="step-text">SQL-triggered reminders based on status</span>
+                            </div>
+                            <div class="workflow-step">
+                                <span class="step-number">4</span>
+                                <span class="step-text">Cora voice check-ins before start date</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="example-card">
-                        <h3>Faculty & Staff Assistant</h3>
-                        <p>Internal AI assistant to help faculty and staff with HR questions, policy lookups, and administrative procedures.</p>
-                        <div class="example-features">
-                            <span class="feature-tag">Policy database</span>
-                            <span class="feature-tag">HR integration</span>
-                            <span class="feature-tag">Secure access</span>
+                    <div class="workflow-card">
+                        <div class="workflow-header">
+                            <h3>Academic Support & Engagement</h3>
+                            <div class="workflow-metrics">
+                                <span class="metric-badge">+50-80% grading speedup</span>
+                                <span class="metric-badge">Better feedback quality</span>
+                            </div>
+                        </div>
+                        <div class="workflow-steps">
+                            <div class="workflow-step">
+                                <span class="step-number">1</span>
+                                <span class="step-text">Student submits assignment</span>
+                            </div>
+                            <div class="workflow-step">
+                                <span class="step-number">2</span>
+                                <span class="step-text">HW Grader drafts AI-based comments</span>
+                            </div>
+                            <div class="workflow-step">
+                                <span class="step-number">3</span>
+                                <span class="step-text">LLM scoring with instructor override</span>
+                            </div>
+                            <div class="workflow-step">
+                                <span class="step-number">4</span>
+                                <span class="step-text">Integration with LMS for workflow automation</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- FAQ Section -->
-        <section class="faq-section section">
+        <!-- Results Section -->
+        <section class="results-section section">
             <div class="container">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-                <div class="faq-grid">
-                    <div class="faq-column">
-                        <div class="faq-item">
-                            <button class="faq-question" data-target="#faq-1">
-                                <span>How long does implementation take?</span>
-                                <svg class="faq-icon" viewBox="0 0 24 24">
-                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
-                                </svg>
-                            </button>
-                            <div id="faq-1" class="faq-answer">
-                                <p>Most institutions are up and running within 2-3 weeks. This includes CRM integration, FAQ training, and team onboarding. Enterprise implementations may take 4-6 weeks depending on customization needs.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <button class="faq-question" data-target="#faq-2">
-                                <span>What CRM systems do you integrate with?</span>
-                                <svg class="faq-icon" viewBox="0 0 24 24">
-                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
-                                </svg>
-                            </button>
-                            <div id="faq-2" class="faq-answer">
-                                <p>We have native integrations with Slate, Salesforce Education Cloud, and Ellucian Banner. We also support custom API connections and can integrate with most CRM/SIS systems through Zapier or direct API development.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <button class="faq-question" data-target="#faq-3">
-                                <span>Is there a setup fee?</span>
-                                <svg class="faq-icon" viewBox="0 0 24 24">
-                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
-                                </svg>
-                            </button>
-                            <div id="faq-3" class="faq-answer">
-                                <p>Starter and Professional plans include setup at no extra charge. Enterprise plans may have a one-time implementation fee depending on customization requirements, which will be discussed during your consultation.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <button class="faq-question" data-target="#faq-4">
-                                <span>Can I customize the AI's responses?</span>
-                                <svg class="faq-icon" viewBox="0 0 24 24">
-                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
-                                </svg>
-                            </button>
-                            <div id="faq-4" class="faq-answer">
-                                <p>Yes! Cory is trained on your specific programs, policies, and messaging. You can customize responses, add program-specific information, and update the knowledge base anytime through our admin portal.</p>
-                            </div>
-                        </div>
+                <h2 class="section-title">Real Results from Real Institutions</h2>
+                <div class="results-grid">
+                    <div class="result-stat">
+                        <div class="stat-number">94%</div>
+                        <div class="stat-label">Contact Rate Achievement</div>
+                        <div class="stat-description">vs 40-50% industry average</div>
                     </div>
-                    
-                    <div class="faq-column">
-                        <div class="faq-item">
-                            <button class="faq-question" data-target="#faq-5">
-                                <span>What happens if I exceed my inquiry limit?</span>
-                                <svg class="faq-icon" viewBox="0 0 24 24">
-                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
-                                </svg>
-                            </button>
-                            <div id="faq-5" class="faq-answer">
-                                <p>We'll alert you as you approach your limit and help you upgrade if needed. Overage rates are reasonable and we never stop service abruptly – we'll work with you to find the right plan for your volume.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <button class="faq-question" data-target="#faq-6">
-                                <span>Is my data secure?</span>
-                                <svg class="faq-icon" viewBox="0 0 24 24">
-                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
-                                </svg>
-                            </button>
-                            <div id="faq-6" class="faq-answer">
-                                <p>Absolutely. We're SOC 2 certified with bank-level security. All data is encrypted in transit and at rest. We're also FERPA and CCPA compliant, with regular security audits and penetration testing.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <button class="faq-question" data-target="#faq-7">
-                                <span>Can I cancel anytime?</span>
-                                <svg class="faq-icon" viewBox="0 0 24 24">
-                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
-                                </svg>
-                            </button>
-                            <div id="faq-7" class="faq-answer">
-                                <p>Yes, you can cancel anytime with 30 days notice. We'll help you export your data and ensure a smooth transition. No cancellation fees or long-term contracts required.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <button class="faq-question" data-target="#faq-8">
-                                <span>What kind of support do you provide?</span>
-                                <svg class="faq-icon" viewBox="0 0 24 24">
-                                    <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
-                                </svg>
-                            </button>
-                            <div id="faq-8" class="faq-answer">
-                                <p>All plans include email support and access to our knowledge base. Professional and Enterprise plans include phone support and dedicated success managers. We also provide training webinars and documentation.</p>
-                            </div>
-                        </div>
+                    <div class="result-stat">
+                        <div class="stat-number">< 60s</div>
+                        <div class="stat-label">Average Response Time</div>
+                        <div class="stat-description">vs 4-24 hours typical</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="stat-number">2,100</div>
+                        <div class="stat-label">Staff Hours Saved/Year</div>
+                        <div class="stat-description">per institution average</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="stat-number">5-10x</div>
+                        <div class="stat-label">ROI Potential</div>
+                        <div class="stat-description">in first year</div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Final CTA -->
-        <section class="cta-section section">
+        <section class="final-cta-section section">
             <div class="container text-center">
-                <h2>Ready to Transform Your Organization with AI?</h2>
-                <p class="lead">Experience Agent Cory and explore custom AI solutions for your unique needs</p>
+                <h2>Ready to Transform Your Institution with AI?</h2>
+                <p class="lead">Whether you need admissions automation or custom AI solutions, we're here to help</p>
                 <div class="cta-buttons">
-                    <button class="btn btn-primary btn-lg" id="final-demo-btn">Try Live Demo</button>
-                    <button class="btn btn-secondary btn-lg" id="final-consultation-btn">Schedule Consultation</button>
+                    <button class="btn btn-primary btn-lg" onclick="document.getElementById('demo-request-form').scrollIntoView({behavior: 'smooth'})">Get Called by Cory</button>
+                    <button class="btn btn-secondary btn-lg" id="custom-ai-cta">Explore Custom AI</button>
                 </div>
             </div>
         </section>
@@ -493,7 +461,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>Agent Cory</h3>
-                    <p>AI-powered admissions assistant that boosts conversions with lightning-fast, multi-channel outreach.</p>
+                    <p>AI-powered admissions assistant and custom AI solutions for educational institutions.</p>
                     <div class="footer-social">
                         <a href="#" aria-label="LinkedIn">
                             <svg viewBox="0 0 24 24">
@@ -513,7 +481,7 @@
                     <ul>
                         <li><a href="/features.html">Features</a></li>
                         <li><a href="/how-it-works.html">How It Works</a></li>
-                        <li><a href="/demo-and-pricing.html">Pricing</a></li>
+                        <li><a href="/demo-and-pricing.html">Demo</a></li>
                         <li><a href="/roi-and-case-studies.html">Case Studies</a></li>
                     </ul>
                 </div>
@@ -593,14 +561,14 @@
             
             <div id="chat-messages" class="chat-messages">
                 <div class="message bot">
-                    <p>Hi! I'm Cory, your AI admissions assistant. I can help answer questions about our platform. How can I help you today?</p>
+                    <p>Hi! I'm Cory, your AI admissions assistant. I can help answer questions about our platform and custom AI solutions. How can I help you today?</p>
                 </div>
             </div>
             
             <div class="chat-quick-replies" id="chat-quick-replies">
                 <button class="quick-reply" data-message="How do you work?">How do you work?</button>
-                <button class="quick-reply" data-message="Do you integrate with CRM systems?">Do you integrate with CRM systems?</button>
-                <button class="quick-reply" data-message="Schedule a demo">Schedule a demo</button>
+                <button class="quick-reply" data-message="Tell me about custom AI projects">Tell me about custom AI projects</button>
+                <button class="quick-reply" data-message="Schedule a consultation">Schedule a consultation</button>
             </div>
             
             <div class="chat-input">
@@ -615,11 +583,11 @@
         </div>
     </div>
 
-    <!-- Demo Access Modal -->
-    <div id="demo-access-modal" class="modal">
+    <!-- Custom AI Consultation Modal -->
+    <div id="custom-ai-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Access Live Demo</h3>
+                <h3>Custom AI Project Consultation</h3>
                 <button class="modal-close" aria-label="Close modal">
                     <svg viewBox="0 0 24 24">
                         <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/>
@@ -629,252 +597,83 @@
             </div>
             
             <div class="modal-body">
-                <p>Please provide your information to access the live demo. This helps us personalize your experience and follow up with relevant insights.</p>
+                <p>Let's discuss how custom AI can transform your institution. Our team will provide a personalized consultation on AI opportunities specific to your needs.</p>
                 
-                <form id="demo-access-form">
+                <form id="custom-ai-form">
                     <div class="form-group">
-                        <label for="demo-first-name">First Name *</label>
-                        <input type="text" id="demo-first-name" name="firstName" required />
+                        <label for="custom-first-name">First Name *</label>
+                        <input type="text" id="custom-first-name" name="firstName" required />
                     </div>
                     
                     <div class="form-group">
-                        <label for="demo-last-name">Last Name *</label>
-                        <input type="text" id="demo-last-name" name="lastName" required />
+                        <label for="custom-last-name">Last Name *</label>
+                        <input type="text" id="custom-last-name" name="lastName" required />
                     </div>
                     
                     <div class="form-group">
-                        <label for="demo-occupation">Occupation/Role *</label>
-                        <select id="demo-occupation" name="occupation" required>
+                        <label for="custom-email">Email Address *</label>
+                        <input type="email" id="custom-email" name="email" required />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="custom-phone">Phone Number *</label>
+                        <input type="tel" id="custom-phone" name="phone" required placeholder="+1 (555) 123-4567" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="custom-institution">Institution/Organization *</label>
+                        <input type="text" id="custom-institution" name="institution" required />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="custom-occupation">Occupation/Role *</label>
+                        <select id="custom-occupation" name="occupation" required>
                             <option value="">Select your role</option>
                             <option value="director-admissions">Director of Admissions</option>
                             <option value="vp-enrollment">VP of Enrollment</option>
-                            <option value="admissions-counselor">Admissions Counselor</option>
-                            <option value="marketing-director">Marketing Director</option>
                             <option value="president-ceo">President/CEO</option>
-                            <option value="it-technology">IT/Technology</option>
+                            <option value="dean">Dean</option>
+                            <option value="it-director">IT Director</option>
+                            <option value="faculty">Faculty</option>
                             <option value="other">Other</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="demo-email">Email Address *</label>
-                        <input type="email" id="demo-email" name="email" required />
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="demo-phone">Phone Number *</label>
-                        <input type="tel" id="demo-phone" name="phone" required placeholder="+1 (555) 123-4567" />
+                        <label for="custom-interest">AI Interest Area</label>
+                        <select id="custom-interest" name="interest">
+                            <option value="">Select area of interest</option>
+                            <option value="admissions">Admissions Automation</option>
+                            <option value="student-support">Student Support & Retention</option>
+                            <option value="academic">Academic & Grading Automation</option>
+                            <option value="administrative">Administrative Workflows</option>
+                            <option value="multiple">Multiple Areas</option>
+                            <option value="other">Other Custom Project</option>
+                        </select>
                     </div>
                     
                     <input type="text" name="website" style="display: none;" />
                     
                     <div class="form-actions">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Access Demo</button>
+                        <button type="submit" class="btn btn-primary">Request Consultation</button>
                     </div>
                 </form>
                 
-                <div id="demo-access-success" style="display: none;">
+                <div id="custom-ai-success" style="display: none;">
                     <div class="success-message">
                         <svg class="success-icon" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
                             <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
                         </svg>
-                        <h4>Demo Activated!</h4>
-                        <p>You can now interact with Agent Cory. Your information has been saved for easy consultation booking.</p>
+                        <h4>Consultation Requested!</h4>
+                        <p>Our AI solutions team will contact you within 24 hours to discuss your custom project needs.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Call Demo Modal (for consultation booking) -->
-    <div id="call-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Schedule Your Consultation</h3>
-                <button class="modal-close" aria-label="Close modal">
-                    <svg viewBox="0 0 24 24">
-                        <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/>
-                        <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"/>
-                    </svg>
-                </button>
-            </div>
-            
-            <div class="modal-body">
-                <p>Book a 30-minute consultation to discuss how Agent Cory and custom AI solutions can help your organization.</p>
-                
-                <form id="call-demo-form">
-                    <div class="form-group">
-                        <label for="call-name">Full Name *</label>
-                        <input type="text" id="call-name" name="name" required />
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="call-email">Email Address *</label>
-                        <input type="email" id="call-email" name="email" required />
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="call-phone">Phone Number *</label>
-                        <input type="tel" id="call-phone" name="phone" required placeholder="+1 (555) 123-4567" />
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="call-organization">Organization *</label>
-                        <input type="text" id="call-organization" name="organization" required />
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="call-interest">Primary Interest</label>
-                        <select id="call-interest" name="interest">
-                            <option value="admissions">Admissions Automation</option>
-                            <option value="custom-ai">Custom AI Development</option>
-                            <option value="both">Both Solutions</option>
-                        </select>
-                    </div>
-                    
-                    <input type="text" name="website" style="display: none;" />
-                    
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Schedule Consultation</button>
-                    </div>
-                </form>
-                
-                <div id="call-success" style="display: none;">
-                    <div class="success-message">
-                        <svg class="success-icon" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
-                        </svg>
-                        <h4>Consultation Scheduled!</h4>
-                        <p>We'll contact you within 2 business hours to schedule your 30-minute consultation.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <script src="/assets/js/main.js" type="module"></script>
-    
-    <script>
-        // Demo widget management
-        let demoActivated = false;
-        let userDemoData = null;
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            // Bind demo activation buttons
-            const demoButtons = document.querySelectorAll('#try-live-demo-btn, #activate-demo-btn, #try-cory-demo-btn, #final-demo-btn');
-            demoButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    if (!demoActivated) {
-                        openDemoAccessModal();
-                    } else {
-                        showDemoWidget();
-                    }
-                });
-            });
-            
-            // Bind consultation buttons
-            const consultationButtons = document.querySelectorAll('#schedule-consultation-btn, #custom-ai-consultation-btn, #final-consultation-btn');
-            consultationButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    openConsultationModal();
-                });
-            });
-            
-            // Handle demo access form
-            const demoAccessForm = document.getElementById('demo-access-form');
-            if (demoAccessForm) {
-                demoAccessForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    handleDemoAccess(e.target);
-                });
-            }
-        });
-        
-        function openDemoAccessModal() {
-            const modal = document.getElementById('demo-access-modal');
-            if (modal) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-        
-        function openConsultationModal() {
-            const modal = document.getElementById('call-modal');
-            if (modal) {
-                // Pre-fill form if user has demo data
-                if (userDemoData) {
-                    const nameField = document.getElementById('call-name');
-                    const emailField = document.getElementById('call-email');
-                    const phoneField = document.getElementById('call-phone');
-                    
-                    if (nameField) nameField.value = `${userDemoData.firstName} ${userDemoData.lastName}`;
-                    if (emailField) emailField.value = userDemoData.email;
-                    if (phoneField) phoneField.value = userDemoData.phone;
-                }
-                
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-        
-        function handleDemoAccess(form) {
-            const formData = new FormData(form);
-            userDemoData = {
-                firstName: formData.get('firstName'),
-                lastName: formData.get('lastName'),
-                occupation: formData.get('occupation'),
-                email: formData.get('email'),
-                phone: formData.get('phone')
-            };
-            
-            // Store for later use
-            sessionStorage.setItem('userDemoData', JSON.stringify(userDemoData));
-            
-            // Show success and activate demo
-            form.style.display = 'none';
-            document.getElementById('demo-access-success').style.display = 'block';
-            
-            setTimeout(() => {
-                // Close modal and show demo
-                document.getElementById('demo-access-modal').classList.remove('active');
-                document.body.style.overflow = '';
-                showDemoWidget();
-            }, 2000);
-        }
-        
-        function showDemoWidget() {
-            const placeholder = document.getElementById('demo-widget-placeholder');
-            if (placeholder && !demoActivated) {
-                placeholder.innerHTML = `
-                    <iframe 
-                        id="audio_iframe" 
-                        src="https://widget.synthflow.ai/widget/v2/eeb1bf36-fbad-43f1-9756-3f912273e4e9/1755114458133x115862416629315840" 
-                        allow="microphone" 
-                        width="400" 
-                        height="550" 
-                        style="border: none; border-radius: 12px; background: white;">
-                    </iframe>
-                `;
-                demoActivated = true;
-                
-                // Update all demo buttons
-                const demoButtons = document.querySelectorAll('#try-live-demo-btn, #activate-demo-btn, #try-cory-demo-btn, #final-demo-btn');
-                demoButtons.forEach(btn => {
-                    btn.textContent = 'Demo Active';
-                    btn.disabled = true;
-                    btn.style.opacity = '0.7';
-                });
-            }
-        }
-        
-        // Load saved demo data on page load
-        const savedData = sessionStorage.getItem('userDemoData');
-        if (savedData) {
-            userDemoData = JSON.parse(savedData);
-        }
-    </script>
 </body>
 </html>
