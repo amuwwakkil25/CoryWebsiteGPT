@@ -730,64 +730,18 @@ class ResourceFilter {
     }
 }
 
-// Cookie Banner Handler
-class CookieBanner {
-    constructor() {
-        this.init();
-    }
-
-    init() {
-        const banner = document.getElementById('cookie-banner');
-        const acceptBtn = document.getElementById('accept-cookies');
-        
-        if (!localStorage.getItem('cookies-accepted')) {
-            setTimeout(() => {
-                if (banner) banner.style.display = 'block';
-            }, 2000);
-        }
-        
-        if (acceptBtn) {
-            acceptBtn.addEventListener('click', () => {
-                localStorage.setItem('cookies-accepted', 'true');
-                if (banner) banner.style.display = 'none';
-            });
-        }
-    }
-}
-
 // Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        // Initialize website integration
-        const websiteIntegration = new WebsiteIntegration();
-        await websiteIntegration.initialize();
-        
-        // Initialize components
-        window.chatWidget = new ChatWidget();
-        window.roiCalculator = new ROICalculator();
-        window.formHandler = new FormHandler();
-        window.navigationHandler = new NavigationHandler();
-        window.accordionHandler = new AccordionHandler();
-        window.resourceFilter = new ResourceFilter();
-        window.cookieBanner = new CookieBanner();
-        
-        // Make leadBus globally available
-        window.leadBus = leadBus;
-        
-        console.log('Agent Cory website initialized successfully');
-        
-    } catch (error) {
-        console.error('Error initializing website:', error);
-        
-        // Fallback initialization without database
-        window.chatWidget = new ChatWidget();
-        window.roiCalculator = new ROICalculator();
-        window.formHandler = new FormHandler();
-        window.navigationHandler = new NavigationHandler();
-        window.accordionHandler = new AccordionHandler();
-        window.resourceFilter = new ResourceFilter();
-        window.cookieBanner = new CookieBanner();
-        
-        console.log('Website initialized in fallback mode');
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize all components
+    window.chatWidget = new ChatWidget();
+    window.roiCalculator = new ROICalculator();
+    window.formHandler = new FormHandler();
+    window.navigationHandler = new NavigationHandler();
+    window.accordionHandler = new AccordionHandler();
+    window.resourceFilter = new ResourceFilter();
+
+    // Initialize website integration
+    const websiteIntegration = new WebsiteIntegration();
+    
+    console.log('Agent Cory Marketing Site initialized');
 });
