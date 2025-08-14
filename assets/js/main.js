@@ -513,6 +513,23 @@ class NavigationHandler {
                 }
             });
         });
+        
+        // Custom AI buttons
+        const customAIButtons = document.querySelectorAll('[id*="custom-ai"]');
+        customAIButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (window.chatWidget) {
+                    window.chatWidget.openModal('call-modal');
+                    // Pre-select custom AI interest
+                    setTimeout(() => {
+                        const interestField = document.getElementById('call-interest');
+                        if (interestField) {
+                            interestField.value = 'custom-ai';
+                        }
+                    }, 100);
+                }
+            });
+        });
     }
 
     updateActiveNav() {
@@ -728,17 +745,27 @@ class ButtonHandlers {
 
     bindCTAButtons() {
         // Try Cory Now buttons
-        const tryCoryButtons = document.querySelectorAll('[id*="try-cory"], [id*="demo-cory"], .nav-cta');
+        const tryCoryButtons = document.querySelectorAll('[id*="try-cory"], [id*="demo-cory"], [id*="try-live-demo"], [id*="activate-demo"], [id*="final-demo"], .nav-cta');
         tryCoryButtons.forEach(btn => {
             btn.addEventListener('click', () => {
-                if (window.chatWidget) {
-                    window.chatWidget.toggle();
+                // Check if demo is activated
+                const userData = sessionStorage.getItem('userDemoData');
+                if (!userData) {
+                    // Open demo access modal
+                    if (window.chatWidget) {
+                        window.chatWidget.openModal('demo-access-modal');
+                    }
+                } else {
+                    // Demo already activated, show widget or toggle chat
+                    if (window.chatWidget) {
+                        window.chatWidget.toggle();
+                    }
                 }
             });
         });
 
         // Request Call buttons
-        const callButtons = document.querySelectorAll('[id*="request-call"], [id*="demo-call"]');
+        const callButtons = document.querySelectorAll('[id*="request-call"], [id*="demo-call"], [id*="schedule-consultation"], [id*="consultation"], [id*="custom-ai-consultation"]');
         callButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 if (window.chatWidget) {

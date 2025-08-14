@@ -1937,6 +1937,164 @@ input:checked + .toggle-slider:before {
     margin-bottom: 0;
 }
 
+/* Services Grid Styles */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: var(--space-8);
+    margin-bottom: var(--space-12);
+}
+
+.service-card {
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    position: relative;
+    transition: var(--transition);
+}
+
+.service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+}
+
+.service-card.featured {
+    border: 2px solid var(--brand);
+}
+
+.service-badge {
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--brand);
+    color: #fff;
+    padding: var(--space-2) var(--space-6);
+    border-radius: 0 0 12px 12px;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+}
+
+.service-header {
+    padding: var(--space-8);
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.service-card.featured .service-header {
+    padding-top: calc(var(--space-8) + var(--space-6));
+}
+
+.service-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--space-4);
+    background-color: var(--brand);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.service-icon svg {
+    width: 32px;
+    height: 32px;
+    color: #fff;
+}
+
+.service-header h3 {
+    margin-bottom: var(--space-2);
+    color: var(--ink);
+}
+
+.service-description {
+    color: var(--muted);
+    font-size: var(--font-size-sm);
+    margin-bottom: 0;
+}
+
+.service-features {
+    padding: var(--space-8);
+}
+
+.service-footer {
+    padding: var(--space-8);
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+
+.service-note {
+    margin-top: var(--space-4);
+    color: var(--muted);
+    font-size: var(--font-size-xs);
+    margin-bottom: 0;
+}
+
+/* Custom AI Examples */
+.examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-6);
+}
+
+.example-card {
+    background-color: #fff;
+    padding: var(--space-6);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.example-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.example-card h3 {
+    margin-bottom: var(--space-3);
+    color: var(--ink);
+}
+
+.example-card p {
+    color: var(--muted);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-4);
+}
+
+.example-features {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+}
+
+.feature-tag {
+    background-color: var(--bg);
+    color: var(--brand);
+    padding: var(--space-1) var(--space-2);
+    border-radius: 12px;
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+}
+
+.custom-ai-section {
+    margin-top: var(--space-8);
+    padding: var(--space-6);
+    background-color: var(--bg);
+    border-radius: 12px;
+}
+
+.custom-ai-section h4 {
+    margin-bottom: var(--space-3);
+    color: var(--ink);
+}
+
+.custom-ai-section p {
+    color: var(--muted);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-4);
+}
+
 /* FAQ */
 .faq-grid {
     display: grid;
