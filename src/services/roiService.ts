@@ -100,28 +100,18 @@ export class ROIService {
     const sessionId = this.getSessionId()
     
     try {
-      // Set session configuration for RLS policy
-      await supabase.rpc('set_config', {
-        setting_name: 'app.session_id',
-        setting_value: sessionId,
-        is_local: true
-      });
-
-      const { data, error } = await supabase
-        .from('roi_calculations')
-        .upsert([{
-          session_id: sessionId,
-          user_inputs: inputs,
-          calculated_results: results,
-          updated_at: new Date().toISOString()
-        }], {
-          onConflict: 'session_id'
-        })
-        .select()
-        .single()
-
-      if (error) throw error
-      return data as ROICalculation
+      // Store in localStorage instead of database to avoid RLS issues
+      const calculation = {
+        id: crypto.randomUUID(),
+        session_id: sessionId,
+        user_inputs: inputs,
+        calculated_results: results,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      }
+      
+      localStorage.setItem('roi_calculation', JSON.stringify(calculation))
+      return calculation as ROICalculation
     } catch (error) {
       console.warn('Could not save ROI calculation to database:', error)
       // Return a mock calculation object for local operation
@@ -140,23 +130,15 @@ export class ROIService {
     const sessionId = this.getSessionId()
     
     try {
-      // Set session configuration for RLS policy
-      await supabase.rpc('set_config', {
-        setting_name: 'app.session_id',
-        setting_value: sessionId,
-        is_local: true
-      });
-
-      const { data, error } = await supabase
-        .from('roi_calculations')
-        .select('*')
-        .eq('session_id', sessionId)
-        .order('updated_at', { ascending: false })
-        .limit(1)
-        .maybeSingle()
-
-      if (error) throw error
-      return data as ROICalculation | null
+      // Load from localStorage instead of database
+      const saved = localStorage.getItem('roi_calculation')
+      if (saved) {
+        const calculation = JSON.parse(saved)
+        if (calculation.session_id === sessionId) {
+          return calculation as ROICalculation
+        }
+      }
+      return null
     } catch (error) {
       console.warn('Could not load ROI calculation from database:', error)
       return null
