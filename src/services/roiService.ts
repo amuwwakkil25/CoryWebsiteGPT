@@ -89,21 +89,48 @@ export class ROIService {
       additionalEnrollments,
       tuitionLift,
       staffHoursSaved: annualSavedHours,
+      annualROI,
+      totalBenefit,
+      platformCost,
+      netBenefit
     }
-    // Store in localStorage to avoid database issues
-    const calculation = {
-      id: crypto.randomUUID(),
-      session_id: sessionId,
-    }
-    // Load from localStorage
-    const saved = localStorage.getItem('roi_calculation')
-    if (saved) {
-      const calculation = JSON.parse(saved)
-      if (calculation.session_id === sessionId) {
-        return calculation as ROICalculation
+  }
+
+  static async saveCalculation(inputs: ROIInputs, results: ROIResults): Promise<ROICalculation | null> {
+    try {
+      const sessionId = this.getSessionId()
+      const calculation: ROICalculation = {
+        id: crypto.randomUUID(),
+        session_id: sessionId,
+        user_inputs: inputs,
+        calculated_results: results,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
       }
-    }
+      
+      localStorage.setItem('roi_calculation', JSON.stringify(calculation))
+      return calculation
+    } catch (error) {
+      console.warn('Failed to save ROI calculation:', error)
       return null
+    }
+  }
+
+  static async getCalculation(): Promise<ROICalculation | null> {
+    try {
+      const sessionId = this.getSessionId()
+      const saved = localStorage.getItem('roi_calculation')
+      if (saved) {
+        const calculation = JSON.parse(saved)
+        if (calculation.session_id === sessionId) {
+          return calculation as ROICalculation
+        }
+      }
+      return null
+    } catch (error) {
+      console.warn('Failed to load ROI calculation:', error)
+      return null
+    }
   }
 
   static formatCurrency(amount: number): string {
