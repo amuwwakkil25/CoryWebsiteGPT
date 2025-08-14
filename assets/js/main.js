@@ -1,6 +1,7 @@
 // Main JavaScript for Agent Cory Marketing Site
 import { WebsiteIntegration } from '../../src/utils/websiteIntegration.ts';
 import { ROICalculator as DatabaseROICalculator } from '../../src/components/ROICalculator.ts';
+import { DemoService } from '../../src/services/demoService.ts';
 
 // Global state
 let leadBus = {
@@ -258,13 +259,19 @@ class FormHandler {
             demoForm.addEventListener('submit', (e) => this.handleDemoForm(e));
         }
 
-        // Call demo form
+        // Custom AI form
+        const customAIForm = document.getElementById('custom-ai-form');
+        if (customAIForm) {
+            customAIForm.addEventListener('submit', (e) => this.handleCustomAIForm(e));
+        }
+
+        // Call demo form (existing)
         const callForm = document.getElementById('call-demo-form');
         if (callForm) {
             callForm.addEventListener('submit', (e) => this.handleCallForm(e));
         }
 
-        // Lead magnet form
+        // Lead magnet form (existing)
         const magnetForm = document.getElementById('lead-magnet-form');
         if (magnetForm) {
             magnetForm.addEventListener('submit', (e) => this.handleMagnetForm(e));
@@ -295,22 +302,94 @@ class FormHandler {
             return;
         }
 
-        // Simulate API call
-        console.log('Demo request:', data);
-        console.log('POST /api/demo-request', data);
+        // Save to Supabase
+        this.saveDemoRequest(data);
+    }
 
-        // Add to lead bus
-        leadBus.addLead({
-            type: 'demo',
-            name: data.name,
-            email: data.email,
-            organization: data.organization,
-            timestamp: new Date()
-        });
+    async saveDemoRequest(data) {
+        try {
+            const demoRequest = {
+                first_name: data.firstName,
+                last_name: data.lastName,
+                email: data.email,
+                phone: data.phone,
+                institution: data.institution,
+                occupation: data.occupation,
+                request_type: 'demo',
+                metadata: {
+                    source: 'demo_page',
+                    user_agent: navigator.userAgent,
+                    timestamp: new Date().toISOString()
+                }
+            };
 
-        // Show success
-        e.target.style.display = 'none';
-        document.getElementById('demo-success').style.display = 'block';
+            await DemoService.createDemoRequest(demoRequest);
+            
+            console.log('Demo request saved to database:', demoRequest);
+            
+            // Show success message
+            document.getElementById('demo-request-form').style.display = 'none';
+            document.getElementById('demo-success').style.display = 'block';
+            
+            // Add to lead bus for chat integration
+            leadBus.addLead({
+                type: 'demo',
+                name: `${data.firstName} ${data.lastName}`,
+                email: data.email,
+                institution: data.institution,
+                timestamp: new Date()
+            });
+            
+        } catch (error) {
+            console.error('Error saving demo request:', error);
+            this.showToast('Error submitting request. Please try again.', 'error');
+        }
+    }
+
+    async handleCustomAIForm(e) {
+        e.preventDefault();
+        
+        if (!this.validateForm(e.target)) {
+            return;
+        }
+
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+        
+        // Check honeypot
+        if (data.website) {
+            return;
+        }
+
+        try {
+            const customAIRequest = {
+                first_name: data.firstName,
+                last_name: data.lastName,
+                email: data.email,
+                phone: data.phone,
+                institution: data.institution,
+                occupation: data.occupation,
+                interest_area: data.interest,
+                request_type: 'custom_ai',
+                metadata: {
+                    source: 'custom_ai_modal',
+                    user_agent: navigator.userAgent,
+                    timestamp: new Date().toISOString()
+                }
+            };
+
+            await DemoService.createDemoRequest(customAIRequest);
+            
+            console.log('Custom AI request saved to database:', customAIRequest);
+
+            // Show success message
+            e.target.style.display = 'none';
+            document.getElementById('custom-ai-success').style.display = 'block';
+            
+        } catch (error) {
+            console.error('Error saving custom AI request:', error);
+            this.showToast('Error submitting request. Please try again.', 'error');
+        }
     }
 
     handleCallForm(e) {
@@ -519,14 +598,7 @@ class NavigationHandler {
         customAIButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 if (window.chatWidget) {
-                    window.chatWidget.openModal('call-modal');
-                    // Pre-select custom AI interest
-                    setTimeout(() => {
-                        const interestField = document.getElementById('call-interest');
-                        if (interestField) {
-                            interestField.value = 'custom-ai';
-                        }
-                    }, 100);
+                    window.chatWidget.openModal('custom-ai-modal');
                 }
             });
         });
@@ -783,14 +855,6 @@ class ButtonHandlers {
                 }
             });
         });
-        
-        // Voice demo toggle button
-        const voiceDemoToggle = document.getElementById('voice-demo-toggle');
-        if (voiceDemoToggle) {
-            voiceDemoToggle.addEventListener('click', () => {
-                this.toggleVoiceDemo();
-            });
-        }
     }
     
     toggleVoiceDemo() {
