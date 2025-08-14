@@ -89,10 +89,12 @@ export class ROIService {
       additionalEnrollments,
       tuitionLift,
       staffHoursSaved: annualSavedHours,
+    }
     // Store in localStorage to avoid database issues
     const calculation = {
       id: crypto.randomUUID(),
       session_id: sessionId,
+    }
     // Load from localStorage
     const saved = localStorage.getItem('roi_calculation')
     if (saved) {
