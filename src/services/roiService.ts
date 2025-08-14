@@ -100,12 +100,12 @@ export class ROIService {
     const sessionId = this.getSessionId()
     
     try {
-      // Set session ID for RLS policy
+      // Set session configuration for RLS policy
       await supabase.rpc('set_config', {
         setting_name: 'app.session_id',
         setting_value: sessionId,
         is_local: true
-      })
+      });
 
       const { data, error } = await supabase
         .from('roi_calculations')
@@ -140,12 +140,12 @@ export class ROIService {
     const sessionId = this.getSessionId()
     
     try {
-      // Set session ID for RLS policy
+      // Set session configuration for RLS policy
       await supabase.rpc('set_config', {
         setting_name: 'app.session_id',
         setting_value: sessionId,
         is_local: true
-      })
+      });
 
       const { data, error } = await supabase
         .from('roi_calculations')
