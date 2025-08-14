@@ -67,287 +67,504 @@
     </header>
 
     <main id="main">
+        <!-- Enhanced Hero Section -->
         <section class="page-hero">
             <div class="container">
-                <h1>How Agent Cory Works</h1>
-                <p class="lead">From the moment a prospect submits an inquiry to successful enrollment, Cory orchestrates every touchpoint with precision timing and intelligent automation.</p>
+                <h1>See Agent Cory in Action</h1>
+                <p class="lead">From inquiry to enrollment, watch how Cory orchestrates every touchpoint with precision timing and intelligent automation.</p>
+                
+                <!-- Interactive Demo Buttons -->
+                <div class="hero-demo-actions">
+                    <button class="btn btn-primary btn-lg" id="try-voice-demo">
+                        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-right: 8px;">
+                            <path stroke="currentColor" stroke-width="2" fill="none" d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                            <path stroke="currentColor" stroke-width="2" fill="none" d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            <line x1="12" y1="19" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
+                            <line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Try Voice Demo
+                    </button>
+                    <button class="btn btn-secondary btn-lg" id="watch-process">
+                        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-right: 8px;">
+                            <polygon points="5,3 19,12 5,21 5,3" stroke="currentColor" stroke-width="2" fill="currentColor"/>
+                        </svg>
+                        Watch the Process
+                    </button>
+                </div>
             </div>
         </section>
 
-        <!-- Timeline -->
-        <section class="timeline-section section">
+        <!-- Interactive Voice Demo Section -->
+        <section class="interactive-demo-section section bg-light" id="voice-demo-section">
             <div class="container">
-                <h2 class="section-title">The Cory Process Timeline</h2>
-                
-                <!-- Voice Demo Integration -->
-                <div class="voice-demo-section" style="text-align: center; margin-bottom: var(--space-12); padding: var(--space-8); background-color: #fff; border-radius: 16px; box-shadow: var(--shadow);">
-                    <div class="voice-demo-intro">
-                        <h3>Experience Cory's Voice Capabilities</h3>
-                        <p>Try our live AI voice assistant to see how Cory engages prospects with natural conversation. Click below to start a voice demo.</p>
-                        <button id="voice-demo-toggle" class="btn btn-primary">Try Voice Demo</button>
-                    </div>
-                    
-                    <div id="voice-demo-container" class="voice-demo-container" style="display: none; margin-top: var(--space-6); text-align: center;">
-                        <iframe 
-                            id="audio_iframe" 
-                            src="https://widget.synthflow.ai/widget/v2/eeb1bf36-fbad-43f1-9756-3f912273e4e9/1755114458133x115862416629315840" 
-                            allow="microphone" 
-                            width="400" 
-                            height="550" 
-                            style="border: none; border-radius: 12px; box-shadow: var(--shadow-lg); background: white; max-width: 100%;">
-                        </iframe>
-                    </div>
-                </div>
-                
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-marker">
-                            <span class="timeline-time">0:00</span>
+                <div class="demo-showcase">
+                    <div class="demo-intro">
+                        <h2>Experience Cory's Voice AI</h2>
+                        <p>Try our live AI voice assistant to see how Cory engages prospects with natural conversation. This is the same AI that will handle your institution's inquiries.</p>
+                        
+                        <div class="demo-features">
+                            <div class="demo-feature">
+                                <svg viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                    <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                <span>Instant response</span>
+                            </div>
+                            <div class="demo-feature">
+                                <svg viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                </svg>
+                                <span>Natural conversation</span>
+                            </div>
+                            <div class="demo-feature">
+                                <svg viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                                <span>Smart qualification</span>
+                            </div>
                         </div>
-                        <div class="timeline-content">
-                            <h3>Inquiry Submitted</h3>
-                            <p>Student fills out form on website, landing page, or responds to ad</p>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-marker">
-                            <span class="timeline-time">0:30</span>
-                        </div>
-                        <div class="timeline-content">
-                            <h3>AI Phone Call</h3>
-                            <p>Cory places intelligent call with natural conversation, qualification questions, and appointment booking</p>
+                        
+                        <div class="sample-questions">
+                            <h4>Try asking Cory:</h4>
+                            <div class="question-chips">
+                                <span class="question-chip">"What programs do you offer?"</span>
+                                <span class="question-chip">"How much does tuition cost?"</span>
+                                <span class="question-chip">"Can I schedule a meeting?"</span>
+                                <span class="question-chip">"What are the requirements?"</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="timeline-item">
-                        <div class="timeline-marker">
-                            <span class="timeline-time">0:45</span>
+                    <div class="demo-widget">
+                        <div class="widget-header">
+                            <h3>Live Voice Demo</h3>
+                            <p>Click the microphone to start talking with Cory</p>
                         </div>
-                        <div class="timeline-content">
-                            <h3>SMS Follow-up</h3>
-                            <p>Personalized text message with program info and calendar link if call wasn't answered</p>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-marker">
-                            <span class="timeline-time">1:00</span>
-                        </div>
-                        <div class="timeline-content">
-                            <h3>Welcome Email</h3>
-                            <p>Branded email with program brochure, next steps, and direct calendar booking link</p>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-marker">
-                            <span class="timeline-time">Meeting Booked</span>
-                        </div>
-                        <div class="timeline-content">
-                            <h3>Counselor Handoff</h3>
-                            <p>Complete lead profile, conversation history, and qualification notes passed to admissions counselor</p>
+                        <div class="widget-container">
+                            <iframe 
+                                id="audio_iframe" 
+                                src="https://widget.synthflow.ai/widget/v2/eeb1bf36-fbad-43f1-9756-3f912273e4e9/1755114458133x115862416629315840" 
+                                allow="microphone" 
+                                width="400" 
+                                height="550" 
+                                style="border: none; border-radius: 12px; box-shadow: var(--shadow-lg); background: white; max-width: 100%;">
+                            </iframe>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Campaign Deep Dives -->
+        <!-- Process Timeline -->
+        <section class="process-timeline section" id="process-section">
+            <div class="container">
+                <h2 class="section-title">The Complete Cory Process</h2>
+                <p class="section-subtitle">From inquiry submission to counselor handoff in under 2 minutes</p>
+                
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item" data-time="0:00">
+                            <div class="timeline-marker">
+                                <div class="timeline-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                                        <line x1="9" y1="12" x2="15" y2="12" stroke="currentColor" stroke-width="2"/>
+                                        <line x1="12" y1="9" x2="12" y2="15" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <span class="timeline-time">0:00</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Inquiry Submitted</h3>
+                                <p>Student fills out form on website, landing page, or responds to ad. Cory is instantly triggered.</p>
+                                <div class="timeline-details">
+                                    <span class="detail-tag">Instant trigger</span>
+                                    <span class="detail-tag">Data capture</span>
+                                    <span class="detail-tag">Lead scoring</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item" data-time="0:30">
+                            <div class="timeline-marker">
+                                <div class="timeline-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-width="2" fill="none" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                    </svg>
+                                </div>
+                                <span class="timeline-time">0:30</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>AI Phone Call</h3>
+                                <p>Cory places intelligent call with natural conversation, qualification questions, and appointment booking capability.</p>
+                                <div class="timeline-details">
+                                    <span class="detail-tag">Natural AI voice</span>
+                                    <span class="detail-tag">Qualification questions</span>
+                                    <span class="detail-tag">Voicemail detection</span>
+                                </div>
+                                <button class="timeline-action" onclick="document.getElementById('voice-demo-section').scrollIntoView({behavior: 'smooth'})">
+                                    Try Voice Demo
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item" data-time="0:45">
+                            <div class="timeline-marker">
+                                <div class="timeline-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-width="2" fill="none" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                    </svg>
+                                </div>
+                                <span class="timeline-time">0:45</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>SMS Follow-up</h3>
+                                <p>Personalized text message with program info and calendar link if call wasn't answered or needs follow-up.</p>
+                                <div class="timeline-details">
+                                    <span class="detail-tag">Personalized content</span>
+                                    <span class="detail-tag">Calendar link</span>
+                                    <span class="detail-tag">TCPA compliant</span>
+                                </div>
+                                <div class="message-preview">
+                                    <div class="sms-bubble">
+                                        "Hi Sarah! Thanks for your interest in our Marketing program. I'm Cory, your AI assistant. Here's more info: [link] Ready to chat? Book a time: [calendar]"
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item" data-time="1:00">
+                            <div class="timeline-marker">
+                                <div class="timeline-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-width="2" fill="none" d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                        <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <span class="timeline-time">1:00</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Welcome Email</h3>
+                                <p>Branded email with program brochure, next steps, and direct calendar booking link with personalized content.</p>
+                                <div class="timeline-details">
+                                    <span class="detail-tag">Branded design</span>
+                                    <span class="detail-tag">Program materials</span>
+                                    <span class="detail-tag">Next steps</span>
+                                </div>
+                                <div class="email-preview">
+                                    <div class="email-header">Welcome to [Institution Name]</div>
+                                    <div class="email-content">Program brochure, FAQ answers, and calendar booking...</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item" data-time="Meeting">
+                            <div class="timeline-marker">
+                                <div class="timeline-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-width="2" fill="none" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                                    </svg>
+                                </div>
+                                <span class="timeline-time">Booked</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Counselor Handoff</h3>
+                                <p>Complete lead profile, conversation history, and qualification notes passed to admissions counselor with context.</p>
+                                <div class="timeline-details">
+                                    <span class="detail-tag">Full context</span>
+                                    <span class="detail-tag">Qualification notes</span>
+                                    <span class="detail-tag">Next steps</span>
+                                </div>
+                                <div class="handoff-preview">
+                                    <div class="handoff-score">Lead Score: 92/100</div>
+                                    <div class="handoff-notes">Interested in Marketing program, budget qualified, ready to start fall semester</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Multi-Channel Showcase -->
+        <section class="multichannel-section section">
+            <div class="container">
+                <h2 class="section-title">Multi-Channel Orchestration</h2>
+                <p class="section-subtitle">Cory coordinates across all channels to maximize engagement</p>
+                
+                <div class="channel-showcase">
+                    <div class="channel-item" data-channel="voice">
+                        <div class="channel-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                        </div>
+                        <h3>Voice Calls</h3>
+                        <p>Natural AI conversation with qualification and booking</p>
+                        <div class="channel-stats">
+                            <span class="stat">94% contact rate</span>
+                            <span class="stat">30s avg response</span>
+                        </div>
+                        <button class="btn btn-primary btn-sm channel-demo" data-demo="voice">Try Voice Demo</button>
+                    </div>
+                    
+                    <div class="channel-item" data-channel="sms">
+                        <div class="channel-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                        </div>
+                        <h3>SMS Messages</h3>
+                        <p>Personalized texts with links and appointment booking</p>
+                        <div class="channel-stats">
+                            <span class="stat">85% open rate</span>
+                            <span class="stat">TCPA compliant</span>
+                        </div>
+                        <button class="btn btn-primary btn-sm channel-demo" data-demo="chat">Try Chat Demo</button>
+                    </div>
+                    
+                    <div class="channel-item" data-channel="email">
+                        <div class="channel-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h3>Email Campaigns</h3>
+                        <p>Branded emails with resources and next steps</p>
+                        <div class="channel-stats">
+                            <span class="stat">45% open rate</span>
+                            <span class="stat">Personalized content</span>
+                        </div>
+                        <button class="btn btn-primary btn-sm channel-demo" data-demo="email">See Email Example</button>
+                    </div>
+                    
+                    <div class="channel-item" data-channel="chat">
+                        <div class="channel-icon">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <line x1="8" y1="21" x2="16" y2="21" stroke="currentColor" stroke-width="2"/>
+                                <line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h3>Web Chat</h3>
+                        <p>24/7 website chat for instant engagement</p>
+                        <div class="channel-stats">
+                            <span class="stat">24/7 available</span>
+                            <span class="stat">Instant response</span>
+                        </div>
+                        <button class="btn btn-primary btn-sm channel-demo" data-demo="chat">Try Chat Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Campaign Strategies -->
         <section class="campaigns-section section bg-light">
             <div class="container">
-                <h2 class="section-title">Campaign Deep Dives</h2>
-                <div class="accordion" id="campaigns-accordion">
-                    
-                    <div class="accordion-item">
-                        <button class="accordion-header" data-target="#cold-leads">
-                            <span>Cold Leads (15-Email Sequence)</span>
-                            <svg class="accordion-icon" viewBox="0 0 24 24">
-                                <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
-                            </svg>
-                        </button>
-                        <div id="cold-leads" class="accordion-content">
-                            <div class="campaign-overview">
-                                <p>Nurturing prospects who haven't engaged yet with valuable content and gentle persistence.</p>
-                                <div class="email-sequence">
-                                    <div class="email-grid">
-                                        <div class="email-item">
-                                            <div class="email-number">1</div>
-                                            <div class="email-title">Welcome + Resource</div>
-                                        </div>
-                                        <div class="email-item">
-                                            <div class="email-number">2</div>
-                                            <div class="email-title">Alumni Success Stories</div>
-                                        </div>
-                                        <div class="email-item">
-                                            <div class="email-number">3</div>
-                                            <div class="email-title">Virtual Campus Tour</div>
-                                        </div>
-                                        <div class="email-item">
-                                            <div class="email-number">4</div>
-                                            <div class="email-title">Faculty Webinar Invite</div>
-                                        </div>
-                                        <div class="email-item">
-                                            <div class="email-number">5</div>
-                                            <div class="email-title">Common FAQs Answered</div>
-                                        </div>
-                                        <div class="email-item">
-                                            <div class="email-number">6</div>
-                                            <div class="email-title">Student Support Services</div>
-                                        </div>
-                                        <div class="email-item">
-                                            <div class="email-number">7</div>
-                                            <div class="email-title">Fast-Track Timeline</div>
-                                        </div>
-                                        <div class="email-item">
-                                            <div class="email-number">8</div>
-                                            <div class="email-title">Meet the Instructors</div>
-                                        </div>
-                                        <div class="email-item">
-                                            <div class="email-number">9</div>
-                                            <div class="email-title">Student Life & Community</div>
-                                        </div>
-                                        <div class="email-item">
-                                            <div class="email-number">10</div>
-                                            <div class="email-title">Employer Perspective</div>
-                                        </div>
-                                        <div class="email-item">
-                                            <div class="email-number">11</div>
-                                            <div class="email-title">Let's Talk - Direct CTA</div>
-                                        </div>
-                                        <div class="email-item">
-                                            <div class="email-number">12</div>
-                                            <div class="email-title">Application Deadline Nudge</div>
-                                        </div>
-                                        <div class="email-item">
-                                            <div class="email-number">13</div>
-                                            <div class="email-title">Why Students Choose Us</div>
-                                        </div>
-                                        <div class="email-item">
-                                            <div class="email-number">14</div>
-                                            <div class="email-title">One-Question Survey</div>
-                                        </div>
-                                        <div class="email-item">
-                                            <div class="email-number">15</div>
-                                            <div class="email-title">Last Check-in</div>
-                                        </div>
+                <h2 class="section-title">Intelligent Campaign Strategies</h2>
+                <p class="section-subtitle">Cory adapts outreach based on prospect behavior and engagement level</p>
+                
+                <div class="campaign-tabs">
+                    <button class="campaign-tab active" data-campaign="new-leads">New Leads</button>
+                    <button class="campaign-tab" data-campaign="cold-nurture">Cold Nurture</button>
+                    <button class="campaign-tab" data-campaign="missed-appt">Missed Appointments</button>
+                    <button class="campaign-tab" data-campaign="reengagement">Re-engagement</button>
+                </div>
+                
+                <div class="campaign-content">
+                    <!-- New Leads Campaign -->
+                    <div class="campaign-panel active" id="new-leads-panel">
+                        <div class="campaign-header">
+                            <h3>New Leads (Day 0-4 Intensive)</h3>
+                            <p>High-intensity engagement for fresh inquiries when interest is peak</p>
+                        </div>
+                        
+                        <div class="campaign-timeline">
+                            <div class="campaign-day">
+                                <h4>Day 0 (Submission Day)</h4>
+                                <div class="day-activities">
+                                    <div class="activity">
+                                        <span class="activity-time">0:00</span>
+                                        <span class="activity-desc">Form submit triggers Cory</span>
+                                        <span class="activity-channel voice">Voice</span>
+                                    </div>
+                                    <div class="activity">
+                                        <span class="activity-time">0:30</span>
+                                        <span class="activity-desc">AI call attempt (voicemail if no answer)</span>
+                                        <span class="activity-channel voice">Voice</span>
+                                    </div>
+                                    <div class="activity">
+                                        <span class="activity-time">0:45</span>
+                                        <span class="activity-desc">SMS intro + help offer</span>
+                                        <span class="activity-channel sms">SMS</span>
+                                    </div>
+                                    <div class="activity">
+                                        <span class="activity-time">1:00</span>
+                                        <span class="activity-desc">Welcome email with brochure + calendar link</span>
+                                        <span class="activity-channel email">Email</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="campaign-day">
+                                <h4>Day 1-2</h4>
+                                <div class="day-activities">
+                                    <div class="activity">
+                                        <span class="activity-time">9:00 AM</span>
+                                        <span class="activity-desc">Follow-up call attempt</span>
+                                        <span class="activity-channel voice">Voice</span>
+                                    </div>
+                                    <div class="activity">
+                                        <span class="activity-time">2:00 PM</span>
+                                        <span class="activity-desc">Program details email</span>
+                                        <span class="activity-channel email">Email</span>
+                                    </div>
+                                    <div class="activity">
+                                        <span class="activity-time">6:00 PM</span>
+                                        <span class="activity-desc">SMS with success story</span>
+                                        <span class="activity-channel sms">SMS</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="accordion-item">
-                        <button class="accordion-header" data-target="#new-leads">
-                            <span>New Leads (Day 0-4 Intensive)</span>
-                            <svg class="accordion-icon" viewBox="0 0 24 24">
-                                <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
-                            </svg>
-                        </button>
-                        <div id="new-leads" class="accordion-content">
-                            <div class="campaign-overview">
-                                <p>High-intensity engagement for fresh inquiries when interest is peak.</p>
-                                <div class="cadence-timeline">
-                                    <div class="cadence-day">
-                                        <h4>Day 0 (Submission Day)</h4>
-                                        <ul>
-                                            <li><strong>0:00</strong> - Form submit triggers Cory</li>
-                                            <li><strong>0:30</strong> - AI call attempt (voicemail if no answer)</li>
-                                            <li><strong>0:45</strong> - SMS intro + help offer</li>
-                                            <li><strong>1:00</strong> - Welcome email with brochure + calendar link</li>
-                                        </ul>
-                                    </div>
-                                    <div class="cadence-day">
-                                        <h4>Day 1</h4>
-                                        <ul>
-                                            <li><strong>9:00 AM</strong> - Follow-up call attempt</li>
-                                            <li><strong>2:00 PM</strong> - Program details email</li>
-                                            <li><strong>6:00 PM</strong> - SMS with success story</li>
-                                        </ul>
-                                    </div>
-                                    <div class="cadence-day">
-                                        <h4>Day 2</h4>
-                                        <ul>
-                                            <li><strong>10:00 AM</strong> - Value-focused email</li>
-                                            <li><strong>4:00 PM</strong> - SMS with quick question</li>
-                                        </ul>
-                                    </div>
-                                    <div class="cadence-day">
-                                        <h4>Day 3-4</h4>
-                                        <ul>
-                                            <li>Morning: Call attempt with different approach</li>
-                                            <li>Evening: Final direct ask email and SMS</li>
-                                        </ul>
-                                    </div>
+                    <!-- Cold Nurture Campaign -->
+                    <div class="campaign-panel" id="cold-nurture-panel">
+                        <div class="campaign-header">
+                            <h3>Cold Nurture (15-Email Sequence)</h3>
+                            <p>Nurturing prospects who haven't engaged yet with valuable content and gentle persistence</p>
+                        </div>
+                        
+                        <div class="email-sequence-grid">
+                            <div class="email-card">
+                                <div class="email-number">1</div>
+                                <div class="email-content">
+                                    <h5>Welcome + Resource</h5>
+                                    <p>Introduction with valuable admissions guide</p>
+                                </div>
+                            </div>
+                            <div class="email-card">
+                                <div class="email-number">2</div>
+                                <div class="email-content">
+                                    <h5>Alumni Success Stories</h5>
+                                    <p>Real graduate outcomes and career paths</p>
+                                </div>
+                            </div>
+                            <div class="email-card">
+                                <div class="email-number">3</div>
+                                <div class="email-content">
+                                    <h5>Virtual Campus Tour</h5>
+                                    <p>Interactive tour of facilities and programs</p>
+                                </div>
+                            </div>
+                            <div class="email-card">
+                                <div class="email-number">4</div>
+                                <div class="email-content">
+                                    <h5>Faculty Webinar Invite</h5>
+                                    <p>Live session with program instructors</p>
+                                </div>
+                            </div>
+                            <div class="email-card">
+                                <div class="email-number">5</div>
+                                <div class="email-content">
+                                    <h5>Common FAQs Answered</h5>
+                                    <p>Address typical concerns and questions</p>
+                                </div>
+                            </div>
+                            <div class="email-card">
+                                <div class="email-number">6</div>
+                                <div class="email-content">
+                                    <h5>Student Support Services</h5>
+                                    <p>Academic and career support overview</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="accordion-item">
-                        <button class="accordion-header" data-target="#missed-appt">
-                            <span>Missed Appointment Recovery</span>
-                            <svg class="accordion-icon" viewBox="0 0 24 24">
-                                <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
-                            </svg>
-                        </button>
-                        <div id="missed-appt" class="accordion-content">
-                            <div class="campaign-overview">
-                                <p>Immediate response when prospects miss scheduled appointments to recover engagement.</p>
-                                <div class="recovery-flow">
-                                    <div class="recovery-step">
-                                        <h4>Immediate Response (Within 5 minutes)</h4>
-                                        <div class="message-example">
-                                            <strong>SMS:</strong> "Sorry we missed you, {Name}! Schedules get busy—want to reschedule? Pick a time here: {link} – Cory, AI Admissions Assistant"
-                                        </div>
-                                    </div>
-                                    <div class="recovery-step">
-                                        <h4>Follow-up Call (15 minutes later)</h4>
-                                        <p>Automated call with understanding tone and easy reschedule options</p>
-                                    </div>
-                                    <div class="recovery-step">
-                                        <h4>Email Follow-up (1 hour later)</h4>
-                                        <p>Professional email with calendar link and additional value content</p>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="sequence-note">
+                            <p><strong>And 9 more emails</strong> covering fast-track timelines, instructor introductions, student life, employer perspectives, and gentle re-engagement touches.</p>
                         </div>
                     </div>
                     
-                    <div class="accordion-item">
-                        <button class="accordion-header" data-target="#reengagement">
-                            <span>30/60-Day Re-engagement</span>
-                            <svg class="accordion-icon" viewBox="0 0 24 24">
-                                <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2" fill="none"/>
-                            </svg>
-                        </button>
-                        <div id="reengagement" class="accordion-content">
-                            <div class="campaign-overview">
-                                <p>Gentle nurturing for prospects who went quiet, providing value without being pushy.</p>
-                                <div class="reengagement-examples">
+                    <!-- Missed Appointment Campaign -->
+                    <div class="campaign-panel" id="missed-appt-panel">
+                        <div class="campaign-header">
+                            <h3>Missed Appointment Recovery</h3>
+                            <p>Immediate response when prospects miss scheduled appointments to recover engagement</p>
+                        </div>
+                        
+                        <div class="recovery-flow">
+                            <div class="recovery-step">
+                                <div class="step-timing">Within 5 minutes</div>
+                                <div class="step-content">
+                                    <h4>Immediate SMS Response</h4>
                                     <div class="message-example">
-                                        <h4>30-Day Check-in Example</h4>
-                                        <p>"Hi {Name}, sharing program updates and scholarships you might like. Want to reconnect? I'm here whenever you're ready. – Cory"</p>
+                                        <div class="sms-bubble">
+                                            "Sorry we missed you, Sarah! Schedules get busy—want to reschedule? Pick a time here: [link] – Cory, AI Admissions Assistant"
+                                        </div>
                                     </div>
-                                    <div class="message-example">
-                                        <h4>60-Day Value Touch</h4>
-                                        <p>Industry report or career guide with soft re-engagement offer</p>
-                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="recovery-step">
+                                <div class="step-timing">15 minutes later</div>
+                                <div class="step-content">
+                                    <h4>Follow-up Call</h4>
+                                    <p>Automated call with understanding tone and easy reschedule options</p>
+                                </div>
+                            </div>
+                            
+                            <div class="recovery-step">
+                                <div class="step-timing">1 hour later</div>
+                                <div class="step-content">
+                                    <h4>Email Follow-up</h4>
+                                    <p>Professional email with calendar link and additional value content</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
+                    <!-- Re-engagement Campaign -->
+                    <div class="campaign-panel" id="reengagement-panel">
+                        <div class="campaign-header">
+                            <h3>30/60-Day Re-engagement</h3>
+                            <p>Gentle nurturing for prospects who went quiet, providing value without being pushy</p>
+                        </div>
+                        
+                        <div class="reengagement-examples">
+                            <div class="reengagement-card">
+                                <h4>30-Day Check-in</h4>
+                                <div class="message-example">
+                                    <div class="email-preview">
+                                        <div class="email-subject">Program updates you might find interesting</div>
+                                        <div class="email-snippet">"Hi Sarah, sharing some program updates and new scholarship opportunities you might like. Want to reconnect? I'm here whenever you're ready. – Cory"</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="reengagement-card">
+                                <h4>60-Day Value Touch</h4>
+                                <div class="message-example">
+                                    <div class="email-preview">
+                                        <div class="email-subject">2024 Industry Report + Career Insights</div>
+                                        <div class="email-snippet">Industry report or career guide with soft re-engagement offer and updated program information</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Data Flow -->
+        <!-- Data Flow Visualization -->
         <section class="data-flow section">
             <div class="container">
-                <h2 class="section-title">Data Flow & Integration</h2>
-                <div class="flow-diagram">
-                    <div class="flow-step">
+                <h2 class="section-title">Seamless Data Flow & Integration</h2>
+                <div class="flow-visualization">
+                    <div class="flow-step" data-step="1">
                         <div class="flow-icon">
                             <svg viewBox="0 0 24 24">
                                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
@@ -355,8 +572,13 @@
                                 <line x1="12" y1="9" x2="12" y2="15" stroke="currentColor" stroke-width="2"/>
                             </svg>
                         </div>
-                        <h3>Forms & Ads</h3>
-                        <p>Website forms, landing pages, social media lead ads</p>
+                        <h3>Lead Sources</h3>
+                        <p>Website forms, landing pages, social media ads</p>
+                        <div class="flow-details">
+                            <span class="detail-item">Web forms</span>
+                            <span class="detail-item">Landing pages</span>
+                            <span class="detail-item">Social ads</span>
+                        </div>
                     </div>
                     
                     <div class="flow-arrow">
@@ -366,7 +588,7 @@
                         </svg>
                     </div>
                     
-                    <div class="flow-step">
+                    <div class="flow-step" data-step="2">
                         <div class="flow-icon">
                             <svg viewBox="0 0 32 32">
                                 <defs>
@@ -385,6 +607,11 @@
                         </div>
                         <h3>Agent Cory</h3>
                         <p>AI processing, qualification, and multi-channel outreach</p>
+                        <div class="flow-details">
+                            <span class="detail-item">Lead scoring</span>
+                            <span class="detail-item">Multi-channel outreach</span>
+                            <span class="detail-item">Conversation AI</span>
+                        </div>
                     </div>
                     
                     <div class="flow-arrow">
@@ -394,7 +621,7 @@
                         </svg>
                     </div>
                     
-                    <div class="flow-step">
+                    <div class="flow-step" data-step="3">
                         <div class="flow-icon">
                             <svg viewBox="0 0 24 24">
                                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
@@ -405,6 +632,11 @@
                         </div>
                         <h3>CRM & Calendar</h3>
                         <p>Automated logging and appointment scheduling</p>
+                        <div class="flow-details">
+                            <span class="detail-item">Slate integration</span>
+                            <span class="detail-item">Salesforce sync</span>
+                            <span class="detail-item">Calendar booking</span>
+                        </div>
                     </div>
                     
                     <div class="flow-arrow">
@@ -414,40 +646,134 @@
                         </svg>
                     </div>
                     
-                    <div class="flow-step">
+                    <div class="flow-step" data-step="4">
                         <div class="flow-icon">
                             <svg viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-width="2" fill="none" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                                 <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
                             </svg>
                         </div>
-                        <h3>Counselor</h3>
+                        <h3>Counselor Handoff</h3>
                         <p>Human handoff with complete context and next steps</p>
+                        <div class="flow-details">
+                            <span class="detail-item">Full context</span>
+                            <span class="detail-item">Lead scoring</span>
+                            <span class="detail-item">Next actions</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Compliance -->
+        <!-- Results Preview -->
+        <section class="results-preview section">
+            <div class="container">
+                <h2 class="section-title">The Results Speak for Themselves</h2>
+                <div class="results-showcase">
+                    <div class="result-metric">
+                        <div class="metric-icon">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="metric-value">< 60s</div>
+                        <div class="metric-label">Average Response Time</div>
+                        <div class="metric-comparison">vs 4-24 hours typical</div>
+                    </div>
+                    
+                    <div class="result-metric">
+                        <div class="metric-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <polyline points="17,11 19,13 23,9" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="metric-value">94%</div>
+                        <div class="metric-label">Contact Rate Achievement</div>
+                        <div class="metric-comparison">vs 40-50% industry average</div>
+                    </div>
+                    
+                    <div class="result-metric">
+                        <div class="metric-icon">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="18" y1="20" x2="18" y2="10" stroke="currentColor" stroke-width="2"/>
+                                <line x1="12" y1="20" x2="12" y2="4" stroke="currentColor" stroke-width="2"/>
+                                <line x1="6" y1="20" x2="6" y2="14" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="metric-value">2,100</div>
+                        <div class="metric-label">Staff Hours Saved/Year</div>
+                        <div class="metric-comparison">per institution average</div>
+                    </div>
+                    
+                    <div class="result-metric">
+                        <div class="metric-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="M12 2v20m8-10H4"/>
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="m19 9-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="metric-value">5-10x</div>
+                        <div class="metric-label">ROI Potential</div>
+                        <div class="metric-comparison">in first year</div>
+                    </div>
+                </div>
+                
+                <div class="results-cta">
+                    <p>Want to see your specific ROI projection?</p>
+                    <a href="/roi-and-case-studies.html#roi-calculator" class="btn btn-secondary">Calculate Your ROI</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Compliance & Security -->
         <section class="compliance section bg-light">
             <div class="container">
-                <h2 class="section-title">Compliance & Data Handling</h2>
+                <h2 class="section-title">Compliance & Security Built-In</h2>
                 <div class="compliance-grid">
                     <div class="compliance-card">
-                        <h3>Opt-in Requirements</h3>
-                        <p>All communication requires explicit consent through form submissions or verbal agreement during calls. Clear opt-out instructions in every message.</p>
+                        <div class="compliance-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <h3>FERPA Compliant</h3>
+                        <p>Educational record protection with secure data handling and appropriate access controls for student information.</p>
                     </div>
+                    
                     <div class="compliance-card">
-                        <h3>Data Privacy</h3>
-                        <p>FERPA and CCPA compliant data handling with encrypted storage and secure transmission. Personal information used only for admissions communication.</p>
+                        <div class="compliance-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                        </div>
+                        <h3>TCPA Compliant SMS</h3>
+                        <p>All messaging requires explicit consent with clear opt-out instructions and automatic list management.</p>
                     </div>
+                    
                     <div class="compliance-card">
-                        <h3>SMS Compliance</h3>
-                        <p>TCPA compliant messaging with required disclaimers. Easy STOP/UNSUBSCRIBE options and automatic list management.</p>
+                        <div class="compliance-icon">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <circle cx="12" cy="16" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                        </div>
+                        <h3>SOC 2 Certified</h3>
+                        <p>Bank-level security with encrypted data transmission and storage, regular audits, and penetration testing.</p>
                     </div>
+                    
                     <div class="compliance-card">
-                        <h3>Call Regulations</h3>
-                        <p>Respects Do Not Call Registry and state-specific calling regulations. Automatic time zone detection for appropriate calling hours.</p>
+                        <div class="compliance-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-width="2" fill="none" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07"/>
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                            </svg>
+                        </div>
+                        <h3>Do Not Call Registry</h3>
+                        <p>Respects DNC preferences and state-specific calling regulations with automatic time zone detection.</p>
                     </div>
                 </div>
             </div>
@@ -456,12 +782,13 @@
         <!-- CTA Section -->
         <section class="cta-section section">
             <div class="container text-center">
-                <h2>Ready to See Cory in Action?</h2>
-                <p class="lead">Experience the complete process from inquiry to handoff</p>
+                <h2>Ready to Transform Your Admissions Process?</h2>
+                <p class="lead">Experience the complete process from inquiry to handoff with a personalized demo</p>
                 <div class="cta-buttons">
-                    <button class="btn btn-primary btn-lg" id="demo-cory-btn">Try Cory Now</button>
+                    <button class="btn btn-primary btn-lg" id="get-started-btn">Get Started with Cory</button>
                     <a href="/demo-and-pricing.html" class="btn btn-secondary btn-lg">Book Live Demo</a>
                 </div>
+                <p class="cta-guarantee">30-day money-back guarantee • No setup fees • Cancel anytime</p>
             </div>
         </section>
     </main>
@@ -658,22 +985,90 @@
         </div>
     </div>
 
+    <script src="/assets/js/main.ts" type="module"></script>
+    
     <script>
-        // Voice demo toggle functionality
+        // Enhanced interactivity for the redesigned page
         document.addEventListener('DOMContentLoaded', function() {
-            const voiceToggle = document.getElementById('voice-demo-toggle');
-            const voiceContainer = document.getElementById('voice-demo-container');
+            // Voice demo integration
+            const tryVoiceDemo = document.getElementById('try-voice-demo');
+            const voiceDemoSection = document.getElementById('voice-demo-section');
             
-            if (voiceToggle && voiceContainer) {
-                voiceToggle.addEventListener('click', function() {
-                    const isVisible = voiceContainer.style.display !== 'none';
-                    voiceContainer.style.display = isVisible ? 'none' : 'block';
-                    voiceToggle.textContent = isVisible ? 'Try Voice Demo' : 'Close Voice Demo';
+            if (tryVoiceDemo) {
+                tryVoiceDemo.addEventListener('click', function() {
+                    voiceDemoSection.scrollIntoView({ behavior: 'smooth' });
                 });
             }
+
+            // Watch process button
+            const watchProcess = document.getElementById('watch-process');
+            const processSection = document.getElementById('process-section');
+            
+            if (watchProcess) {
+                watchProcess.addEventListener('click', function() {
+                    processSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+
+            // Campaign tabs functionality
+            const campaignTabs = document.querySelectorAll('.campaign-tab');
+            const campaignPanels = document.querySelectorAll('.campaign-panel');
+            
+            campaignTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const campaign = this.dataset.campaign;
+                    
+                    // Update active tab
+                    campaignTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update active panel
+                    campaignPanels.forEach(p => p.classList.remove('active'));
+                    const targetPanel = document.getElementById(`${campaign}-panel`);
+                    if (targetPanel) {
+                        targetPanel.classList.add('active');
+                    }
+                });
+            });
+
+            // Channel demo buttons
+            const channelDemos = document.querySelectorAll('.channel-demo');
+            channelDemos.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const demoType = this.dataset.demo;
+                    
+                    if (demoType === 'voice') {
+                        voiceDemoSection.scrollIntoView({ behavior: 'smooth' });
+                    } else if (demoType === 'chat') {
+                        // Open chat widget
+                        if (window.chatWidget) {
+                            window.chatWidget.toggle();
+                        }
+                    } else if (demoType === 'email') {
+                        // Show email example modal or scroll to email preview
+                        alert('Email example would be shown here in a modal or expanded view');
+                    }
+                });
+            });
+
+            // Timeline animation on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const timelineObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.timeline-item, .flow-step, .channel-item').forEach(el => {
+                timelineObserver.observe(el);
+            });
         });
     </script>
-    
-    <script src="/assets/js/main.ts" type="module"></script>
 </body>
 </html>
