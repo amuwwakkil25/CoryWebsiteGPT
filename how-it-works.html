@@ -162,11 +162,24 @@
                 <h2 class="section-title">The Complete Cory Process</h2>
                 <p class="section-subtitle">From inquiry submission to counselor handoff in under 2 minutes</p>
                 
-                <!-- Demo CTA -->
-                <div class="demo-cta-section" style="text-align: center; margin-bottom: var(--space-12); padding: var(--space-8); background-color: #fff; border-radius: 16px; box-shadow: var(--shadow);">
-                    <h3>Experience Cory in Action</h3>
-                    <p>See how Agent Cory engages prospects with natural conversation and intelligent qualification.</p>
-                    <a href="/demo-and-pricing.html" class="btn btn-primary btn-lg">Try Live Demo</a>
+                <!-- Voice Demo Integration -->
+                <div class="voice-demo-section" style="text-align: center; margin-bottom: var(--space-12); padding: var(--space-8); background-color: #fff; border-radius: 16px; box-shadow: var(--shadow);">
+                    <div class="voice-demo-intro">
+                        <h3>Experience Cory's Voice Capabilities</h3>
+                        <p>Try our live AI voice assistant to see how Cory engages prospects with natural conversation. Click below to start a voice demo.</p>
+                        <button id="voice-demo-toggle" class="btn btn-primary">Try Voice Demo</button>
+                    </div>
+                    
+                    <div id="voice-demo-container" class="voice-demo-container" style="display: none; margin-top: var(--space-6); text-align: center;">
+                        <iframe 
+                            id="audio_iframe" 
+                            src="https://widget.synthflow.ai/widget/v2/eeb1bf36-fbad-43f1-9756-3f912273e4e9/1755114458133x115862416629315840" 
+                            allow="microphone" 
+                            width="400" 
+                            height="550" 
+                            style="border: none; border-radius: 12px; box-shadow: var(--shadow-lg); background: white; max-width: 100%;">
+                        </iframe>
+                    </div>
                 </div>
                 
                 <div class="timeline-container">
@@ -937,7 +950,31 @@
                         <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/>
                         <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"/>
                     </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Voice demo toggle functionality
         document.addEventListener('DOMContentLoaded', function() {
+            const voiceToggle = document.getElementById('voice-demo-toggle');
+            const voiceContainer = document.getElementById('voice-demo-container');
+            
+            if (voiceToggle && voiceContainer) {
+                voiceToggle.addEventListener('click', function() {
+                    const isVisible = voiceContainer.style.display !== 'none';
+                    voiceContainer.style.display = isVisible ? 'none' : 'block';
+                    voiceToggle.textContent = isVisible ? 'Try Voice Demo' : 'Close Voice Demo';
+                });
+            }
+        });
+    </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
                 rootMargin: '0px 0px -50px 0px'
             };
 
