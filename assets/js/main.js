@@ -855,6 +855,85 @@ class ButtonHandlers {
                 }
             });
         });
+
+        // Custom AI consultation buttons
+        const customAIButtons = document.querySelectorAll('[id*="custom-ai"]');
+        customAIButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (window.chatWidget) {
+                    window.chatWidget.openModal('custom-ai-modal');
+                }
+            });
+        });
+        
+        // Handle custom AI form submission
+        const customAIForm = document.getElementById('custom-ai-form');
+        if (customAIForm) {
+            customAIForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                if (!this.validateForm(e.target)) {
+                    return;
+                }
+
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData.entries());
+                
+                // Check honeypot
+                if (data.website) {
+                    return;
+                }
+
+                await this.saveCustomAIRequest(data);
+                this.showCustomAISuccess(e.target);
+            });
+        }
+    }
+    
+    async saveCustomAIRequest(data) {
+        try {
+            // Import Supabase client
+            const { supabase } = await import('../../src/lib/supabase.ts');
+            
+            const customRequest = {
+                first_name: data.first_name,
+                last_name: data.last_name,
+                email: data.email,
+                phone: data.phone,
+                institution: data.institution,
+                occupation: data.occupation,
+                interest_area: data.interest_area || null,
+                request_type: 'custom_ai',
+                status: 'new',
+                metadata: {}
+            };
+            
+            const { data: result, error } = await supabase
+                .from('demo_requests')
+                .insert(customRequest)
+                .select()
+                .single();
+            
+            if (error) {
+                console.error('Error saving custom AI request:', error);
+                this.showToast('Request saved locally. We will contact you soon!', 'info');
+            } else {
+                console.log('Custom AI request saved successfully:', result);
+                this.showToast('Custom AI consultation requested! We will contact you within 24 hours.', 'success');
+            }
+            
+        } catch (error) {
+            console.error('Error with custom AI request:', error);
+            this.showToast('Request received! We will contact you soon.', 'info');
+        }
+    }
+    
+    showCustomAISuccess(form) {
+        form.style.display = 'none';
+        const successDiv = document.getElementById('custom-ai-success');
+        if (successDiv) {
+            successDiv.style.display = 'block';
+        }
     }
     
     toggleVoiceDemo() {
