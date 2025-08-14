@@ -3109,6 +3109,173 @@ input:checked + .toggle-slider:before {
     height: auto;
 }
 
+/* Voice Demo Landing Page Styles */
+.voice-demo-hero {
+    padding: var(--space-20) 0;
+    text-align: center;
+    background: linear-gradient(135deg, var(--bg) 0%, white 100%);
+}
+
+.voice-demo-hero h1 {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--space-4);
+}
+
+.demo-instructions {
+    margin-top: var(--space-8);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.demo-instructions h3 {
+    margin-bottom: var(--space-6);
+    color: var(--ink);
+}
+
+.instruction-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-6);
+}
+
+.instruction-item {
+    text-align: center;
+    padding: var(--space-4);
+}
+
+.instruction-number {
+    width: 40px;
+    height: 40px;
+    background-color: var(--brand);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin: 0 auto var(--space-3);
+}
+
+.instruction-item p {
+    color: var(--muted);
+    font-size: var(--font-size-sm);
+    margin: 0;
+}
+
+.voice-widget-section {
+    text-align: center;
+}
+
+.voice-widget-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-12);
+}
+
+.demo-tips {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.demo-tips h3 {
+    margin-bottom: var(--space-6);
+    color: var(--ink);
+}
+
+.sample-questions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-4);
+}
+
+.question-card {
+    background-color: white;
+    padding: var(--space-4);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--brand);
+}
+
+.question-card p {
+    margin: 0;
+    color: var(--ink);
+    font-style: italic;
+    font-size: var(--font-size-sm);
+}
+
+.experience-section {
+    background-color: var(--bg);
+}
+
+.experience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-8);
+}
+
+.experience-card {
+    background-color: white;
+    padding: var(--space-6);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.experience-icon {
+    width: 64px;
+    height: 64px;
+    background-color: var(--brand);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-4);
+}
+
+.experience-icon svg {
+    width: 32px;
+    height: 32px;
+    color: white;
+}
+
+.experience-card h3 {
+    margin-bottom: var(--space-3);
+    color: var(--ink);
+}
+
+.experience-card p {
+    color: var(--muted);
+    font-size: var(--font-size-sm);
+    margin: 0;
+}
+
+.next-steps {
+    background: linear-gradient(135deg, var(--brand) 0%, #1E40AF 100%);
+    color: white;
+    text-align: center;
+}
+
+.next-steps h2 {
+    color: white;
+    margin-bottom: var(--space-4);
+}
+
+.next-steps .lead {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: var(--space-8);
+}
+
+.next-steps .btn-primary {
+    background-color: white;
+    color: var(--brand);
+    border-color: white;
+}
+
+.next-steps .btn-primary:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
 .voice-demo-container {
     display: flex;
     gap: var(--space-8);
