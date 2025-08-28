@@ -731,9 +731,15 @@
                     <div class="simulator-header">
                         <h3>See a Real Conversation in Action</h3>
                         <p>Watch how Cory engages prospects with natural, intelligent conversation</p>
+                        <button class="play-conversation-btn" id="play-conversation">
+                            <svg class="play-icon" viewBox="0 0 24 24">
+                                <polygon points="5,3 19,12 5,21" fill="currentColor"/>
+                            </svg>
+                            <span>Play Conversation Demo</span>
+                        </button>
                     </div>
                     
-                    <div class="conversation-flow">
+                    <div class="conversation-flow" id="conversation-flow" style="display: none;">
                         <div class="conversation-message">
                             <div class="message-avatar cory">C</div>
                             <div class="message-content">
@@ -763,6 +769,30 @@
                             <div class="message-content">
                                 <p>"I work in sales now but want to move into marketing management. I need something flexible since I work full-time."</p>
                                 <div class="message-meta">Sarah • Qualified prospect</div>
+                            </div>
+                        </div>
+                        
+                        <div class="conversation-message">
+                            <div class="message-avatar cory">C</div>
+                            <div class="message-content">
+                                <p>"That's exactly what our program is designed for! We have evening and weekend classes, plus online options. Would you like me to schedule a 15-minute call with one of our advisors to discuss your specific goals?"</p>
+                                <div class="message-meta">Cory • Booking attempt</div>
+                            </div>
+                        </div>
+                        
+                        <div class="conversation-message">
+                            <div class="message-avatar prospect">S</div>
+                            <div class="message-content">
+                                <p>"Yes, that would be great! I'm available Tuesday or Wednesday afternoon."</p>
+                                <div class="message-meta">Sarah • Ready to book</div>
+                            </div>
+                        </div>
+                        
+                        <div class="conversation-message">
+                            <div class="message-avatar cory">C</div>
+                            <div class="message-content">
+                                <p>"Perfect! I've scheduled you for Tuesday at 2 PM with Jessica, our Marketing program advisor. You'll receive a confirmation email with the meeting link. Is there anything specific you'd like to discuss with her?"</p>
+                                <div class="message-meta">Cory • Meeting booked successfully</div>
                             </div>
                         </div>
                     </div>
@@ -1012,6 +1042,37 @@
         </div>
     </footer>
 
+        .conversation-message:nth-child(5) { animation-delay: 2.6s; }
+        .conversation-message:nth-child(6) { animation-delay: 3.2s; }
+        .conversation-message:nth-child(7) { animation-delay: 3.8s; }
+        
+        .play-conversation-btn {
+            background: var(--brand);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 2rem auto 0;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .play-conversation-btn:hover {
+            background: #1E40AF;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .play-icon {
+            width: 20px;
+            height: 20px;
+        }@@ .. @@
     <!-- LeadConnector Chat Widget -->
     <script 
       src="https://widgets.leadconnectorhq.com/loader.js"  
@@ -1019,5 +1080,53 @@
      data-widget-id="68acc1b8c4b3dadbb3c70fea"   > 
      </script>
 
+    <script>
+        // Interactive conversation demo
+        document.addEventListener('DOMContentLoaded', function() {
+            const playBtn = document.getElementById('play-conversation');
+            const conversationFlow = document.getElementById('conversation-flow');
+            
+            if (playBtn && conversationFlow) {
+                playBtn.addEventListener('click', function() {
+                    // Hide play button and show conversation
+                    playBtn.style.display = 'none';
+                    conversationFlow.style.display = 'block';
+                    
+                    // Reset animations
+                    const messages = conversationFlow.querySelectorAll('.conversation-message');
+                    messages.forEach(msg => {
+                        msg.style.opacity = '0';
+                        msg.style.transform = 'translateY(20px)';
+                    });
+                    
+                    // Trigger animations with delays
+                    messages.forEach((msg, index) => {
+                        setTimeout(() => {
+                            msg.style.transition = 'all 0.6s ease';
+                            msg.style.opacity = '1';
+                            msg.style.transform = 'translateY(0)';
+                        }, index * 600 + 200);
+                    });
+                    
+                    // Add reset button after all messages
+                    setTimeout(() => {
+                        const resetBtn = document.createElement('button');
+                        resetBtn.className = 'btn btn-secondary';
+                        resetBtn.textContent = 'Play Again';
+                        resetBtn.style.margin = '2rem auto 0';
+                        resetBtn.style.display = 'block';
+                        
+                        resetBtn.addEventListener('click', function() {
+                            conversationFlow.style.display = 'none';
+                            playBtn.style.display = 'flex';
+                            resetBtn.remove();
+                        });
+                        
+                        conversationFlow.appendChild(resetBtn);
+                    }, messages.length * 600 + 1000);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
