@@ -307,18 +307,26 @@ code {
 }
 
 .footer-logo {
-  height: 32px;
-  width: auto;
-  max-width: 168px;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.9;
-  transition: all 0.3s ease;
+    height: 32px;
+    width: auto;
+    max-width: 210px;
+    object-fit: contain;
+    opacity: 0.95;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
 }
 
 .footer-logo:hover {
-  opacity: 1;
-  transform: scale(1.05);
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* Mobile responsive footer logo */
+@media (max-width: 768px) {
+    .footer-logo {
+        height: 28px;
+        max-width: 180px;
+    }
 }
 
 .nav-menu {
