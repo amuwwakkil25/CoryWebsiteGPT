@@ -1530,4 +1530,6 @@ cite span {
 }
 
 .footer-social a:hover {
-  background:
+  background: var(--gradient-sky);
+  transform: translateY(-2px);
+}
