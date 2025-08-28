@@ -1491,7 +1491,7 @@ cite span {
     width: auto;
     max-width: 210px;
     object-fit: contain;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-3);
     opacity: 0.95;
     transition: opacity 0.3s ease;
 }
@@ -1500,10 +1500,25 @@ cite span {
     opacity: 1;
 }
 
+.footer-logo-img {
+    max-width: 210px;
+    height: auto;
+    object-fit: contain;
+}
+
 @media (max-width: 768px) {
     .footer-logo {
         height: 28px;
         max-width: 180px;
+    }
+    
+    .footer-logo-img {
+        max-width: 180px;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
     }
 }
 
