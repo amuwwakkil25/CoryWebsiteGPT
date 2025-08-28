@@ -10,6 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/main.css" />
     
+    <!-- Icon Libraries -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -629,24 +633,36 @@
                 <div class="timeline-preview">
                     <div class="timeline-step">
                         <div class="timeline-step-number">1</div>
+                        <div class="timeline-step-icon">
+                            <i data-lucide="user-plus"></i>
+                        </div>
                         <h3>Inquiry Received</h3>
                         <p>New lead enters system</p>
                     </div>
                     
                     <div class="timeline-step">
                         <div class="timeline-step-number">2</div>
+                        <div class="timeline-step-icon">
+                            <i data-lucide="phone-call"></i>
+                        </div>
                         <h3>30s - Cory Calls</h3>
                         <p>AI initiates contact</p>
                     </div>
                     
                     <div class="timeline-step">
                         <div class="timeline-step-number">3</div>
+                        <div class="timeline-step-icon">
+                            <i data-lucide="calendar-check"></i>
+                        </div>
                         <h3>2min - Qualified & Booked</h3>
                         <p>Meeting scheduled</p>
                     </div>
                     
                     <div class="timeline-step">
                         <div class="timeline-step-number">4</div>
+                        <div class="timeline-step-icon">
+                            <i data-lucide="handshake"></i>
+                        </div>
                         <h3>Counselor Meeting</h3>
                         <p>Human takes over</p>
                     </div>
@@ -664,6 +680,9 @@
                     <div class="step-card">
                         <div class="step-header">
                             <div class="step-number">1</div>
+                            <div class="step-icon">
+                                <i data-lucide="zap"></i>
+                            </div>
                             <h3 class="step-title">Instant Detection</h3>
                         </div>
                         <div class="step-timing">⚡ 0-5 seconds</div>
@@ -679,6 +698,9 @@
                     <div class="step-card featured">
                         <div class="step-header">
                             <div class="step-number">2</div>
+                            <div class="step-icon">
+                                <i data-lucide="sparkles"></i>
+                            </div>
                             <h3 class="step-title">The Magic Moment</h3>
                         </div>
                         <div class="step-timing">🎯 30-60 seconds</div>
@@ -694,6 +716,9 @@
                     <div class="step-card">
                         <div class="step-header">
                             <div class="step-number">3</div>
+                            <div class="step-icon">
+                                <i data-lucide="send"></i>
+                            </div>
                             <h3 class="step-title">Multi-Channel Follow-Up</h3>
                         </div>
                         <div class="step-timing">📱 1-2 minutes</div>
@@ -709,6 +734,9 @@
                     <div class="step-card">
                         <div class="step-header">
                             <div class="step-number">4</div>
+                            <div class="step-icon">
+                                <i data-lucide="user-check"></i>
+                            </div>
                             <h3 class="step-title">Perfect Handoff</h3>
                         </div>
                         <div class="step-timing">🤝 2-5 minutes</div>
@@ -716,9 +744,7 @@
                         <ul class="step-features">
                             <li>Complete conversation log</li>
                             <li>Lead scoring and notes</li>
-                            <li>Calendar integration</li>
-                            <li>CRM data sync</li>
-                        </ul>
+                                <i class="fas fa-play play-icon"></i>
                     </div>
                 </div>
             </div>
@@ -822,21 +848,14 @@
                     <div class="backup-steps">
                         <div class="backup-step">
                             <div class="backup-step-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07"/>
-                                </svg>
-                            </div>
-                            <h4>Personalized Voicemail</h4>
-                            <p>Leaves specific message about their program interest</p>
+                                    <i data-lucide="mic" style="width: 16px; height: 16px; margin-right: 0.5rem;"></i>
                         </div>
                         
                         <div class="backup-step">
                             <div class="backup-step-icon">
                                 <svg viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-width="2" fill="none" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                                </svg>
-                            </div>
-                            <h4>Immediate SMS</h4>
+                                    <i data-lucide="voicemail"></i>
                             <p>Sends text with calendar link and program info</p>
                         </div>
                         
@@ -844,9 +863,7 @@
                             <div class="backup-step-icon">
                                 <svg viewBox="0 0 24 24">
                                     <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
-                                    <path stroke="currentColor" stroke-width="2" fill="none" d="m2 7 10 5 10-5"/>
-                                </svg>
-                            </div>
+                                    <i data-lucide="message-circle"></i>
                             <h4>Welcome Email</h4>
                             <p>Delivers detailed program information and next steps</p>
                         </div>
@@ -854,10 +871,7 @@
                         <div class="backup-step">
                             <div class="backup-step-icon">
                                 <svg viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
-                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M21 3v5h-5"/>
-                                </svg>
-                            </div>
+                                    <i data-lucide="mail"></i>
                             <h4>Smart Retry</h4>
                             <p>Attempts callback at optimal times based on behavior</p>
                         </div>
@@ -865,21 +879,14 @@
                 </div>
             </div>
         </section>
-
-        <!-- Traditional vs Cory -->
-        <section class="comparison-section section">
-            <div class="container">
+                                    <i data-lucide="refresh-cw"></i>
                 <h2 class="section-title">Traditional Admissions vs Agent Cory</h2>
                 
                 <div class="comparison-grid">
                     <div class="comparison-card traditional">
                         <div class="comparison-header">
                             <div class="comparison-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
-                                    <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/>
-                                    <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/>
-                                </svg>
+                                <i class="fas fa-times-circle"></i>
                             </div>
                             <h3 class="comparison-title">Traditional Process</h3>
                         </div>
@@ -907,10 +914,7 @@
                     <div class="comparison-card cory">
                         <div class="comparison-header">
                             <div class="comparison-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
-                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
-                                </svg>
+                                <i class="fas fa-check-circle"></i>
                             </div>
                             <h3 class="comparison-title">Agent Cory Process</h3>
                         </div>
@@ -928,6 +932,16 @@
                         
                         <ul class="step-features">
                             <li>Instant AI response</li>
+        .timeline-step-icon {
+            margin: 0 auto 0.5rem;
+            opacity: 0.9;
+        }
+        
+        .timeline-step-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+        
                             <li>24/7 availability</li>
                             <li>Systematic multi-channel follow-up</li>
                             <li>Counselors focus on qualified leads</li>
@@ -1027,15 +1041,38 @@
             color: white;
             border: none;
             padding: 1rem 2rem;
+        .step-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--brand);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .step-icon i {
+            font-size: 1.5rem;
+        }
+        
             border-radius: 12px;
             font-size: 1.125rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
+        .step-card.featured .step-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+        
             align-items: center;
             gap: 0.75rem;
             margin: 2rem auto 0;
             transition: all 0.3s ease;
+            flex: 1;
             box-shadow: var(--shadow-lg);
         }
         
@@ -1047,14 +1084,29 @@
         
         .play-icon {
             width: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .backup-step-icon i {
+            font-size: 1.5rem;
+        }
+        
+        .backup-step:hover .backup-step-icon {
+            transform: scale(1.1);
+            background: #1E40AF;
             height: 20px;
         }@@ .. @@
     <!-- LeadConnector Chat Widget -->
     <script 
       src="https://widgets.leadconnectorhq.com/loader.js"  
-      data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" 
+            gap: 1.5rem;
      data-widget-id="68acc1b8c4b3dadbb3c70fea"   > 
      </script>
+            transition: all 0.3s ease;
+        }
+        
+        .comparison-icon i {
+            font-size: 1.5rem;
 
     <script>
         // Interactive conversation demo
@@ -1067,10 +1119,15 @@
                     // Hide play button and show conversation
                     playBtn.style.display = 'none';
                     conversationFlow.style.display = 'block';
+        .comparison-card:hover .comparison-icon {
+            transform: scale(1.1);
+        }
+        
                     
                     // Reset animations
                     const messages = conversationFlow.querySelectorAll('.conversation-message');
                     messages.forEach(msg => {
+            flex: 1;
                         msg.style.opacity = '0';
                         msg.style.transform = 'translateY(20px)';
                     });
@@ -1096,11 +1153,90 @@
                             conversationFlow.style.display = 'none';
                             playBtn.style.display = 'flex';
                             resetBtn.remove();
-                        });
-                        
+            font-size: 1.25rem;
+        }
+        
+        /* Enhanced spacing and typography */
+        .section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .section-subtitle {
+            font-size: 1.25rem;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Improved button styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+        }
+        
+        .btn-primary {
+            background: var(--brand);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1E40AF;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--brand);
+            border: 2px solid var(--brand);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--brand);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Enhanced card hover effects */
+        .step-card, .backup-step, .comparison-card {
+            transition: all 0.3s ease;
+        }
+        
+        .step-card:hover, .backup-step:hover, .comparison-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
                         conversationFlow.appendChild(resetBtn);
                     }, messages.length * 1200 + 1000); // Adjusted for slower timing
                 });
+            }
+            
+            // Initialize Lucide icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
             }
         });
     </script>
