@@ -362,7 +362,7 @@ html, body {
 
 .btn-secondary {
   background: transparent;
-  color: var(--midnight-navy);
+  color: var(--text-inverse);
   border: 2px solid var(--midnight-navy);
 }
 
