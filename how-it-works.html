@@ -770,7 +770,8 @@
             font-size: 3rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
-            line-height: 1.2;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             color: white;
             text-shadow: 0 2px 8px rgba(0,0,0,0.5);
         }
@@ -778,8 +779,8 @@
         .hero-subtitle {
             font-size: 1.25rem;
             margin-bottom: 3rem;
-            color: rgba(255,255,255,0.95);
-            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
             font-weight: 400;
         }
 
@@ -827,12 +828,13 @@
 
         .step-card {
             background: white;
-            border-radius: 12px;
-            padding: 2rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             box-shadow: var(--shadow-md);
             border: 1px solid var(--border);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
+            backdrop-filter: blur(10px);
         }
 
         .step-card:hover {
