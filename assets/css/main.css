@@ -1487,6 +1487,28 @@ cite span {
   color: rgba(255, 255, 255, 0.6);
 }
 
+/* Footer logo styles */
+.footer-logo {
+    height: 32px;
+    width: auto;
+    max-width: 210px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+    opacity: 0.95;
+    transition: opacity 0.3s ease;
+}
+
+.footer-logo:hover {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .footer-logo {
+        height: 28px;
+        max-width: 180px;
+    }
+}
+
 /* Background Variations */
 .bg-light {
   background: var(--bg-light);
