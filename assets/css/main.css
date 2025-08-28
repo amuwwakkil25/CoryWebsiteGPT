@@ -276,6 +276,42 @@ html, body {
   overflow-x: hidden;
 }
 
+/* Utility Classes for Responsive Design */
+.w-full { width: 100%; }
+.max-w-full { max-width: 100%; }
+.min-w-0 { min-width: 0; }
+.overflow-hidden { overflow: hidden; }
+.overflow-x-hidden { overflow-x: hidden; }
+
+/* Responsive Text Alignment */
+@media (max-width: 768px) {
+  .text-center-mobile { text-align: center; }
+  .text-left-mobile { text-align: left; }
+}
+
+/* Responsive Spacing */
+.p-responsive { padding: clamp(1rem, 4vw, 2rem); }
+.m-responsive { margin: clamp(1rem, 4vw, 2rem); }
+.gap-responsive { gap: clamp(1rem, 3vw, 2rem); }
+
+/* Responsive Flex */
+.flex-responsive {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+@media (max-width: 768px) {
+  .flex-responsive {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.bg-light {
+  background: var(--bg-light);
+}
+
 /* Button System */
 .btn {
   display: inline-flex;
@@ -1664,145 +1700,4 @@ cite span {
 
 .footer-social a:hover i {
   color: white;
-}
-
-/* Additional Mobile Fixes */
-@media (max-width: 480px) {
-  .section {
-    padding: 2rem 0;
-  }
-  
-  .hero {
-    padding: 3rem 0 2rem;
-  }
-  
-  .page-hero {
-    padding: 3rem 0 2rem;
-  }
-  
-  .hero-stats {
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-2);
-    width: 100%;
-  }
-  
-  .stat-chip {
-    width: 100%;
-    max-width: 280px;
-    justify-content: center;
-  }
-  
-  .trust-logos {
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-1);
-  }
-  
-  .trust-logo {
-    width: 100%;
-    max-width: 200px;
-    text-align: center;
-  }
-  
-  .result-cards {
-    grid-template-columns: 1fr;
-    gap: var(--space-2);
-  }
-  
-  .result-card {
-    padding: var(--space-3);
-  }
-  
-  .result-value {
-    font-size: 1.5rem;
-  }
-  
-  .benefit-features {
-    justify-content: center;
-  }
-  
-  .feature-tag {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  :root {
-    --space-12: 3rem;
-    --space-10: 2.5rem;
-    --space-8: 2rem;
-  }
-  
-  .nav-menu {
-    gap: var(--space-2);
-  }
-  
-  .nav-link {
-    padding: var(--space-2);
-    text-align: center;
-    width: 100%;
-  }
-  
-  .comparison-header,
-  .comparison-row {
-    grid-template-columns: 1fr;
-    gap: var(--space-2);
-  }
-  
-  .comparison-card {
-    margin-bottom: var(--space-3);
-  }
-  
-  .demo-content {
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-  }
-  
-  .feature-row {
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-  }
-  
-  .feature-row.reverse {
-    direction: ltr;
-  }
-  
-  .benefits-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-3);
-  }
-  
-  .footer-main {
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-    text-align: center;
-  }
-  
-  .footer-brand {
-    max-width: none;
-  }
-  
-  .timeline-item {
-    padding-left: 0;
-    border-left: none;
-    text-align: center;
-  }
-  
-  .timeline-preview::before {
-    display: none;
-  }
-  
-  .cta-buttons {
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-2);
-    width: 100%;
-  }
-  
-  .cta-buttons .btn {
-    width: 100%;
-    max-width: 300px;
-  }
 }
