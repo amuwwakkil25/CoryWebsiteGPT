@@ -109,8 +109,8 @@
         .timeline-step-number {
             width: 40px;
             height: 40px;
-            background: white;
-            color: var(--brand);
+            background: var(--fresh-lime);
+            color: var(--midnight-navy);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -364,11 +364,43 @@
         
         /* Backup Flow */
         .backup-flow {
-            background: white;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--silver-mist) 100%);
             border-radius: 16px;
-            padding: 2rem;
+            padding: 3rem 2rem;
             margin: 3rem 0;
             border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .backup-flow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(30,144,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+            opacity: 0.5;
+        }
+        
+        .backup-flow h3 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--midnight-navy);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .backup-flow > p {
+            text-align: center;
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
         }
         
         .backup-steps {
@@ -376,38 +408,72 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin-top: 2rem;
+            position: relative;
+            z-index: 2;
         }
         
         .backup-step {
             text-align: center;
             padding: 1.5rem;
             border-radius: 12px;
-            background: var(--bg-light);
-            border: 1px solid var(--border);
+            background: white;
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .backup-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-sky);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .backup-step:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .backup-step:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--sky-gradient-start);
         }
         
         .backup-step-icon {
             width: 48px;
             height: 48px;
-            background: var(--brand);
+            background: var(--gradient-sky);
             color: white;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .backup-step:hover .backup-step-icon {
+            transform: scale(1.1) rotate(5deg);
         }
         
         .backup-step h4 {
             font-size: 1.125rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
+            color: var(--midnight-navy);
         }
         
         .backup-step p {
             font-size: 0.875rem;
             color: var(--text-secondary);
             margin: 0;
+            line-height: 1.5;
         }
         
         /* Comparison Section */
@@ -573,6 +639,175 @@
                 grid-template-columns: 1fr;
             }
         }
+        
+        .timeline-step-icon {
+            margin: 0 auto 0.5rem;
+            opacity: 0.9;
+        }
+        
+        .timeline-step-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .step-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--brand);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .step-icon i {
+            font-size: 1.5rem;
+        }
+        
+        .step-card.featured .step-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+        
+        .play-conversation-btn {
+            background: var(--brand);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 2rem auto 0;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .play-conversation-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .play-conversation-btn:hover::before {
+            left: 100%;
+        }
+        
+        .play-conversation-btn:hover {
+            background: #1E40AF;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .play-icon {
+            width: 20px;
+            height: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .backup-step-icon i {
+            font-size: 1.5rem;
+        }
+        
+        .comparison-icon i {
+            font-size: 1.5rem;
+        }
+        
+        .comparison-card:hover .comparison-icon {
+            transform: scale(1.1);
+        }
+        
+        /* Enhanced spacing and typography */
+        .section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .section-subtitle {
+            font-size: 1.25rem;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Improved button styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+        }
+        
+        .btn-primary {
+            background: var(--brand);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1E40AF;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--brand);
+            border: 2px solid var(--brand);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--brand);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Enhanced card hover effects */
+        .step-card, .backup-step, .comparison-card {
+            transition: all 0.3s ease;
+        }
+        
+        .step-card:hover, .backup-step:hover, .comparison-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .conversation-message:nth-child(5) { animation-delay: 2.6s; }
+        .conversation-message:nth-child(6) { animation-delay: 3.2s; }
+        .conversation-message:nth-child(7) { animation-delay: 3.8s; }
     </style>
 </head>
 <body>
@@ -714,8 +949,6 @@
                             <li>Personalized email content</li>
                             <li>Calendar booking links</li>
                             <li>Program-specific resources</li>
-                        </ul>
-                    </div>
                             <li>Calendar integration</li>
                         </ul>
                     </div>
@@ -732,7 +965,7 @@
                         <p>Watch how Cory engages prospects with natural, intelligent conversation</p>
                         <button class="play-conversation-btn" id="play-conversation">
                             <i data-lucide="play" class="play-icon"></i>
-                            <span>Play Conversation Demo</span>
+                            <span>▶️ Play Conversation Demo</span>
                         </button>
                         <div class="voice-demo-link" style="margin-top: 1rem;">
                             <p style="margin: 0.5rem 0; color: var(--text-secondary); font-size: 0.875rem;">Want to hear the actual conversation?</p>
@@ -814,34 +1047,34 @@
                     <div class="backup-steps">
                         <div class="backup-step">
                             <div class="backup-step-icon">
-                                <i data-lucide="phone-call"></i>
+                                📱
                             </div>
-                            <h4>Personalized Voicemail</h4>
-                            <p>Leaves relevant message with callback number</p>
+                            <h4>Instant SMS Follow-Up</h4>
+                            <p>🚀 Sends personalized text with calendar link and program info within seconds</p>
                         </div>
                         
                         <div class="backup-step">
                             <div class="backup-step-icon">
-                                <i data-lucide="message-square"></i>
+                                📧
                             </div>
-                            <h4>Instant SMS</h4>
-                            <p>Sends text with calendar link and program info</p>
+                            <h4>Welcome Email Package</h4>
+                            <p>✨ Delivers detailed program information, success stories, and next steps</p>
                         </div>
                         
                         <div class="backup-step">
                             <div class="backup-step-icon">
-                                <i data-lucide="mail"></i>
+                                🔄
                             </div>
-                            <h4>Welcome Email</h4>
-                            <p>Delivers detailed program information and next steps</p>
+                            <h4>Smart Retry Logic</h4>
+                            <p>🎯 Attempts callback at optimal times based on engagement patterns</p>
                         </div>
                         
                         <div class="backup-step">
                             <div class="backup-step-icon">
-                                <i data-lucide="refresh-cw"></i>
+                                💬
                             </div>
-                            <h4>Smart Retry</h4>
-                            <p>Attempts callback at optimal times based on behavior</p>
+                            <h4>Multi-Channel Coordination</h4>
+                            <p>🌟 Coordinates across SMS, email, and chat for maximum engagement</p>
                         </div>
                     </div>
                 </div>
@@ -903,16 +1136,6 @@
                         
                         <ul class="step-features">
                             <li>Instant AI response</li>
-        .timeline-step-icon {
-            margin: 0 auto 0.5rem;
-            opacity: 0.9;
-        }
-        
-        .timeline-step-icon i {
-            font-size: 1.5rem;
-            color: white;
-        }
-        
                             <li>24/7 availability</li>
                             <li>Systematic multi-channel follow-up</li>
                             <li>Counselors focus on qualified leads</li>
@@ -998,218 +1221,6 @@
         </div>
     </footer>
 
-        .conversation-message:nth-child(5) { animation-delay: 2.6s; }
-        .conversation-message:nth-child(6) { animation-delay: 3.2s; }
-        .conversation-message:nth-child(7) { animation-delay: 3.8s; }
-        
-        .play-conversation-btn {
-            background: var(--brand);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-        .step-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--brand);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        
-        .step-icon i {
-            font-size: 1.5rem;
-        }
-        
-            border-radius: 12px;
-            font-size: 1.125rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-        .step-card.featured .step-icon {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            backdrop-filter: blur(10px);
-        }
-        
-            align-items: center;
-            gap: 0.75rem;
-            margin: 2rem auto 0;
-            transition: all 0.3s ease;
-            flex: 1;
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .play-conversation-btn:hover {
-            background: #1E40AF;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-xl);
-        }
-        
-        .play-icon {
-            width: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .backup-step-icon i {
-            font-size: 1.5rem;
-        }
-        
-        .backup-step:hover .backup-step-icon {
-            transform: scale(1.1);
-            background: #1E40AF;
-        }
-        
-        /* Enhanced spacing and typography */
-        .section {
-            padding: 4rem 0;
-        }
-        
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-        
-        .section-subtitle {
-            font-size: 1.25rem;
-            text-align: center;
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        /* Improved button styles */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn-lg {
-            padding: 1rem 2rem;
-            font-size: 1.125rem;
-        }
-        
-        .btn-primary {
-            background: var(--brand);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #1E40AF;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .btn-secondary {
-            background: white;
-            color: var(--brand);
-            border: 2px solid var(--brand);
-        }
-        
-        .btn-secondary:hover {
-            background: var(--brand);
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        /* Enhanced card hover effects */
-        .step-card, .backup-step, .comparison-card {
-            transition: all 0.3s ease;
-        }
-        
-        .step-card:hover, .backup-step:hover, .comparison-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-xl);
-        }
-        
-        .timeline-step-icon {
-            margin: 0 auto 0.5rem;
-            opacity: 0.9;
-        }
-        
-        .timeline-step-icon i {
-            font-size: 1.5rem;
-            color: white;
-        }
-        
-        .step-icon {
-            width: 48px;
-            height: 20px;
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--brand);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        
-        .step-icon i {
-            font-size: 1.5rem;
-        }
-        
-        .step-card.featured .step-icon {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            backdrop-filter: blur(10px);
-        }
-        
-        .play-conversation-btn {
-            background: var(--brand);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            font-size: 1.125rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin: 2rem auto 0;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .play-conversation-btn:hover {
-            background: #1E40AF;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-xl);
-        }
-        
-        .play-icon {
-            width: 20px;
-            height: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .backup-step-icon i {
-            font-size: 1.5rem;
-        }
-        
-        .comparison-icon i {
-            font-size: 1.5rem;
-        }
-        
-        .comparison-card:hover .comparison-icon {
-            transform: scale(1.1);
-        }
-    </style>
     <!-- LeadConnector Chat Widget -->
     <script 
       src="https://beta.leadconnectorhq.com/loader.js"  
@@ -1228,10 +1239,6 @@
                     // Hide play button and show conversation
                     playBtn.style.display = 'none';
                     conversationFlow.style.display = 'block';
-        .comparison-card:hover .comparison-icon {
-            transform: scale(1.1);
-        }
-        
                     
                     // Reset animations
                     const messages = conversationFlow.querySelectorAll('.conversation-message');
