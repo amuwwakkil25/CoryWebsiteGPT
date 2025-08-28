@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>How Agent Cory Works - AI Admissions Process Explained</title>
-    <meta name="description" content="Discover how Agent Cory transforms admissions with instant AI outreach, intelligent qualification, and seamless handoffs to your counselors." />
+    <meta name="description" content="See exactly how Agent Cory transforms your admissions process with AI-powered speed and precision - from inquiry to enrollment in minutes." />
     
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,6 +17,559 @@
         gtag('js', new Date());
         gtag('config', 'G-XXXXXXX');
     </script>
+    
+    <style>
+        /* How It Works specific styles */
+        .how-it-works-hero {
+            background: linear-gradient(135deg, var(--brand) 0%, #1E40AF 100%);
+            padding: 6rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .how-it-works-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        
+        .how-it-works-hero .container {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .how-it-works-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            line-height: 1.1;
+        }
+        
+        .how-it-works-hero .lead {
+            font-size: 1.25rem;
+            color: white;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            opacity: 0.95;
+        }
+        
+        .timeline-preview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            position: relative;
+        }
+        
+        .timeline-preview::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, white 20%, white 80%, transparent 100%);
+            z-index: 1;
+            opacity: 0.8;
+        }
+        
+        .timeline-step {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-step:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-4px);
+        }
+        
+        .timeline-step-number {
+            width: 40px;
+            height: 40px;
+            background: white;
+            color: var(--brand);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .timeline-step h3 {
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .timeline-step p {
+            color: white;
+            font-size: 0.875rem;
+            opacity: 0.9;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            margin: 0;
+        }
+        
+        /* Process Steps */
+        .process-steps {
+            padding: 4rem 0;
+        }
+        
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .step-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--brand), #1E40AF);
+        }
+        
+        .step-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .step-card.featured {
+            background: linear-gradient(135deg, var(--brand) 0%, #1E40AF 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .step-card.featured::before {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: var(--brand);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        
+        .step-card.featured .step-number {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .step-card.featured .step-title {
+            color: white;
+        }
+        
+        .step-timing {
+            background: var(--success);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .step-card.featured .step-timing {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .step-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .step-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+        }
+        
+        .step-features li::before {
+            content: '✓';
+            width: 20px;
+            height: 20px;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .step-card.featured .step-features li::before {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Conversation Simulator */
+        .conversation-simulator {
+            background: var(--bg-light);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .simulator-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .simulator-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .conversation-flow {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .conversation-message {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .conversation-message:nth-child(1) { animation-delay: 0.2s; }
+        .conversation-message:nth-child(2) { animation-delay: 0.8s; }
+        .conversation-message:nth-child(3) { animation-delay: 1.4s; }
+        .conversation-message:nth-child(4) { animation-delay: 2.0s; }
+        
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+        
+        .message-avatar.cory {
+            background: var(--brand);
+            color: white;
+        }
+        
+        .message-avatar.prospect {
+            background: var(--text-secondary);
+            color: white;
+        }
+        
+        .message-content {
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            flex: 1;
+        }
+        
+        .message-content p {
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        .message-meta {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Backup Flow */
+        .backup-flow {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 3rem 0;
+            border: 1px solid var(--border);
+        }
+        
+        .backup-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .backup-step {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 12px;
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+        }
+        
+        .backup-step-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--brand);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+        
+        .backup-step h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .backup-step p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        /* Comparison Section */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .comparison-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+        }
+        
+        .comparison-card.traditional {
+            border-color: var(--error);
+        }
+        
+        .comparison-card.cory {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .comparison-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .comparison-card.traditional .comparison-icon {
+            background: var(--error);
+            color: white;
+        }
+        
+        .comparison-card.cory .comparison-icon {
+            background: var(--success);
+            color: white;
+        }
+        
+        .comparison-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .comparison-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px;
+            background: var(--bg-light);
+        }
+        
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .comparison-card.traditional .metric-value {
+            color: var(--error);
+        }
+        
+        .comparison-card.cory .metric-value {
+            color: var(--success);
+        }
+        
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Implementation Timeline */
+        .implementation-timeline {
+            background: var(--bg-light);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+        }
+        
+        .timeline-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            position: relative;
+        }
+        
+        .timeline-item {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        
+        .timeline-item-number {
+            width: 32px;
+            height: 32px;
+            background: var(--brand);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+        
+        .timeline-item h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-item p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .how-it-works-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .timeline-preview {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .timeline-preview::before {
+                display: none;
+            }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="cookie-banner" class="cookie-banner" style="display: none;">
@@ -68,547 +621,311 @@
 
     <main id="main">
         <!-- Hero Section -->
-        <section class="hero-section">
+        <section class="how-it-works-hero">
             <div class="container">
-                <div class="hero-content text-center">
-                    <h1 class="hero-title">From Inquiry to Enrollment in Minutes, Not Days</h1>
-                    <p class="hero-subtitle">See exactly how Agent Cory transforms your admissions process with AI-powered speed and precision</p>
+                <h1>From Inquiry to Enrollment in Minutes, Not Days</h1>
+                <p class="lead">See exactly how Agent Cory transforms your admissions process with AI-powered speed and precision</p>
+                
+                <div class="timeline-preview">
+                    <div class="timeline-step">
+                        <div class="timeline-step-number">1</div>
+                        <h3>Inquiry Received</h3>
+                        <p>New lead enters system</p>
+                    </div>
                     
-                    <div class="hero-visual">
-                        <div class="timeline-preview">
-                            <div class="timeline-item active">
-                                <div class="timeline-dot"></div>
-                                <span>Inquiry Received</span>
-                            </div>
-                            <div class="timeline-item active">
-                                <div class="timeline-dot"></div>
-                                <span>30s - Cory Calls</span>
-                            </div>
-                            <div class="timeline-item active">
-                                <div class="timeline-dot"></div>
-                                <span>2min - Qualified & Booked</span>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <span>Counselor Meeting</span>
-                            </div>
-                        </div>
+                    <div class="timeline-step">
+                        <div class="timeline-step-number">2</div>
+                        <h3>30s - Cory Calls</h3>
+                        <p>AI initiates contact</p>
+                    </div>
+                    
+                    <div class="timeline-step">
+                        <div class="timeline-step-number">3</div>
+                        <h3>2min - Qualified & Booked</h3>
+                        <p>Meeting scheduled</p>
+                    </div>
+                    
+                    <div class="timeline-step">
+                        <div class="timeline-step-number">4</div>
+                        <h3>Counselor Meeting</h3>
+                        <p>Human takes over</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- The 4-Step Process -->
+        <!-- Process Steps -->
         <section class="process-steps section">
             <div class="container">
                 <h2 class="section-title">The Agent Cory Process</h2>
+                <p class="section-subtitle">Every step optimized for maximum conversion and efficiency</p>
+                
                 <div class="steps-grid">
-                    
-                    <!-- Step 1 -->
                     <div class="step-card">
                         <div class="step-header">
-                            <div class="step-number">01</div>
-                            <div class="step-time">0 seconds</div>
+                            <div class="step-number">1</div>
+                            <h3 class="step-title">Instant Detection</h3>
                         </div>
-                        <div class="step-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                <circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
-                                <line x1="20" y1="8" x2="20" y2="14" stroke="currentColor" stroke-width="2"/>
-                                <line x1="23" y1="11" x2="17" y2="11" stroke="currentColor" stroke-width="2"/>
-                            </svg>
-                        </div>
-                        <h3>New Inquiry Detected</h3>
-                        <p>A prospect submits a form on your website or calls your main number. The lead instantly appears in your CRM system.</p>
-                        <div class="step-details">
-                            <ul>
-                                <li>Real-time CRM monitoring</li>
-                                <li>Automatic lead scoring</li>
-                                <li>Priority queue assignment</li>
-                            </ul>
-                        </div>
+                        <div class="step-timing">⚡ 0-5 seconds</div>
+                        <p class="step-description">New inquiry triggers immediate AI response. Cory analyzes the lead source, program interest, and contact information to prepare personalized outreach.</p>
+                        <ul class="step-features">
+                            <li>CRM integration triggers</li>
+                            <li>Lead source analysis</li>
+                            <li>Program interest detection</li>
+                            <li>Contact preference identification</li>
+                        </ul>
                     </div>
-
-                    <!-- Step 2 -->
+                    
                     <div class="step-card featured">
                         <div class="step-header">
-                            <div class="step-number">02</div>
-                            <div class="step-time">30 seconds</div>
+                            <div class="step-number">2</div>
+                            <h3 class="step-title">The Magic Moment</h3>
                         </div>
-                        <div class="step-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                            </svg>
-                        </div>
-                        <h3>Cory Makes the Call</h3>
-                        <p>Agent Cory immediately calls the prospect with a warm, natural introduction. She engages in conversation to understand their needs and interests.</p>
-                        <div class="step-details">
-                            <ul>
-                                <li>Natural AI conversation</li>
-                                <li>Personalized introduction</li>
-                                <li>Voicemail detection & messages</li>
-                                <li>Context-aware responses</li>
-                            </ul>
-                        </div>
-                        <div class="step-badge">The Magic Moment</div>
+                        <div class="step-timing">🎯 30-60 seconds</div>
+                        <p class="step-description">Cory makes the first call while the prospect is still on your website. Natural AI conversation qualifies interest, answers questions, and builds rapport.</p>
+                        <ul class="step-features">
+                            <li>Natural conversation AI</li>
+                            <li>Real-time qualification</li>
+                            <li>FAQ automation</li>
+                            <li>Voicemail personalization</li>
+                        </ul>
                     </div>
-
-                    <!-- Step 3 -->
+                    
                     <div class="step-card">
                         <div class="step-header">
-                            <div class="step-number">03</div>
-                            <div class="step-time">2-5 minutes</div>
+                            <div class="step-number">3</div>
+                            <h3 class="step-title">Multi-Channel Follow-Up</h3>
                         </div>
-                        <div class="step-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
-                                <line x1="12" y1="17" x2="12.01" y2="17" stroke="currentColor" stroke-width="2"/>
-                            </svg>
-                        </div>
-                        <h3>Qualification & FAQ</h3>
-                        <p>Cory asks smart questions to qualify the prospect and answers their questions about programs, costs, and requirements with expert knowledge.</p>
-                        <div class="step-details">
-                            <ul>
-                                <li>Intelligent qualification questions</li>
-                                <li>Program-specific FAQ responses</li>
-                                <li>Financial aid information</li>
-                                <li>Timeline and fit assessment</li>
-                            </ul>
-                        </div>
+                        <div class="step-timing">📱 1-2 minutes</div>
+                        <p class="step-description">If the call doesn't connect, Cory immediately sends personalized SMS and email with calendar booking links and relevant program information.</p>
+                        <ul class="step-features">
+                            <li>Intelligent SMS messaging</li>
+                            <li>Personalized email content</li>
+                            <li>Calendar booking links</li>
+                            <li>Program-specific resources</li>
+                        </ul>
                     </div>
-
-                    <!-- Step 4 -->
+                    
                     <div class="step-card">
                         <div class="step-header">
-                            <div class="step-number">04</div>
-                            <div class="step-time">5-8 minutes</div>
+                            <div class="step-number">4</div>
+                            <h3 class="step-title">Perfect Handoff</h3>
                         </div>
-                        <div class="step-icon">
-                            <svg viewBox="0 0 24 24">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
-                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
-                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
-                                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
-                            </svg>
+                        <div class="step-timing">🤝 2-5 minutes</div>
+                        <p class="step-description">Qualified prospects are seamlessly handed off to counselors with complete context, conversation history, and booking confirmation.</p>
+                        <ul class="step-features">
+                            <li>Complete conversation log</li>
+                            <li>Lead scoring and notes</li>
+                            <li>Calendar integration</li>
+                            <li>CRM data sync</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Conversation -->
+        <section class="conversation-demo section bg-light">
+            <div class="container">
+                <div class="conversation-simulator">
+                    <div class="simulator-header">
+                        <h3>See a Real Conversation in Action</h3>
+                        <p>Watch how Cory engages prospects with natural, intelligent conversation</p>
+                    </div>
+                    
+                    <div class="conversation-flow">
+                        <div class="conversation-message">
+                            <div class="message-avatar cory">C</div>
+                            <div class="message-content">
+                                <p>"Hi Sarah! This is Cory from Metro State University. I see you just inquired about our Marketing program. Do you have a quick minute to chat about your goals?"</p>
+                                <div class="message-meta">Cory • 32 seconds after inquiry</div>
+                            </div>
                         </div>
-                        <h3>Appointment Booked</h3>
-                        <p>For qualified prospects, Cory books a meeting directly into your counselor's calendar and sends confirmation details.</p>
-                        <div class="step-details">
-                            <ul>
-                                <li>Real-time calendar integration</li>
-                                <li>Automatic confirmations</li>
-                                <li>Prep notes for counselors</li>
-                                <li>CRM updates and logging</li>
-                            </ul>
+                        
+                        <div class="conversation-message">
+                            <div class="message-avatar prospect">S</div>
+                            <div class="message-content">
+                                <p>"Oh wow, that was fast! Yes, I'm interested in learning more about the program requirements and costs."</p>
+                                <div class="message-meta">Sarah • Prospect</div>
+                            </div>
+                        </div>
+                        
+                        <div class="conversation-message">
+                            <div class="message-avatar cory">C</div>
+                            <div class="message-content">
+                                <p>"Perfect! Our Marketing program is designed for working professionals. Are you currently employed, and are you looking to advance in your current field or switch careers?"</p>
+                                <div class="message-meta">Cory • Qualifying questions</div>
+                            </div>
+                        </div>
+                        
+                        <div class="conversation-message">
+                            <div class="message-avatar prospect">S</div>
+                            <div class="message-content">
+                                <p>"I work in sales now but want to move into marketing management. I need something flexible since I work full-time."</p>
+                                <div class="message-meta">Sarah • Qualified prospect</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- What Happens Next -->
-        <section class="what-happens-next section bg-light">
+        <!-- Backup Flow -->
+        <section class="backup-section section">
             <div class="container">
-                <h2 class="section-title">What Happens When Prospects Don't Answer?</h2>
                 <div class="backup-flow">
-                    <div class="backup-step">
-                        <div class="backup-icon phone-missed">
-                            <svg viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07"/>
-                                <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/>
-                                <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"/>
-                            </svg>
+                    <h3>What Happens When Calls Don't Connect?</h3>
+                    <p>Cory never gives up. Our intelligent backup system ensures every prospect gets multiple touchpoints.</p>
+                    
+                    <div class="backup-steps">
+                        <div class="backup-step">
+                            <div class="backup-step-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07"/>
+                                </svg>
+                            </div>
+                            <h4>Personalized Voicemail</h4>
+                            <p>Leaves specific message about their program interest</p>
                         </div>
-                        <h3>Missed Call</h3>
-                        <p>No answer? No problem.</p>
-                    </div>
-                    
-                    <div class="backup-arrow">→</div>
-                    
-                    <div class="backup-step">
-                        <div class="backup-icon voicemail">
-                            <svg viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                                <line x1="12" y1="19" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
-                                <line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2"/>
-                            </svg>
+                        
+                        <div class="backup-step">
+                            <div class="backup-step-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                </svg>
+                            </div>
+                            <h4>Immediate SMS</h4>
+                            <p>Sends text with calendar link and program info</p>
                         </div>
-                        <h3>Personalized Voicemail</h3>
-                        <p>Cory leaves a warm, personalized message</p>
-                    </div>
-                    
-                    <div class="backup-arrow">→</div>
-                    
-                    <div class="backup-step">
-                        <div class="backup-icon sms">
-                            <svg viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                            </svg>
+                        
+                        <div class="backup-step">
+                            <div class="backup-step-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="m2 7 10 5 10-5"/>
+                                </svg>
+                            </div>
+                            <h4>Welcome Email</h4>
+                            <p>Delivers detailed program information and next steps</p>
                         </div>
-                        <h3>Instant SMS Follow-up</h3>
-                        <p>Text with calendar link sent immediately</p>
-                    </div>
-                    
-                    <div class="backup-arrow">→</div>
-                    
-                    <div class="backup-step">
-                        <div class="backup-icon email">
-                            <svg viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2"/>
-                            </svg>
+                        
+                        <div class="backup-step">
+                            <div class="backup-step-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M21 3v5h-5"/>
+                                </svg>
+                            </div>
+                            <h4>Smart Retry</h4>
+                            <p>Attempts callback at optimal times based on behavior</p>
                         </div>
-                        <h3>Email with Resources</h3>
-                        <p>Program info and booking options delivered</p>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Traditional vs Cory -->
+        <section class="comparison-section section">
+            <div class="container">
+                <h2 class="section-title">Traditional Admissions vs Agent Cory</h2>
                 
-                <div class="backup-stats">
-                    <div class="backup-stat">
-                        <div class="stat-number">94%</div>
-                        <div class="stat-label">Eventually Reached</div>
-                    </div>
-                    <div class="backup-stat">
-                        <div class="stat-number">3.2</div>
-                        <div class="stat-label">Avg Touchpoints to Connect</div>
-                    </div>
-                    <div class="backup-stat">
-                        <div class="stat-number">24hrs</div>
-                        <div class="stat-label">Max Response Window</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Interactive Demo -->
-        <section class="interactive-demo section">
-            <div class="container">
-                <h2 class="section-title">See It in Action</h2>
-                <div class="demo-simulator">
-                    <div class="demo-screen">
-                        <div class="demo-header">
-                            <h3>Live Simulation</h3>
-                            <div class="demo-status">
-                                <span class="status-dot active"></span>
-                                <span>Cory is calling...</span>
-                            </div>
-                        </div>
-                        
-                        <div class="demo-conversation">
-                            <div class="conversation-step active" data-step="1">
-                                <div class="speaker cory">
-                                    <div class="avatar">
-                                        <svg viewBox="0 0 32 32">
-                                            <circle cx="16" cy="16" r="14" fill="var(--brand)"/>
-                                            <circle cx="16" cy="16" r="2" fill="white"/>
-                                        </svg>
-                                    </div>
-                                    <div class="message">
-                                        <p>"Hi Sarah! This is Cory from Metro University. I see you just inquired about our Marketing program. Do you have a quick minute to chat?"</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="conversation-step" data-step="2">
-                                <div class="speaker prospect">
-                                    <div class="avatar">👩</div>
-                                    <div class="message">
-                                        <p>"Oh wow, that was fast! Yes, I'm interested in learning more about the program."</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="conversation-step" data-step="3">
-                                <div class="speaker cory">
-                                    <div class="avatar">
-                                        <svg viewBox="0 0 32 32">
-                                            <circle cx="16" cy="16" r="14" fill="var(--brand)"/>
-                                            <circle cx="16" cy="16" r="2" fill="white"/>
-                                        </svg>
-                                    </div>
-                                    <div class="message">
-                                        <p>"Perfect! Our Marketing program is designed for working professionals. Are you currently working in marketing, or looking to transition into the field?"</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="conversation-step" data-step="4">
-                                <div class="speaker prospect">
-                                    <div class="avatar">👩</div>
-                                    <div class="message">
-                                        <p>"I'm in sales now but want to move into digital marketing. What's the time commitment like?"</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="conversation-step" data-step="5">
-                                <div class="speaker cory">
-                                    <div class="avatar">
-                                        <svg viewBox="0 0 32 32">
-                                            <circle cx="16" cy="16" r="14" fill="var(--brand)"/>
-                                            <circle cx="16" cy="16" r="2" fill="white"/>
-                                        </svg>
-                                    </div>
-                                    <div class="message">
-                                        <p>"Great question! Our program is designed for working professionals - classes are evenings and weekends. Would you like me to schedule a 15-minute call with one of our advisors to discuss the curriculum in detail?"</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="demo-controls">
-                            <button class="btn btn-secondary" id="demo-restart">Restart Demo</button>
-                            <button class="btn btn-primary" id="demo-play">Play Conversation</button>
-                        </div>
-                    </div>
-                    
-                    <div class="demo-insights">
-                        <h3>What Just Happened</h3>
-                        <div class="insight-list">
-                            <div class="insight-item">
-                                <div class="insight-icon">⚡</div>
-                                <div class="insight-text">
-                                    <strong>Instant Response:</strong> Cory called within 30 seconds while interest was highest
-                                </div>
-                            </div>
-                            <div class="insight-item">
-                                <div class="insight-icon">🎯</div>
-                                <div class="insight-text">
-                                    <strong>Smart Qualification:</strong> Asked relevant questions to understand fit and motivation
-                                </div>
-                            </div>
-                            <div class="insight-item">
-                                <div class="insight-icon">📅</div>
-                                <div class="insight-text">
-                                    <strong>Natural Booking:</strong> Smoothly transitioned to scheduling without being pushy
-                                </div>
-                            </div>
-                            <div class="insight-item">
-                                <div class="insight-icon">📝</div>
-                                <div class="insight-text">
-                                    <strong>Complete Notes:</strong> All conversation details logged in CRM for counselor
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Behind the Scenes -->
-        <section class="behind-scenes section">
-            <div class="container">
-                <h2 class="section-title">Behind the Scenes Technology</h2>
-                <div class="tech-grid">
-                    <div class="tech-card">
-                        <div class="tech-icon">
-                            <svg viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M12 1v6m0 6v6"/>
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M1 12h6m6 0h6"/>
-                            </svg>
-                        </div>
-                        <h3>AI Voice Engine</h3>
-                        <p>Advanced natural language processing creates human-like conversations that feel authentic and engaging.</p>
-                    </div>
-                    
-                    <div class="tech-card">
-                        <div class="tech-icon">
-                            <svg viewBox="0 0 24 24">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M9 9h6v6H9z"/>
-                            </svg>
-                        </div>
-                        <h3>CRM Integration</h3>
-                        <p>Real-time bidirectional sync with your existing systems ensures no data is lost and everything stays organized.</p>
-                    </div>
-                    
-                    <div class="tech-card">
-                        <div class="tech-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                        </div>
-                        <h3>Smart Qualification</h3>
-                        <p>Machine learning algorithms score and qualify leads based on conversation data and behavioral signals.</p>
-                    </div>
-                    
-                    <div class="tech-card">
-                        <div class="tech-icon">
-                            <svg viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
-                                <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2"/>
-                            </svg>
-                        </div>
-                        <h3>Perfect Timing</h3>
-                        <p>Time zone intelligence and behavioral analysis ensure outreach happens at the optimal moment for each prospect.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Results Comparison -->
-        <section class="results-comparison section">
-            <div class="container">
-                <h2 class="section-title">Traditional vs Agent Cory Approach</h2>
-                <div class="comparison-cards">
+                <div class="comparison-grid">
                     <div class="comparison-card traditional">
                         <div class="comparison-header">
-                            <h3>Traditional Admissions</h3>
-                            <div class="comparison-badge slow">Slow & Manual</div>
+                            <div class="comparison-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                    <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <h3 class="comparison-title">Traditional Process</h3>
                         </div>
-                        <div class="comparison-timeline">
-                            <div class="timeline-point">
-                                <div class="timeline-time">Day 1</div>
-                                <div class="timeline-desc">Inquiry received</div>
+                        
+                        <div class="comparison-metrics">
+                            <div class="metric-item">
+                                <div class="metric-value">4-24hrs</div>
+                                <div class="metric-label">Response Time</div>
                             </div>
-                            <div class="timeline-point">
-                                <div class="timeline-time">Day 2-3</div>
-                                <div class="timeline-desc">Counselor sees lead in CRM</div>
-                            </div>
-                            <div class="timeline-point">
-                                <div class="timeline-time">Day 3-5</div>
-                                <div class="timeline-desc">First outreach attempt</div>
-                            </div>
-                            <div class="timeline-point">
-                                <div class="timeline-time">Week 2</div>
-                                <div class="timeline-desc">Multiple follow-up attempts</div>
-                            </div>
-                            <div class="timeline-point">
-                                <div class="timeline-time">Week 3+</div>
-                                <div class="timeline-desc">Lead goes cold</div>
+                            <div class="metric-item">
+                                <div class="metric-value">40-50%</div>
+                                <div class="metric-label">Contact Rate</div>
                             </div>
                         </div>
-                        <div class="comparison-stats">
-                            <div class="stat-item negative">
-                                <span class="stat-value">40%</span>
-                                <span class="stat-label">Contact Rate</span>
-                            </div>
-                            <div class="stat-item negative">
-                                <span class="stat-value">15%</span>
-                                <span class="stat-label">Conversion Rate</span>
-                            </div>
-                        </div>
+                        
+                        <ul class="step-features">
+                            <li>Manual lead assignment</li>
+                            <li>Business hours only</li>
+                            <li>Inconsistent follow-up</li>
+                            <li>High counselor workload</li>
+                            <li>Lost weekend/evening leads</li>
+                        </ul>
                     </div>
                     
                     <div class="comparison-card cory">
                         <div class="comparison-header">
-                            <h3>With Agent Cory</h3>
-                            <div class="comparison-badge fast">Fast & Automated</div>
+                            <div class="comparison-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M9 12l2 2 4-4"/>
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                            </div>
+                            <h3 class="comparison-title">Agent Cory Process</h3>
                         </div>
-                        <div class="comparison-timeline">
-                            <div class="timeline-point">
-                                <div class="timeline-time">0:00</div>
-                                <div class="timeline-desc">Inquiry received</div>
+                        
+                        <div class="comparison-metrics">
+                            <div class="metric-item">
+                                <div class="metric-value">< 60s</div>
+                                <div class="metric-label">Response Time</div>
                             </div>
-                            <div class="timeline-point">
-                                <div class="timeline-time">0:30</div>
-                                <div class="timeline-desc">Cory calls prospect</div>
-                            </div>
-                            <div class="timeline-point">
-                                <div class="timeline-time">2:00</div>
-                                <div class="timeline-desc">Qualification complete</div>
-                            </div>
-                            <div class="timeline-point">
-                                <div class="timeline-time">5:00</div>
-                                <div class="timeline-desc">Meeting booked</div>
-                            </div>
-                            <div class="timeline-point">
-                                <div class="timeline-time">Next Day</div>
-                                <div class="timeline-desc">Counselor meets qualified lead</div>
+                            <div class="metric-item">
+                                <div class="metric-value">90-95%</div>
+                                <div class="metric-label">Contact Rate</div>
                             </div>
                         </div>
-                        <div class="comparison-stats">
-                            <div class="stat-item positive">
-                                <span class="stat-value">94%</span>
-                                <span class="stat-label">Contact Rate</span>
-                            </div>
-                            <div class="stat-item positive">
-                                <span class="stat-value">35%</span>
-                                <span class="stat-label">Conversion Rate</span>
-                            </div>
-                        </div>
+                        
+                        <ul class="step-features">
+                            <li>Instant AI response</li>
+                            <li>24/7 availability</li>
+                            <li>Systematic multi-channel follow-up</li>
+                            <li>Counselors focus on qualified leads</li>
+                            <li>Never miss any inquiry</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Implementation Process -->
+        <!-- Implementation Timeline -->
         <section class="implementation section bg-light">
             <div class="container">
-                <h2 class="section-title">Getting Started is Simple</h2>
-                <div class="implementation-steps">
-                    <div class="impl-step">
-                        <div class="impl-number">1</div>
-                        <div class="impl-content">
-                            <h3>Setup & Integration</h3>
-                            <p>We connect to your CRM and configure Cory with your program details</p>
-                            <div class="impl-duration">Week 1</div>
-                        </div>
-                    </div>
+                <div class="implementation-timeline">
+                    <h3>Getting Started with Agent Cory</h3>
+                    <p>From setup to success in just a few simple steps</p>
                     
-                    <div class="impl-step">
-                        <div class="impl-number">2</div>
-                        <div class="impl-content">
-                            <h3>AI Training</h3>
-                            <p>Cory learns your programs, policies, and preferred conversation style</p>
-                            <div class="impl-duration">Week 2</div>
+                    <div class="timeline-steps">
+                        <div class="timeline-item">
+                            <div class="timeline-item-number">1</div>
+                            <h4>Initial Setup</h4>
+                            <p>Connect your CRM and configure AI training data</p>
                         </div>
-                    </div>
-                    
-                    <div class="impl-step">
-                        <div class="impl-number">3</div>
-                        <div class="impl-content">
-                            <h3>Team Training</h3>
-                            <p>Your staff learns to work with Cory and interpret qualified leads</p>
-                            <div class="impl-duration">Week 2-3</div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-item-number">2</div>
+                            <h4>AI Training</h4>
+                            <p>Cory learns your programs, policies, and procedures</p>
                         </div>
-                    </div>
-                    
-                    <div class="impl-step">
-                        <div class="impl-number">4</div>
-                        <div class="impl-content">
-                            <h3>Go Live</h3>
-                            <p>Cory starts engaging your prospects with full monitoring and support</p>
-                            <div class="impl-duration">Week 3</div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-item-number">3</div>
+                            <h4>Testing Phase</h4>
+                            <p>Test calls and refinement with your team</p>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="implementation-support">
-                    <h3>Full Support Throughout</h3>
-                    <div class="support-features">
-                        <div class="support-item">
-                            <svg viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                <circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
-                            </svg>
-                            <span>Dedicated implementation manager</span>
-                        </div>
-                        <div class="support-item">
-                            <svg viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-width="2" fill="none" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                            </svg>
-                            <span>24/7 technical support</span>
-                        </div>
-                        <div class="support-item">
-                            <svg viewBox="0 0 24 24">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
-                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
-                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
-                                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
-                            </svg>
-                            <span>Weekly optimization reviews</span>
-                        </div>
-                        <div class="support-item">
-                            <svg viewBox="0 0 24 24">
-                                <line x1="18" y1="20" x2="18" y2="10" stroke="currentColor" stroke-width="2"/>
-                                <line x1="12" y1="20" x2="12" y2="4" stroke="currentColor" stroke-width="2"/>
-                                <line x1="6" y1="20" x2="6" y2="14" stroke="currentColor" stroke-width="2"/>
-                            </svg>
-                            <span>Performance analytics & reporting</span>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-item-number">4</div>
+                            <h4>Go Live</h4>
+                            <p>Full deployment with ongoing support and optimization</p>
                         </div>
                     </div>
                 </div>
@@ -618,10 +935,10 @@
         <!-- CTA Section -->
         <section class="cta-section section">
             <div class="container text-center">
-                <h2>Ready to Transform Your Admissions Process?</h2>
-                <p class="lead">See Agent Cory in action with a personalized demo for your institution</p>
+                <h2>Ready to See This Process in Action?</h2>
+                <p class="lead">Experience how Agent Cory can transform your admissions workflow</p>
                 <div class="cta-buttons">
-                    <a href="/demo-and-pricing.html" class="btn btn-primary btn-lg">Get Agent Cory to Call You</a>
+                    <a href="/demo-and-pricing.html" class="btn btn-primary btn-lg">Get Called by Cory</a>
                     <a href="/voice-demo.html" class="btn btn-secondary btn-lg">Try Voice Demo</a>
                 </div>
             </div>
@@ -701,604 +1018,6 @@
       data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" 
      data-widget-id="68acc1b8c4b3dadbb3c70fea"   > 
      </script>
-
-    <script>
-        // Interactive demo functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const playButton = document.getElementById('demo-play');
-            const restartButton = document.getElementById('demo-restart');
-            const conversationSteps = document.querySelectorAll('.conversation-step');
-            let currentStep = 0;
-            let isPlaying = false;
-
-            function showStep(stepIndex) {
-                conversationSteps.forEach((step, index) => {
-                    if (index <= stepIndex) {
-                        step.classList.add('active');
-                    } else {
-                        step.classList.remove('active');
-                    }
-                });
-            }
-
-            function playConversation() {
-                if (isPlaying) return;
-                
-                isPlaying = true;
-                playButton.textContent = 'Playing...';
-                playButton.disabled = true;
-                
-                const interval = setInterval(() => {
-                    if (currentStep < conversationSteps.length - 1) {
-                        currentStep++;
-                        showStep(currentStep);
-                    } else {
-                        clearInterval(interval);
-                        playButton.textContent = 'Replay Conversation';
-                        playButton.disabled = false;
-                        isPlaying = false;
-                    }
-                }, 2000);
-            }
-
-            function restartDemo() {
-                currentStep = 0;
-                showStep(currentStep);
-                playButton.textContent = 'Play Conversation';
-                playButton.disabled = false;
-                isPlaying = false;
-            }
-
-            playButton.addEventListener('click', playConversation);
-            restartButton.addEventListener('click', restartDemo);
-
-            // Initialize with first step
-            showStep(0);
-        });
-    </script>
-
-    <style>
-        /* How It Works specific styles */
-        .hero-section {
-            background: linear-gradient(135deg, var(--brand) 0%, #1E40AF 100%);
-            background-color: var(--brand);
-            color: white;
-            padding: 6rem 0 4rem;
-        }
-
-        .hero-title {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            color: white;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            margin-bottom: 3rem;
-            color: rgba(255, 255, 255, 0.95);
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-            font-weight: 400;
-        }
-
-        .timeline-preview {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .timeline-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            opacity: 0.5;
-            transition: opacity 0.3s ease;
-        }
-
-        .timeline-item.active {
-            opacity: 1;
-        }
-
-        .timeline-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: white;
-            border: 2px solid rgba(255,255,255,0.5);
-        }
-
-        .timeline-item.active .timeline-dot {
-            border-color: white;
-            box-shadow: 0 0 0 4px rgba(255,255,255,0.2);
-        }
-
-        /* Process Steps */
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .step-card {
-            background: white;
-            background: rgba(255, 255, 255, 0.15);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            backdrop-filter: blur(10px);
-        }
-
-        .step-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .step-card.featured {
-            border-color: var(--brand);
-            background: linear-gradient(135deg, var(--brand) 0%, #1E40AF 100%);
-            color: white;
-        }
-
-        .step-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .step-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--brand);
-        }
-
-        .step-card.featured .step-number {
-            color: white;
-        }
-
-        .step-time {
-            background: var(--bg-light);
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-        }
-
-        .step-card.featured .step-time {
-            background: rgba(255,255,255,0.2);
-            color: white;
-        }
-
-        .step-icon {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 1rem;
-            color: var(--brand);
-        }
-
-        .step-card.featured .step-icon {
-            color: white;
-        }
-
-        .step-badge {
-            position: absolute;
-            top: -10px;
-            right: 1rem;
-            background: var(--success);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        /* Backup Flow */
-        .backup-flow {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            margin: 3rem 0;
-            flex-wrap: wrap;
-        }
-
-        .backup-step {
-            text-align: center;
-            padding: 1.5rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: var(--shadow-sm);
-            min-width: 150px;
-        }
-
-        .backup-icon {
-            width: 40px;
-            height: 40px;
-            margin: 0 auto 1rem;
-            color: var(--brand);
-        }
-
-        .backup-arrow {
-            font-size: 1.5rem;
-            color: var(--text-secondary);
-            font-weight: bold;
-        }
-
-        .backup-stats {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 3rem;
-        }
-
-        .backup-stat {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--brand);
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-        }
-
-        /* Interactive Demo */
-        .demo-simulator {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 3rem;
-            margin-top: 3rem;
-        }
-
-        .demo-screen {
-            background: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-        }
-
-        .demo-header {
-            background: var(--bg-light);
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .demo-status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--text-secondary);
-        }
-
-        .status-dot.active {
-            background: var(--success);
-            animation: pulse 2s infinite;
-        }
-
-        .demo-conversation {
-            padding: 1.5rem;
-            min-height: 400px;
-        }
-
-        .conversation-step {
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
-
-        .conversation-step.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .speaker {
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
-        }
-
-        .speaker.prospect {
-            flex-direction: row-reverse;
-        }
-
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 1.25rem;
-        }
-
-        .speaker.cory .avatar {
-            background: var(--brand);
-        }
-
-        .speaker.prospect .avatar {
-            background: var(--bg-light);
-        }
-
-        .message {
-            background: var(--bg-light);
-            padding: 1rem;
-            border-radius: 12px;
-            max-width: 80%;
-        }
-
-        .speaker.cory .message {
-            background: var(--brand);
-            color: white;
-        }
-
-        .demo-controls {
-            padding: 1rem 1.5rem;
-            background: var(--bg-light);
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .demo-insights {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-            height: fit-content;
-        }
-
-        .insight-list {
-            margin-top: 1.5rem;
-        }
-
-        .insight-item {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            background: var(--bg-light);
-            border-radius: 8px;
-        }
-
-        .insight-icon {
-            font-size: 1.25rem;
-            flex-shrink: 0;
-        }
-
-        /* Tech Grid */
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .tech-card {
-            text-align: center;
-            padding: 2rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow-md);
-        }
-
-        .tech-icon {
-            width: 48px;
-            height: 48px;
-            margin: 0 auto 1rem;
-            color: var(--brand);
-        }
-
-        /* Comparison Cards */
-        .comparison-cards {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            margin-top: 3rem;
-        }
-
-        .comparison-card {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-        }
-
-        .comparison-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .comparison-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .comparison-badge.slow {
-            background: var(--error);
-            color: white;
-        }
-
-        .comparison-badge.fast {
-            background: var(--success);
-            color: white;
-        }
-
-        .comparison-timeline {
-            margin-bottom: 2rem;
-        }
-
-        .timeline-point {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .timeline-time {
-            font-weight: 600;
-            color: var(--brand);
-        }
-
-        .comparison-stats {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: block;
-        }
-
-        .stat-item.positive .stat-value {
-            color: var(--success);
-        }
-
-        .stat-item.negative .stat-value {
-            color: var(--error);
-        }
-
-        /* Implementation Steps */
-        .implementation-steps {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 3rem 0;
-            flex-wrap: wrap;
-        }
-
-        .impl-step {
-            text-align: center;
-            max-width: 200px;
-        }
-
-        .impl-number {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--brand);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0 auto 1rem;
-        }
-
-        .impl-duration {
-            background: var(--bg-light);
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            margin-top: 1rem;
-            display: inline-block;
-        }
-
-        .implementation-support {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow-md);
-            margin-top: 3rem;
-        }
-
-        .support-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .support-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem;
-            background: var(--bg-light);
-            border-radius: 8px;
-        }
-
-        .support-item svg {
-            width: 20px;
-            height: 20px;
-            color: var(--brand);
-            flex-shrink: 0;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-
-            .timeline-preview {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .demo-simulator {
-                grid-template-columns: 1fr;
-            }
-
-            .comparison-cards {
-                grid-template-columns: 1fr;
-            }
-
-            .implementation-steps {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .backup-flow {
-                flex-direction: column;
-            }
-
-            .backup-arrow {
-                transform: rotate(90deg);
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-    </style>
 
 </body>
 </html>
