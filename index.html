@@ -13,20 +13,74 @@
     <meta property="og:url" content="https://agentcory.com" />
     
     <!-- Favicon -->
-    <!-- Favicon for all browsers and devices -->
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="shortcut icon" href="/favicon.png" />
-    
-    <!-- Apple Touch Icon for iOS devices -->
     <link rel="apple-touch-icon" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
-    
-    <!-- Android Chrome -->
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
-    
-    <!-- Microsoft Tiles -->
     <meta name="msapplication-TileImage" content="/favicon.png" />
+    <meta name="msapplication-TileColor" content="#0B1F36" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    
+    <!-- Icon Libraries -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXX');
+    </script>
+    
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Agent Cory",
+        "description": "AI-powered admissions assistant for colleges and universities",
+        "url": "https://agentcory.com",
+        "logo": "https://agentcory.com/assets/images/logo.svg",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+1-558-CORY-AI",
+            "contactType": "customer service"
+        },
+        "sameAs": [
+            "https://linkedin.com/company/agentcory",
+            "https://twitter.com/agentcory"
+        ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Agent Cory",
+        "description": "AI admissions assistant that engages inquiries in under 30 second",
+        "brand": {
+            "@type": "Brand",
+            "name": "Agent Cory"
+        },
+        "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/InStock",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
 </head>
 <body>
     <!-- Cookie Banner -->
@@ -675,6 +729,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="/assets/js/main.js"></script>
     <script>
         // Initialize Lucide icons after DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
@@ -686,9 +741,9 @@
     
     <!-- LeadConnector Chat Widget -->
     <script 
-      src="https://widgets.leadconnectorhq.com/loader.js"  
-      data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" 
-     data-widget-id="68acc1b8c4b3dadbb3c70fea"   > 
+      src="https://beta.leadconnectorhq.com/loader.js"  
+      data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js" 
+     data-widget-id="68b077f85dff15aa9384c4e9"   > 
      </script>
 
 </body>
