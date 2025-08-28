@@ -12,7 +12,8 @@ export default defineConfig({
         'demo-and-pricing': resolve(__dirname, 'demo-and-pricing.html'),
         resources: resolve(__dirname, 'resources.html'),
         privacy: resolve(__dirname, 'privacy.html'),
-        'voice-demo': resolve(__dirname, 'voice-demo.html')
+        'voice-demo': resolve(__dirname, 'voice-demo.html'),
+        terms: resolve(__dirname, 'terms.html')
       }
     }
   }
