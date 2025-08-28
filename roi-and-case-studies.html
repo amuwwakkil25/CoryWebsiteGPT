@@ -149,6 +149,45 @@
             </div>
         </section>
 
+        <style>
+            /* Fix improvement column readability */
+            .improvement-value.positive {
+                color: var(--midnight-navy) !important;
+                font-weight: 700;
+                background: var(--fresh-lime);
+                padding: 0.5rem 1rem;
+                border-radius: var(--radius);
+                border: 2px solid var(--midnight-navy);
+                text-shadow: none;
+                font-size: 0.875rem;
+            }
+            
+            .improvement-value.positive:hover {
+                transform: scale(1.05);
+                box-shadow: var(--shadow-md);
+            }
+            
+            /* Ensure good contrast for all comparison values */
+            .before-value, .after-value {
+                font-weight: 700;
+                font-size: 1rem;
+            }
+            
+            .before-value {
+                color: var(--warm-coral);
+                background: rgba(255, 107, 107, 0.1);
+                padding: 0.25rem 0.5rem;
+                border-radius: var(--radius-sm);
+            }
+            
+            .after-value {
+                color: var(--sky-gradient-start);
+                background: rgba(30, 144, 255, 0.1);
+                padding: 0.25rem 0.5rem;
+                border-radius: var(--radius-sm);
+            }
+        </style>
+
         <!-- ROI Calculator Embed -->
         <section class="roi-calculator section bg-light" id="roi-calculator">
             <div class="container">
