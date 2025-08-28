@@ -737,6 +737,18 @@
                             </svg>
                             <span>Play Conversation Demo</span>
                         </button>
+                        <div class="voice-demo-link" style="margin-top: 1rem;">
+                            <p style="margin: 0.5rem 0; color: var(--text-secondary); font-size: 0.875rem;">Want to hear the actual conversation?</p>
+                            <a href="/voice-demo.html" class="btn btn-secondary">
+                                <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; margin-right: 0.5rem;">
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                    <path stroke="currentColor" stroke-width="2" fill="none" d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                    <line x1="12" y1="19" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Try Live Voice Demo
+                            </a>
+                        </div>
                     </div>
                     
                     <div class="conversation-flow" id="conversation-flow" style="display: none;">
@@ -1069,7 +1081,7 @@
                             msg.style.transition = 'all 0.6s ease';
                             msg.style.opacity = '1';
                             msg.style.transform = 'translateY(0)';
-                        }, index * 600 + 200);
+                        }, index * 1200 + 400); // Doubled the delay for slower animation
                     });
                     
                     // Add reset button after all messages
@@ -1087,7 +1099,7 @@
                         });
                         
                         conversationFlow.appendChild(resetBtn);
-                    }, messages.length * 600 + 1000);
+                    }, messages.length * 1200 + 1000); // Adjusted for slower timing
                 });
             }
         });
