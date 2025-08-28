@@ -1302,13 +1302,12 @@ cite span {
 .form-group select,
 .form-group textarea {
   width: 100%;
-  padding: clamp(0.75rem, 2vw, 1rem);
+  padding: var(--space-2);
   border: 2px solid var(--border);
   border-radius: var(--radius);
-  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-size: 1rem;
   font-family: inherit;
   transition: all 0.3s ease;
-  min-width: 0;
 }
 
 .form-group input:focus,
@@ -1468,13 +1467,12 @@ cite span {
 .modal-content {
   background: var(--bg-primary);
   border-radius: var(--radius-lg);
-  max-width: min(500px, 95vw);
+  max-width: 500px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: var(--shadow-xl);
   animation: modalSlideIn 0.3s ease-out;
-  margin: var(--space-2);
 }
 
 @keyframes modalSlideIn {
@@ -1666,4 +1664,145 @@ cite span {
 
 .footer-social a:hover i {
   color: white;
+}
+
+/* Additional Mobile Fixes */
+@media (max-width: 480px) {
+  .section {
+    padding: 2rem 0;
+  }
+  
+  .hero {
+    padding: 3rem 0 2rem;
+  }
+  
+  .page-hero {
+    padding: 3rem 0 2rem;
+  }
+  
+  .hero-stats {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    width: 100%;
+  }
+  
+  .stat-chip {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+  
+  .trust-logos {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+  }
+  
+  .trust-logo {
+    width: 100%;
+    max-width: 200px;
+    text-align: center;
+  }
+  
+  .result-cards {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+  
+  .result-card {
+    padding: var(--space-3);
+  }
+  
+  .result-value {
+    font-size: 1.5rem;
+  }
+  
+  .benefit-features {
+    justify-content: center;
+  }
+  
+  .feature-tag {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --space-12: 3rem;
+    --space-10: 2.5rem;
+    --space-8: 2rem;
+  }
+  
+  .nav-menu {
+    gap: var(--space-2);
+  }
+  
+  .nav-link {
+    padding: var(--space-2);
+    text-align: center;
+    width: 100%;
+  }
+  
+  .comparison-header,
+  .comparison-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+  
+  .comparison-card {
+    margin-bottom: var(--space-3);
+  }
+  
+  .demo-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  .feature-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  .feature-row.reverse {
+    direction: ltr;
+  }
+  
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    text-align: center;
+  }
+  
+  .footer-brand {
+    max-width: none;
+  }
+  
+  .timeline-item {
+    padding-left: 0;
+    border-left: none;
+    text-align: center;
+  }
+  
+  .timeline-preview::before {
+    display: none;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    width: 100%;
+  }
+  
+  .cta-buttons .btn {
+    width: 100%;
+    max-width: 300px;
+  }
 }
