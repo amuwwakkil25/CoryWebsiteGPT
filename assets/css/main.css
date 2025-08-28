@@ -1473,6 +1473,27 @@ cite span {
   margin-bottom: var(--space-2);
   color: var(--midnight-navy);
 }
+.cta-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-4);
+}
+
+.final-cta-section {
+  background: var(--gradient-brand);
+  color: var(--text-inverse);
+}
+
+.final-cta-section h2 {
+  color: var(--text-inverse);
+  margin-bottom: var(--space-3);
+}
+
+.final-cta-section .lead {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--space-5);
+}
+
 
 .call-expectations ul {
   list-style: none;
