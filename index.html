@@ -19,7 +19,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/main.css" />
@@ -90,21 +90,11 @@
         <nav class="nav">
             <div class="nav-container">
                 <a href="/" class="nav-brand">
-                    <svg class="nav-logo" viewBox="0 0 32 32" aria-label="Agent Cory">
-                        <defs>
-                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:var(--brand);stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <circle cx="16" cy="16" r="14" fill="url(#logoGradient)" stroke="white" stroke-width="1"/>
-                        <circle cx="16" cy="16" r="10" fill="none" stroke="white" stroke-width="1" opacity="0.3"/>
-                        <circle cx="16" cy="16" r="6" fill="none" stroke="white" stroke-width="1" opacity="0.5"/>
-                        <circle cx="16" cy="16" r="2" fill="white"/>
-                        <path d="M8 12 L16 8 L24 12 L16 16 Z" fill="white" opacity="0.8"/>
-                        <path d="M12 20 Q16 18 20 20" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-                    </svg>
-                    <span>Agent Cory</span>
+                    <div class="nav-logo">
+                        <i data-lucide="graduation-cap" style="width: 32px; height: 32px; color: var(--sky-gradient-start);"></i>
+                        <i data-lucide="headphones" style="width: 20px; height: 20px; color: var(--sky-gradient-end); margin-left: -8px; margin-top: 8px;"></i>
+                    </div>
+                    <span style="font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--midnight-navy);">AgentCory.ai</span>
                 </a>
                 
                 <button class="nav-toggle" aria-label="Toggle navigation">
@@ -479,8 +469,14 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Agent Cory</h3>
-                    <p>AI-powered admissions assistant that boosts conversions with lightning-fast, multi-channel outreach.</p>
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="display: flex; align-items: center;">
+                            <i data-lucide="graduation-cap" style="width: 24px; height: 24px; color: var(--fresh-lime);"></i>
+                            <i data-lucide="headphones" style="width: 16px; height: 16px; color: var(--sky-gradient-end); margin-left: -6px; margin-top: 6px;"></i>
+                        </div>
+                        <h3 style="margin: 0; font-family: 'Poppins', sans-serif;">AgentCory.ai</h3>
+                    </div>
+                    <p>Professional yet warm AI admissions assistant that transforms inquiries into enrollments with data-driven efficiency and human-like engagement.</p>
                     <div class="footer-social">
                         <a href="#" aria-label="LinkedIn">
                             <i class="fab fa-linkedin"></i>
@@ -524,16 +520,16 @@
                 <div class="footer-section">
                     <h4>Contact</h4>
                     <p>
-                        <strong>Phone:</strong> 1-888-465-1991<br>
+                        <strong>Phone:</strong> 1-888-CORY-AI<br>
                         <strong>Email:</strong> cory@agentcory.ai<br>
-                        <strong>Address:</strong> 200 Chisholm Pl<br>
-                        Plano, TX 75075
+                        <strong>Address:</strong> 123 Innovation Drive<br>
+                        Suite 100, Tech City, TC 12345
                     </p>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 Agent Cory. All rights reserved.</p>
+                <p>&copy; 2025 AgentCory.ai. All rights reserved.</p>
             </div>
         </div>
     </footer>
