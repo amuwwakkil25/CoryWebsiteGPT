@@ -14,6 +14,7 @@ export default defineConfig({
         privacy: resolve(__dirname, 'privacy.html'),
         'voice-demo': resolve(__dirname, 'voice-demo.html'),
         terms: resolve(__dirname, 'terms.html')
+        terms: resolve(__dirname, 'terms.html')
       }
     }
   }
