@@ -520,6 +520,259 @@ code {
   margin-bottom: var(--space-4);
 }
 
+/* Process Steps Grid for Home Page */
+.process-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.process-card {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.process-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-sky);
+}
+
+.process-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--sky-gradient-start);
+}
+
+.process-card.featured {
+  background: var(--gradient-brand);
+  color: var(--text-inverse);
+  transform: scale(1.02);
+}
+
+.process-card.featured::before {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.process-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.process-number {
+  width: 40px;
+  height: 40px;
+  background: var(--gradient-sky);
+  color: var(--text-inverse);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.process-card.featured .process-number {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.process-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(30, 144, 255, 0.1);
+  color: var(--sky-gradient-start);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.process-card.featured .process-icon {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--text-inverse);
+  backdrop-filter: blur(10px);
+}
+
+.process-icon i {
+  font-size: 1.25rem;
+}
+
+.process-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+}
+
+.process-card.featured .process-title {
+  color: var(--text-inverse);
+}
+
+.process-badge {
+  background: var(--fresh-lime);
+  color: var(--midnight-navy);
+  padding: 0.25rem var(--space-2);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.process-card.featured .process-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--text-inverse);
+  backdrop-filter: blur(10px);
+}
+
+.process-timing {
+  background: var(--success);
+  color: var(--text-inverse);
+  padding: 0.25rem var(--space-2);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: var(--space-3);
+}
+
+.process-card.featured .process-timing {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.process-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: var(--space-3);
+  color: var(--text-secondary);
+}
+
+.process-card.featured .process-description {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.process-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-4) 0;
+}
+
+.process-features li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.process-card.featured .process-features li {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.process-features li::before {
+  content: '✓';
+  width: 20px;
+  height: 20px;
+  background: var(--fresh-lime);
+  color: var(--midnight-navy);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.process-card.featured .process-features li::before {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--text-inverse);
+  backdrop-filter: blur(10px);
+}
+
+.process-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  margin-top: auto;
+}
+
+.stat-item {
+  text-align: center;
+  padding: var(--space-2);
+  background: var(--bg-light);
+  border-radius: var(--radius);
+}
+
+.process-card.featured .stat-item {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  color: var(--midnight-navy);
+  display: block;
+}
+
+.process-card.featured .stat-value {
+  color: var(--text-inverse);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.process-card.featured .stat-label {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.process-cta {
+  text-align: center;
+  margin-top: var(--space-8);
+  padding: var(--space-6);
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.process-cta h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+  color: var(--midnight-navy);
+}
+
+.process-cta p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-4);
+}
+
 /* Benefits Grid */
 .benefits-grid {
   display: grid;
