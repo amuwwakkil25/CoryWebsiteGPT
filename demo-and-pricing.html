@@ -129,8 +129,8 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="demo-last-name">Last Name *</label>
-                                <input type="text" id="demo-last-name" name="last_name" required />
+                                <label for="demo-last-name">Last Name</label>
+                                <input type="text" id="demo-last-name" name="last_name" />
                                 <div class="form-error" id="demo-last-name-error"></div>
                             </div>
                             
@@ -141,8 +141,8 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="demo-phone">Phone Number *</label>
-                                <input type="tel" id="demo-phone" name="phone" required placeholder="+1 (555) 123-4567" />
+                                <label for="demo-phone">Phone Number</label>
+                                <input type="tel" id="demo-phone" name="phone" placeholder="+1 (555) 123-4567" />
                                 <div class="form-error" id="demo-phone-error"></div>
                             </div>
                             
@@ -170,6 +170,26 @@
                             
                             <!-- Honeypot field -->
                             <input type="text" name="website" style="display: none;" />
+                            
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="demo-marketing-consent" name="marketing_consent" />
+                                    I consent to receive marketing text messages from Agent Cory at the phone number provided. Frequency may vary. Message & data rates may apply. Text HELP for assistance, reply STOP to opt out.
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="demo-service-consent" name="service_consent" />
+                                    I consent to receive non-marketing text messages from Agent Cory about my order updates, appointment reminders etc. Message & data rates may apply.
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <p class="consent-links">
+                                    <a href="/terms.html" target="_blank">Terms of Service</a> & <a href="/privacy.html" target="_blank">Privacy Policy</a>
+                                </p>
+                            </div>
                             
                             <button type="submit" class="btn btn-primary btn-lg btn-full">Get Called by Cory Now</button>
                         </form>
