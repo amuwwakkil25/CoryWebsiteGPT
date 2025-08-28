@@ -1213,6 +1213,9 @@
     <!-- LeadConnector Chat Widget -->
     <script 
       src="https://widgets.leadconnectorhq.com/loader.js"  
+      data-resources-url="https://widgets.leadconnectorhq.com/"
+      data-widget-id="YOUR_WIDGET_ID">
+    </script>
 
     <script>
         // Interactive conversation demo
@@ -1256,8 +1259,10 @@
                         
                         resetBtn.addEventListener('click', function() {
                             conversationFlow.style.display = 'none';
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-xl);
+                            playBtn.style.display = 'flex';
+                            resetBtn.remove();
+                        });
+                        
                         conversationFlow.appendChild(resetBtn);
                     }, messages.length * 1200 + 1000); // Adjusted for slower timing
                 });
