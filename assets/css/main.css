@@ -1521,6 +1521,16 @@ cite span {
 }
 
 @media (max-width: 768px) {
+  .nav-logo-img {
+    height: 32px;
+    max-width: 160px;
+  }
+  
+  .footer-logo {
+    height: 28px;
+    max-width: 140px;
+  }
+  
   .hero-title {
     font-size: 2.5rem;
   }
