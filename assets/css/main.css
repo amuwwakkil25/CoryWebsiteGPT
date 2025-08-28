@@ -196,6 +196,10 @@ code {
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
   .col-md-1 { grid-column: span 1; }
   .col-md-2 { grid-column: span 2; }
   .col-md-3 { grid-column: span 3; }
@@ -1664,4 +1668,123 @@ cite span {
 
 .footer-social a:hover i {
   color: white;
+}
+
+/* Navigation Responsive */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+  }
+  
+  .section-title {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+  
+  .hero-ctas,
+  .hero-stats {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  
+  .nav-menu {
+    position: fixed;
+    top: 80px;
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - 80px);
+    background: var(--bg-primary);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: var(--space-6) var(--space-4);
+    transition: left 0.3s ease;
+    box-shadow: var(--shadow-lg);
+    border-top: 1px solid var(--border);
+  }
+  
+  .nav-menu.active {
+    left: 0;
+  }
+  
+  .nav-toggle {
+    display: flex;
+  }
+  
+  .nav-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  
+  .nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .nav-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+  }
+  
+  /* Mobile Grid Adjustments */
+  .calculator-widget {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    padding: var(--space-4);
+  }
+  
+  .feature-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    text-align: center;
+  }
+  
+  .feature-row.reverse {
+    direction: ltr;
+  }
+  
+  .demo-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  .comparison-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  .timeline-preview {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  .timeline-preview::before {
+    display: none;
+  }
+  
+  /* Mobile Modal Adjustments */
+  .modal {
+    padding: var(--space-2);
+  }
+  
+  .modal-content {
+    max-width: 100%;
+    margin: 0;
+  }
+  
+  .modal-body {
+    padding: var(--space-3);
+  }
+  
+  .form-actions {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
