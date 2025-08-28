@@ -1422,6 +1422,42 @@ cite span {
   margin-bottom: var(--space-6);
 }
 
+/* Override for proper 4-column layout */
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 2rem;
+    align-items: start;
+}
+
+.footer-section:first-child {
+    max-width: 300px;
+}
+
+.footer-logo-img {
+    max-width: 210px;
+    height: auto;
+    margin-bottom: 1rem;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .footer-section:first-child {
+        max-width: none;
+    }
+    
+    .footer-logo-img {
+        max-width: 180px;
+    }
+}
+
 .footer-section h3,
 .footer-section h4 {
   color: var(--text-inverse);
