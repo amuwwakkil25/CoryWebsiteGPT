@@ -25,6 +25,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/main.css" />
     
+    <!-- Icon Libraries -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -68,42 +72,134 @@
     </header>
 
     <main id="main">
-        <section class="page-hero">
+        <!-- Hero Section -->
+        <section class="demo-hero">
             <div class="container">
-                <h1>Experience Agent Cory Live</h1>
-                <p class="lead">Get Agent Cory to call you and discover custom AI solutions for your institution.</p>
+                <div class="demo-hero-content">
+                    <div class="demo-hero-badge">
+                        <i data-lucide="sparkles"></i>
+                        <span>Live AI Demo</span>
+                    </div>
+                    <h1>Experience Agent Cory Live</h1>
+                    <p class="lead">Get Agent Cory to call you within minutes and discover how AI can transform your admissions process.</p>
+                    
+                    <div class="demo-hero-stats">
+                        <div class="hero-stat">
+                            <div class="stat-icon">
+                                <i data-lucide="phone"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">&lt; 3min</div>
+                                <div class="stat-label">Call Response Time</div>
+                            </div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="stat-icon">
+                                <i data-lucide="message-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">100%</div>
+                                <div class="stat-label">Natural Conversation</div>
+                            </div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="stat-icon">
+                                <i data-lucide="calendar-check"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">Live</div>
+                                <div class="stat-label">Booking Demo</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Demo Section -->
-        <section class="demo-section section">
+        <section class="demo-main-section section">
             <div class="container">
-                <div class="demo-content">
-                    <div class="demo-info">
-                        <h2>Get Agent Cory to Call You</h2>
-                        <p>Experience our AI admissions assistant firsthand. Fill out the form and Cory will call you within minutes to demonstrate:</p>
-                        
-                        <ul class="demo-checklist">
-                            <li>
-                                <i data-lucide="check-circle" class="check-icon"></i>
-                                Natural AI conversation and qualification
-                            </li>
-                            <li>
-                                <i data-lucide="check-circle" class="check-icon"></i>
-                                Intelligent FAQ responses about your programs
-                            </li>
-                            <li>
-                                <i data-lucide="check-circle" class="check-icon"></i>
-                                Appointment booking capabilities
-                            </li>
-                            <li>
-                                <i data-lucide="check-circle" class="check-icon"></i>
-                                Multi-channel follow-up coordination
-                            </li>
-                        </ul>
-                        
-                        <div class="demo-note">
-                            <p><strong>What happens next:</strong> After you submit the form, Cory will call you within 2-3 minutes to demonstrate our AI capabilities. You'll experience exactly how we engage your prospects.</p>
+                <div class="demo-main-grid">
+                    <div class="demo-info-section">
+                        <div class="demo-info-card">
+                            <div class="demo-info-header">
+                                <div class="demo-info-icon">
+                                    <i data-lucide="phone-call"></i>
+                                </div>
+                                <h2>Get Agent Cory to Call You</h2>
+                                <p class="demo-info-subtitle">Experience our AI admissions assistant firsthand</p>
+                            </div>
+                            
+                            <div class="demo-experience-grid">
+                                <div class="experience-item">
+                                    <div class="experience-icon">
+                                        <i data-lucide="brain"></i>
+                                    </div>
+                                    <div class="experience-content">
+                                        <h4>Natural AI Conversation</h4>
+                                        <p>Experience human-like dialogue and intelligent qualification</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="experience-item">
+                                    <div class="experience-icon">
+                                        <i data-lucide="help-circle"></i>
+                                    </div>
+                                    <div class="experience-content">
+                                        <h4>Intelligent FAQ Responses</h4>
+                                        <p>See how Cory answers program-specific questions</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="experience-item">
+                                    <div class="experience-icon">
+                                        <i data-lucide="calendar-plus"></i>
+                                    </div>
+                                    <div class="experience-content">
+                                        <h4>Live Appointment Booking</h4>
+                                        <p>Watch Cory schedule meetings in real-time</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="experience-item">
+                                    <div class="experience-icon">
+                                        <i data-lucide="send"></i>
+                                    </div>
+                                    <div class="experience-content">
+                                        <h4>Multi-Channel Coordination</h4>
+                                        <p>Experience seamless SMS and email follow-up</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="demo-process-flow">
+                                <h3>What Happens Next</h3>
+                                <div class="process-timeline">
+                                    <div class="timeline-step">
+                                        <div class="step-number">1</div>
+                                        <div class="step-content">
+                                            <h4>Submit Form</h4>
+                                            <p>Fill out your details</p>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-connector"></div>
+                                    <div class="timeline-step">
+                                        <div class="step-number">2</div>
+                                        <div class="step-content">
+                                            <h4>Cory Calls</h4>
+                                            <p>Within 2-3 minutes</p>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-connector"></div>
+                                    <div class="timeline-step">
+                                        <div class="step-number">3</div>
+                                        <div class="step-content">
+                                            <h4>Live Demo</h4>
+                                            <p>Experience AI capabilities</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
@@ -204,179 +300,359 @@
         </section>
 
         <!-- Live Voice Demo -->
-        <section class="voice-demo-section section bg-light">
+        <section class="voice-demo-showcase section bg-light">
             <div class="container">
-                <h2 class="section-title">Try Our Voice AI Demo</h2>
-                <p class="section-subtitle">Experience Cory's conversational AI capabilities with this interactive demo</p>
-                
-                <div class="voice-demo-cta">
-                    <p>Click below to try our live AI voice assistant and see how Cory engages prospects with natural conversation.</p>
-                    <a href="/voice-demo.html" class="btn btn-primary btn-lg voice-demo-btn">Try Voice AI Demo</a>
+                <div class="voice-demo-card">
+                    <div class="voice-demo-header">
+                        <div class="voice-demo-icon">
+                            <i data-lucide="mic"></i>
+                        </div>
+                        <h2>Try Our Interactive Voice AI</h2>
+                        <p>Experience Cory's conversational AI capabilities with this live demo</p>
+                    </div>
+                    
+                    <div class="voice-demo-features">
+                        <div class="voice-feature">
+                            <i data-lucide="volume-2"></i>
+                            <span>Natural Speech Recognition</span>
+                        </div>
+                        <div class="voice-feature">
+                            <i data-lucide="brain"></i>
+                            <span>Contextual Understanding</span>
+                        </div>
+                        <div class="voice-feature">
+                            <i data-lucide="clock"></i>
+                            <span>Real-Time Responses</span>
+                        </div>
+                    </div>
+                    
+                    <div class="voice-demo-cta">
+                        <p>Click below to try our live AI voice assistant and see how Cory engages prospects with natural conversation.</p>
+                        <a href="/voice-demo.html" class="btn btn-primary btn-lg voice-demo-btn">
+                            <i data-lucide="play"></i>
+                            Try Voice AI Demo
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Custom AI Solutions -->
-        <section class="custom-ai-section section">
+        <section class="custom-ai-showcase section">
             <div class="container">
-                <h2 class="section-title">Custom AI Solutions for Education</h2>
-                <p class="section-subtitle">Beyond admissions, we build custom AI automation for every aspect of your institution</p>
+                <div class="custom-ai-header">
+                    <div class="custom-ai-badge">
+                        <i data-lucide="cpu"></i>
+                        <span>Custom AI Development</span>
+                    </div>
+                    <h2 class="section-title">Custom AI Solutions for Education</h2>
+                    <p class="section-subtitle">Beyond admissions, we build custom AI automation for every aspect of your institution</p>
+                </div>
                 
-                <div class="ai-solutions-grid">
-                    <div class="solution-card">
-                        <div class="solution-icon">
-                            <i data-lucide="user-plus"></i>
+                <div class="process-steps-grid">
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">1</div>
+                            <div class="process-icon">
+                                <i data-lucide="user-plus"></i>
+                            </div>
+                            <h3 class="process-title">Admissions Inquiry & Follow-Up</h3>
                         </div>
-                        <h3>Admissions Inquiry & Follow-Up</h3>
-                        <p>Convert inquiries into applicants through timely outreach with 3-4x faster response times and +20-30% conversion rates.</p>
-                        <ul class="solution-features">
+                        <div class="process-timing">🎯 3-4x faster response</div>
+                        <p class="process-description">Convert inquiries into applicants through timely outreach with 3-4x faster response times and +20-30% conversion rates.</p>
+                        <ul class="process-features">
                             <li>Cora (Voice AI) calls and qualifies leads instantly</li>
                             <li>Web & SMS chatbot for FAQ + appointment booking</li>
                             <li>CRM-based SQL triggers for new inquiries</li>
                             <li>Multi-channel follow-up automation</li>
                         </ul>
-                        <div class="solution-metrics">
-                            <span class="metric-badge success">3-4x faster response</span>
-                            <span class="metric-badge success">+20-30% conversion</span>
+                        <div class="process-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">3-4x</span>
+                                <span class="stat-label">Faster Response</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">+30%</span>
+                                <span class="stat-label">Conversion Rate</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="solution-card">
-                        <div class="solution-icon">
-                            <i data-lucide="graduation-cap"></i>
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">2</div>
+                            <div class="process-icon">
+                                <i data-lucide="graduation-cap"></i>
+                            </div>
+                            <h3 class="process-title">Student Onboarding & Melt Prevention</h3>
                         </div>
-                        <h3>Student Onboarding & Melt Prevention</h3>
-                        <p>Ensure admitted students show up and start on time with personalized SMS nudges and voice check-ins.</p>
-                        <ul class="solution-features">
+                        <div class="process-timing">📚 -21% melt rate</div>
+                        <p class="process-description">Ensure admitted students show up and start on time with personalized SMS nudges and voice check-ins.</p>
+                        <ul class="process-features">
                             <li>CAI sends personalized SMS nudges (FAFSA, orientation links)</li>
                             <li>SQL-triggered reminders based on status</li>
                             <li>Cora voice check-ins before start date</li>
                             <li>First-day readiness automation</li>
                         </ul>
-                        <div class="solution-metrics">
-                            <span class="metric-badge success">-21% melt rate</span>
-                            <span class="metric-badge success">+First-day readiness</span>
+                        <div class="process-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">-21%</span>
+                                <span class="stat-label">Melt Rate</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">95%</span>
+                                <span class="stat-label">First-Day Ready</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="solution-card">
-                        <div class="solution-icon">
-                            <i data-lucide="user-x"></i>
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">3</div>
+                            <div class="process-icon">
+                                <i data-lucide="user-x"></i>
+                            </div>
+                            <h3 class="process-title">Dropout Detection & Re-Engagement</h3>
                         </div>
-                        <h3>Dropout Detection & Re-Engagement</h3>
-                        <p>Catch at-risk students early and retain them with proactive AI-powered outreach and support.</p>
-                        <ul class="solution-features">
+                        <div class="process-timing">🔄 +3-15% retention</div>
+                        <p class="process-description">Catch at-risk students early and retain them with proactive AI-powered outreach and support.</p>
+                        <ul class="process-features">
                             <li>SQL-based risk triggers tied to LMS activity</li>
                             <li>CAI sends "We noticed you've been quiet" messages</li>
                             <li>Cora calls unresponsive students for live re-engagement</li>
                             <li>Automated support resource delivery</li>
                         </ul>
-                        <div class="solution-metrics">
-                            <span class="metric-badge success">+3-15% term-to-term retention</span>
-                            <span class="metric-badge success">Reduced staff time</span>
+                        <div class="process-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">+15%</span>
+                                <span class="stat-label">Retention Rate</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">-60%</span>
+                                <span class="stat-label">Staff Time</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="solution-card">
-                        <div class="solution-icon">
-                            <i data-lucide="file-text"></i>
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">4</div>
+                            <div class="process-icon">
+                                <i data-lucide="file-text"></i>
+                            </div>
+                            <h3 class="process-title">Academic Nudging & Motivation</h3>
                         </div>
-                        <h3>Academic Nudging & Motivation</h3>
-                        <p>Keep students moving with micro-engagements that improve course completion and daily logins.</p>
-                        <ul class="solution-features">
+                        <div class="process-timing">📝 Higher completion rates</div>
+                        <p class="process-description">Keep students moving with micro-engagements that improve course completion and daily logins.</p>
+                        <ul class="process-features">
                             <li>CAI nudges: "Assignment due tomorrow" or "Nice job on the quiz!"</li>
                             <li>Auto-personalization by course and student</li>
                             <li>GPT-powered tone/style adaptation</li>
                             <li>Integration with LMS for behavior tracking</li>
                         </ul>
-                        <div class="solution-metrics">
-                            <span class="metric-badge success">Higher assignment submission rates</span>
-                            <span class="metric-badge success">Increased daily logins</span>
+                        <div class="process-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">+40%</span>
+                                <span class="stat-label">Submission Rate</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">+25%</span>
+                                <span class="stat-label">Daily Logins</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="solution-card">
-                        <div class="solution-icon">
-                            <i data-lucide="monitor"></i>
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">5</div>
+                            <div class="process-icon">
+                                <i data-lucide="monitor"></i>
+                            </div>
+                            <h3 class="process-title">Homework Grading & Feedback</h3>
                         </div>
-                        <h3>Homework Grading & Feedback</h3>
-                        <p>Deliver feedback fast to keep students moving forward with AI-powered grading assistance.</p>
-                        <ul class="solution-features">
+                        <div class="process-timing">⚡ +50-80% speedup</div>
+                        <p class="process-description">Deliver feedback fast to keep students moving forward with AI-powered grading assistance.</p>
+                        <ul class="process-features">
                             <li>HW Grader drafts AI-based comments</li>
                             <li>LLM scoring with instructor override</li>
                             <li>Integration with LMS for workflow automation</li>
                             <li>Consistent feedback quality across instructors</li>
                         </ul>
-                        <div class="solution-metrics">
-                            <span class="metric-badge success">+50-80% grading speedup</span>
-                            <span class="metric-badge success">Better feedback quality</span>
+                        <div class="process-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">+80%</span>
+                                <span class="stat-label">Grading Speed</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">95%</span>
+                                <span class="stat-label">Quality Score</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="solution-card">
-                        <div class="solution-icon">
-                            <i data-lucide="headphones"></i>
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">6</div>
+                            <div class="process-icon">
+                                <i data-lucide="headphones"></i>
+                            </div>
+                            <h3 class="process-title">Student Support & Services</h3>
                         </div>
-                        <h3>Student Support & Services</h3>
-                        <p>24/7 AI-powered support for financial aid, registration, and campus life questions.</p>
-                        <ul class="solution-features">
+                        <div class="process-timing">🕐 24/7 availability</div>
+                        <p class="process-description">24/7 AI-powered support for financial aid, registration, and campus life questions.</p>
+                        <ul class="process-features">
                             <li>Financial aid application assistance</li>
                             <li>Registration and scheduling support</li>
                             <li>Campus life and event coordination</li>
                             <li>Multi-department FAQ automation</li>
                         </ul>
-                        <div class="solution-metrics">
-                            <span class="metric-badge success">24/7 availability</span>
-                            <span class="metric-badge success">Reduced support tickets</span>
+                        <div class="process-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">24/7</span>
+                                <span class="stat-label">Availability</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">-45%</span>
+                                <span class="stat-label">Support Tickets</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="custom-ai-cta">
-                    <h3>Need Something Specific?</h3>
-                    <p>We build custom AI solutions tailored to your institution's unique needs. From student success to administrative efficiency, our team can automate any workflow.</p>
-                    <button class="btn btn-secondary btn-lg" id="custom-ai-consultation">Discuss Custom AI Project</button>
+                <div class="custom-ai-cta-card">
+                    <div class="cta-card-content">
+                        <div class="cta-icon">
+                            <i data-lucide="lightbulb"></i>
+                        </div>
+                        <h3>Need Something Specific?</h3>
+                        <p>We build custom AI solutions tailored to your institution's unique needs. From student success to administrative efficiency, our team can automate any workflow.</p>
+                        <div class="cta-features">
+                            <span class="cta-feature">Custom Development</span>
+                            <span class="cta-feature">Full Integration</span>
+                            <span class="cta-feature">Ongoing Support</span>
+                        </div>
+                        <button class="btn btn-primary btn-lg" id="custom-ai-consultation">
+                            <i data-lucide="arrow-right"></i>
+                            Discuss Custom AI Project
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Results Section -->
-        <section class="results-section section bg-light">
+        <section class="results-showcase section bg-light">
             <div class="container">
-                <h2 class="section-title">Real Results from Real Institutions</h2>
-                <div class="results-grid">
-                    <div class="result-stat">
-                        <div class="stat-number">94%</div>
-                        <div class="stat-label">Contact Rate Achievement</div>
-                        <div class="stat-description">vs 40-50% industry average</div>
+                <div class="results-header">
+                    <div class="results-badge">
+                        <i data-lucide="trophy"></i>
+                        <span>Proven Results</span>
                     </div>
-                    <div class="result-stat">
-                        <div class="stat-number">&lt; 60s</div>
-                        <div class="stat-label">Average Response Time</div>
-                        <div class="stat-description">vs 4-24 hours typical</div>
+                    <h2 class="section-title">Real Results from Real Institutions</h2>
+                    <p class="section-subtitle">See the measurable impact Agent Cory delivers across different institution types</p>
+                </div>
+                
+                <div class="results-showcase-grid">
+                    <div class="result-showcase-card">
+                        <div class="result-icon">
+                            <i data-lucide="target"></i>
+                        </div>
+                        <div class="result-metric">
+                            <div class="metric-number">94%</div>
+                            <div class="metric-label">Contact Rate Achievement</div>
+                        </div>
+                        <div class="result-comparison">
+                            <span class="comparison-before">Industry: 40-50%</span>
+                            <span class="comparison-arrow">→</span>
+                            <span class="comparison-after">Cory: 94%</span>
+                        </div>
                     </div>
-                    <div class="result-stat">
-                        <div class="stat-number">2,100</div>
-                        <div class="stat-label">Staff Hours Saved/Year</div>
-                        <div class="stat-description">per institution average</div>
+                    
+                    <div class="result-showcase-card">
+                        <div class="result-icon">
+                            <i data-lucide="clock"></i>
+                        </div>
+                        <div class="result-metric">
+                            <div class="metric-number">&lt; 60s</div>
+                            <div class="metric-label">Average Response Time</div>
+                        </div>
+                        <div class="result-comparison">
+                            <span class="comparison-before">Typical: 4-24hrs</span>
+                            <span class="comparison-arrow">→</span>
+                            <span class="comparison-after">Cory: &lt; 60s</span>
+                        </div>
                     </div>
-                    <div class="result-stat">
-                        <div class="stat-number">5-10x</div>
-                        <div class="stat-label">ROI Potential</div>
-                        <div class="stat-description">in first year</div>
+                    
+                    <div class="result-showcase-card">
+                        <div class="result-icon">
+                            <i data-lucide="users"></i>
+                        </div>
+                        <div class="result-metric">
+                            <div class="metric-number">2,100</div>
+                            <div class="metric-label">Staff Hours Saved/Year</div>
+                        </div>
+                        <div class="result-comparison">
+                            <span class="comparison-before">Manual: 40hrs/week</span>
+                            <span class="comparison-arrow">→</span>
+                            <span class="comparison-after">Automated: 4hrs/week</span>
+                        </div>
+                    </div>
+                    
+                    <div class="result-showcase-card featured">
+                        <div class="result-icon">
+                            <i data-lucide="trending-up"></i>
+                        </div>
+                        <div class="result-metric">
+                            <div class="metric-number">5-10x</div>
+                            <div class="metric-label">ROI Potential</div>
+                        </div>
+                        <div class="result-comparison">
+                            <span class="comparison-before">Investment: $36K</span>
+                            <span class="comparison-arrow">→</span>
+                            <span class="comparison-after">Return: $180K-360K</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Final CTA -->
-        <section class="final-cta-section section">
-            <div class="container text-center">
-                <h2>Ready to Transform Your Institution with AI?</h2>
-                <p class="lead">Whether you need admissions automation or custom AI solutions, we're here to help</p>
-                <div class="cta-buttons">
-                    <button class="btn btn-primary btn-lg" onclick="document.getElementById('demo-request-form').scrollIntoView({behavior: 'smooth'})">Get Called by Cory</button>
-                    <button class="btn btn-secondary btn-lg" id="custom-ai-cta">Explore Custom AI</button>
+        <section class="demo-final-cta section">
+            <div class="container">
+                <div class="final-cta-card">
+                    <div class="cta-card-header">
+                        <div class="cta-card-icon">
+                            <i data-lucide="rocket"></i>
+                        </div>
+                        <h2>Ready to Transform Your Institution with AI?</h2>
+                        <p class="lead">Whether you need admissions automation or custom AI solutions, we're here to help</p>
+                    </div>
+                    
+                    <div class="cta-options">
+                        <div class="cta-option">
+                            <div class="option-icon">
+                                <i data-lucide="phone"></i>
+                            </div>
+                            <h4>Get Called by Cory</h4>
+                            <p>Experience our AI assistant firsthand</p>
+                            <button class="btn btn-primary btn-lg" onclick="document.getElementById('demo-request-form').scrollIntoView({behavior: 'smooth'})">
+                                <i data-lucide="phone-call"></i>
+                                Get Demo Call
+                            </button>
+                        </div>
+                        
+                        <div class="cta-option">
+                            <div class="option-icon">
+                                <i data-lucide="cpu"></i>
+                            </div>
+                            <h4>Explore Custom AI</h4>
+                            <p>Discuss tailored solutions for your needs</p>
+                            <button class="btn btn-secondary btn-lg" id="custom-ai-cta">
+                                <i data-lucide="arrow-right"></i>
+                                Custom AI Consultation
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -551,6 +827,7 @@
      data-widget-id="68b077f85dff15aa9384c4e9"   > 
      </script>
 
+    <script type="module" src="/assets/js/main.ts"></script>
     <script>
         // Initialize Lucide icons after DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
