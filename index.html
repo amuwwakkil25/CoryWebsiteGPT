@@ -170,7 +170,7 @@
                         </div>
                         <h3>Chat with Cory</h3>
                         <p>See how Cory answers questions and qualifies leads instantly</p>
-                        <button class="btn btn-primary" id="demo-chat-btn">Start Chat Demo</button>
+                        <button class="btn btn-primary" id="demo-chat-btn" onclick="if(window.$_Tawk && window.$_Tawk.maximize) { window.$_Tawk.maximize(); } else if(window.LeadConnector && window.LeadConnector.openWidget) { window.LeadConnector.openWidget(); } else { console.log('Chat widget not available yet'); }">Start Chat Demo</button>
                     </div>
                     
                     <div class="demo-card">
