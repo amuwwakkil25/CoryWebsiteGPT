@@ -170,7 +170,7 @@
                         </div>
                         <h3>Chat with Cory</h3>
                         <p>See how Cory answers questions and qualifies leads instantly</p>
-                        <button class="btn btn-primary" id="demo-chat-btn" onclick="if(window.$_Tawk && window.$_Tawk.maximize) { window.$_Tawk.maximize(); } else if(window.LeadConnector && window.LeadConnector.openWidget) { window.LeadConnector.openWidget(); } else { console.log('Chat widget not available yet'); }">Start Chat Demo</button>
+                        <button class="btn btn-primary" id="demo-chat-btn">Start Chat Demo</button>
                     </div>
                     
                     <div class="demo-card">
@@ -672,12 +672,40 @@
     <!-- Scripts -->
     <script type="module" src="/assets/js/main.ts"></script>
     <script>
-        // Initialize Lucide icons after DOM is loaded
+        // Chat widget integration
         document.addEventListener('DOMContentLoaded', function() {
+            const chatBtn = document.getElementById('demo-chat-btn');
+            if (chatBtn) {
+                chatBtn.addEventListener('click', function() {
+                    // Try multiple methods to open the chat widget
+                    if (window.leadConnectorWidget && window.leadConnectorWidget.open) {
+                        window.leadConnectorWidget.open();
+                    } else if (window.parent && window.parent.postMessage) {
+                        window.parent.postMessage({ type: 'OPEN_CHAT_WIDGET' }, '*');
+                    } else if (document.querySelector('.leadconnector-chat-widget')) {
+                        const widget = document.querySelector('.leadconnector-chat-widget');
+                        if (widget) {
+                            widget.click();
+                        }
+                    } else {
+                        // Fallback: try to find and click the chat bubble
+                        setTimeout(() => {
+                            const chatBubble = document.querySelector('[data-testid="chat-bubble"], .chat-widget-bubble, .leadconnector-widget');
+                            if (chatBubble) {
+                                chatBubble.click();
+                            } else {
+                                console.log('Chat widget not found - it may still be loading');
+                            }
+                        }, 100);
+                    }
+                });
+            }
+        });
+        
+        // Initialize Lucide icons after DOM is loaded
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
-        });
     </script>
     
     <!-- LeadConnector Chat Widget -->
