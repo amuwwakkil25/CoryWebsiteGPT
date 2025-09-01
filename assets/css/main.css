@@ -2579,14 +2579,14 @@ cite span {
     color: var(--sky-gradient-start);
 }
 
-.voice-demo-btn {
-    box-shadow: var(--shadow-lg);
+    width: 60px;
+    height: 60px;
     position: relative;
     overflow: hidden;
 }
 
 .voice-demo-btn::before {
-    content: '';
+    transform: scale(1.05);
     position: absolute;
     top: 0;
     left: -100%;
