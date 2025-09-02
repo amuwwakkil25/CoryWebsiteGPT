@@ -2583,7 +2583,6 @@ cite span {
     height: 60px;
     position: relative;
     overflow: hidden;
-}
 
 .voice-demo-btn::before {
     transform: scale(1.05);
