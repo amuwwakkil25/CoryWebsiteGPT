@@ -25,6 +25,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/main.css" />
     
+    <!-- Icon Libraries -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -68,40 +72,69 @@
     </header>
 
     <main id="main">
-        <section class="page-hero">
+        <section class="resources-hero">
             <div class="container">
-                <h1>Resources & Insights</h1>
-                <p class="lead">Expert guidance, best practices, and actionable insights for modernizing your admissions process with AI.</p>
+                <div class="hero-content">
+                    <h1>Resources & Insights</h1>
+                    <p class="lead">Expert guidance, proven strategies, and actionable insights for transforming your admissions process with AI.</p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Institutions Helped</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Expert Resources</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100K+</div>
+                            <div class="stat-label">Downloads</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Filters -->
-        <section class="filters-section section">
+        <!-- Search and Filters -->
+        <section class="resources-filters section">
             <div class="container">
-                <div class="filters-bar">
-                    <div class="filter-group">
-                        <label for="topic-filter">Topic</label>
-                        <select id="topic-filter" class="filter-select">
-                            <option value="all">All Topics</option>
-                            <option value="admissions">Admissions Strategy</option>
-                            <option value="ai">AI & Automation</option>
-                            <option value="crm">CRM & Technology</option>
-                            <option value="conversion">Lead Conversion</option>
-                        </select>
+                <div class="filters-header">
+                    <div class="search-box">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" id="resource-search" placeholder="Search resources..." />
                     </div>
                     
-                    <div class="filter-group">
-                        <label for="format-filter">Format</label>
-                        <select id="format-filter" class="filter-select">
-                            <option value="all">All Formats</option>
-                            <option value="guide">Guide</option>
-                            <option value="webinar">Webinar</option>
-                            <option value="case-study">Case Study</option>
-                            <option value="blog">Blog Post</option>
-                        </select>
+                    <div class="filter-controls">
+                        <div class="filter-group">
+                            <label for="type-filter">Type</label>
+                            <select id="type-filter" class="filter-select">
+                                <option value="all">All Types</option>
+                                <option value="blog">Blog Posts</option>
+                                <option value="case_study">Case Studies</option>
+                                <option value="guide">Guides</option>
+                                <option value="ebook">eBooks</option>
+                                <option value="webinar">Webinars</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="category-filter">Category</label>
+                            <select id="category-filter" class="filter-select">
+                                <option value="all">All Categories</option>
+                                <option value="ai">AI & Automation</option>
+                                <option value="admissions">Admissions Strategy</option>
+                                <option value="conversion">Lead Conversion</option>
+                                <option value="crm">CRM & Technology</option>
+                                <option value="roi">ROI & Analytics</option>
+                            </select>
+                        </div>
+                        
+                        <button id="clear-filters" class="btn btn-secondary">
+                            <i data-lucide="x"></i>
+                            Clear
+                        </button>
                     </div>
-                    
-                    <button id="clear-filters" class="btn btn-secondary">Clear Filters</button>
                 </div>
             </div>
         </section>
@@ -110,250 +143,72 @@
         <section class="featured-resources section">
             <div class="container">
                 <h2 class="section-title">Featured Resources</h2>
-                <div class="featured-grid">
-                    
-                    <div class="featured-card">
-                        <div class="card-image">
-                            <img src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=500" alt="AI Admissions Guide" />
-                            <div class="card-badge">New Guide</div>
-                        </div>
-                        <div class="card-content">
-                            <h3>The Complete Guide to AI in Admissions</h3>
-                            <p>Comprehensive 40-page guide covering implementation strategies, best practices, and ROI measurement for AI-powered admissions automation.</p>
-                            <div class="card-meta">
-                                <span class="meta-item">📖 Guide</span>
-                                <span class="meta-item">⏱ 25 min read</span>
-                                <span class="meta-item">🎯 AI & Automation</span>
-                            </div>
-                            <button class="btn btn-primary" data-resource-id="ai-guide">Download Guide</button>
-                        </div>
+                <div id="featured-content" class="featured-grid">
+                    <!-- Content will be loaded dynamically -->
+                    <div class="loading-placeholder">
+                        <div class="loading-spinner"></div>
+                        <p>Loading featured resources...</p>
                     </div>
-                    
-                    <div class="featured-card">
-                        <div class="card-image">
-                            <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Conversion Webinar" />
-                            <div class="card-badge">Live Webinar</div>
-                        </div>
-                        <div class="card-content">
-                            <h3>5 Strategies to Double Your Lead Conversion Rate</h3>
-                            <p>Join our upcoming webinar to learn proven tactics that top-performing institutions use to convert more inquiries into enrolled students.</p>
-                            <div class="card-meta">
-                                <span class="meta-item">🎥 Webinar</span>
-                                <span class="meta-item">⏱ 45 min</span>
-                                <span class="meta-item">📊 Lead Conversion</span>
-                            </div>
-                            <button class="btn btn-primary" data-resource-id="conversion-webinar">Register Now</button>
-                        </div>
-                    </div>
-                    
                 </div>
             </div>
         </section>
 
         <!-- All Resources -->
-        <section class="all-resources section">
+        <section class="all-resources section bg-light">
             <div class="container">
-                <h2 class="section-title">All Resources</h2>
-                <div class="resources-grid" id="resources-grid">
-                    
-                    <!-- Guide Resources -->
-                    <div class="resource-card" data-topic="admissions" data-format="guide">
-                        <div class="resource-icon">
-                            <i data-lucide="book-open"></i>
-                        </div>
-                        <div class="resource-content">
-                            <h3>Admissions Response Time Benchmarks 2024</h3>
-                            <p>Industry data showing how response time impacts conversion rates, with actionable recommendations for improvement.</p>
-                            <div class="resource-meta">
-                                <span class="meta-badge guide">Guide</span>
-                                <span class="meta-text">15 min read</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary" data-resource-id="response-time-guide">Download</button>
+                <div class="resources-header">
+                    <h2 class="section-title">All Resources</h2>
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="grid">
+                            <i data-lucide="grid-3x3"></i>
+                            Grid
+                        </button>
+                        <button class="view-btn" data-view="list">
+                            <i data-lucide="list"></i>
+                            List
+                        </button>
                     </div>
-                    
-                    <div class="resource-card" data-topic="crm" data-format="guide">
-                        <div class="resource-icon">
-                            <i data-lucide="book-open"></i>
-                        </div>
-                        <div class="resource-content">
-                            <h3>CRM Integration Best Practices</h3>
-                            <p>Step-by-step guide for seamless CRM integration, data mapping, and workflow automation setup.</p>
-                            <div class="resource-meta">
-                                <span class="meta-badge guide">Guide</span>
-                                <span class="meta-text">20 min read</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary" data-resource-id="crm-integration-guide">Download</button>
+                </div>
+                
+                <div id="resources-content" class="resources-grid">
+                    <!-- Content will be loaded dynamically -->
+                    <div class="loading-placeholder">
+                        <div class="loading-spinner"></div>
+                        <p>Loading resources...</p>
                     </div>
-                    
-                    <div class="resource-card" data-topic="conversion" data-format="guide">
-                        <div class="resource-icon">
-                            <i data-lucide="book-open"></i>
-                        </div>
-                        <div class="resource-content">
-                            <h3>Multi-Channel Outreach Playbook</h3>
-                            <p>Templates and strategies for coordinated phone, SMS, email, and chat campaigns that convert.</p>
-                            <div class="resource-meta">
-                                <span class="meta-badge guide">Guide</span>
-                                <span class="meta-text">30 min read</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary" data-resource-id="multichannel-playbook">Download</button>
-                    </div>
-                    
-                    <!-- Webinar Resources -->
-                    <div class="resource-card" data-topic="ai" data-format="webinar">
-                        <div class="resource-icon">
-                            <i data-lucide="video"></i>
-                        </div>
-                        <div class="resource-content">
-                            <h3>AI Implementation: Lessons from 100+ Institutions</h3>
-                            <p>Real-world insights from successful AI implementations, including common pitfalls and how to avoid them.</p>
-                            <div class="resource-meta">
-                                <span class="meta-badge webinar">Webinar</span>
-                                <span class="meta-text">45 min</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary" data-resource-id="ai-lessons-webinar">Watch Now</button>
-                    </div>
-                    
-                    <div class="resource-card" data-topic="admissions" data-format="webinar">
-                        <div class="resource-icon">
-                            <i data-lucide="video"></i>
-                        </div>
-                        <div class="resource-content">
-                            <h3>Building High-Converting Admissions Funnels</h3>
-                            <p>Framework for designing admissions processes that maximize conversion from inquiry to enrollment.</p>
-                            <div class="resource-meta">
-                                <span class="meta-badge webinar">Webinar</span>
-                                <span class="meta-text">50 min</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary" data-resource-id="funnel-webinar">Watch Now</button>
-                    </div>
-                    
-                    <!-- Case Study Resources -->
-                    <div class="resource-card" data-topic="ai" data-format="case-study">
-                        <div class="resource-icon">
-                            <i data-lucide="file-text"></i>
-                        </div>
-                        <div class="resource-content">
-                            <h3>Case Study: 847% ROI in 12 Months</h3>
-                            <p>How Metro State University transformed their admissions process and achieved record-breaking results.</p>
-                            <div class="resource-meta">
-                                <span class="meta-badge case-study">Case Study</span>
-                                <span class="meta-text">12 min read</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary" data-resource-id="metro-state-case">Read Case</button>
-                    </div>
-                    
-                    <div class="resource-card" data-topic="conversion" data-format="case-study">
-                        <div class="resource-icon">
-                            <i data-lucide="file-text"></i>
-                        </div>
-                        <div class="resource-content">
-                            <h3>Case Study: 3x Increase in Contact Rates</h3>
-                            <p>Community College Network's journey from 30% to 94% contact rates across 5 campuses.</p>
-                            <div class="resource-meta">
-                                <span class="meta-badge case-study">Case Study</span>
-                                <span class="meta-text">10 min read</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary" data-resource-id="ccn-case">Read Case</button>
-                    </div>
-                    
-                    <!-- Blog Resources -->
-                    <div class="resource-card" data-topic="admissions" data-format="blog">
-                        <div class="resource-icon">
-                            <i data-lucide="edit"></i>
-                        </div>
-                        <div class="resource-content">
-                            <h3>The Psychology of Fast Response Times</h3>
-                            <p>Research-backed insights into why speed matters so much in admissions and how to leverage it.</p>
-                            <div class="resource-meta">
-                                <span class="meta-badge blog">Blog Post</span>
-                                <span class="meta-text">8 min read</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary" data-resource-id="psychology-speed-blog">Read Post</button>
-                    </div>
-                    
-                    <div class="resource-card" data-topic="ai" data-format="blog">
-                        <div class="resource-icon">
-                            <i data-lucide="edit"></i>
-                        </div>
-                        <div class="resource-content">
-                            <h3>AI vs Human: Finding the Right Balance</h3>
-                            <p>When to use AI and when human touch matters most in the admissions journey.</p>
-                            <div class="resource-meta">
-                                <span class="meta-badge blog">Blog Post</span>
-                                <span class="meta-text">6 min read</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary" data-resource-id="ai-human-balance-blog">Read Post</button>
-                    </div>
-                    
-                    <div class="resource-card" data-topic="crm" data-format="blog">
-                        <div class="resource-icon">
-                            <i data-lucide="edit"></i>
-                        </div>
-                        <div class="resource-content">
-                            <h3>Maximizing Your Slate CRM Investment</h3>
-                            <p>Advanced tips and tricks for getting the most out of your Slate CRM with AI integration.</p>
-                            <div class="resource-meta">
-                                <span class="meta-badge blog">Blog Post</span>
-                                <span class="meta-text">12 min read</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary" data-resource-id="slate-tips-blog">Read Post</button>
-                    </div>
-                    
+                </div>
+                
+                <div class="load-more-container">
+                    <button id="load-more" class="btn btn-secondary" style="display: none;">
+                        <i data-lucide="plus"></i>
+                        Load More Resources
+                    </button>
                 </div>
             </div>
         </section>
 
-        <!-- Lead Magnets -->
-        <section class="lead-magnets section bg-light">
+        <!-- Newsletter Signup -->
+        <section class="newsletter-section section">
             <div class="container">
-                <h2 class="section-title">Premium Resources</h2>
-                <div class="magnets-grid">
-                    
-                    <div class="magnet-card">
-                        <div class="magnet-icon">
-                            <i data-lucide="bar-chart"></i>
+                <div class="newsletter-card">
+                    <div class="newsletter-content">
+                        <div class="newsletter-icon">
+                            <i data-lucide="mail"></i>
                         </div>
-                        <div class="magnet-content">
-                            <h3>2024 Admissions Benchmarks Report</h3>
-                            <p>Comprehensive industry data including response times, conversion rates, and ROI metrics from 500+ institutions.</p>
-                            <ul class="magnet-features">
-                                <li>50+ key performance benchmarks</li>
-                                <li>Industry comparison data</li>
-                                <li>Actionable improvement recommendations</li>
-                                <li>Executive summary included</li>
-                            </ul>
-                        </div>
-                        <button class="btn btn-primary" data-resource-id="benchmarks-report">Get Free Report</button>
+                        <h3>Stay Updated with Latest Insights</h3>
+                        <p>Get weekly admissions automation tips, case studies, and industry insights delivered to your inbox.</p>
                     </div>
                     
-                    <div class="magnet-card">
-                        <div class="magnet-icon">
-                            <i data-lucide="calculator"></i>
+                    <form id="newsletter-form" class="newsletter-form">
+                        <div class="newsletter-inputs">
+                            <input type="email" id="newsletter-email" name="email" placeholder="Enter your email" required />
+                            <button type="submit" class="btn btn-primary">
+                                <i data-lucide="arrow-right"></i>
+                                Subscribe
+                            </button>
                         </div>
-                        <div class="magnet-content">
-                            <h3>ROI Calculator + Implementation Toolkit</h3>
-                            <p>Interactive calculator plus complete toolkit for planning and implementing AI admissions automation.</p>
-                            <ul class="magnet-features">
-                                <li>Custom ROI projection tool</li>
-                                <li>Implementation timeline template</li>
-                                <li>Staff training materials</li>
-                                <li>Success metrics tracking sheets</li>
-                            </ul>
-                        </div>
-                        <button class="btn btn-primary" data-resource-id="roi-toolkit">Get Toolkit</button>
-                    </div>
-                    
+                        <p class="newsletter-note">No spam. Unsubscribe anytime.</p>
+                    </form>
                 </div>
             </div>
         </section>
@@ -447,60 +302,19 @@
         </div>
     </footer>
 
-    <!-- Call Demo Modal -->
-    <div id="call-modal" class="modal">
-        <div class="modal-content">
+    <!-- Content Detail Modal -->
+    <div id="content-modal" class="modal">
+        <div class="modal-content large">
             <div class="modal-header">
-                <h3>Experience Cory's Call Capabilities</h3>
+                <h3 id="content-modal-title">Resource Title</h3>
                 <button class="modal-close" aria-label="Close modal">
                     <i data-lucide="x"></i>
                 </button>
             </div>
             
             <div class="modal-body">
-                <p>Get a live demonstration of how Cory makes outbound calls to engage prospects.</p>
-                
-                <form id="call-demo-form">
-                    <div class="form-group">
-                        <label for="call-name">Full Name *</label>
-                        <input type="text" id="call-name" name="name" required />
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="call-phone">Phone Number *</label>
-                        <input type="tel" id="call-phone" name="phone" required placeholder="+1 (555) 123-4567" />
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="call-time">When would you like Cory to call?</label>
-                        <select id="call-time" name="callTime">
-                            <option value="now">Right now</option>
-                            <option value="1min">In 1 minute</option>
-                            <option value="custom">Pick a specific time</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="call-consent" name="consent" required />
-                            I consent to receive a demonstration call from Agent Cory AI system
-                        </label>
-                    </div>
-                    
-                    <input type="text" name="website" style="display: none;" />
-                    
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Request Demo Call</button>
-                    </div>
-                </form>
-                
-                <div id="call-success" style="display: none;">
-                    <div class="success-message">
-                        <i data-lucide="check-circle" class="success-icon"></i>
-                        <h4>Demo Call Scheduled!</h4>
-                        <p>Cory will call you shortly to demonstrate our AI capabilities.</p>
-                    </div>
+                <div id="content-modal-body">
+                    <!-- Content will be loaded dynamically -->
                 </div>
             </div>
         </div>
@@ -518,7 +332,7 @@
             
             <div class="modal-body">
                 <div id="magnet-modal-description">
-                    <p>Get instant access to this premium resource. After download, Cory will follow up with additional insights and resources.</p>
+                    <p>Get instant access to this premium resource.</p>
                 </div>
                 
                 <form id="lead-magnet-form">
@@ -553,7 +367,7 @@
                     <div class="form-group">
                         <label class="checkbox-label">
                             <input type="checkbox" id="magnet-follow-up" name="followUp" />
-                            I'd like Cory to follow up with personalized insights for my institution
+                            I'd like to receive additional insights and resources
                         </label>
                     </div>
                     
@@ -570,12 +384,669 @@
                     <div class="success-message">
                         <i data-lucide="check-circle" class="success-icon"></i>
                         <h4>Resource Sent!</h4>
-                        <p>Check your email for the download link. If you requested follow-up, Cory will be in touch soon!</p>
+                        <p>Check your email for the download link.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+        /* Resources Page Specific Styles */
+        .resources-hero {
+            background: var(--gradient-brand);
+            padding: var(--space-12) 0 var(--space-8);
+            margin-top: 80px;
+            text-align: center;
+            color: var(--text-inverse);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .resources-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+            opacity: 0.4;
+        }
+        
+        .resources-hero .container {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .resources-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--text-inverse);
+            margin-bottom: var(--space-3);
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .resources-hero .lead {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: var(--space-6);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-6);
+            margin-top: var(--space-6);
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: var(--space-3);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-lg);
+            min-width: 120px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            color: var(--fresh-lime);
+            margin-bottom: var(--space-1);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+        
+        /* Filters Section */
+        .resources-filters {
+            background: var(--bg-light);
+            padding: var(--space-6) 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .filters-header {
+            display: flex;
+            gap: var(--space-4);
+            align-items: end;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: var(--space-3);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            width: 20px;
+            height: 20px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: var(--space-3) var(--space-3) var(--space-3) var(--space-10);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            font-size: 1rem;
+            background: var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--sky-gradient-start);
+            box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.1);
+        }
+        
+        .filter-controls {
+            display: flex;
+            gap: var(--space-3);
+            align-items: end;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+        }
+        
+        .filter-group label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        
+        .filter-select {
+            padding: var(--space-2) var(--space-3);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg-primary);
+            font-size: 0.875rem;
+            min-width: 140px;
+        }
+        
+        /* Featured Resources */
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-6);
+        }
+        
+        .featured-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .featured-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--sky-gradient-start);
+        }
+        
+        .featured-image {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+        }
+        
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .featured-card:hover .featured-image img {
+            transform: scale(1.05);
+        }
+        
+        .content-badge {
+            position: absolute;
+            top: var(--space-3);
+            left: var(--space-3);
+            padding: 0.5rem var(--space-2);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .content-badge.blog {
+            background: var(--warm-coral);
+            color: var(--text-inverse);
+        }
+        
+        .content-badge.case_study {
+            background: var(--fresh-lime);
+            color: var(--midnight-navy);
+        }
+        
+        .content-badge.guide {
+            background: var(--sky-gradient-start);
+            color: var(--text-inverse);
+        }
+        
+        .content-badge.ebook {
+            background: var(--midnight-navy);
+            color: var(--text-inverse);
+        }
+        
+        .content-badge.webinar {
+            background: var(--success);
+            color: var(--text-inverse);
+        }
+        
+        .featured-content {
+            padding: var(--space-5);
+        }
+        
+        .featured-content h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--midnight-navy);
+            margin-bottom: var(--space-2);
+            line-height: 1.3;
+        }
+        
+        .featured-content p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-4);
+            line-height: 1.6;
+        }
+        
+        .content-meta {
+            display: flex;
+            gap: var(--space-3);
+            align-items: center;
+            margin-bottom: var(--space-4);
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .meta-icon {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .content-tags {
+            display: flex;
+            gap: var(--space-1);
+            flex-wrap: wrap;
+            margin-top: var(--space-3);
+        }
+        
+        .tag {
+            background: var(--silver-mist);
+            color: var(--midnight-navy);
+            padding: 0.25rem var(--space-2);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        /* Resources Grid */
+        .resources-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-6);
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: var(--space-1);
+            background: var(--bg-primary);
+            padding: 0.25rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+        
+        .view-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            padding: var(--space-1) var(--space-2);
+            border: none;
+            background: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .view-btn.active {
+            background: var(--gradient-sky);
+            color: var(--text-inverse);
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-4);
+            margin-top: var(--space-6);
+        }
+        
+        .resources-grid.list-view {
+            grid-template-columns: 1fr;
+            gap: var(--space-3);
+        }
+        
+        .resource-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--sky-gradient-start);
+        }
+        
+        .resources-grid.list-view .resource-card {
+            flex-direction: row;
+            align-items: center;
+        }
+        
+        .resource-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .resources-grid.list-view .resource-image {
+            width: 200px;
+            height: 120px;
+            flex-shrink: 0;
+        }
+        
+        .resource-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .resource-card:hover .resource-image img {
+            transform: scale(1.05);
+        }
+        
+        .resource-content {
+            padding: var(--space-4);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .resource-content h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--midnight-navy);
+            margin-bottom: var(--space-2);
+            line-height: 1.3;
+        }
+        
+        .resource-content p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-3);
+            line-height: 1.5;
+            flex: 1;
+        }
+        
+        .resource-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        
+        .read-time {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+        
+        .resource-action {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--sky-gradient-start);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            transition: all 0.3s ease;
+        }
+        
+        .resource-card:hover .resource-action {
+            color: var(--midnight-navy);
+            transform: translateX(4px);
+        }
+        
+        /* Newsletter Section */
+        .newsletter-section {
+            background: var(--gradient-sky);
+            color: var(--text-inverse);
+        }
+        
+        .newsletter-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-3);
+        }
+        
+        .newsletter-icon i {
+            font-size: 1.75rem;
+            color: var(--text-inverse);
+        }
+        
+        .newsletter-content h3 {
+            color: var(--text-inverse);
+            margin-bottom: var(--space-2);
+        }
+        
+        .newsletter-content p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: var(--space-4);
+        }
+        
+        .newsletter-inputs {
+            display: flex;
+            gap: var(--space-2);
+            margin-bottom: var(--space-2);
+        }
+        
+        .newsletter-inputs input {
+            flex: 1;
+            padding: var(--space-3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+        
+        .newsletter-note {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+        }
+        
+        /* Loading States */
+        .loading-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-8);
+            color: var(--text-secondary);
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--sky-gradient-start);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: var(--space-3);
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Modal Enhancements */
+        .modal-content.large {
+            max-width: 800px;
+            max-height: 90vh;
+        }
+        
+        .content-modal-body {
+            max-height: 70vh;
+            overflow-y: auto;
+            padding: var(--space-4);
+        }
+        
+        .content-modal-body h1,
+        .content-modal-body h2,
+        .content-modal-body h3 {
+            color: var(--midnight-navy);
+            margin-top: var(--space-4);
+            margin-bottom: var(--space-2);
+        }
+        
+        .content-modal-body h1 {
+            font-size: 2rem;
+            margin-top: 0;
+        }
+        
+        .content-modal-body p {
+            line-height: 1.7;
+            margin-bottom: var(--space-3);
+        }
+        
+        .content-modal-body ul,
+        .content-modal-body ol {
+            margin: var(--space-3) 0;
+            padding-left: var(--space-4);
+        }
+        
+        .content-modal-body li {
+            margin-bottom: var(--space-1);
+            line-height: 1.6;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .resources-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: var(--space-3);
+            }
+            
+            .filters-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: var(--space-3);
+            }
+            
+            .filter-controls {
+                flex-direction: column;
+                gap: var(--space-2);
+            }
+            
+            .newsletter-inputs {
+                flex-direction: column;
+            }
+            
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .resources-grid.list-view .resource-card {
+                flex-direction: column;
+            }
+            
+            .resources-grid.list-view .resource-image {
+                width: 100%;
+                height: 200px;
+            }
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: var(--space-8);
+            color: var(--text-secondary);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: var(--space-3);
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-2);
+        }
+        
+        /* Filter Active States */
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--sky-gradient-start);
+            box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.1);
+        }
+        
+        .active-filters {
+            display: flex;
+            gap: var(--space-2);
+            margin-top: var(--space-3);
+            flex-wrap: wrap;
+        }
+        
+        .active-filter {
+            background: var(--sky-gradient-start);
+            color: var(--text-inverse);
+            padding: 0.25rem var(--space-2);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+        
+        .active-filter button {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            padding: 0;
+            margin-left: var(--space-1);
+        }
+    </style>
 
     <!-- LeadConnector Chat Widget -->
     <script>
@@ -592,5 +1063,6 @@
      data-widget-id="68b077f85dff15aa9384c4e9"   > 
      </script>
 
+    <script type="module" src="/assets/js/resources.ts"></script>
 </body>
 </html>

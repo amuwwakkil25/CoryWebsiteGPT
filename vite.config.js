@@ -13,7 +13,8 @@ export default defineConfig({
         resources: resolve(__dirname, 'resources.html'),
         privacy: resolve(__dirname, 'privacy.html'),
         'voice-demo': resolve(__dirname, 'voice-demo.html'),
-        terms: resolve(__dirname, 'terms.html')
+        terms: resolve(__dirname, 'terms.html'),
+        'content-template': resolve(__dirname, 'content/[slug].html')
       }
     }
   }
