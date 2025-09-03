@@ -158,10 +158,20 @@ export class ContentService {
 
   // Increment view count
   static async incrementViewCount(id: string): Promise<void> {
-    const { error } = await supabase
-      .rpc('increment_view_count', { content_id: id })
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/increment-view-count`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content_id: id })
+      })
     
-    if (error) {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+    } catch (error) {
       console.error('Error incrementing view count:', error)
     }
   }
