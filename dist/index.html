@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agent Cory - Boost Admissions Conversions with AI-Powered Speed & Precision</title>
+    <meta name="description" content="Agent Cory engages new inquiries in under 30 seconds by call, text, chat, and email—qualifies, answers FAQs, books appointments, then hands off to counselors." />
+    
+    <!-- OpenGraph -->
+    <meta property="og:title" content="Agent Cory - AI-Powered Admissions Assistant" />
+    <meta property="og:description" content="Boost admissions conversions with AI that responds in under 60 seconds across all channels" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://agentcory.com" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="shortcut icon" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
+    <meta name="msapplication-TileImage" content="/favicon.png" />
+    <meta name="msapplication-TileColor" content="#0B1F36" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    
+    <!-- Icon Libraries -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXX');
+    </script>
+    
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Agent Cory",
+        "description": "AI-powered admissions assistant for colleges and universities",
+        "url": "https://agentcory.com",
+        "logo": "https://agentcory.com/assets/images/logo.svg",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+1-558-CORY-AI",
+            "contactType": "customer service"
+        },
+        "sameAs": [
+            "https://linkedin.com/company/agentcory",
+            "https://twitter.com/agentcory"
+        ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Agent Cory",
+        "description": "AI admissions assistant that engages inquiries in under 30 second",
+        "brand": {
+            "@type": "Brand",
+            "name": "Agent Cory"
+        },
+        "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/InStock",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+  <script type="module" crossorigin src="/assets/supabase-C7PnJWqa.js"></script>
+  <script type="module" crossorigin src="/assets/main-_YQoVJ6p.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-CfduDuno.css">
+</head>
+<body>
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-content">
+            <p>We use cookies to improve your experience and analyze site usage. <a href="/privacy.html">Learn more</a></p>
+            <button id="accept-cookies" class="btn btn-sm">Accept</button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="/" class="nav-brand">
+                    <img src="/Logo_Cory.svg" alt="Agent Cory - AI-Powered Admissions Assistant" class="nav-logo-img" />
+                </a>
+                
+                <button class="nav-toggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <ul class="nav-menu">
+                    <li><a href="/" class="nav-link active">Home</a></li>
+                    <li><a href="/how-it-works.html" class="nav-link">How It Works</a></li>
+                    <li><a href="/features.html" class="nav-link">Features</a></li>
+                    <li><a href="/roi-and-case-studies.html" class="nav-link">ROI & Cases</a></li>
+                    <li><a href="/demo-and-pricing.html" class="nav-link">Demo</a></li>
+                    <li><a href="/resources.html" class="nav-link">Resources</a></li>
+                    <li><button class="btn btn-primary nav-cta">Try Cory Now</button></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Boost Admissions Conversions with AI-Powered Speed & Precision</h1>
+                    <p class="hero-subtitle">Agent Cory engages new inquiries in under 30 seconds by call, text, chat, and email—qualifies, answers FAQs, books appointments, then hands off to counselors.</p>
+                    
+                    <div class="hero-ctas">
+                        <button class="btn btn-primary btn-lg" id="try-cory-btn">Try Cory Now</button>
+                        <button class="btn btn-secondary btn-lg" id="request-call-btn">Request a Call from Cory</button>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-chip">
+                            <i data-lucide="zap" class="stat-icon"></i>
+                            <span>&lt; 60s response time</span>
+                        </div>
+                        <div class="stat-chip">
+                            <i data-lucide="users" class="stat-icon"></i>
+                            <span>90–95% first-week contact rate</span>
+                        </div>
+                        <div class="stat-chip">
+                            <i data-lucide="trending-up" class="stat-icon"></i>
+                            <span>5–10× ROI potential</span>
+                        </div>
+                    </div>
+                    
+                    <div class="trust-strip">
+                        <p>Trusted by leading institutions</p>
+                        <div class="trust-logos">
+                            <div class="trust-logo">State University</div>
+                            <div class="trust-logo">Metro College</div>
+                            <div class="trust-logo">Tech Institute</div>
+                            <div class="trust-logo">Community College</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Demo Row -->
+        <section class="demo-row section">
+            <div class="container">
+                <h2 class="section-title">Experience Cory in Action</h2>
+                <div class="demo-cards">
+                    <div class="demo-card">
+                        <div class="demo-card-icon">
+                            <i data-lucide="message-circle"></i>
+                        </div>
+                        <h3>Chat with Cory</h3>
+                        <p>See how Cory answers questions and qualifies leads instantly</p>
+                        <button class="btn btn-primary" id="demo-chat-btn">Start Chat Demo</button>
+                    </div>
+                    
+                    <div class="demo-card">
+                        <div class="demo-card-icon">
+                            <i data-lucide="phone"></i>
+                        </div>
+                        <h3>Have Cory call you</h3>
+                        <p>Experience Cory's phone outreach capabilities firsthand</p>
+                        <a href="https://agentcory.ai/demo-and-pricing" class="btn btn-primary">Request Demo Call</a>
+                    </div>
+                    
+                    <div class="demo-card">
+                        <div class="demo-card-icon">
+                            <i data-lucide="calculator"></i>
+                        </div>
+                        <h3>Calculate your ROI</h3>
+                        <p>See potential savings and increased enrollments</p>
+                        <button class="btn btn-primary" onclick="document.getElementById('roi-calculator').scrollIntoView({behavior: 'smooth'})">Calculate ROI</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How Cory Works -->
+        <section class="how-it-works section bg-light">
+            <div class="container">
+                <h2 class="section-title">How Cory Works</h2>
+                <p class="section-subtitle">AI-powered workflows that transform every stage of your admissions process</p>
+                
+                <div class="process-steps-grid">
+                    <div class="process-card featured">
+                        <div class="process-header">
+                            <div class="process-number">1</div>
+                            <div class="process-icon">
+                                <i data-lucide="phone-incoming"></i>
+                            </div>
+                            <h3 class="process-title">Inbound Campaign</h3>
+                            <div class="process-badge">New</div>
+                        </div>
+                        <div class="process-timing">⚡ &lt; 5s Response</div>
+                        <p class="process-description">Instant response to all inbound inquiries across every channel with natural AI conversation and intelligent qualification.</p>
+                        <ul class="process-features">
+                            <li>Live call answering with natural AI conversation</li>
+                            <li>SMS auto-responses with qualification questions</li>
+                            <li>24/7 email monitoring with intelligent auto-replies</li>
+                            <li>WhatsApp Business integration</li>
+                            <li>Social media DM automation</li>
+                            <li>Smart handoff to humans when confidence drops below 65%</li>
+                        </ul>
+                        <div class="process-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">100%</span>
+                                <span class="stat-label">Response Rate</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">&lt; 5s</span>
+                                <span class="stat-label">Answer Time</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">2</div>
+                            <div class="process-icon">
+                                <i data-lucide="zap"></i>
+                            </div>
+                            <h3 class="process-title">New Lead Rapid Response</h3>
+                        </div>
+                        <div class="process-timing">🎯 30-60s Response</div>
+                        <p class="process-description">Call within 30 seconds, followed by SMS and email with calendar link for prospects who don't answer immediately.</p>
+                        <ul class="process-features">
+                            <li>Instant phone call with AI conversation</li>
+                            <li>Personalized voicemail if no answer</li>
+                            <li>Follow-up SMS with calendar booking link</li>
+                            <li>Welcome email with program information</li>
+                        </ul>
+                        <div class="process-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">94%</span>
+                                <span class="stat-label">Contact Rate</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">&lt; 1min</span>
+                                <span class="stat-label">Detection Time</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">3</div>
+                            <div class="process-icon">
+                                <i data-lucide="refresh-cw"></i>
+                            </div>
+                            <h3 class="process-title">Show and Recovery</h3>
+                        </div>
+                        <div class="process-timing">📅 Full Appointment Lifecycle</div>
+                        <p class="process-description">Once an appointment is booked from other campaigns, prospects are moved to this specialized campaign that manages the entire appointment lifecycle to maximize show rates.</p>
+                        <ul class="process-features">
+                            <li>Pre-appointment reminders and confirmation</li>
+                            <li>Real-time appointment monitoring</li>
+                            <li>Instant no-show detection and SMS recovery</li>
+                            <li>2-hour post no-show rebooking sequence</li>
+                        </ul>
+                        <div class="process-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">85%</span>
+                                <span class="stat-label">Show Rate</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">67%</span>
+                                <span class="stat-label">Recovery Rate</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">4</div>
+                            <div class="process-icon">
+                                <i data-lucide="users"></i>
+                            </div>
+                            <h3 class="process-title">Cold Nurture</h3>
+                        </div>
+                        <div class="process-timing">📧 15-email sequence</div>
+                        <p class="process-description">15-email sequence with resources, success stories, and program highlights to warm up cold prospects.</p>
+                        <ul class="process-features">
+                            <li>Personalized email sequences by program interest</li>
+                            <li>Success stories and case studies</li>
+                            <li>Program highlights and curriculum details</li>
+                            <li>Financial aid and scholarship information</li>
+                        </ul>
+                        <div class="process-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">23%</span>
+                                <span class="stat-label">Engagement Rate</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">15</span>
+                                <span class="stat-label">Touch Points</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="process-card">
+                        <div class="process-header">
+                            <div class="process-number">5</div>
+                            <div class="process-icon">
+                                <i data-lucide="calendar-clock"></i>
+                            </div>
+                            <h3 class="process-title">30/60-day Re-engagement</h3>
+                        </div>
+                        <div class="process-timing">🔄 Gentle check-ins</div>
+                        <p class="process-description">Gentle check-ins with program updates and scholarship opportunities for long-term prospect nurturing.</p>
+                        <ul class="process-features">
+                            <li>Automated check-in sequences</li>
+                            <li>Program updates and new offerings</li>
+                            <li>Scholarship and financial aid alerts</li>
+                            <li>Career outcome success stories</li>
+                        </ul>
+                        <div class="process-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">18%</span>
+                                <span class="stat-label">Reactivation Rate</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">60</span>
+                                <span class="stat-label">Day Cycle</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="process-cta">
+                    <h3>Ready to See These Workflows in Action?</h3>
+                    <p>Experience how Cory's automated workflows can transform your admissions process</p>
+                    <a href="/demo-and-pricing.html" class="btn btn-primary btn-lg">Get Called by Cory</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Grid -->
+        <section class="benefits section">
+            <div class="container">
+                <h2 class="section-title">Why Admissions Teams Choose Cory</h2>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i data-lucide="zap"></i>
+                        </div>
+                        <h3>Lightning-Fast Outreach</h3>
+                        <p>Strike while the iron is hot. Cory engages every new inquiry within 60 seconds through intelligent phone calls, ensuring no lead goes cold.</p>
+                        <div class="benefit-features">
+                            <span class="feature-tag">30s avg response</span>
+                            <span class="feature-tag">Natural AI conversation</span>
+                            <span class="feature-tag">Voicemail detection</span>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i data-lucide="send"></i>
+                        </div>
+                        <h3>Multi-Channel Mastery</h3>
+                        <p>Meet prospects where they are with seamless coordination across voice, SMS, email, and chat. Each touchpoint is perfectly timed and contextually relevant.</p>
+                        <div class="benefit-features">
+                            <span class="feature-tag">Voice + SMS + Email</span>
+                            <span class="feature-tag">Perfect timing</span>
+                            <span class="feature-tag">WhatsApp support</span>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i data-lucide="clock"></i>
+                        </div>
+                        <h3>Always Available</h3>
+                        <p>Never miss an inquiry, regardless of time or day. Cory captures weekend and evening leads that competitors lose, converting them at the same rate as business hours.</p>
+                        <div class="benefit-features">
+                            <span class="feature-tag">24/7 coverage</span>
+                            <span class="feature-tag">Time zone smart</span>
+                            <span class="feature-tag">Holiday support</span>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i data-lucide="help-circle"></i>
+                        </div>
+                        <h3>Intelligent FAQ Brain</h3>
+                        <p>Cory knows your programs inside and out. Trained on your specific curriculum, admission requirements, costs, and policies to provide accurate answers.</p>
+                        <div class="benefit-features">
+                            <span class="feature-tag">Custom training</span>
+                            <span class="feature-tag">Auto updates</span>
+                            <span class="feature-tag">Human escalation</span>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i data-lucide="user-check"></i>
+                        </div>
+                        <h3>Smart Qualification</h3>
+                        <p>Books meetings and hands off to your counselors with complete context. Reduces manual outreach by 80-90% so staff focus on real conversations.</p>
+                        <div class="benefit-features">
+                            <span class="feature-tag">Lead scoring</span>
+                            <span class="feature-tag">Auto booking</span>
+                            <span class="feature-tag">Context handoff</span>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i data-lucide="link"></i>
+                        </div>
+                        <h3>Seamless Integration</h3>
+                        <p>Plugs into your CRM/SIS—every touch logged, dashboards included. Native integrations with Slate, Salesforce, and Ellucian Banner.</p>
+                        <div class="benefit-features">
+                            <span class="feature-tag">CRM sync</span>
+                            <span class="feature-tag">Auto logging</span>
+                            <span class="feature-tag">Real-time data</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROI Calculator -->
+        <section class="roi-calculator section" id="roi-calculator">
+            <div class="container">
+                <h2 class="section-title">Calculate Your ROI</h2>
+                <div class="calculator-widget">
+                    <div class="calculator-inputs">
+                        <h3>Your Current Metrics</h3>
+                        <div class="input-group">
+                            <label for="monthly-inquiries">Monthly Inquiries</label>
+                            <input type="number" id="monthly-inquiries" value="500" min="0" step="10">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="contact-rate">Current Contact Rate (%)</label>
+                            <input type="number" id="contact-rate" value="45" min="0" max="100" step="1">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="conversion-rate">Inquiry → Application (%)</label>
+                            <input type="number" id="conversion-rate" value="25" min="0" max="100" step="1">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="avg-tuition">Average Tuition (Net)</label>
+                            <input type="number" id="avg-tuition" value="25000" min="0" step="1000">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="staff-cost">Staff Hourly Cost</label>
+                            <input type="number" id="staff-cost" value="35" min="0" step="5">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="touches-per-lead">Avg Outreach Touches per Lead</label>
+                            <input type="number" id="touches-per-lead" value="8" min="0" step="1">
+                        </div>
+                    </div>
+                    
+                    <div class="calculator-assumptions">
+                        <h3>Cory's Impact (Adjustable)</h3>
+                        <div class="slider-group">
+                            <label for="cory-contact-rate">Cory Contact Rate: <span id="cory-contact-rate-value">92%</span></label>
+                            <input type="range" id="cory-contact-rate" min="80" max="98" value="92" step="1">
+                        </div>
+                        
+                        <div class="slider-group">
+                            <label for="response-uplift">Response Time Impact: <span id="response-uplift-value">+25%</span></label>
+                            <input type="range" id="response-uplift" min="10" max="50" value="25" step="5">
+                        </div>
+                        
+                        <div class="slider-group">
+                            <label for="automation-coverage">Automation Coverage: <span id="automation-coverage-value">85%</span></label>
+                            <input type="range" id="automation-coverage" min="60" max="95" value="85" step="5">
+                        </div>
+                    </div>
+                    
+                    <div class="calculator-results">
+                        <h3>Projected Annual Impact</h3>
+                        <div class="result-cards">
+                            <div class="result-card">
+                                <div class="result-value" id="additional-apps">+240</div>
+                                <div class="result-label">Additional Applications</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-value" id="additional-enrollments">+72</div>
+                                <div class="result-label">Additional Enrollments</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-value" id="tuition-lift">$1.8M</div>
+                                <div class="result-label">Tuition Revenue Lift</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-value" id="staff-hours-saved">2,040</div>
+                                <div class="result-label">Staff Hours Saved</div>
+                            </div>
+                            <div class="result-card primary">
+                                <div class="result-value" id="annual-roi">560%</div>
+                                <div class="result-label">Estimated Annual ROI</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Proof -->
+        <section class="social-proof section bg-light">
+            <div class="container">
+                <h2 class="section-title">Trusted by Leading Institutions</h2>
+                <div class="testimonials">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stats">
+                            <div class="stat">
+                                <div class="stat-number">847%</div>
+                                <div class="stat-label">ROI in Year 1</div>
+                            </div>
+                        </div>
+                        <blockquote>"Cory transformed our admissions process. We went from 40% contact rates to 94% overnight, and our conversion improved by 30% thanks to faster response times."</blockquote>
+                        <cite>
+                            <strong>Dr. Sarah Johnson</strong>
+                            <span>Director of Admissions, Metro State University</span>
+                        </cite>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-stats">
+                            <div class="stat">
+                                <div class="stat-number">2,100</div>
+                                <div class="stat-label">Hours Saved/Year</div>
+                            </div>
+                        </div>
+                        <blockquote>"Our team can focus on relationship building instead of manual outreach. Cory handles the initial qualification perfectly and hands off qualified leads with complete context."</blockquote>
+                        <cite>
+                            <strong>Michael Chen</strong>
+                            <span>VP Enrollment Management, Tech Institute</span>
+                        </cite>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-stats">
+                            <div class="stat">
+                                <div class="stat-number">$2.4M</div>
+                                <div class="stat-label">Additional Revenue</div>
+                            </div>
+                        </div>
+                        <blockquote>"The 24/7 availability alone increased our inquiries by 20%. Weekend and evening leads that we used to lose are now converting at the same rate as business hours."</blockquote>
+                        <cite>
+                            <strong>Lisa Rodriguez</strong>
+                            <span>Enrollment Director, Community College Network</span>
+                        </cite>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="final-cta section">
+            <div class="container">
+                <div class="text-center">
+                <h2>Ready to Transform Your Admissions Process?</h2>
+                <p class="lead">See how Cory can boost your conversions and free up your team in just 30 minutes</p>
+                    <div class="cta-button-wrapper">
+                        <a href="/demo-and-pricing.html" class="btn btn-primary btn-lg">Book a 30-min Demo</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Call Demo Modal -->
+    <div id="call-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Experience Cory's Call Capabilities</h3>
+                <button class="modal-close" aria-label="Close modal">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <p>Get a live demonstration of how Cory makes outbound calls to engage prospects. You'll experience:</p>
+                <ul>
+                    <li>Natural conversation flow</li>
+                    <li>Intelligent question qualification</li>
+                    <li>Appointment booking capability</li>
+                    <li>Seamless handoff process</li>
+                </ul>
+                
+                <form id="call-demo-form">
+                    <div class="form-group">
+                        <label for="call-name">Full Name *</label>
+                        <input type="text" id="call-name" name="name" required />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="call-phone">Phone Number *</label>
+                        <input type="tel" id="call-phone" name="phone" required placeholder="+1 (555) 123-4567" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="call-time">When would you like Cory to call?</label>
+                        <select id="call-time" name="callTime">
+                            <option value="now">Right now</option>
+                            <option value="1min">In 1 minute</option>
+                            <option value="custom">Pick a specific time</option>
+                        </select>
+                    </div>
+                    
+                    <div id="custom-time-group" class="form-group" style="display: none;">
+                        <label for="call-datetime">Preferred Date & Time</label>
+                        <input type="datetime-local" id="call-datetime" name="datetime" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="call-consent" name="consent" required />
+                            I consent to receive a demonstration call from Agent Cory AI system
+                        </label>
+                    </div>
+                    
+                    <!-- Honeypot field -->
+                    <input type="text" name="website" style="display: none;" />
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Request Demo Call</button>
+                    </div>
+                </form>
+                
+                <div id="call-success" style="display: none;">
+                    <div class="success-message">
+                        <i data-lucide="check-circle" class="success-icon"></i>
+                        <span>⚡ &lt; 60s Response Time</span>
+                        
+                        <div class="call-script">
+                            <h5>What to expect in the call:</h5>
+                            <ol>
+                                <li>Cory will introduce herself as an AI assistant</li>
+                                <li>She'll ask about your institution and current challenges</li>
+                                <li>You'll see how she qualifies leads and answers common questions</li>
+                                <li>She'll offer to schedule a meeting with our team</li>
+                                <li>The call demonstrates our quick response and natural flow</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Chat widget integration
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatBtn = document.getElementById('demo-chat-btn');
+            if (chatBtn) {
+                chatBtn.addEventListener('click', function() {
+                    // Try multiple methods to open the chat widget
+                    if (window.leadConnectorWidget && window.leadConnectorWidget.open) {
+                        window.leadConnectorWidget.open();
+                    } else if (window.parent && window.parent.postMessage) {
+                        window.parent.postMessage({ type: 'OPEN_CHAT_WIDGET' }, '*');
+                    } else if (document.querySelector('.leadconnector-chat-widget')) {
+                        const widget = document.querySelector('.leadconnector-chat-widget');
+                        if (widget) {
+                            widget.click();
+                        }
+                    } else {
+                        // Fallback: try to find and click the chat bubble
+                        setTimeout(() => {
+                            const chatBubble = document.querySelector('[data-testid="chat-bubble"], .chat-widget-bubble, .leadconnector-widget');
+                            if (chatBubble) {
+                                chatBubble.click();
+                            } else {
+                                console.log('Chat widget not found - it may still be loading');
+                            }
+                        }, 100);
+                    }
+                });
+            }
+        });
+        
+        // Initialize Lucide icons after DOM is loaded
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+    </script>
+    
+    <!-- LeadConnector Chat Widget -->
+    <script 
+      src="https://beta.leadconnectorhq.com/loader.js"  
+      data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js" 
+     data-widget-id="68b077f85dff15aa9384c4e9"   > 
+     </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-main">
+                <!-- Logo Column -->
+                <div class="footer-brand">
+                    <img src="/assets/Logo_DarkMode_AgentCory-sbK-NVLX.svg" alt="Agent Cory - AI-Powered Admissions Assistant" class="footer-logo-img" />
+                    <p class="footer-description">AI-powered admissions assistant that boosts conversions with lightning-fast, multi-channel outreach.</p>
+                    <div class="footer-social">
+                        <a href="https://linkedin.com/company/108149003" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://x.com/AgentCoryAI" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCw6XtSZQNiFcftHKEYNc3_A" target="_blank" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.instagram.com/agentcory.ai" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=61579324469233" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Product Column -->
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="/features.html">Features</a></li>
+                        <li><a href="/how-it-works.html">How It Works</a></li>
+                        <li><a href="/demo-and-pricing.html">Demo</a></li>
+                        <li><a href="/roi-and-case-studies.html">Case Studies</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Resources Column -->
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="/resources.html">Blog</a></li>
+                        <li><a href="/resources.html">Guides</a></li>
+                        <li><a href="/resources.html">Webinars</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Company Column -->
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Contact Section -->
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <p>
+                    <strong>Phone:</strong> 1-888-465-1991<br>
+                    <strong>Email:</strong> cory@agentcory.ai<br>
+                    <strong>Address:</strong> 200 Chisholm Pl<br>
+                    Plano, TX 75075
+                </p>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Agent Cory. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
