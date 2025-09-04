@@ -5,16 +5,58 @@ class DiagnosticLogger {
   static log(message, data = null) {
     console.log(`🔍 [Resources Debug] ${message}`, data || '');
     
-    // Also display on page for deployment debugging
-    const debugDiv = document.getElementById('debug-info') || this.createDebugDiv();
-    const logEntry = document.createElement('div');
-    logEntry.style.cssText = 'padding: 0.5rem; border-bottom: 1px solid #eee; font-family: monospace; font-size: 0.75rem;';
-    logEntry.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
-    if (data) {
-      logEntry.innerHTML += `<br><pre style="margin: 0.25rem 0; color: #666;">${JSON.stringify(data, null, 2)}</pre>`;
+    // Enhanced deployment debugging
+    this.displayOnPage(message, data);
+    this.logToLocalStorage(message, data);
+  }
+  
+  static displayOnPage(message, data) {
+    try {
+      const debugDiv = document.getElementById('debug-info') || this.createDebugDiv();
+      const logEntry = document.createElement('div');
+      logEntry.style.cssText = 'padding: 0.5rem; border-bottom: 1px solid #eee; font-family: monospace; font-size: 0.75rem;';
+      
+      const timestamp = new Date().toLocaleTimeString();
+      const dataStr = data ? JSON.stringify(data, null, 2) : '';
+      
+      logEntry.innerHTML = `
+        <div style="color: #333; font-weight: bold;">${timestamp}: ${message}</div>
+        ${dataStr ? `<pre style="margin: 0.25rem 0; color: #666; font-size: 0.7rem; max-height: 100px; overflow-y: auto;">${dataStr}</pre>` : ''}
+      `;
+      
+      debugDiv.appendChild(logEntry);
+      debugDiv.scrollTop = debugDiv.scrollHeight;
+      
+      // Keep only last 20 entries
+      const entries = debugDiv.querySelectorAll('div[style*="padding"]');
+      if (entries.length > 20) {
+        entries[0].remove();
+      }
+    } catch (error) {
+      console.error('Debug display error:', error);
     }
-    debugDiv.appendChild(logEntry);
-    debugDiv.scrollTop = debugDiv.scrollHeight;
+  }
+  
+  static logToLocalStorage(message, data) {
+    try {
+      const logs = JSON.parse(localStorage.getItem('deployment_logs') || '[]');
+      logs.push({
+        timestamp: new Date().toISOString(),
+        message,
+        data,
+        url: window.location.href,
+        userAgent: navigator.userAgent
+      });
+      
+      // Keep only last 50 logs
+      if (logs.length > 50) {
+        logs.splice(0, logs.length - 50);
+      }
+      
+      localStorage.setItem('deployment_logs', JSON.stringify(logs));
+    } catch (error) {
+      console.error('LocalStorage logging error:', error);
+    }
   }
   
   static createDebugDiv() {
@@ -22,25 +64,49 @@ class DiagnosticLogger {
     debugDiv.id = 'debug-info';
     debugDiv.style.cssText = `
       position: fixed;
-      bottom: 20px;
+      bottom: 10px;
       right: 20px;
-      width: 400px;
-      max-height: 300px;
+      width: 450px;
+      max-height: 400px;
       background: white;
       border: 2px solid #333;
       border-radius: 8px;
       overflow-y: auto;
       z-index: 9999;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      font-family: monospace;
     `;
     
     const header = document.createElement('div');
-    header.style.cssText = 'background: #333; color: white; padding: 0.5rem; font-weight: bold; position: sticky; top: 0;';
-    header.innerHTML = 'Debug Log <button onclick="this.parentElement.parentElement.remove()" style="float: right; background: none; border: none; color: white; cursor: pointer;">×</button>';
+    header.style.cssText = 'background: #333; color: white; padding: 0.5rem; font-weight: bold; position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center;';
+    header.innerHTML = `
+      <span>🔍 Deployment Debug Log</span>
+      <div>
+        <button onclick="DiagnosticLogger.exportLogs()" style="background: #666; border: none; color: white; cursor: pointer; padding: 0.25rem 0.5rem; margin-right: 0.5rem; border-radius: 3px; font-size: 0.7rem;">Export</button>
+        <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem;">×</button>
+      </div>
+    `;
     debugDiv.appendChild(header);
     
     document.body.appendChild(debugDiv);
     return debugDiv;
+  }
+  
+  static exportLogs() {
+    try {
+      const logs = localStorage.getItem('deployment_logs') || '[]';
+      const blob = new Blob([logs], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `deployment-logs-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Export error:', error);
+    }
   }
 }
 
