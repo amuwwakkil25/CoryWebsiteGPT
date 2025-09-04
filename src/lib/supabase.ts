@@ -3,6 +3,13 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
+console.log('Supabase configuration check:', {
+  hasUrl: !!supabaseUrl,
+  hasKey: !!supabaseAnonKey,
+  urlValid: supabaseUrl && !supabaseUrl.includes('your_supabase_project_url_here'),
+  keyValid: supabaseAnonKey && !supabaseAnonKey.includes('your_supabase_anon_public_key_here')
+});
+
 if (!supabaseUrl || !supabaseAnonKey || 
     supabaseUrl === 'your_supabase_project_url_here' || 
     supabaseAnonKey === 'your_supabase_anon_public_key_here') {
@@ -10,7 +17,11 @@ if (!supabaseUrl || !supabaseAnonKey ||
   throw new Error('Missing or invalid Supabase environment variables. Please check your .env file and ensure you have set valid Supabase credentials.')
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: false
+  }
+})
 
 // Database types
 export interface WebsitePage {
