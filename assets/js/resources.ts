@@ -65,9 +65,22 @@ class ResourcesPageManager {
       this.isLoading = true;
       this.showLoadingState();
       
-      // Load all published content
-      this.allContent = await ContentService.getAllContent();
-      this.filteredContent = [...this.allContent];
+      // Load all published content with error handling
+      try {
+        this.allContent = await ContentService.getAllContent();
+        this.filteredContent = [...this.allContent];
+        
+        // If no content from database, use fallback content
+        if (this.allContent.length === 0) {
+          console.warn('No content found in database, using fallback content');
+          this.allContent = this.getFallbackContent();
+          this.filteredContent = [...this.allContent];
+        }
+      } catch (dbError) {
+        console.error('Database error, using fallback content:', dbError);
+        this.allContent = this.getFallbackContent();
+        this.filteredContent = [...this.allContent];
+      }
       
       this.isLoading = false;
     } catch (error) {
@@ -75,6 +88,91 @@ class ResourcesPageManager {
       this.isLoading = false;
       throw error;
     }
+  }
+
+  getFallbackContent(): ContentItem[] {
+    return [
+      {
+        id: 'ai-guide-fallback',
+        title: 'The Complete Guide to AI in Admissions',
+        slug: 'ai-admissions-guide',
+        excerpt: 'Comprehensive 40-page guide covering implementation strategies, best practices, and ROI measurement for AI-powered admissions automation.',
+        content: '# The Complete Guide to AI in Admissions\n\nThis comprehensive guide covers everything you need to know about implementing AI in your admissions process...',
+        content_type: 'guide',
+        featured_image_url: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800',
+        author_name: 'Agent Cory Team',
+        author_title: 'AI Admissions Experts',
+        reading_time_minutes: 25,
+        tags: ['AI', 'Implementation', 'Best Practices'],
+        category: 'ai',
+        is_featured: true,
+        is_published: true,
+        published_at: new Date().toISOString(),
+        seo_title: 'Complete Guide to AI in Admissions - Agent Cory',
+        seo_description: 'Learn how to implement AI in your admissions process with this comprehensive guide.',
+        download_url: '/downloads/ai-admissions-guide.pdf',
+        metrics: { downloads: 1250, rating: 4.8 },
+        view_count: 3420
+      },
+      {
+        id: 'metro-case-study-fallback',
+        title: 'Case Study: 847% ROI in 12 Months',
+        slug: 'metro-state-case-study',
+        excerpt: 'How Metro State University transformed their admissions process and achieved record-breaking results with Agent Cory.',
+        content: '# Metro State University Case Study\n\n## The Challenge\n\nMetro State University was struggling with...',
+        content_type: 'case_study',
+        featured_image_url: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800',
+        author_name: 'Dr. Sarah Johnson',
+        author_title: 'Director of Admissions, Metro State University',
+        reading_time_minutes: 12,
+        tags: ['Case Study', 'ROI', 'University'],
+        category: 'roi',
+        is_featured: true,
+        is_published: true,
+        published_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+        metrics: { roi_percentage: 847, additional_revenue: 2100000, time_saved_hours: 2100 },
+        view_count: 2890
+      },
+      {
+        id: 'response-time-blog-fallback',
+        title: 'The Psychology of Fast Response Times in Admissions',
+        slug: 'psychology-fast-response-times',
+        excerpt: 'Research-backed insights into why speed matters so much in admissions and how to leverage it for better conversion rates.',
+        content: '# The Psychology of Fast Response Times\n\n## Why Speed Matters\n\nIn the world of admissions...',
+        content_type: 'blog',
+        featured_image_url: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800',
+        author_name: 'Agent Cory Team',
+        author_title: 'AI Admissions Experts',
+        reading_time_minutes: 8,
+        tags: ['Psychology', 'Response Time', 'Conversion'],
+        category: 'admissions',
+        is_featured: false,
+        is_published: true,
+        published_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+        metrics: { shares: 245, comments: 18 },
+        view_count: 1560
+      },
+      {
+        id: 'roi-ebook-fallback',
+        title: '2024 Admissions ROI Benchmarks Report',
+        slug: 'admissions-roi-benchmarks-2024',
+        excerpt: 'Comprehensive industry data including response times, conversion rates, and ROI metrics from 500+ institutions.',
+        content: '# 2024 Admissions ROI Benchmarks\n\n## Executive Summary\n\nThis report analyzes...',
+        content_type: 'ebook',
+        featured_image_url: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800',
+        author_name: 'Agent Cory Research Team',
+        author_title: 'Industry Analysts',
+        reading_time_minutes: 35,
+        tags: ['Benchmarks', 'ROI', 'Industry Data'],
+        category: 'roi',
+        is_featured: true,
+        is_published: true,
+        published_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+        download_url: '/downloads/roi-benchmarks-2024.pdf',
+        metrics: { downloads: 2340, institutions_surveyed: 500 },
+        view_count: 4120
+      }
+    ];
   }
 
   bindEvents(): void {
@@ -591,12 +689,14 @@ class ResourcesPageManager {
   }
 
   shareContent(title: string, url: string): void {
-    if (navigator.share) {
+    // Check if Web Share API is available and we're in a secure context
+    if (navigator.share && window.isSecureContext) {
       navigator.share({ title, url }).catch(error => {
         console.log('Share failed, falling back to clipboard:', error);
         this.copyToClipboard(url, title);
       });
     } else {
+      console.log('Web Share API not available or not in secure context, using clipboard fallback');
       this.copyToClipboard(url, title);
     }
   }

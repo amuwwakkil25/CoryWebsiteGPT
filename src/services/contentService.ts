@@ -159,17 +159,17 @@ export class ContentService {
   // Increment view count
   static async incrementViewCount(id: string): Promise<void> {
     try {
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/increment-view-count`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ content_id: id })
-      })
-    
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+      // Simple increment using direct database update
+      const { error } = await supabase
+        .from('content_items')
+        .update({ 
+          view_count: supabase.sql`view_count + 1`,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', id)
+      
+      if (error) {
+        console.error('Error incrementing view count:', error)
       }
     } catch (error) {
       console.error('Error incrementing view count:', error)
