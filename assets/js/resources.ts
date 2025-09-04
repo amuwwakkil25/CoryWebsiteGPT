@@ -807,5 +807,5 @@ class ResourcesPageManager {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  new ResourcesPageManager();
+  window.resourcesManager = new ResourcesPageManager();
 });
