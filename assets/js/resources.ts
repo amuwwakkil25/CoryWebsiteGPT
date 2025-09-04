@@ -1,6 +1,5 @@
-// Resources Page JavaScript
-import { ContentService } from '../../src/services/contentService.ts';
-import { WebsiteIntegration } from '../../src/utils/websiteIntegration.ts';
+// Resources Page - Robust Content Loading Architecture
+// This implements a multi-tier fallback system for maximum reliability
 
 interface ContentItem {
   id: string;
@@ -26,58 +25,110 @@ interface ContentItem {
   view_count: number;
 }
 
-class ResourcesPageManager {
-  private allContent: ContentItem[] = [];
-  private filteredContent: ContentItem[] = [];
-  private currentView: 'grid' | 'list' = 'grid';
-  private currentPage = 1;
-  private itemsPerPage = 12;
-  private isLoading = false;
-
-  constructor() {
-    this.init();
-  }
-
-  async init(): Promise<void> {
+class ContentLoader {
+  private static readonly CACHE_KEY = 'agentcory_content_cache';
+  private static readonly CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
+  
+  static async loadContent(): Promise<ContentItem[]> {
+    console.log('🔄 Starting content loading process...');
+    
+    // Strategy 1: Try cache first
+    const cached = this.getCachedContent();
+    if (cached) {
+      console.log('✅ Using cached content:', cached.length, 'items');
+      return cached;
+    }
+    
+    // Strategy 2: Try database with timeout
     try {
-      // Show loading state
-      this.showLoadingState();
+      console.log('🔄 Attempting database load...');
+      const dbContent = await this.loadFromDatabase();
+      if (dbContent && dbContent.length > 0) {
+        console.log('✅ Database load successful:', dbContent.length, 'items');
+        this.setCachedContent(dbContent);
+        return dbContent;
+      }
+    } catch (error) {
+      console.warn('⚠️ Database load failed:', error);
+    }
+    
+    // Strategy 3: Use static content as final fallback
+    console.log('📦 Using static fallback content');
+    const staticContent = this.getStaticContent();
+    this.setCachedContent(staticContent);
+    return staticContent;
+  }
+  
+  private static getCachedContent(): ContentItem[] | null {
+    try {
+      const cached = localStorage.getItem(this.CACHE_KEY);
+      if (!cached) return null;
       
-      // Try to load from database first
-      try {
-        console.log('Attempting to load content from database...');
-        this.allContent = await ContentService.getAllContent();
-        console.log('Successfully loaded content from database:', this.allContent.length, 'items');
-        this.filteredContent = [...this.allContent];
-      } catch (dbError) {
-        console.warn('Database loading failed, using fallback content:', dbError);
-        this.allContent = this.getFallbackContent();
-        this.filteredContent = [...this.allContent];
+      const { data, timestamp } = JSON.parse(cached);
+      if (Date.now() - timestamp > this.CACHE_DURATION) {
+        localStorage.removeItem(this.CACHE_KEY);
+        return null;
       }
       
-      // Bind event listeners
-      this.bindEvents();
-      
-      // Render content
-      this.renderFeaturedContent();
-      this.renderAllContent();
-      
-      console.log('Resources page initialized with', this.allContent.length, 'items');
-    } catch (error) {
-      console.error('Error initializing resources page:', error);
-      // Final fallback
-      this.allContent = this.getFallbackContent();
-      this.filteredContent = [...this.allContent];
-      this.renderFeaturedContent();
-      this.renderAllContent();
+      return data;
+    } catch {
+      return null;
     }
   }
-
-
-  getFallbackContent(): ContentItem[] {
+  
+  private static setCachedContent(content: ContentItem[]): void {
+    try {
+      localStorage.setItem(this.CACHE_KEY, JSON.stringify({
+        data: content,
+        timestamp: Date.now()
+      }));
+    } catch (error) {
+      console.warn('Cache storage failed:', error);
+    }
+  }
+  
+  private static async loadFromDatabase(): Promise<ContentItem[]> {
+    // Create a timeout promise
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      setTimeout(() => reject(new Error('Database timeout')), 5000);
+    });
+    
+    // Create the database query promise
+    const queryPromise = this.executeQuery();
+    
+    // Race between query and timeout
+    return Promise.race([queryPromise, timeoutPromise]);
+  }
+  
+  private static async executeQuery(): Promise<ContentItem[]> {
+    // Simple fetch approach to avoid Supabase client issues
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Missing Supabase configuration');
+    }
+    
+    const response = await fetch(`${supabaseUrl}/rest/v1/content_items?is_published=eq.true&order=published_at.desc`, {
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Database query failed: ${response.status} ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    return data as ContentItem[];
+  }
+  
+  private static getStaticContent(): ContentItem[] {
     return [
       {
-        id: 'ai-guide-fallback',
+        id: 'ai-guide-static',
         title: 'The Complete Guide to AI in Admissions',
         slug: 'ai-admissions-guide',
         excerpt: 'Comprehensive 40-page guide covering implementation strategies, best practices, and ROI measurement for AI-powered admissions automation.',
@@ -99,7 +150,7 @@ class ResourcesPageManager {
         view_count: 3420
       },
       {
-        id: 'conversion-webinar-fallback',
+        id: 'conversion-webinar-static',
         title: '5 Strategies to Double Your Lead Conversion Rate',
         slug: 'double-conversion-strategies',
         excerpt: 'Join our upcoming webinar to learn proven tactics that top-performing institutions use to convert more inquiries into enrolled students.',
@@ -119,11 +170,11 @@ class ResourcesPageManager {
         view_count: 1890
       },
       {
-        id: 'metro-case-study-fallback',
-        title: 'Case Study: 847% ROI in 12 Months',
+        id: 'metro-case-study-static',
+        title: 'Case Study: Metro State University - 847% ROI in 12 Months',
         slug: 'metro-state-case-study',
-        excerpt: 'How Metro State University transformed their admissions process and achieved record-breaking results.',
-        content: '# Metro State University Case Study\n\n## The Challenge\n\nMetro State University was struggling with...',
+        excerpt: 'How Metro State University transformed their admissions process and achieved record-breaking results with Agent Cory.',
+        content: '# Metro State University Case Study\n\n## The Challenge\n\nMetro State University was struggling with low contact rates and slow response times...',
         content_type: 'case_study',
         featured_image_url: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800',
         author_name: 'Dr. Sarah Johnson',
@@ -138,11 +189,11 @@ class ResourcesPageManager {
         view_count: 2890
       },
       {
-        id: 'benchmarks-report-fallback',
+        id: 'benchmarks-report-static',
         title: '2024 Admissions Benchmarks Report',
         slug: 'admissions-benchmarks-2024',
         excerpt: 'Comprehensive industry data including response times, conversion rates, and ROI metrics from 500+ institutions.',
-        content: '# 2024 Admissions Benchmarks Report\n\n## Executive Summary\n\nThis comprehensive report...',
+        content: '# 2024 Admissions Benchmarks Report\n\n## Executive Summary\n\nThis comprehensive report analyzes data from over 500 educational institutions...',
         content_type: 'ebook',
         featured_image_url: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800',
         author_name: 'Agent Cory Research Team',
@@ -158,11 +209,11 @@ class ResourcesPageManager {
         view_count: 2650
       },
       {
-        id: 'response-time-blog-fallback',
+        id: 'response-time-blog-static',
         title: 'The Psychology of Fast Response Times in Admissions',
         slug: 'psychology-fast-response-times',
         excerpt: 'Research-backed insights into why speed matters so much in admissions and how to leverage it for better conversion rates.',
-        content: '# The Psychology of Fast Response Times\n\n## Why Speed Matters\n\nIn the world of admissions...',
+        content: '# The Psychology of Fast Response Times\n\n## Why Speed Matters\n\nIn the world of admissions, timing is everything...',
         content_type: 'blog',
         featured_image_url: 'https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800',
         author_name: 'Agent Cory Team',
@@ -177,11 +228,11 @@ class ResourcesPageManager {
         view_count: 1560
       },
       {
-        id: 'crm-integration-guide-fallback',
-        title: 'CRM Integration Best Practices',
+        id: 'crm-integration-guide-static',
+        title: 'CRM Integration Best Practices for Higher Ed',
         slug: 'crm-integration-best-practices',
         excerpt: 'Step-by-step guide for seamless CRM integration, data mapping, and workflow automation setup.',
-        content: '# CRM Integration Best Practices\n\n## Getting Started\n\nIntegrating your CRM...',
+        content: '# CRM Integration Best Practices\n\n## Getting Started\n\nIntegrating your CRM with AI automation requires careful planning...',
         content_type: 'guide',
         featured_image_url: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800',
         author_name: 'Agent Cory Team',
@@ -196,11 +247,11 @@ class ResourcesPageManager {
         view_count: 1340
       },
       {
-        id: 'ai-implementation-blog-fallback',
-        title: 'AI vs Human: Finding the Right Balance',
+        id: 'ai-implementation-blog-static',
+        title: 'AI vs Human: Finding the Right Balance in Admissions',
         slug: 'ai-human-balance-admissions',
         excerpt: 'When to use AI and when human touch matters most in the admissions journey.',
-        content: '# AI vs Human: Finding the Right Balance\n\n## The Human Element\n\nWhile AI can automate...',
+        content: '# AI vs Human: Finding the Right Balance\n\n## The Human Element\n\nWhile AI can automate many processes...',
         content_type: 'blog',
         featured_image_url: 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800',
         author_name: 'Agent Cory Team',
@@ -213,8 +264,114 @@ class ResourcesPageManager {
         published_at: new Date(Date.now() - 21 * 24 * 60 * 60 * 1000).toISOString(),
         metrics: { shares: 180, comments: 25 },
         view_count: 980
+      },
+      {
+        id: 'retention-strategies-static',
+        title: 'Student Retention: AI-Powered Early Warning Systems',
+        slug: 'ai-student-retention-systems',
+        excerpt: 'How AI can identify at-risk students early and implement automated intervention strategies to improve retention rates.',
+        content: '# Student Retention: AI-Powered Early Warning Systems\n\n## The Retention Challenge\n\nStudent retention is one of the biggest challenges...',
+        content_type: 'guide',
+        featured_image_url: 'https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=800',
+        author_name: 'Agent Cory Team',
+        author_title: 'Student Success Experts',
+        reading_time_minutes: 18,
+        tags: ['Retention', 'AI', 'Student Success'],
+        category: 'ai',
+        is_featured: false,
+        is_published: true,
+        published_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+        metrics: { downloads: 650, implementations: 45 },
+        view_count: 1120
       }
     ];
+  }
+}
+
+class DatabaseService {
+  private static supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  private static supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+  
+  static async testConnection(): Promise<boolean> {
+    try {
+      if (!this.supabaseUrl || !this.supabaseKey) {
+        console.error('❌ Missing Supabase environment variables');
+        return false;
+      }
+      
+      const response = await fetch(`${this.supabaseUrl}/rest/v1/`, {
+        headers: {
+          'apikey': this.supabaseKey,
+          'Authorization': `Bearer ${this.supabaseKey}`
+        }
+      });
+      
+      console.log('🔗 Database connection test:', response.ok ? 'SUCCESS' : 'FAILED');
+      return response.ok;
+    } catch (error) {
+      console.error('❌ Database connection test failed:', error);
+      return false;
+    }
+  }
+  
+  static async getContent(): Promise<ContentItem[]> {
+    if (!await this.testConnection()) {
+      throw new Error('Database connection failed');
+    }
+    
+    const response = await fetch(`${this.supabaseUrl}/rest/v1/content_items?is_published=eq.true&order=published_at.desc`, {
+      headers: {
+        'apikey': this.supabaseKey,
+        'Authorization': `Bearer ${this.supabaseKey}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Query failed: ${response.status} ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    console.log('📊 Database query result:', data.length, 'items');
+    return data;
+  }
+}
+
+class ResourcesPageManager {
+  private allContent: ContentItem[] = [];
+  private filteredContent: ContentItem[] = [];
+  private currentView: 'grid' | 'list' = 'grid';
+  private currentPage = 1;
+  private itemsPerPage = 12;
+  private isLoading = false;
+
+  constructor() {
+    this.init();
+  }
+
+  async init(): Promise<void> {
+    console.log('🚀 Initializing Resources Page Manager...');
+    
+    try {
+      // Show loading state
+      this.showLoadingState();
+      
+      // Load content using our robust loader
+      this.allContent = await ContentLoader.loadContent();
+      this.filteredContent = [...this.allContent];
+      
+      // Bind event listeners
+      this.bindEvents();
+      
+      // Render content
+      this.renderFeaturedContent();
+      this.renderAllContent();
+      
+      console.log('✅ Resources page initialized successfully with', this.allContent.length, 'items');
+    } catch (error) {
+      console.error('❌ Critical error during initialization:', error);
+      this.showErrorState();
+    }
   }
 
   bindEvents(): void {
@@ -332,17 +489,6 @@ class ResourcesPageManager {
     
     this.currentPage = 1;
     this.renderAllContent();
-    this.updateActiveFilters(selectedType, selectedCategory);
-  }
-
-  updateActiveFilters(type: string, category: string): void {
-    // This would show active filter tags
-    const activeFilters = [];
-    if (type !== 'all') activeFilters.push({ type: 'type', value: type });
-    if (category !== 'all') activeFilters.push({ type: 'category', value: category });
-    
-    // Update UI to show active filters (implementation depends on design)
-    console.log('Active filters:', activeFilters);
   }
 
   clearAllFilters(): void {
@@ -551,17 +697,8 @@ class ResourcesPageManager {
       return;
     }
 
-    // For regular content, show in modal or navigate to dedicated page
-    if (item.content && item.content.length > 500) {
-      // Show full content in modal
-      this.showContentModal(item);
-    } else {
-      // Navigate to dedicated page
-      window.location.href = `/content/${item.slug}`;
-    }
-
-    // Skip view tracking for now to avoid errors
-    console.log('Viewed content:', item.title);
+    // For regular content, show in modal
+    this.showContentModal(item);
   }
 
   showContentModal(item: ContentItem): void {
@@ -573,7 +710,6 @@ class ResourcesPageManager {
 
     title.textContent = item.title;
     
-    // Convert markdown-like content to HTML
     const htmlContent = this.convertToHTML(item.content);
     body.innerHTML = `
       <div class="content-header">
@@ -599,8 +735,7 @@ class ResourcesPageManager {
             <i data-lucide="printer"></i>
             Print
           </button>
-          <button class="btn btn-primary" onclick="navigator.share ? navigator.share({title: '${item.title}', url: window.location.href}) : null">
-          <button class="btn btn-primary" onclick="this.shareContent('${item.title}', window.location.href)">
+          <button class="btn btn-primary" onclick="window.resourcesManager.shareContent('${item.title}', window.location.href)">
             <i data-lucide="share-2"></i>
             Share
           </button>
@@ -633,7 +768,6 @@ class ResourcesPageManager {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
     
-    // Focus first input
     const firstInput = modal.querySelector('input, select, textarea') as HTMLElement;
     if (firstInput) {
       setTimeout(() => firstInput.focus(), 100);
@@ -644,15 +778,12 @@ class ResourcesPageManager {
     modal.classList.remove('active');
     document.body.style.overflow = '';
     
-    // Reset forms
     const forms = modal.querySelectorAll('form');
     forms.forEach(form => (form as HTMLFormElement).reset());
     
-    // Hide success messages
     const successDivs = modal.querySelectorAll('[id$="-success"]');
     successDivs.forEach(div => (div as HTMLElement).style.display = 'none');
     
-    // Show forms
     const formDivs = modal.querySelectorAll('form');
     formDivs.forEach(div => (div as HTMLElement).style.display = 'block');
   }
@@ -664,13 +795,9 @@ class ResourcesPageManager {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     
-    // Check honeypot
-    if (data.website) {
-      return;
-    }
+    if (data.website) return;
 
-    // Log the request instead of submitting to database
-    console.log('Lead magnet request:', {
+    console.log('📝 Lead magnet request:', {
       name: data.name,
       email: data.email,
       organization: data.organization,
@@ -679,7 +806,6 @@ class ResourcesPageManager {
       follow_up_requested: data.followUp === 'on'
     });
 
-    // Show success message
     form.style.display = 'none';
     const successDiv = document.getElementById('magnet-success');
     if (successDiv) {
@@ -696,15 +822,13 @@ class ResourcesPageManager {
     const formData = new FormData(form);
     const email = formData.get('email') as string;
 
-    // Log the signup instead of submitting to database
-    console.log('Newsletter signup:', email);
+    console.log('📧 Newsletter signup:', email);
     
     this.showToast('Successfully subscribed to newsletter!', 'success');
     form.reset();
   }
 
   convertToHTML(content: string): string {
-    // Simple markdown-to-HTML conversion
     return content
       .replace(/^# (.*$)/gm, '<h1>$1</h1>')
       .replace(/^## (.*$)/gm, '<h2>$1</h2>')
@@ -722,19 +846,6 @@ class ResourcesPageManager {
   }
 
   shareContent(title: string, url: string): void {
-    // Check if Web Share API is available and we're in a secure context
-    if (navigator.share && window.isSecureContext) {
-      navigator.share({ title, url }).catch(error => {
-        console.log('Share failed, falling back to clipboard:', error);
-        this.copyToClipboard(url, title);
-      });
-    } else {
-      console.log('Web Share API not available or not in secure context, using clipboard fallback');
-      this.copyToClipboard(url, title);
-    }
-  }
-
-  copyToClipboard(url: string, title: string): void {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(url).then(() => {
         this.showToast(`Link copied to clipboard: ${title}`, 'success');
@@ -790,7 +901,7 @@ class ResourcesPageManager {
           <div class="empty-state">
             <i data-lucide="alert-circle"></i>
             <h3>Unable to load resources</h3>
-            <p>Please try refreshing the page.</p>
+            <p>Please try refreshing the page or contact support.</p>
             <button class="btn btn-primary" onclick="window.location.reload()">Refresh Page</button>
           </div>
         `;
@@ -814,7 +925,6 @@ class ResourcesPageManager {
       max-width: 400px;
     `;
     
-    // Set background color based on type
     const colors = {
       success: 'var(--success)',
       error: 'var(--error)',
