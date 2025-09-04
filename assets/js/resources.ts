@@ -262,13 +262,29 @@ class DatabaseService {
         }
       }
       
+      // Log all available environment variables (safely)
+      const envVars = {};
+      for (const key in import.meta.env) {
+        if (key.startsWith('VITE_')) {
+          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+            ? `${import.meta.env[key]?.substring(0, 10)}...` 
+            : import.meta.env[key];
+        }
+      }
+      
       DiagnosticLogger.log('Environment check', {
+        allEnvVars: envVars,
         allEnvVars: envVars,
         allEnvVars: envVars,
         hasUrl: !!supabaseUrl,
         hasKey: !!supabaseKey,
         urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
         keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode: import.meta.env.MODE,
+        isDev: import.meta.env.DEV,
+        isProd: import.meta.env.PROD
         urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
         keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
         buildMode: import.meta.env.MODE,
@@ -301,18 +317,29 @@ class DatabaseService {
         throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
       }
       
+      if (!supabaseUrl.includes('supabase.co')) {
+        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
+      }
+      
+      if (!supabaseKey.startsWith('eyJ')) {
+        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
+      }
+      
       // Test basic connection
       const testUrl = `${supabaseUrl}/rest/v1/`;
       DiagnosticLogger.log('Testing connection to:', { testUrl });
       
       const response = await fetch(testUrl, {
-      }
-      )
+      DiagnosticLogger.log('Testing connection to:', { testUrl });
+      
+      const response = await fetch(testUrl, {
       DiagnosticLogger.log('Testing connection to:', { testUrl });
       
       const response = await fetch(testUrl, {
         headers: {
           'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json'
           'Authorization': `Bearer ${supabaseKey}`,
           'Content-Type': 'application/json'
           'Authorization': `Bearer ${supabaseKey}`,
@@ -338,6 +365,13 @@ class DatabaseService {
       
       if (!response.ok) {
         const errorText = await response.text();
+        ok: response.ok,
+        headers: Object.fromEntries(response.headers.entries()),
+        url: response.url
+      }
+      
+      if (!response.ok) {
+        const errorText = await response.text();
         DiagnosticLogger.log('Connection test failed with response:', { errorText });
       }
       
@@ -346,6 +380,7 @@ class DatabaseService {
       DiagnosticLogger.log('Connection test failed', {
         error: error.message,
         stack: error.stack,
+        name: error.name
         name: error.name
       });
       return false;
