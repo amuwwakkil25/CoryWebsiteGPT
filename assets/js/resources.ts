@@ -50,13 +50,17 @@ class ResourcesPageManager {
       this.bindEvents();
       
       // Render initial content
-      this.renderFeaturedContent();
+      await this.renderFeaturedContent();
       this.renderAllContent();
       
       console.log('Resources page initialized with database content');
     } catch (error) {
       console.error('Failed to initialize resources page:', error);
-      this.showErrorState();
+      // Use fallback content and continue
+      this.allContent = this.getFallbackContent();
+      this.filteredContent = [...this.allContent];
+      await this.renderFeaturedContent();
+      this.renderAllContent();
     }
   }
 
@@ -65,19 +69,25 @@ class ResourcesPageManager {
       this.isLoading = true;
       this.showLoadingState();
       
-      // Load all published content
-      this.allContent = await ContentService.getAllContent();
-      this.filteredContent = [...this.allContent];
+      // Try to load from database first
+      try {
+        this.allContent = await ContentService.getAllContent();
+        console.log('Loaded content items from database:', this.allContent.length);
+      } catch (dbError) {
+        console.warn('Database loading failed, using fallback content:', dbError);
+        this.allContent = this.getFallbackContent();
+        console.log('Using fallback content items:', this.allContent.length);
+      }
       
-      console.log('Loaded content items:', this.allContent.length);
+      this.filteredContent = [...this.allContent];
       
       this.isLoading = false;
     } catch (error) {
       console.error('Error loading content from database:', error);
       this.isLoading = false;
-      
-      // Show error state instead of throwing
-      this.showErrorState();
+      // Use fallback content instead of showing error
+      this.allContent = this.getFallbackContent();
+      this.filteredContent = [...this.allContent];
     }
   }
 
@@ -509,8 +519,13 @@ class ResourcesPageManager {
       window.location.href = `/content/${item.slug}`;
     }
 
-    // Track view
-    await ContentService.incrementViewCount(item.id);
+    // Track view (with error handling)
+    try {
+      await ContentService.incrementViewCount(item.id);
+    } catch (error) {
+      console.warn('Failed to track view count:', error);
+      // Continue without blocking the user experience
+    }
   }
 
   showContentModal(item: ContentItem): void {
