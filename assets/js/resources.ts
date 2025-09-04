@@ -83,7 +83,7 @@ class DiagnosticLogger {
       <span>🔍 Deployment Debug Log</span>
       <div>
         <button onclick="DiagnosticLogger.exportLogs()" style="background: #666; border: none; color: white; cursor: pointer; padding: 0.25rem 0.5rem; margin-right: 0.5rem; border-radius: 3px; font-size: 0.7rem;">Export</button>
-        <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem;">×</button>
+        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem;">×</button>
       </div>
     `;
     debugDiv.appendChild(header);
@@ -252,124 +252,12 @@ class DatabaseService {
         }
       }
       
-      // Log all available environment variables (safely)
-      const envVars = {};
-      for (const key in import.meta.env) {
-        if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
-            ? `${import.meta.env[key]?.substring(0, 10)}...` 
-            : import.meta.env[key];
-        }
-      }
-      
-      // Log all available environment variables (safely)
-      const envVars = {};
-      for (const key in import.meta.env) {
-        if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
-            ? `${import.meta.env[key]?.substring(0, 10)}...` 
-            : import.meta.env[key];
-        }
-      }
-      
-      // Log all available environment variables (safely)
-      const envVars = {};
-      for (const key in import.meta.env) {
-        if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
-            ? `${import.meta.env[key]?.substring(0, 10)}...` 
-            : import.meta.env[key];
-        }
-      }
-      
-      // Log all available environment variables (safely)
-      const envVars = {};
-      for (const key in import.meta.env) {
-        if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
-            ? `${import.meta.env[key]?.substring(0, 10)}...` 
-            : import.meta.env[key];
-        }
-      }
-      
-      // Log all available environment variables (safely)
-      const envVars = {};
-      for (const key in import.meta.env) {
-        if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
-            ? `${import.meta.env[key]?.substring(0, 10)}...` 
-            : import.meta.env[key];
-        }
-      }
-      
-      // Log all available environment variables (safely)
-      const envVars = {};
-      for (const key in import.meta.env) {
-        if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
-            ? `${import.meta.env[key]?.substring(0, 10)}...` 
-            : import.meta.env[key];
-        }
-      }
-      
-      // Log all available environment variables (safely)
-      const envVars = {};
-      for (const key in import.meta.env) {
-        if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
-            ? `${import.meta.env[key]?.substring(0, 10)}...` 
-            : import.meta.env[key];
-        }
-      }
-      
       DiagnosticLogger.log('Environment check', {
-        allEnvVars: envVars,
-        allEnvVars: envVars,
-        allEnvVars: envVars,
-        allEnvVars: envVars,
-        allEnvVars: envVars,
-        allEnvVars: envVars,
-        allEnvVars: envVars,
         allEnvVars: envVars,
         hasUrl: !!supabaseUrl,
         hasKey: !!supabaseKey,
         urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
         keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        isDev: import.meta.env.DEV,
-        isProd: import.meta.env.PROD
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        isDev: import.meta.env.DEV,
-        isProd: import.meta.env.PROD
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        isDev: import.meta.env.DEV,
-        isProd: import.meta.env.PROD
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        isDev: import.meta.env.DEV,
-        isProd: import.meta.env.PROD
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        isDev: import.meta.env.DEV,
-        isProd: import.meta.env.PROD
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        isDev: import.meta.env.DEV,
-        isProd: import.meta.env.PROD
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        isDev: import.meta.env.DEV,
-        isProd: import.meta.env.PROD
         urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
         keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
         buildMode: import.meta.env.MODE,
@@ -389,78 +277,12 @@ class DatabaseService {
         throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
       }
       
-      if (!supabaseUrl.includes('supabase.co')) {
-        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
-      }
-      
-      if (!supabaseKey.startsWith('eyJ')) {
-        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
-      }
-      
-      if (!supabaseUrl.includes('supabase.co')) {
-        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
-      }
-      
-      if (!supabaseKey.startsWith('eyJ')) {
-        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
-      }
-      
-      if (!supabaseUrl.includes('supabase.co')) {
-        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
-      }
-      
-      if (!supabaseKey.startsWith('eyJ')) {
-        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
-      }
-      
-      if (!supabaseUrl.includes('supabase.co')) {
-        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
-      }
-      
-      if (!supabaseKey.startsWith('eyJ')) {
-        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
-      }
-      
-      if (!supabaseUrl.includes('supabase.co')) {
-        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
-      }
-      
-      if (!supabaseKey.startsWith('eyJ')) {
-        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
-      }
-      
-      if (!supabaseUrl.includes('supabase.co')) {
-        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
-      }
-      
-      if (!supabaseKey.startsWith('eyJ')) {
-        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
-      }
-      
-      if (!supabaseUrl.includes('supabase.co')) {
-        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
-      }
-      
-      if (!supabaseKey.startsWith('eyJ')) {
-        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
-      }
-      
       // Test basic connection
       const testUrl = `${supabaseUrl}/rest/v1/`;
       DiagnosticLogger.log('Testing connection to:', { testUrl });
       
       const response = await fetch(testUrl, {
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
-      
-      const response = await fetch(testUrl, {
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
-      
-      const response = await fetch(testUrl, {
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
-      
-      const response = await fetch(testUrl, {
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
+        headers: {
           'Authorization': `Bearer ${supabaseKey}`,
           'Content-Type': 'application/json'
         },
@@ -477,13 +299,6 @@ class DatabaseService {
       
       if (!response.ok) {
         const errorText = await response.text();
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
-      }
-      
-      if (!response.ok) {
-        const errorText = await response.text();
         DiagnosticLogger.log('Connection test failed with response:', { errorText });
       }
       
@@ -493,9 +308,6 @@ class DatabaseService {
         error: error.message,
         stack: error.stack,
         name: error.name
-        stack: error.stack,
-        stack: error.stack,
-        name: error.name
       });
       return false;
     }
@@ -503,71 +315,6 @@ class DatabaseService {
   
   static async getContent() {
     try {
-    content_type: 'webinar',
-    featured_image_url: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800',
-    author_name: 'Agent Cory Team',
-    author_title: 'AI Admissions Experts',
-    reading_time_minutes: 45,
-    tags: ['Webinar', 'Conversion', 'Strategy'],
-    category: 'conversion',
-    is_featured: true,
-    is_published: true,
-    published_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    external_url: 'https://zoom.us/webinar/register/example',
-    metrics: { registrations: 450, attendees: 320 },
-    view_count: 1890
-  },
-  {
-    id: 'metro-case-study-static',
-    title: 'Case Study: Metro State University - 847% ROI in 12 Months',
-    slug: 'metro-state-case-study',
-    excerpt: 'How Metro State University transformed their admissions process and achieved record-breaking results with Agent Cory.',
-    content: `# Metro State University Case Study\n\n## The Challenge\n\nMetro State University was struggling with low contact rates and slow response times...`,
-    content_type: 'case_study',
-    featured_image_url: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800',
-    author_name: 'Dr. Sarah Johnson',
-    author_title: 'Director of Admissions, Metro State University',
-    reading_time_minutes: 12,
-    tags: ['Case Study', 'ROI', 'University'],
-    category: 'admissions',
-    is_featured: false,
-    is_published: true,
-    published_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    metrics: { roi_percentage: 847, additional_revenue: 2100000, time_saved_hours: 2100 },
-    view_count: 2890
-  }
-];
-
-// Content loader with database fallback
-class ContentLoader {
-  static async loadContent() {
-    DebugLogger.log('🚀 Starting content loading process...');
-    
-    try {
-      // Test database connection first
-      DebugLogger.log('Testing database connection...');
-      if (await DatabaseService.testConnection()) {
-        DebugLogger.log('✅ Database connection successful, fetching content...');
-        const content = await DatabaseService.getContent();
-        
-        if (content && content.length > 0) {
-          DebugLogger.log('✅ Database content loaded successfully', { count: content.length });
-          return content;
-        } else {
-          DebugLogger.log('⚠️ Database is empty, using static content');
-        }
-      } else {
-        DebugLogger.log('❌ Database connection failed, using static content');
-      }
-    } catch (error) {
-      DebugLogger.log('❌ Database error, using static content', { error: error.message });
-    }
-    
-    // Fallback to static content
-    DebugLogger.log('📦 Using static fallback content');
-    return STATIC_CONTENT;
-  }
-}
       DiagnosticLogger.log('Starting database content fetch...');
       
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -584,13 +331,10 @@ class ContentLoader {
         headers: {
           'apikey': supabaseKey,
           'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
-        },
-        method: 'GET'
+          'Content-Type': 'application/json',
           'Accept': 'application/json'
-        }
+        },
+        method: 'GET'
       });
       
       DiagnosticLogger.log('Database response', {
@@ -599,20 +343,7 @@ class ContentLoader {
         ok: response.ok,
         headers: Object.fromEntries(response.headers.entries()),
         url: response.url
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
-      if (!response.ok) {
-        const errorText = await response.text();
-        DiagnosticLogger.log('Connection test failed with response:', { errorText });
-      }
-      
-        headers: Object.fromEntries(response.headers.entries())
       });
-      if (!response.ok) {
-        const errorText = await response.text();
-        DiagnosticLogger.log('Connection test failed with response:', { errorText });
-      }
-      
       
       if (!response.ok) {
         const errorText = await response.text();
@@ -759,8 +490,12 @@ class ResourcesPageManager {
 
     // Newsletter form
     const newsletterForm = document.getElementById('newsletter-form');
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://wjtmdrjuheclgdzwprku.supabase.co';
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c';
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', (e) => this.handleNewsletterSignup(e));
+    }
+
+    // Bind modal events
+    this.bindModalEvents();
   }
 
   bindModalEvents() {
@@ -815,9 +550,7 @@ class ResourcesPageManager {
     const selectedCategory = categoryFilter?.value || 'all';
     
     this.filteredContent = this.allContent.filter(item => {
-      const typeMatch = selectedT
-  }
-}ype === 'all' || item.content_type === selectedType;
+      const typeMatch = selectedType === 'all' || item.content_type === selectedType;
       const categoryMatch = selectedCategory === 'all' || item.category === selectedCategory;
       return typeMatch && categoryMatch;
     });
