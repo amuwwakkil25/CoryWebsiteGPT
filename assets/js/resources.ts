@@ -1,384 +1,347 @@
-// Resources Page - Robust Content Loading Architecture
-// This implements a multi-tier fallback system for maximum reliability
+// Resources Page - Diagnostic & Fallback Architecture
+// This implements immediate content display with database enhancement
 
-interface ContentItem {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  content: string;
-  content_type: 'blog' | 'case_study' | 'ebook' | 'guide' | 'webinar';
-  featured_image_url?: string;
-  author_name: string;
-  author_title: string;
-  reading_time_minutes?: number;
-  tags: string[];
-  category: string;
-  is_featured: boolean;
-  is_published: boolean;
-  published_at: string;
-  seo_title?: string;
-  seo_description?: string;
-  download_url?: string;
-  external_url?: string;
-  metrics: Record<string, any>;
-  view_count: number;
+class DiagnosticLogger {
+  static log(message, data = null) {
+    console.log(`🔍 [Resources Debug] ${message}`, data || '');
+    
+    // Also display on page for deployment debugging
+    const debugDiv = document.getElementById('debug-info') || this.createDebugDiv();
+    const logEntry = document.createElement('div');
+    logEntry.style.cssText = 'padding: 0.5rem; border-bottom: 1px solid #eee; font-family: monospace; font-size: 0.75rem;';
+    logEntry.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
+    if (data) {
+      logEntry.innerHTML += `<br><pre style="margin: 0.25rem 0; color: #666;">${JSON.stringify(data, null, 2)}</pre>`;
+    }
+    debugDiv.appendChild(logEntry);
+    debugDiv.scrollTop = debugDiv.scrollHeight;
+  }
+  
+  static createDebugDiv() {
+    const debugDiv = document.createElement('div');
+    debugDiv.id = 'debug-info';
+    debugDiv.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 400px;
+      max-height: 300px;
+      background: white;
+      border: 2px solid #333;
+      border-radius: 8px;
+      overflow-y: auto;
+      z-index: 9999;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    `;
+    
+    const header = document.createElement('div');
+    header.style.cssText = 'background: #333; color: white; padding: 0.5rem; font-weight: bold; position: sticky; top: 0;';
+    header.innerHTML = 'Debug Log <button onclick="this.parentElement.parentElement.remove()" style="float: right; background: none; border: none; color: white; cursor: pointer;">×</button>';
+    debugDiv.appendChild(header);
+    
+    document.body.appendChild(debugDiv);
+    return debugDiv;
+  }
 }
 
-class ContentLoader {
-  private static readonly CACHE_KEY = 'agentcory_content_cache';
-  private static readonly CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
-  
-  static async loadContent(): Promise<ContentItem[]> {
-    console.log('🔄 Starting content loading process...');
-    
-    // Strategy 1: Try cache first
-    const cached = this.getCachedContent();
-    if (cached) {
-      console.log('✅ Using cached content:', cached.length, 'items');
-      return cached;
-    }
-    
-    // Strategy 2: Try database with timeout
-    try {
-      console.log('🔄 Attempting database load...');
-      const dbContent = await this.loadFromDatabase();
-      if (dbContent && dbContent.length > 0) {
-        console.log('✅ Database load successful:', dbContent.length, 'items');
-        this.setCachedContent(dbContent);
-        return dbContent;
-      }
-    } catch (error) {
-      console.warn('⚠️ Database load failed:', error);
-    }
-    
-    // Strategy 3: Use static content as final fallback
-    console.log('📦 Using static fallback content');
-    const staticContent = this.getStaticContent();
-    this.setCachedContent(staticContent);
-    return staticContent;
+// Static content that always works
+const STATIC_CONTENT = [
+  {
+    id: 'ai-guide-static',
+    title: 'The Complete Guide to AI in Admissions',
+    slug: 'ai-admissions-guide',
+    excerpt: 'Comprehensive 40-page guide covering implementation strategies, best practices, and ROI measurement for AI-powered admissions automation.',
+    content: '# The Complete Guide to AI in Admissions\n\nThis comprehensive guide covers everything you need to know about implementing AI in your admissions process...',
+    content_type: 'guide',
+    featured_image_url: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800',
+    author_name: 'Agent Cory Team',
+    author_title: 'AI Admissions Experts',
+    reading_time_minutes: 25,
+    tags: ['AI', 'Implementation', 'Best Practices'],
+    category: 'ai',
+    is_featured: true,
+    is_published: true,
+    published_at: new Date().toISOString(),
+    seo_title: 'Complete Guide to AI in Admissions - Agent Cory',
+    seo_description: 'Learn how to implement AI in your admissions process with this comprehensive guide.',
+    download_url: '/downloads/ai-admissions-guide.pdf',
+    metrics: { downloads: 1250, rating: 4.8 },
+    view_count: 3420
+  },
+  {
+    id: 'conversion-webinar-static',
+    title: '5 Strategies to Double Your Lead Conversion Rate',
+    slug: 'double-conversion-strategies',
+    excerpt: 'Join our upcoming webinar to learn proven tactics that top-performing institutions use to convert more inquiries into enrolled students.',
+    content: '# 5 Strategies to Double Your Lead Conversion Rate\n\n## Strategy 1: Speed of Response\n\nThe faster you respond...',
+    content_type: 'webinar',
+    featured_image_url: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800',
+    author_name: 'Agent Cory Team',
+    author_title: 'AI Admissions Experts',
+    reading_time_minutes: 45,
+    tags: ['Webinar', 'Conversion', 'Strategy'],
+    category: 'conversion',
+    is_featured: true,
+    is_published: true,
+    published_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    external_url: 'https://zoom.us/webinar/register/example',
+    metrics: { registrations: 450, attendees: 320 },
+    view_count: 1890
+  },
+  {
+    id: 'metro-case-study-static',
+    title: 'Case Study: Metro State University - 847% ROI in 12 Months',
+    slug: 'metro-state-case-study',
+    excerpt: 'How Metro State University transformed their admissions process and achieved record-breaking results with Agent Cory.',
+    content: '# Metro State University Case Study\n\n## The Challenge\n\nMetro State University was struggling with low contact rates and slow response times...',
+    content_type: 'case_study',
+    featured_image_url: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800',
+    author_name: 'Dr. Sarah Johnson',
+    author_title: 'Director of Admissions, Metro State University',
+    reading_time_minutes: 12,
+    tags: ['Case Study', 'ROI', 'University'],
+    category: 'admissions',
+    is_featured: false,
+    is_published: true,
+    published_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    metrics: { roi_percentage: 847, additional_revenue: 2100000, time_saved_hours: 2100 },
+    view_count: 2890
+  },
+  {
+    id: 'benchmarks-report-static',
+    title: '2024 Admissions Benchmarks Report',
+    slug: 'admissions-benchmarks-2024',
+    excerpt: 'Comprehensive industry data including response times, conversion rates, and ROI metrics from 500+ institutions.',
+    content: '# 2024 Admissions Benchmarks Report\n\n## Executive Summary\n\nThis comprehensive report analyzes data from over 500 educational institutions...',
+    content_type: 'ebook',
+    featured_image_url: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800',
+    author_name: 'Agent Cory Research Team',
+    author_title: 'Industry Analysts',
+    reading_time_minutes: 30,
+    tags: ['Benchmarks', 'Industry Data', 'Research'],
+    category: 'roi',
+    is_featured: true,
+    is_published: true,
+    published_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    download_url: '/downloads/benchmarks-2024.pdf',
+    metrics: { downloads: 1850, institutions_surveyed: 500 },
+    view_count: 2650
+  },
+  {
+    id: 'response-time-blog-static',
+    title: 'The Psychology of Fast Response Times in Admissions',
+    slug: 'psychology-fast-response-times',
+    excerpt: 'Research-backed insights into why speed matters so much in admissions and how to leverage it for better conversion rates.',
+    content: '# The Psychology of Fast Response Times\n\n## Why Speed Matters\n\nIn the world of admissions, timing is everything...',
+    content_type: 'blog',
+    featured_image_url: 'https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800',
+    author_name: 'Agent Cory Team',
+    author_title: 'AI Admissions Experts',
+    reading_time_minutes: 8,
+    tags: ['Psychology', 'Response Time', 'Conversion'],
+    category: 'admissions',
+    is_featured: false,
+    is_published: true,
+    published_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+    metrics: { shares: 245, comments: 18 },
+    view_count: 1560
+  },
+  {
+    id: 'crm-integration-guide-static',
+    title: 'CRM Integration Best Practices for Higher Ed',
+    slug: 'crm-integration-best-practices',
+    excerpt: 'Step-by-step guide for seamless CRM integration, data mapping, and workflow automation setup.',
+    content: '# CRM Integration Best Practices\n\n## Getting Started\n\nIntegrating your CRM with AI automation requires careful planning...',
+    content_type: 'guide',
+    featured_image_url: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800',
+    author_name: 'Agent Cory Team',
+    author_title: 'Integration Specialists',
+    reading_time_minutes: 20,
+    tags: ['CRM', 'Integration', 'Automation'],
+    category: 'crm',
+    is_featured: false,
+    is_published: true,
+    published_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    metrics: { downloads: 890, implementations: 120 },
+    view_count: 1340
   }
-  
-  private static getCachedContent(): ContentItem[] | null {
-    try {
-      const cached = localStorage.getItem(this.CACHE_KEY);
-      if (!cached) return null;
-      
-      const { data, timestamp } = JSON.parse(cached);
-      if (Date.now() - timestamp > this.CACHE_DURATION) {
-        localStorage.removeItem(this.CACHE_KEY);
-        return null;
-      }
-      
-      return data;
-    } catch {
-      return null;
-    }
-  }
-  
-  private static setCachedContent(content: ContentItem[]): void {
-    try {
-      localStorage.setItem(this.CACHE_KEY, JSON.stringify({
-        data: content,
-        timestamp: Date.now()
-      }));
-    } catch (error) {
-      console.warn('Cache storage failed:', error);
-    }
-  }
-  
-  private static async loadFromDatabase(): Promise<ContentItem[]> {
-    // Create a timeout promise
-    const timeoutPromise = new Promise<never>((_, reject) => {
-      setTimeout(() => reject(new Error('Database timeout')), 5000);
-    });
-    
-    // Create the database query promise
-    const queryPromise = this.executeQuery();
-    
-    // Race between query and timeout
-    return Promise.race([queryPromise, timeoutPromise]);
-  }
-  
-  private static async executeQuery(): Promise<ContentItem[]> {
-    // Simple fetch approach to avoid Supabase client issues
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-    const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-    
-    if (!supabaseUrl || !supabaseKey) {
-      throw new Error('Missing Supabase configuration');
-    }
-    
-    const response = await fetch(`${supabaseUrl}/rest/v1/content_items?is_published=eq.true&order=published_at.desc`, {
-      headers: {
-        'apikey': supabaseKey,
-        'Authorization': `Bearer ${supabaseKey}`,
-        'Content-Type': 'application/json'
-      }
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Database query failed: ${response.status} ${response.statusText}`);
-    }
-    
-    const data = await response.json();
-    return data as ContentItem[];
-  }
-  
-  private static getStaticContent(): ContentItem[] {
-    return [
-      {
-        id: 'ai-guide-static',
-        title: 'The Complete Guide to AI in Admissions',
-        slug: 'ai-admissions-guide',
-        excerpt: 'Comprehensive 40-page guide covering implementation strategies, best practices, and ROI measurement for AI-powered admissions automation.',
-        content: '# The Complete Guide to AI in Admissions\n\nThis comprehensive guide covers everything you need to know about implementing AI in your admissions process...',
-        content_type: 'guide',
-        featured_image_url: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800',
-        author_name: 'Agent Cory Team',
-        author_title: 'AI Admissions Experts',
-        reading_time_minutes: 25,
-        tags: ['AI', 'Implementation', 'Best Practices'],
-        category: 'ai',
-        is_featured: true,
-        is_published: true,
-        published_at: new Date().toISOString(),
-        seo_title: 'Complete Guide to AI in Admissions - Agent Cory',
-        seo_description: 'Learn how to implement AI in your admissions process with this comprehensive guide.',
-        download_url: '/downloads/ai-admissions-guide.pdf',
-        metrics: { downloads: 1250, rating: 4.8 },
-        view_count: 3420
-      },
-      {
-        id: 'conversion-webinar-static',
-        title: '5 Strategies to Double Your Lead Conversion Rate',
-        slug: 'double-conversion-strategies',
-        excerpt: 'Join our upcoming webinar to learn proven tactics that top-performing institutions use to convert more inquiries into enrolled students.',
-        content: '# 5 Strategies to Double Your Lead Conversion Rate\n\n## Strategy 1: Speed of Response\n\nThe faster you respond...',
-        content_type: 'webinar',
-        featured_image_url: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800',
-        author_name: 'Agent Cory Team',
-        author_title: 'AI Admissions Experts',
-        reading_time_minutes: 45,
-        tags: ['Webinar', 'Conversion', 'Strategy'],
-        category: 'conversion',
-        is_featured: true,
-        is_published: true,
-        published_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-        external_url: 'https://zoom.us/webinar/register/example',
-        metrics: { registrations: 450, attendees: 320 },
-        view_count: 1890
-      },
-      {
-        id: 'metro-case-study-static',
-        title: 'Case Study: Metro State University - 847% ROI in 12 Months',
-        slug: 'metro-state-case-study',
-        excerpt: 'How Metro State University transformed their admissions process and achieved record-breaking results with Agent Cory.',
-        content: '# Metro State University Case Study\n\n## The Challenge\n\nMetro State University was struggling with low contact rates and slow response times...',
-        content_type: 'case_study',
-        featured_image_url: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800',
-        author_name: 'Dr. Sarah Johnson',
-        author_title: 'Director of Admissions, Metro State University',
-        reading_time_minutes: 12,
-        tags: ['Case Study', 'ROI', 'University'],
-        category: 'admissions',
-        is_featured: false,
-        is_published: true,
-        published_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-        metrics: { roi_percentage: 847, additional_revenue: 2100000, time_saved_hours: 2100 },
-        view_count: 2890
-      },
-      {
-        id: 'benchmarks-report-static',
-        title: '2024 Admissions Benchmarks Report',
-        slug: 'admissions-benchmarks-2024',
-        excerpt: 'Comprehensive industry data including response times, conversion rates, and ROI metrics from 500+ institutions.',
-        content: '# 2024 Admissions Benchmarks Report\n\n## Executive Summary\n\nThis comprehensive report analyzes data from over 500 educational institutions...',
-        content_type: 'ebook',
-        featured_image_url: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800',
-        author_name: 'Agent Cory Research Team',
-        author_title: 'Industry Analysts',
-        reading_time_minutes: 30,
-        tags: ['Benchmarks', 'Industry Data', 'Research'],
-        category: 'roi',
-        is_featured: true,
-        is_published: true,
-        published_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-        download_url: '/downloads/benchmarks-2024.pdf',
-        metrics: { downloads: 1850, institutions_surveyed: 500 },
-        view_count: 2650
-      },
-      {
-        id: 'response-time-blog-static',
-        title: 'The Psychology of Fast Response Times in Admissions',
-        slug: 'psychology-fast-response-times',
-        excerpt: 'Research-backed insights into why speed matters so much in admissions and how to leverage it for better conversion rates.',
-        content: '# The Psychology of Fast Response Times\n\n## Why Speed Matters\n\nIn the world of admissions, timing is everything...',
-        content_type: 'blog',
-        featured_image_url: 'https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800',
-        author_name: 'Agent Cory Team',
-        author_title: 'AI Admissions Experts',
-        reading_time_minutes: 8,
-        tags: ['Psychology', 'Response Time', 'Conversion'],
-        category: 'admissions',
-        is_featured: false,
-        is_published: true,
-        published_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-        metrics: { shares: 245, comments: 18 },
-        view_count: 1560
-      },
-      {
-        id: 'crm-integration-guide-static',
-        title: 'CRM Integration Best Practices for Higher Ed',
-        slug: 'crm-integration-best-practices',
-        excerpt: 'Step-by-step guide for seamless CRM integration, data mapping, and workflow automation setup.',
-        content: '# CRM Integration Best Practices\n\n## Getting Started\n\nIntegrating your CRM with AI automation requires careful planning...',
-        content_type: 'guide',
-        featured_image_url: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800',
-        author_name: 'Agent Cory Team',
-        author_title: 'Integration Specialists',
-        reading_time_minutes: 20,
-        tags: ['CRM', 'Integration', 'Automation'],
-        category: 'crm',
-        is_featured: false,
-        is_published: true,
-        published_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-        metrics: { downloads: 890, implementations: 120 },
-        view_count: 1340
-      },
-      {
-        id: 'ai-implementation-blog-static',
-        title: 'AI vs Human: Finding the Right Balance in Admissions',
-        slug: 'ai-human-balance-admissions',
-        excerpt: 'When to use AI and when human touch matters most in the admissions journey.',
-        content: '# AI vs Human: Finding the Right Balance\n\n## The Human Element\n\nWhile AI can automate many processes...',
-        content_type: 'blog',
-        featured_image_url: 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800',
-        author_name: 'Agent Cory Team',
-        author_title: 'AI Strategy Experts',
-        reading_time_minutes: 12,
-        tags: ['AI Strategy', 'Human Touch', 'Balance'],
-        category: 'roi',
-        is_featured: true,
-        is_published: true,
-        published_at: new Date(Date.now() - 21 * 24 * 60 * 60 * 1000).toISOString(),
-        metrics: { shares: 180, comments: 25 },
-        view_count: 980
-      },
-      {
-        id: 'retention-strategies-static',
-        title: 'Student Retention: AI-Powered Early Warning Systems',
-        slug: 'ai-student-retention-systems',
-        excerpt: 'How AI can identify at-risk students early and implement automated intervention strategies to improve retention rates.',
-        content: '# Student Retention: AI-Powered Early Warning Systems\n\n## The Retention Challenge\n\nStudent retention is one of the biggest challenges...',
-        content_type: 'guide',
-        featured_image_url: 'https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=800',
-        author_name: 'Agent Cory Team',
-        author_title: 'Student Success Experts',
-        reading_time_minutes: 18,
-        tags: ['Retention', 'AI', 'Student Success'],
-        category: 'ai',
-        is_featured: false,
-        is_published: true,
-        published_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-        metrics: { downloads: 650, implementations: 45 },
-        view_count: 1120
-      }
-    ];
-  }
-}
+];
 
 class DatabaseService {
-  private static supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-  private static supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-  
-  static async testConnection(): Promise<boolean> {
+  static async testConnection() {
     try {
-      if (!this.supabaseUrl || !this.supabaseKey) {
-        console.error('❌ Missing Supabase environment variables');
-        return false;
+      DiagnosticLogger.log('Testing database connection...');
+      
+      // Check environment variables
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      
+      DiagnosticLogger.log('Environment check', {
+        hasUrl: !!supabaseUrl,
+        hasKey: !!supabaseKey,
+        urlPreview: supabaseUrl ? supabaseUrl.substring(0, 30) + '...' : 'missing',
+        keyPreview: supabaseKey ? supabaseKey.substring(0, 20) + '...' : 'missing'
+      });
+      
+      if (!supabaseUrl || !supabaseKey) {
+        throw new Error('Missing Supabase environment variables');
       }
       
-      const response = await fetch(`${this.supabaseUrl}/rest/v1/`, {
+      // Test basic connection
+      const response = await fetch(`${supabaseUrl}/rest/v1/`, {
         headers: {
-          'apikey': this.supabaseKey,
-          'Authorization': `Bearer ${this.supabaseKey}`
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`
         }
       });
       
-      console.log('🔗 Database connection test:', response.ok ? 'SUCCESS' : 'FAILED');
+      DiagnosticLogger.log('Connection test result', {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok
+      });
+      
       return response.ok;
     } catch (error) {
-      console.error('❌ Database connection test failed:', error);
+      DiagnosticLogger.log('Connection test failed', {
+        error: error.message,
+        stack: error.stack
+      });
       return false;
     }
   }
   
-  static async getContent(): Promise<ContentItem[]> {
-    if (!await this.testConnection()) {
-      throw new Error('Database connection failed');
-    }
-    
-    const response = await fetch(`${this.supabaseUrl}/rest/v1/content_items?is_published=eq.true&order=published_at.desc`, {
-      headers: {
-        'apikey': this.supabaseKey,
-        'Authorization': `Bearer ${this.supabaseKey}`,
-        'Content-Type': 'application/json'
+  static async getContent() {
+    try {
+      DiagnosticLogger.log('Starting database content fetch...');
+      
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      
+      if (!supabaseUrl || !supabaseKey) {
+        throw new Error('Missing Supabase configuration');
       }
-    });
+      
+      const url = `${supabaseUrl}/rest/v1/content_items?is_published=eq.true&order=published_at.desc`;
+      DiagnosticLogger.log('Fetching from URL', { url });
+      
+      const response = await fetch(url, {
+        headers: {
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+      
+      DiagnosticLogger.log('Database response', {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok,
+        headers: Object.fromEntries(response.headers.entries())
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        DiagnosticLogger.log('Database error response', { errorText });
+        throw new Error(`Database query failed: ${response.status} ${response.statusText} - ${errorText}`);
+      }
+      
+      const data = await response.json();
+      DiagnosticLogger.log('Database query success', {
+        itemCount: data.length,
+        firstItem: data[0] ? { title: data[0].title, type: data[0].content_type } : 'none'
+      });
+      
+      return data;
+    } catch (error) {
+      DiagnosticLogger.log('Database fetch error', {
+        error: error.message,
+        stack: error.stack
+      });
+      throw error;
+    }
+  }
+}
+
+class ContentLoader {
+  static async loadContent() {
+    DiagnosticLogger.log('🚀 Starting content loading process...');
     
-    if (!response.ok) {
-      throw new Error(`Query failed: ${response.status} ${response.statusText}`);
+    // Strategy 1: Try database with comprehensive diagnostics
+    try {
+      DiagnosticLogger.log('Testing database connection...');
+      const connectionOk = await DatabaseService.testConnection();
+      
+      if (connectionOk) {
+        DiagnosticLogger.log('✅ Database connection successful, fetching content...');
+        const dbContent = await DatabaseService.getContent();
+        
+        if (dbContent && dbContent.length > 0) {
+          DiagnosticLogger.log('✅ Database content loaded successfully', { count: dbContent.length });
+          return dbContent;
+        } else {
+          DiagnosticLogger.log('⚠️ Database is empty, using static content');
+        }
+      } else {
+        DiagnosticLogger.log('❌ Database connection failed, using static content');
+      }
+    } catch (error) {
+      DiagnosticLogger.log('❌ Database error, using static content', { error: error.message });
     }
     
-    const data = await response.json();
-    console.log('📊 Database query result:', data.length, 'items');
-    return data;
+    // Strategy 2: Use static content
+    DiagnosticLogger.log('📦 Using static fallback content');
+    return STATIC_CONTENT;
   }
 }
 
 class ResourcesPageManager {
-  private allContent: ContentItem[] = [];
-  private filteredContent: ContentItem[] = [];
-  private currentView: 'grid' | 'list' = 'grid';
-  private currentPage = 1;
-  private itemsPerPage = 12;
-  private isLoading = false;
-
   constructor() {
+    this.allContent = [];
+    this.filteredContent = [];
+    this.currentView = 'grid';
+    this.currentPage = 1;
+    this.itemsPerPage = 12;
+    this.isLoading = false;
     this.init();
   }
 
-  async init(): Promise<void> {
-    console.log('🚀 Initializing Resources Page Manager...');
+  async init() {
+    DiagnosticLogger.log('🚀 Initializing Resources Page Manager...');
     
     try {
-      // Show loading state
+      // Show loading state briefly
       this.showLoadingState();
       
-      // Load content using our robust loader
+      // Load content with diagnostics
       this.allContent = await ContentLoader.loadContent();
       this.filteredContent = [...this.allContent];
+      
+      DiagnosticLogger.log('Content loaded', { 
+        total: this.allContent.length,
+        featured: this.allContent.filter(item => item.is_featured).length
+      });
       
       // Bind event listeners
       this.bindEvents();
       
-      // Render content
+      // Render content immediately
       this.renderFeaturedContent();
       this.renderAllContent();
       
-      console.log('✅ Resources page initialized successfully with', this.allContent.length, 'items');
+      DiagnosticLogger.log('✅ Resources page initialized successfully');
     } catch (error) {
-      console.error('❌ Critical error during initialization:', error);
+      DiagnosticLogger.log('❌ Critical initialization error', { error: error.message });
       this.showErrorState();
     }
   }
 
-  bindEvents(): void {
+  bindEvents() {
     // Search functionality
-    const searchInput = document.getElementById('resource-search') as HTMLInputElement;
+    const searchInput = document.getElementById('resource-search');
     if (searchInput) {
-      let searchTimeout: NodeJS.Timeout;
+      let searchTimeout;
       searchInput.addEventListener('input', () => {
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(() => {
@@ -388,8 +351,8 @@ class ResourcesPageManager {
     }
 
     // Filter controls
-    const typeFilter = document.getElementById('type-filter') as HTMLSelectElement;
-    const categoryFilter = document.getElementById('category-filter') as HTMLSelectElement;
+    const typeFilter = document.getElementById('type-filter');
+    const categoryFilter = document.getElementById('category-filter');
     const clearFilters = document.getElementById('clear-filters');
 
     if (typeFilter) {
@@ -408,8 +371,8 @@ class ResourcesPageManager {
     const viewButtons = document.querySelectorAll('.view-btn');
     viewButtons.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        const target = e.currentTarget as HTMLElement;
-        const view = target.dataset.view as 'grid' | 'list';
+        const target = e.currentTarget;
+        const view = target.dataset.view;
         this.toggleView(view);
       });
     });
@@ -430,14 +393,14 @@ class ResourcesPageManager {
     this.bindModalEvents();
   }
 
-  bindModalEvents(): void {
+  bindModalEvents() {
     // Close modal events
     const closeButtons = document.querySelectorAll('.modal-close');
     closeButtons.forEach(btn => {
       btn.addEventListener('click', (e) => {
         const modal = e.target.closest('.modal');
         if (modal) {
-          this.closeModal(modal as HTMLElement);
+          this.closeModal(modal);
         }
       });
     });
@@ -445,7 +408,7 @@ class ResourcesPageManager {
     // Close on backdrop click
     document.addEventListener('click', (e) => {
       if (e.target.classList.contains('modal')) {
-        this.closeModal(e.target as HTMLElement);
+        this.closeModal(e.target);
       }
     });
 
@@ -456,7 +419,7 @@ class ResourcesPageManager {
     }
   }
 
-  handleSearch(query: string): void {
+  handleSearch(query) {
     const searchTerm = query.toLowerCase().trim();
     
     if (!searchTerm) {
@@ -474,9 +437,9 @@ class ResourcesPageManager {
     this.renderAllContent();
   }
 
-  applyFilters(): void {
-    const typeFilter = document.getElementById('type-filter') as HTMLSelectElement;
-    const categoryFilter = document.getElementById('category-filter') as HTMLSelectElement;
+  applyFilters() {
+    const typeFilter = document.getElementById('type-filter');
+    const categoryFilter = document.getElementById('category-filter');
     
     const selectedType = typeFilter?.value || 'all';
     const selectedCategory = categoryFilter?.value || 'all';
@@ -491,10 +454,10 @@ class ResourcesPageManager {
     this.renderAllContent();
   }
 
-  clearAllFilters(): void {
-    const typeFilter = document.getElementById('type-filter') as HTMLSelectElement;
-    const categoryFilter = document.getElementById('category-filter') as HTMLSelectElement;
-    const searchInput = document.getElementById('resource-search') as HTMLInputElement;
+  clearAllFilters() {
+    const typeFilter = document.getElementById('type-filter');
+    const categoryFilter = document.getElementById('category-filter');
+    const searchInput = document.getElementById('resource-search');
     
     if (typeFilter) typeFilter.value = 'all';
     if (categoryFilter) categoryFilter.value = 'all';
@@ -505,7 +468,7 @@ class ResourcesPageManager {
     this.renderAllContent();
   }
 
-  toggleView(view: 'grid' | 'list'): void {
+  toggleView(view) {
     this.currentView = view;
     
     // Update button states
@@ -523,11 +486,13 @@ class ResourcesPageManager {
     }
   }
 
-  renderFeaturedContent(): void {
+  renderFeaturedContent() {
     const container = document.getElementById('featured-content');
     if (!container) return;
 
     const featuredItems = this.allContent.filter(item => item.is_featured);
+    
+    DiagnosticLogger.log('Rendering featured content', { count: featuredItems.length });
     
     if (featuredItems.length === 0) {
       container.innerHTML = '<div class="empty-state"><p>No featured resources available.</p></div>';
@@ -544,13 +509,19 @@ class ResourcesPageManager {
     });
   }
 
-  renderAllContent(): void {
+  renderAllContent() {
     const container = document.getElementById('resources-content');
     if (!container) return;
 
     const startIndex = 0;
     const endIndex = this.currentPage * this.itemsPerPage;
     const itemsToShow = this.filteredContent.slice(startIndex, endIndex);
+    
+    DiagnosticLogger.log('Rendering all content', { 
+      total: this.filteredContent.length,
+      showing: itemsToShow.length,
+      page: this.currentPage
+    });
     
     if (itemsToShow.length === 0) {
       container.innerHTML = `
@@ -581,7 +552,7 @@ class ResourcesPageManager {
     }
   }
 
-  createFeaturedCard(item: ContentItem): string {
+  createFeaturedCard(item) {
     return `
       <div class="featured-card" data-id="${item.id}">
         <div class="featured-image">
@@ -615,7 +586,7 @@ class ResourcesPageManager {
     `;
   }
 
-  createResourceCard(item: ContentItem): string {
+  createResourceCard(item) {
     return `
       <div class="resource-card" data-id="${item.id}">
         <div class="resource-image">
@@ -640,7 +611,7 @@ class ResourcesPageManager {
     `;
   }
 
-  formatContentType(type: string): string {
+  formatContentType(type) {
     const typeMap = {
       blog: 'Blog Post',
       case_study: 'Case Study',
@@ -648,10 +619,10 @@ class ResourcesPageManager {
       ebook: 'eBook',
       webinar: 'Webinar'
     };
-    return typeMap[type as keyof typeof typeMap] || type;
+    return typeMap[type] || type;
   }
 
-  getActionText(type: string): string {
+  getActionText(type) {
     const actionMap = {
       blog: 'Read Article',
       case_study: 'View Case Study',
@@ -659,10 +630,10 @@ class ResourcesPageManager {
       ebook: 'Download eBook',
       webinar: 'Watch Webinar'
     };
-    return actionMap[type as keyof typeof actionMap] || 'View Content';
+    return actionMap[type] || 'View Content';
   }
 
-  formatDate(dateString: string): string {
+  formatDate(dateString) {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -671,7 +642,7 @@ class ResourcesPageManager {
     });
   }
 
-  updateLoadMoreButton(): void {
+  updateLoadMoreButton() {
     const loadMoreBtn = document.getElementById('load-more');
     if (!loadMoreBtn) return;
 
@@ -679,12 +650,14 @@ class ResourcesPageManager {
     loadMoreBtn.style.display = hasMore ? 'block' : 'none';
   }
 
-  loadMoreContent(): void {
+  loadMoreContent() {
     this.currentPage++;
     this.renderAllContent();
   }
 
-  openContentModal(item: ContentItem): void {
+  openContentModal(item) {
+    DiagnosticLogger.log('Opening content modal', { title: item.title, type: item.content_type });
+    
     // For downloadable content, show lead magnet form
     if (item.content_type === 'ebook' || item.download_url) {
       this.openLeadMagnetModal(item);
@@ -701,7 +674,7 @@ class ResourcesPageManager {
     this.showContentModal(item);
   }
 
-  showContentModal(item: ContentItem): void {
+  showContentModal(item) {
     const modal = document.getElementById('content-modal');
     const title = document.getElementById('content-modal-title');
     const body = document.getElementById('content-modal-body');
@@ -746,11 +719,11 @@ class ResourcesPageManager {
     this.openModal(modal);
   }
 
-  openLeadMagnetModal(item: ContentItem): void {
+  openLeadMagnetModal(item) {
     const modal = document.getElementById('lead-magnet-modal');
     const title = document.getElementById('magnet-modal-title');
     const description = document.getElementById('magnet-modal-description');
-    const resourceIdInput = document.getElementById('magnet-resource-id') as HTMLInputElement;
+    const resourceIdInput = document.getElementById('magnet-resource-id');
     
     if (!modal || !title || !description || !resourceIdInput) return;
 
@@ -764,46 +737,44 @@ class ResourcesPageManager {
     this.openModal(modal);
   }
 
-  openModal(modal: HTMLElement): void {
+  openModal(modal) {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
     
-    const firstInput = modal.querySelector('input, select, textarea') as HTMLElement;
+    const firstInput = modal.querySelector('input, select, textarea');
     if (firstInput) {
       setTimeout(() => firstInput.focus(), 100);
     }
   }
 
-  closeModal(modal: HTMLElement): void {
+  closeModal(modal) {
     modal.classList.remove('active');
     document.body.style.overflow = '';
     
     const forms = modal.querySelectorAll('form');
-    forms.forEach(form => (form as HTMLFormElement).reset());
+    forms.forEach(form => form.reset());
     
     const successDivs = modal.querySelectorAll('[id$="-success"]');
-    successDivs.forEach(div => (div as HTMLElement).style.display = 'none');
+    successDivs.forEach(div => div.style.display = 'none');
     
     const formDivs = modal.querySelectorAll('form');
-    formDivs.forEach(div => (div as HTMLElement).style.display = 'block');
+    formDivs.forEach(div => div.style.display = 'block');
   }
 
-  handleLeadMagnetForm(e: Event): void {
+  handleLeadMagnetForm(e) {
     e.preventDefault();
     
-    const form = e.target as HTMLFormElement;
+    const form = e.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     
     if (data.website) return;
 
-    console.log('📝 Lead magnet request:', {
+    DiagnosticLogger.log('📝 Lead magnet request submitted', {
       name: data.name,
       email: data.email,
       organization: data.organization,
-      role: data.role,
-      resource_id: data.resourceId,
-      follow_up_requested: data.followUp === 'on'
+      resource_id: data.resourceId
     });
 
     form.style.display = 'none';
@@ -815,20 +786,20 @@ class ResourcesPageManager {
     this.showToast('Resource request submitted successfully!', 'success');
   }
 
-  handleNewsletterSignup(e: Event): void {
+  handleNewsletterSignup(e) {
     e.preventDefault();
     
-    const form = e.target as HTMLFormElement;
+    const form = e.target;
     const formData = new FormData(form);
-    const email = formData.get('email') as string;
+    const email = formData.get('email');
 
-    console.log('📧 Newsletter signup:', email);
+    DiagnosticLogger.log('📧 Newsletter signup', { email });
     
     this.showToast('Successfully subscribed to newsletter!', 'success');
     form.reset();
   }
 
-  convertToHTML(content: string): string {
+  convertToHTML(content) {
     return content
       .replace(/^# (.*$)/gm, '<h1>$1</h1>')
       .replace(/^## (.*$)/gm, '<h2>$1</h2>')
@@ -845,7 +816,7 @@ class ResourcesPageManager {
       .replace(/<\/li><\/p>/g, '</li></ul>');
   }
 
-  shareContent(title: string, url: string): void {
+  shareContent(title, url) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(url).then(() => {
         this.showToast(`Link copied to clipboard: ${title}`, 'success');
@@ -857,7 +828,7 @@ class ResourcesPageManager {
     }
   }
 
-  fallbackCopyToClipboard(url: string, title: string): void {
+  fallbackCopyToClipboard(url, title) {
     const textArea = document.createElement('textarea');
     textArea.value = url;
     textArea.style.position = 'fixed';
@@ -877,7 +848,7 @@ class ResourcesPageManager {
     document.body.removeChild(textArea);
   }
 
-  showLoadingState(): void {
+  showLoadingState() {
     const containers = ['featured-content', 'resources-content'];
     containers.forEach(id => {
       const container = document.getElementById(id);
@@ -892,7 +863,7 @@ class ResourcesPageManager {
     });
   }
 
-  showErrorState(): void {
+  showErrorState() {
     const containers = ['featured-content', 'resources-content'];
     containers.forEach(id => {
       const container = document.getElementById(id);
@@ -909,7 +880,7 @@ class ResourcesPageManager {
     });
   }
 
-  showToast(message: string, type: 'success' | 'error' | 'info' = 'info'): void {
+  showToast(message, type = 'info') {
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
     toast.textContent = message;
