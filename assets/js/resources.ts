@@ -460,6 +460,7 @@ class ResourcesPageManager {
             Print
           </button>
           <button class="btn btn-primary" onclick="navigator.share ? navigator.share({title: '${item.title}', url: window.location.href}) : null">
+          <button class="btn btn-primary" onclick="this.shareContent('${item.title}', window.location.href)">
             <i data-lucide="share-2"></i>
             Share
           </button>
@@ -587,6 +588,49 @@ class ResourcesPageManager {
       .replace(/<\/h([1-6])><\/p>/g, '</h$1>')
       .replace(/<p><li>/g, '<ul><li>')
       .replace(/<\/li><\/p>/g, '</li></ul>');
+  }
+
+  shareContent(title: string, url: string): void {
+    if (navigator.share) {
+      navigator.share({ title, url }).catch(error => {
+        console.log('Share failed, falling back to clipboard:', error);
+        this.copyToClipboard(url, title);
+      });
+    } else {
+      this.copyToClipboard(url, title);
+    }
+  }
+
+  copyToClipboard(url: string, title: string): void {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(() => {
+        this.showToast(`Link copied to clipboard: ${title}`, 'success');
+      }).catch(() => {
+        this.fallbackCopyToClipboard(url, title);
+      });
+    } else {
+      this.fallbackCopyToClipboard(url, title);
+    }
+  }
+
+  fallbackCopyToClipboard(url: string, title: string): void {
+    const textArea = document.createElement('textarea');
+    textArea.value = url;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+      document.execCommand('copy');
+      this.showToast(`Link copied to clipboard: ${title}`, 'success');
+    } catch (err) {
+      this.showToast('Unable to copy link. Please copy manually.', 'error');
+    }
+    
+    document.body.removeChild(textArea);
   }
 
   showLoadingState(): void {
