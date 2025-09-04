@@ -378,6 +378,8 @@ class DatabaseService {
       DiagnosticLogger.log('Testing connection to:', { testUrl });
       
       const response = await fetch(testUrl, {
+      }
+      )
       DiagnosticLogger.log('Testing connection to:', { testUrl });
       
       const response = await fetch(testUrl, {
