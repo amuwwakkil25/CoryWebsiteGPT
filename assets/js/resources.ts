@@ -65,28 +65,19 @@ class ResourcesPageManager {
       this.isLoading = true;
       this.showLoadingState();
       
-      // Load all published content with error handling
-      try {
-        this.allContent = await ContentService.getAllContent();
-        this.filteredContent = [...this.allContent];
-        
-        // If no content from database, use fallback content
-        if (this.allContent.length === 0) {
-          console.warn('No content found in database, using fallback content');
-          this.allContent = this.getFallbackContent();
-          this.filteredContent = [...this.allContent];
-        }
-      } catch (dbError) {
-        console.error('Database error, using fallback content:', dbError);
-        this.allContent = this.getFallbackContent();
-        this.filteredContent = [...this.allContent];
-      }
+      // Load all published content
+      this.allContent = await ContentService.getAllContent();
+      this.filteredContent = [...this.allContent];
+      
+      console.log('Loaded content items:', this.allContent.length);
       
       this.isLoading = false;
     } catch (error) {
-      console.error('Error loading content:', error);
+      console.error('Error loading content from database:', error);
       this.isLoading = false;
-      throw error;
+      
+      // Show error state instead of throwing
+      this.showErrorState();
     }
   }
 

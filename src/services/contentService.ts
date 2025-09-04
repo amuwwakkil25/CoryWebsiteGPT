@@ -38,6 +38,8 @@ export interface LeadMagnetRequest {
 export class ContentService {
   // Get all published content
   static async getAllContent(): Promise<ContentItem[]> {
+    console.log('Fetching content from database...');
+    
     const { data, error } = await supabase
       .from('content_items')
       .select('*')
@@ -45,10 +47,11 @@ export class ContentService {
       .order('published_at', { ascending: false })
     
     if (error) {
-      console.error('Error fetching content:', error)
+      console.error('Supabase error fetching content:', error);
       throw error
     }
     
+    console.log('Fetched content items:', data?.length || 0);
     return data as ContentItem[]
   }
 
