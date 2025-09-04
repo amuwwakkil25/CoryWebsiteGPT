@@ -40,20 +40,32 @@ class ResourcesPageManager {
 
   async init(): Promise<void> {
     try {
-      // Use static content instead of database
-      this.allContent = this.getFallbackContent();
-      this.filteredContent = [...this.allContent];
+      // Show loading state
+      this.showLoadingState();
+      
+      // Try to load from database first
+      try {
+        console.log('Attempting to load content from database...');
+        this.allContent = await ContentService.getAllContent();
+        console.log('Successfully loaded content from database:', this.allContent.length, 'items');
+        this.filteredContent = [...this.allContent];
+      } catch (dbError) {
+        console.warn('Database loading failed, using fallback content:', dbError);
+        this.allContent = this.getFallbackContent();
+        this.filteredContent = [...this.allContent];
+      }
       
       // Bind event listeners
       this.bindEvents();
       
-      // Render initial content
+      // Render content
       this.renderFeaturedContent();
       this.renderAllContent();
       
-      console.log('Resources page initialized with static content');
+      console.log('Resources page initialized with', this.allContent.length, 'items');
     } catch (error) {
       console.error('Error initializing resources page:', error);
+      // Final fallback
       this.allContent = this.getFallbackContent();
       this.filteredContent = [...this.allContent];
       this.renderFeaturedContent();
