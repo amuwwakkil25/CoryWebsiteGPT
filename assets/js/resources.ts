@@ -1,405 +1,5 @@
-// Resources Page - Diagnostic & Fallback Architecture
-// This implements immediate content display with database enhancement
-
-class DiagnosticLogger {
-  static log(message, data = null) {
-    console.log(`🔍 [Resources Debug] ${message}`, data || '');
-    
-    // Enhanced deployment debugging
-    this.displayOnPage(message, data);
-    this.logToLocalStorage(message, data);
-  }
-  
-  static displayOnPage(message, data) {
-    try {
-      const debugDiv = document.getElementById('debug-info') || this.createDebugDiv();
-      const logEntry = document.createElement('div');
-      logEntry.style.cssText = 'padding: 0.5rem; border-bottom: 1px solid #eee; font-family: monospace; font-size: 0.75rem;';
-      
-      const timestamp = new Date().toLocaleTimeString();
-      const dataStr = data ? JSON.stringify(data, null, 2) : '';
-      
-      logEntry.innerHTML = `
-        <div style="color: #333; font-weight: bold;">${timestamp}: ${message}</div>
-        ${dataStr ? `<pre style="margin: 0.25rem 0; color: #666; font-size: 0.7rem; max-height: 100px; overflow-y: auto;">${dataStr}</pre>` : ''}
-      `;
-      
-      debugDiv.appendChild(logEntry);
-      debugDiv.scrollTop = debugDiv.scrollHeight;
-      
-      // Keep only last 20 entries
-      const entries = debugDiv.querySelectorAll('div[style*="padding"]');
-      if (entries.length > 20) {
-        entries[0].remove();
-      }
-    } catch (error) {
-      console.error('Debug display error:', error);
-    }
-  }
-  
-  static logToLocalStorage(message, data) {
-    try {
-      const logs = JSON.parse(localStorage.getItem('deployment_logs') || '[]');
-      logs.push({
-        timestamp: new Date().toISOString(),
-        message,
-        data,
-        url: window.location.href,
-        userAgent: navigator.userAgent
-      });
-      
-      // Keep only last 50 logs
-      if (logs.length > 50) {
-        logs.splice(0, logs.length - 50);
-      }
-      
-      localStorage.setItem('deployment_logs', JSON.stringify(logs));
-    } catch (error) {
-      console.error('LocalStorage logging error:', error);
-    }
-  }
-  
-  static createDebugDiv() {
-    const debugDiv = document.createElement('div');
-    debugDiv.id = 'debug-info';
-    debugDiv.style.cssText = `
-      position: fixed;
-      bottom: 10px;
-      right: 20px;
-      width: 450px;
-      max-height: 400px;
-      background: white;
-      border: 2px solid #333;
-      border-radius: 8px;
-      overflow-y: auto;
-      z-index: 9999;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      font-family: monospace;
-    `;
-    
-    const header = document.createElement('div');
-    header.style.cssText = 'background: #333; color: white; padding: 0.5rem; font-weight: bold; position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center;';
-    header.innerHTML = `
-      <span>🔍 Deployment Debug Log</span>
-      <div>
-        <button onclick="DiagnosticLogger.exportLogs()" style="background: #666; border: none; color: white; cursor: pointer; padding: 0.25rem 0.5rem; margin-right: 0.5rem; border-radius: 3px; font-size: 0.7rem;">Export</button>
-        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem;">×</button>
-      </div>
-    `;
-    debugDiv.appendChild(header);
-    
-    document.body.appendChild(debugDiv);
-    return debugDiv;
-  }
-  
-  static exportLogs() {
-    try {
-      const logs = localStorage.getItem('deployment_logs') || '[]';
-      const blob = new Blob([logs], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `deployment-logs-${new Date().toISOString().split('T')[0]}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Export error:', error);
-    }
-  }
-}
-
-// Static content that always works
-const STATIC_CONTENT = [
-  {
-    id: 'ai-guide-static',
-    title: 'The Complete Guide to AI in Admissions',
-    slug: 'ai-admissions-guide',
-    excerpt: 'Comprehensive 40-page guide covering implementation strategies, best practices, and ROI measurement for AI-powered admissions automation.',
-    content: '# The Complete Guide to AI in Admissions\n\nThis comprehensive guide covers everything you need to know about implementing AI in your admissions process...',
-    content_type: 'guide',
-    featured_image_url: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800',
-    author_name: 'Agent Cory Team',
-    author_title: 'AI Admissions Experts',
-    reading_time_minutes: 25,
-    tags: ['AI', 'Implementation', 'Best Practices'],
-    category: 'ai',
-    is_featured: true,
-    is_published: true,
-    published_at: new Date().toISOString(),
-    seo_title: 'Complete Guide to AI in Admissions - Agent Cory',
-    seo_description: 'Learn how to implement AI in your admissions process with this comprehensive guide.',
-    download_url: '/downloads/ai-admissions-guide.pdf',
-    metrics: { downloads: 1250, rating: 4.8 },
-    view_count: 3420
-  },
-  {
-    id: 'conversion-webinar-static',
-    title: '5 Strategies to Double Your Lead Conversion Rate',
-    slug: 'double-conversion-strategies',
-    excerpt: 'Join our upcoming webinar to learn proven tactics that top-performing institutions use to convert more inquiries into enrolled students.',
-    content: '# 5 Strategies to Double Your Lead Conversion Rate\n\n## Strategy 1: Speed of Response\n\nThe faster you respond...',
-    content_type: 'webinar',
-    featured_image_url: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800',
-    author_name: 'Agent Cory Team',
-    author_title: 'AI Admissions Experts',
-    reading_time_minutes: 45,
-    tags: ['Webinar', 'Conversion', 'Strategy'],
-    category: 'conversion',
-    is_featured: true,
-    is_published: true,
-    published_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    external_url: 'https://zoom.us/webinar/register/example',
-    metrics: { registrations: 450, attendees: 320 },
-    view_count: 1890
-  },
-  {
-    id: 'metro-case-study-static',
-    title: 'Case Study: Metro State University - 847% ROI in 12 Months',
-    slug: 'metro-state-case-study',
-    excerpt: 'How Metro State University transformed their admissions process and achieved record-breaking results with Agent Cory.',
-    content: '# Metro State University Case Study\n\n## The Challenge\n\nMetro State University was struggling with low contact rates and slow response times...',
-    content_type: 'case_study',
-    featured_image_url: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800',
-    author_name: 'Dr. Sarah Johnson',
-    author_title: 'Director of Admissions, Metro State University',
-    reading_time_minutes: 12,
-    tags: ['Case Study', 'ROI', 'University'],
-    category: 'admissions',
-    is_featured: false,
-    is_published: true,
-    published_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    metrics: { roi_percentage: 847, additional_revenue: 2100000, time_saved_hours: 2100 },
-    view_count: 2890
-  },
-  {
-    id: 'benchmarks-report-static',
-    title: '2024 Admissions Benchmarks Report',
-    slug: 'admissions-benchmarks-2024',
-    excerpt: 'Comprehensive industry data including response times, conversion rates, and ROI metrics from 500+ institutions.',
-    content: '# 2024 Admissions Benchmarks Report\n\n## Executive Summary\n\nThis comprehensive report analyzes data from over 500 educational institutions...',
-    content_type: 'ebook',
-    featured_image_url: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800',
-    author_name: 'Agent Cory Research Team',
-    author_title: 'Industry Analysts',
-    reading_time_minutes: 30,
-    tags: ['Benchmarks', 'Industry Data', 'Research'],
-    category: 'roi',
-    is_featured: true,
-    is_published: true,
-    published_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    download_url: '/downloads/benchmarks-2024.pdf',
-    metrics: { downloads: 1850, institutions_surveyed: 500 },
-    view_count: 2650
-  },
-  {
-    id: 'response-time-blog-static',
-    title: 'The Psychology of Fast Response Times in Admissions',
-    slug: 'psychology-fast-response-times',
-    excerpt: 'Research-backed insights into why speed matters so much in admissions and how to leverage it for better conversion rates.',
-    content: '# The Psychology of Fast Response Times\n\n## Why Speed Matters\n\nIn the world of admissions, timing is everything...',
-    content_type: 'blog',
-    featured_image_url: 'https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800',
-    author_name: 'Agent Cory Team',
-    author_title: 'AI Admissions Experts',
-    reading_time_minutes: 8,
-    tags: ['Psychology', 'Response Time', 'Conversion'],
-    category: 'admissions',
-    is_featured: false,
-    is_published: true,
-    published_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-    metrics: { shares: 245, comments: 18 },
-    view_count: 1560
-  },
-  {
-    id: 'crm-integration-guide-static',
-    title: 'CRM Integration Best Practices for Higher Ed',
-    slug: 'crm-integration-best-practices',
-    excerpt: 'Step-by-step guide for seamless CRM integration, data mapping, and workflow automation setup.',
-    content: '# CRM Integration Best Practices\n\n## Getting Started\n\nIntegrating your CRM with AI automation requires careful planning...',
-    content_type: 'guide',
-    featured_image_url: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800',
-    author_name: 'Agent Cory Team',
-    author_title: 'Integration Specialists',
-    reading_time_minutes: 20,
-    tags: ['CRM', 'Integration', 'Automation'],
-    category: 'crm',
-    is_featured: false,
-    is_published: true,
-    published_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-    metrics: { downloads: 890, implementations: 120 },
-    view_count: 1340
-  }
-];
-
-class DatabaseService {
-  static async testConnection() {
-    try {
-      DiagnosticLogger.log('Testing database connection...');
-      
-      // Check environment variables with detailed logging
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-      
-      // Log all available environment variables (safely)
-      const envVars = {};
-      for (const key in import.meta.env) {
-        if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
-            ? `${import.meta.env[key]?.substring(0, 10)}...` 
-            : import.meta.env[key];
-        }
-      }
-      
-      DiagnosticLogger.log('Environment check', {
-        allEnvVars: envVars,
-        hasUrl: !!supabaseUrl,
-        hasKey: !!supabaseKey,
-        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
-        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        isDev: import.meta.env.DEV,
-        isProd: import.meta.env.PROD
-      });
-      
-      if (!supabaseUrl || !supabaseKey) {
-        throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
-      }
-      
-      if (!supabaseUrl.includes('supabase.co')) {
-        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
-      }
-      
-      if (!supabaseKey.startsWith('eyJ')) {
-        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
-      }
-      
-      // Test basic connection
-      const testUrl = `${supabaseUrl}/rest/v1/`;
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
-      
-      const response = await fetch(testUrl, {
-        headers: {
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
-      });
-      
-      DiagnosticLogger.log('Connection test result', {
-        status: response.status,
-        statusText: response.statusText,
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
-      });
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        DiagnosticLogger.log('Connection test failed with response:', { errorText });
-      }
-      
-      return response.ok;
-    } catch (error) {
-      DiagnosticLogger.log('Connection test failed', {
-        error: error.message,
-        stack: error.stack,
-        name: error.name
-      });
-      return false;
-    }
-  }
-  
-  static async getContent() {
-    try {
-      DiagnosticLogger.log('Starting database content fetch...');
-      
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-      
-      if (!supabaseUrl || !supabaseKey) {
-        throw new Error('Missing Supabase configuration');
-      }
-      
-      const url = `${supabaseUrl}/rest/v1/content_items?is_published=eq.true&order=published_at.desc`;
-      DiagnosticLogger.log('Fetching from URL', { url });
-      
-      const response = await fetch(url, {
-        headers: {
-          'apikey': supabaseKey,
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        method: 'GET'
-      });
-      
-      DiagnosticLogger.log('Database response', {
-        status: response.status,
-        statusText: response.statusText,
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
-      });
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        DiagnosticLogger.log('Database error response', { errorText });
-        throw new Error(`Database query failed: ${response.status} ${response.statusText} - ${errorText}`);
-      }
-      
-      const data = await response.json();
-      DiagnosticLogger.log('Database query success', {
-        itemCount: data.length,
-        firstItem: data[0] ? { title: data[0].title, type: data[0].content_type } : 'none'
-      });
-      
-      return data;
-    } catch (error) {
-      DiagnosticLogger.log('Database fetch error', {
-        error: error.message,
-        stack: error.stack,
-        name: error.name
-      });
-      throw error;
-    }
-  }
-}
-
-class ContentLoader {
-  static async loadContent() {
-    DiagnosticLogger.log('🚀 Starting content loading process...');
-    
-    // Strategy 1: Try database with comprehensive diagnostics
-    try {
-      DiagnosticLogger.log('Testing database connection...');
-      const connectionOk = await DatabaseService.testConnection();
-      
-      if (connectionOk) {
-        DiagnosticLogger.log('✅ Database connection successful, fetching content...');
-        const dbContent = await DatabaseService.getContent();
-        
-        if (dbContent && dbContent.length > 0) {
-          DiagnosticLogger.log('✅ Database content loaded successfully', { count: dbContent.length });
-          return dbContent;
-        } else {
-          DiagnosticLogger.log('⚠️ Database is empty, using static content');
-        }
-      } else {
-        DiagnosticLogger.log('❌ Database connection failed, using static content');
-      }
-    } catch (error) {
-      DiagnosticLogger.log('❌ Database error, using static content', { error: error.message });
-    }
-    
-    // Strategy 2: Use static content
-    DiagnosticLogger.log('📦 Using static fallback content');
-    return STATIC_CONTENT;
-  }
-}
+// Resources Page - Using ContentService for proper Supabase integration
+import { ContentService } from '../../src/services/contentService.ts';
 
 class ResourcesPageManager {
   constructor() {
@@ -413,19 +13,35 @@ class ResourcesPageManager {
   }
 
   async init() {
-    DiagnosticLogger.log('🚀 Initializing Resources Page Manager...');
+    console.log('🚀 Initializing Resources Page Manager...');
     
     try {
       // Show loading state briefly
-      this.showLoadingState();
+      // Check environment variables with detailed logging
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
       
-      // Load content with diagnostics
-      this.allContent = await ContentLoader.loadContent();
+      // Log all available environment variables (safely)
+      const envVars = {};
+      for (const key in import.meta.env) {
+        if (key.startsWith('VITE_')) {
+          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+            ? `${import.meta.env[key]?.substring(0, 10)}...` 
+            : import.meta.env[key];
+        }
+      }
+      this.allContent = await ContentService.getAllContent();
       this.filteredContent = [...this.allContent];
+        allEnvVars: envVars,
       
-      DiagnosticLogger.log('Content loaded', { 
-        total: this.allContent.length,
-        featured: this.allContent.filter(item => item.is_featured).length
+      console.log('Content loaded', { 
+        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode: import.meta.env.MODE,
+        isDev: import.meta.env.DEV,
+        isProd: import.meta.env.PROD
       });
       
       // Bind event listeners
@@ -435,9 +51,9 @@ class ResourcesPageManager {
       this.renderFeaturedContent();
       this.renderAllContent();
       
-      DiagnosticLogger.log('✅ Resources page initialized successfully');
+      console.log('✅ Resources page initialized successfully');
     } catch (error) {
-      DiagnosticLogger.log('❌ Critical initialization error', { error: error.message });
+      console.error('❌ Critical initialization error', error);
       this.showErrorState();
     }
   }
@@ -498,15 +114,28 @@ class ResourcesPageManager {
     this.bindModalEvents();
   }
 
-  bindModalEvents() {
+        throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
+      }
+      
+      if (!supabaseUrl.includes('supabase.co')) {
+        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
+      }
+      
+      if (!supabaseKey.startsWith('eyJ')) {
+        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
     // Close modal events
     const closeButtons = document.querySelectorAll('.modal-close');
     closeButtons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      const testUrl = `${supabaseUrl}/rest/v1/`;
+      DiagnosticLogger.log('Testing connection to:', { testUrl });
+      
+      const response = await fetch(testUrl, {
         const modal = e.target.closest('.modal');
         if (modal) {
-          this.closeModal(modal);
-        }
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json'
+        },
+        method: 'GET'
       });
     });
 
@@ -597,7 +226,7 @@ class ResourcesPageManager {
 
     const featuredItems = this.allContent.filter(item => item.is_featured);
     
-    DiagnosticLogger.log('Rendering featured content', { count: featuredItems.length });
+    console.log('Rendering featured content', { count: featuredItems.length });
     
     if (featuredItems.length === 0) {
       container.innerHTML = '<div class="empty-state"><p>No featured resources available.</p></div>';
@@ -622,7 +251,7 @@ class ResourcesPageManager {
     const endIndex = this.currentPage * this.itemsPerPage;
     const itemsToShow = this.filteredContent.slice(startIndex, endIndex);
     
-    DiagnosticLogger.log('Rendering all content', { 
+    console.log('Rendering all content', { 
       total: this.filteredContent.length,
       showing: itemsToShow.length,
       page: this.currentPage
@@ -761,7 +390,7 @@ class ResourcesPageManager {
   }
 
   openContentModal(item) {
-    DiagnosticLogger.log('Opening content modal', { title: item.title, type: item.content_type });
+    console.log('Opening content modal', { title: item.title, type: item.content_type });
     
     // For downloadable content, show lead magnet form
     if (item.content_type === 'ebook' || item.download_url) {
@@ -775,7 +404,13 @@ class ResourcesPageManager {
       return;
     }
 
-    // For regular content, show in modal
+    // For full articles (blog, guide, case_study), redirect to dedicated content page
+    if (['blog', 'guide', 'case_study'].includes(item.content_type)) {
+      window.location.href = `/content/${item.slug}.html`;
+      return;
+    }
+
+    // For other content, show in modal
     this.showContentModal(item);
   }
 
@@ -875,7 +510,7 @@ class ResourcesPageManager {
     
     if (data.website) return;
 
-    DiagnosticLogger.log('📝 Lead magnet request submitted', {
+    console.log('📝 Lead magnet request submitted', {
       name: data.name,
       email: data.email,
       organization: data.organization,
@@ -898,7 +533,7 @@ class ResourcesPageManager {
     const formData = new FormData(form);
     const email = formData.get('email');
 
-    DiagnosticLogger.log('📧 Newsletter signup', { email });
+    console.log('📧 Newsletter signup', { email });
     
     this.showToast('Successfully subscribed to newsletter!', 'success');
     form.reset();
@@ -929,14 +564,22 @@ class ResourcesPageManager {
         this.fallbackCopyToClipboard(url, title);
       });
     } else {
-      this.fallbackCopyToClipboard(url, title);
+        ok: response.ok,
+        headers: Object.fromEntries(response.headers.entries()),
+        url: response.url
     }
   }
+      if (!response.ok) {
+        const errorText = await response.text();
+        DiagnosticLogger.log('Connection test failed with response:', { errorText });
+      }
+      
 
   fallbackCopyToClipboard(url, title) {
     const textArea = document.createElement('textarea');
     textArea.value = url;
-    textArea.style.position = 'fixed';
+        stack: error.stack,
+        name: error.name
     textArea.style.left = '-999999px';
     textArea.style.top = '-999999px';
     document.body.appendChild(textArea);
