@@ -713,7 +713,9 @@ class ResourcesPageManager {
     const selectedCategory = categoryFilter?.value || 'all';
     
     this.filteredContent = this.allContent.filter(item => {
-      const typeMatch = selectedType === 'all' || item.content_type === selectedType;
+      const typeMatch = selectedT
+  }
+}ype === 'all' || item.content_type === selectedType;
       const categoryMatch = selectedCategory === 'all' || item.category === selectedCategory;
       return typeMatch && categoryMatch;
     });
