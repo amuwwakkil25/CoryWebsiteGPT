@@ -239,10 +239,21 @@ class DatabaseService {
       DiagnosticLogger.log('Testing database connection...');
       
       // Check environment variables with detailed logging
-      const supabaseUrl = 'https://wjtmdrjuheclgdzwprku.supabase.co';
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c';
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      
+      // Log all available environment variables (safely)
+      const envVars = {};
+      for (const key in import.meta.env) {
+        if (key.startsWith('VITE_')) {
+          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+            ? `${import.meta.env[key]?.substring(0, 10)}...` 
+            : import.meta.env[key];
+        }
+      }
       
       DiagnosticLogger.log('Environment check', {
+        allEnvVars: envVars,
         hasUrl: !!supabaseUrl,
         hasKey: !!supabaseKey,
         urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
@@ -322,7 +333,8 @@ class DatabaseService {
           'Authorization': `Bearer ${supabaseKey}`,
           'Content-Type': 'application/json',
           'Accept': 'application/json'
-        }
+        },
+        method: 'GET'
       });
       
       DiagnosticLogger.log('Database response', {
@@ -484,6 +496,12 @@ class ResourcesPageManager {
 
     // Bind modal events
     this.bindModalEvents();
+
+    // Environment fallback
+    if (!import.meta.env.VITE_SUPABASE_URL) {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://wjtmdrjuheclgdzwprku.supabase.co';
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c';
+    }
   }
 
   bindModalEvents() {
