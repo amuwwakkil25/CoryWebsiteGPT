@@ -150,6 +150,8 @@ class ResourcesPageManager {
     this.init();
   }
 
+  async init() {
+    try {
       // Check environment variables with detailed logging
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
       const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -163,11 +165,9 @@ class ResourcesPageManager {
             : import.meta.env[key];
         }
       }
-    try {
-      this.showLoadingState();
+
+      console.log('Environment check:', {
         allEnvVars: envVars,
-      
-      // Try the new fallback system
         urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
         keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
         urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
@@ -175,9 +175,18 @@ class ResourcesPageManager {
         buildMode: import.meta.env.MODE,
         isDev: import.meta.env.DEV,
         isProd: import.meta.env.PROD
+      });
+
+      this.showLoadingState();
+      
+      // Try the new fallback system
+      this.allContent = await fetchResources();
+      
+      if (!supabaseUrl || !supabaseKey) {
         console.log('✅ Content loaded successfully', { count: this.allContent.length });
-      } catch (error) {
+      } else {
         console.warn('All data sources failed, using static fallback:', error.message);
+        this.allContent = staticFallback;
         throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
       }
       
@@ -265,16 +274,11 @@ class ResourcesPageManager {
     // Close modal events
     const closeButtons = document.querySelectorAll('.modal-close');
     closeButtons.forEach(btn => {
-      const testUrl = `${supabaseUrl}/rest/v1/`;
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
-      
-      const response = await fetch(testUrl, {
+      btn.addEventListener('click', (e) => {
         const modal = e.target.closest('.modal');
         if (modal) {
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
+          this.closeModal(modal);
+        }
       });
     });
 
@@ -627,22 +631,14 @@ class ResourcesPageManager {
         this.fallbackCopyToClipboard(url, title);
       });
     } else {
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
+      this.fallbackCopyToClipboard(url, title);
     }
   }
-      if (!response.ok) {
-        const errorText = await response.text();
-        DiagnosticLogger.log('Connection test failed with response:', { errorText });
-      }
-      
 
   fallbackCopyToClipboard(url, title) {
     const textArea = document.createElement('textarea');
     textArea.value = url;
-        stack: error.stack,
-        name: error.name
+    textArea.style.position = 'fixed';
     textArea.style.left = '-999999px';
     textArea.style.top = '-999999px';
     document.body.appendChild(textArea);
