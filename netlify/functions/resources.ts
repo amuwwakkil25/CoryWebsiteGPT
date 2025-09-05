@@ -150,15 +150,24 @@ class ResourcesPageManager {
     this.init();
   }
 
+  async init() {
+    try {
       // Check environment variables with detailed logging
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
       const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
       
       // Log all available environment variables (safely)
       const envVars = {};
-        allEnvVars: envVars,
       for (const key in import.meta.env) {
         if (key.startsWith('VITE_')) {
+          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+            ? `${import.meta.env[key]?.substring(0, 10)}...` 
+            : import.meta.env[key];
+        }
+      }
+      
+      console.log('Environment check:', {
+        allEnvVars: envVars,
         urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
         keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
         urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
@@ -166,9 +175,9 @@ class ResourcesPageManager {
         buildMode: import.meta.env.MODE,
         isDev: import.meta.env.DEV,
         isProd: import.meta.env.PROD
-            : import.meta.env[key];
-        }
-      }
+      });
+      
+      if (!supabaseUrl || !supabaseKey) {
         throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
       }
       
@@ -178,44 +187,41 @@ class ResourcesPageManager {
       
       if (!supabaseKey.startsWith('eyJ')) {
         throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
-      // Log all available environment variables (safely)
-      const envVars = {};
-      for (const key in import.meta.env) {
+      }
+      
+      // Test connection
       const testUrl = `${supabaseUrl}/rest/v1/`;
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
+      console.log('Testing connection to:', { testUrl });
       
       const response = await fetch(testUrl, {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
-            ? `${import.meta.env[key]?.substring(0, 10)}...` 
+        headers: {
           'Authorization': `Bearer ${supabaseKey}`,
           'Content-Type': 'application/json'
         },
         method: 'GET'
+      });
+      
+      console.log('Connection test result:', {
+        ok: response.ok,
+        headers: Object.fromEntries(response.headers.entries()),
+        url: response.url
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.log('Connection test failed with response:', { errorText });
       }
-    try {
+      
       this.showLoadingState();
-        allEnvVars: envVars,
       
       // Try the new fallback system
-        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
-        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        isDev: import.meta.env.DEV,
-        isProd: import.meta.env.PROD
+      this.allContent = await fetchResources();
+      
+      if (this.allContent.length === 0) {
         console.log('✅ Content loaded successfully', { count: this.allContent.length });
-      } catch (error) {
+      } else {
         console.warn('All data sources failed, using static fallback:', error.message);
-        throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
-      }
-      
-      if (!supabaseUrl.includes('supabase.co')) {
-        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
-      }
-      
-      if (!supabaseKey.startsWith('eyJ')) {
-        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
+        this.allContent = staticFallback;
       }
       
       this.filteredContent = [...this.allContent];
@@ -224,15 +230,8 @@ class ResourcesPageManager {
       this.bindEvents();
       
       // Render content
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
+      this.renderFeaturedContent();
       this.renderAllContent();
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        DiagnosticLogger.log('Connection test failed with response:', { errorText });
-      }
       
       console.log('✅ Resources page initialized successfully');
     } catch (error) {
@@ -301,16 +300,11 @@ class ResourcesPageManager {
     // Close modal events
     const closeButtons = document.querySelectorAll('.modal-close');
     closeButtons.forEach(btn => {
-      const testUrl = `${supabaseUrl}/rest/v1/`;
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
-      
-      const response = await fetch(testUrl, {
+      btn.addEventListener('click', (e) => {
         const modal = e.target.closest('.modal');
         if (modal) {
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
+          this.closeModal(modal);
+        }
       });
     });
 
@@ -663,23 +657,14 @@ class ResourcesPageManager {
         this.fallbackCopyToClipboard(url, title);
       });
     } else {
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
+      this.fallbackCopyToClipboard(url, title);
     }
   }
-      if (!response.ok) {
-        const errorText = await response.text();
-        DiagnosticLogger.log('Connection test failed with response:', { errorText });
-      }
-      
 
   fallbackCopyToClipboard(url, title) {
     const textArea = document.createElement('textarea');
     textArea.value = url;
-        stack: error.stack,
-        stack: error.stack,
-        name: error.name
+    textArea.style.position = 'fixed';
     textArea.style.left = '-999999px';
     textArea.style.top = '-999999px';
     document.body.appendChild(textArea);
@@ -690,6 +675,11 @@ class ResourcesPageManager {
       document.execCommand('copy');
       this.showToast(`Link copied to clipboard: ${title}`, 'success');
     } catch (err) {
+      console.error('Copy failed:', {
+        message: err.message,
+        stack: err.stack,
+        name: err.name
+      });
       this.showToast('Unable to copy link. Please copy manually.', 'error');
     }
     
