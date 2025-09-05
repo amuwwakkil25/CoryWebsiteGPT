@@ -1,351 +1,520 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROI Calculator & Case Studies - Agent Cory</title>
-    <meta name="description" content="Calculate your ROI with Agent Cory's AI-powered admissions automation and explore real case studies from successful institutions.">
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ROI Calculator & Case Studies - Agent Cory AI Admissions Assistant</title>
+    <meta name="description" content="Calculate your ROI with Agent Cory and explore real case studies showing 5-10x returns from AI-powered admissions automation." />
+    
+    <!-- Favicon for all browsers and devices -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="shortcut icon" href="/favicon.png" />
+    
+    <!-- Apple Touch Icon for iOS devices -->
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+    
+    <!-- Android Chrome -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
+    
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileImage" content="/favicon.png" />
+    <meta name="msapplication-TileColor" content="#0B1F36" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    
+    <!-- Icon Libraries -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXX');
+    </script>
 </head>
 <body>
-    <!-- Header -->
+    <div id="cookie-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-content">
+            <p>We use cookies to improve your experience and analyze site usage. <a href="/privacy.html">Learn more</a></p>
+            <button id="accept-cookies" class="btn btn-sm">Accept</button>
+        </div>
+    </div>
+
     <header class="header">
-        <nav class="nav container">
-            <div class="nav-brand">
-                <a href="/" class="brand-link">
-                    <span class="brand-text">Agent Cory</span>
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="/" class="nav-brand">
+                    <img src="/Logo_Cory.svg" alt="Agent Cory - AI-Powered Admissions Assistant" class="nav-logo-img" />
                 </a>
-            </div>
-            <div class="nav-menu" id="nav-menu">
-                <ul class="nav-list">
-                    <li class="nav-item">
-                        <a href="/" class="nav-link">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/how-it-works.html" class="nav-link">How It Works</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/features.html" class="nav-link">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/demo-and-pricing.html" class="nav-link">Demo & Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/resources.html" class="nav-link">Resources</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/roi-and-case-studies.html" class="nav-link active">ROI & Case Studies</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="nav-actions">
-                <a href="/demo-and-pricing.html" class="btn btn-primary">Get Demo</a>
-                <button class="nav-toggle" id="nav-toggle">
+                
+                <button class="nav-toggle" aria-label="Toggle navigation">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
+                
+                <ul class="nav-menu">
+                    <li><a href="/" class="nav-link">Home</a></li>
+                    <li><a href="/how-it-works.html" class="nav-link">How It Works</a></li>
+                    <li><a href="/features.html" class="nav-link">Features</a></li>
+                    <li><a href="/roi-and-case-studies.html" class="nav-link active">ROI & Cases</a></li>
+                    <li><a href="/demo-and-pricing.html" class="nav-link">Demo</a></li>
+                    <li><a href="/resources.html" class="nav-link">Resources</a></li>
+                    <li><button class="btn btn-primary nav-cta">Try Cory Now</button></li>
+                </ul>
             </div>
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <main>
+    <main id="main">
         <!-- Hero Section -->
-        <section class="hero-section">
+        <section class="page-hero">
             <div class="container">
-                <div class="hero-content">
-                    <h1 class="hero-title">Calculate Your ROI with Agent Cory</h1>
-                    <p class="hero-subtitle">See how much time and money you can save with AI-powered admissions automation. Get instant ROI calculations and explore real success stories.</p>
-                </div>
+                <h1>ROI Calculator & Case Studies</h1>
+                <p class="lead">Calculate your potential return on investment and explore real success stories from institutions using Agent Cory.</p>
             </div>
         </section>
 
-        <!-- ROI Calculator Section -->
-        <section class="roi-calculator-section">
+        <!-- ROI Calculator -->
+        <section class="roi-calculator section" id="roi-calculator">
             <div class="container">
-                <div class="section-header">
-                    <h2>ROI Calculator</h2>
-                    <p>Enter your current admissions metrics to see your potential return on investment</p>
-                </div>
-                
-                <div class="roi-calculator-container">
+                <h2 class="section-title">Calculate Your ROI</h2>
+                <div class="calculator-widget">
                     <div class="calculator-inputs">
+                        <h3>Your Current Metrics</h3>
                         <div class="input-group">
                             <label for="monthly-inquiries">Monthly Inquiries</label>
-                            <input type="number" id="monthly-inquiries" value="500" min="1">
+                            <input type="number" id="monthly-inquiries" value="500" min="0" step="10">
                         </div>
                         
                         <div class="input-group">
-                            <label for="current-response-rate">Current Response Rate (%)</label>
-                            <input type="number" id="current-response-rate" value="15" min="0" max="100">
+                            <label for="contact-rate">Current Contact Rate (%)</label>
+                            <input type="number" id="contact-rate" value="45" min="0" max="100" step="1">
                         </div>
                         
                         <div class="input-group">
-                            <label for="conversion-rate">Conversion Rate (%)</label>
-                            <input type="number" id="conversion-rate" value="8" min="0" max="100">
+                            <label for="conversion-rate">Inquiry → Application (%)</label>
+                            <input type="number" id="conversion-rate" value="25" min="0" max="100" step="1">
                         </div>
                         
                         <div class="input-group">
-                            <label for="avg-tuition">Average Tuition ($)</label>
-                            <input type="number" id="avg-tuition" value="25000" min="1">
+                            <label for="avg-tuition">Average Tuition (Net)</label>
+                            <input type="number" id="avg-tuition" value="25000" min="0" step="1000">
                         </div>
                         
                         <div class="input-group">
-                            <label for="staff-hourly-rate">Staff Hourly Rate ($)</label>
-                            <input type="number" id="staff-hourly-rate" value="25" min="1">
+                            <label for="staff-cost">Staff Hourly Cost</label>
+                            <input type="number" id="staff-cost" value="35" min="0" step="5">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="touches-per-lead">Avg Outreach Touches per Lead</label>
+                            <input type="number" id="touches-per-lead" value="8" min="0" step="1">
+                        </div>
+                    </div>
+                    
+                    <div class="calculator-assumptions">
+                        <h3>Cory's Impact (Adjustable)</h3>
+                        <div class="slider-group">
+                            <label for="cory-contact-rate">Cory Contact Rate: <span id="cory-contact-rate-value">92%</span></label>
+                            <input type="range" id="cory-contact-rate" min="80" max="98" value="92" step="1">
+                        </div>
+                        
+                        <div class="slider-group">
+                            <label for="response-uplift">Response Time Impact: <span id="response-uplift-value">+25%</span></label>
+                            <input type="range" id="response-uplift" min="10" max="50" value="25" step="5">
+                        </div>
+                        
+                        <div class="slider-group">
+                            <label for="automation-coverage">Automation Coverage: <span id="automation-coverage-value">85%</span></label>
+                            <input type="range" id="automation-coverage" min="60" max="95" value="85" step="5">
                         </div>
                     </div>
                     
                     <div class="calculator-results">
-                        <div class="results-header">
-                            <h3>Your ROI Projection</h3>
-                        </div>
-                        
-                        <div class="results-grid">
+                        <h3>Projected Annual Impact</h3>
+                        <div class="result-cards">
                             <div class="result-card">
-                                <div class="result-value" id="additional-revenue">$0</div>
-                                <div class="result-label">Additional Annual Revenue</div>
+                                <div class="result-value" id="additional-apps">+240</div>
+                                <div class="result-label">Additional Applications</div>
                             </div>
-                            
                             <div class="result-card">
-                                <div class="result-value" id="time-saved">0</div>
-                                <div class="result-label">Hours Saved Per Month</div>
+                                <div class="result-value" id="additional-enrollments">+72</div>
+                                <div class="result-label">Additional Enrollments</div>
                             </div>
-                            
                             <div class="result-card">
-                                <div class="result-value" id="cost-savings">$0</div>
-                                <div class="result-label">Annual Cost Savings</div>
+                                <div class="result-value" id="tuition-lift">$1.8M</div>
+                                <div class="result-label">Tuition Revenue Lift</div>
                             </div>
-                            
-                            <div class="result-card highlight">
-                                <div class="result-value" id="total-roi">0%</div>
-                                <div class="result-label">Total ROI</div>
+                            <div class="result-card">
+                                <div class="result-value" id="staff-hours-saved">2,040</div>
+                                <div class="result-label">Staff Hours Saved</div>
                             </div>
-                        </div>
-                        
-                        <div class="roi-breakdown">
-                            <h4>ROI Breakdown</h4>
-                            <div class="breakdown-item">
-                                <span>Improved Response Rate (15% → 85%)</span>
-                                <span id="response-improvement">+$0</span>
+                            <div class="result-card primary">
+                                <div class="result-value" id="annual-roi">560%</div>
+                                <div class="result-label">Estimated Annual ROI</div>
                             </div>
-                            <div class="breakdown-item">
-                                <span>24/7 Availability</span>
-                                <span id="availability-benefit">+$0</span>
-                            </div>
-                            <div class="breakdown-item">
-                                <span>Staff Time Savings</span>
-                                <span id="time-savings">+$0</span>
-                            </div>
-                            <div class="breakdown-item">
-                                <span>Agent Cory Investment</span>
-                                <span class="cost">-$12,000</span>
-                            </div>
-                        </div>
-                        
-                        <div class="cta-section">
-                            <a href="/demo-and-pricing.html" class="btn btn-primary btn-large">Get Your Custom ROI Analysis</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Case Studies Section -->
-        <section class="case-studies-section">
+        <!-- Case Studies -->
+        <section class="case-studies section bg-light">
             <div class="container">
-                <div class="section-header">
-                    <h2>Real Success Stories</h2>
-                    <p>See how institutions like yours have transformed their admissions process</p>
-                </div>
+                <h2 class="section-title">Real Success Stories</h2>
+                <p class="section-subtitle">See how institutions like yours have transformed their admissions process</p>
                 
                 <div class="case-studies-grid">
                     <div class="case-study-card featured">
                         <div class="case-study-header">
-                            <h3>Metro State University</h3>
-                            <div class="roi-badge">847% ROI</div>
+                            <div class="institution-logo">Metro State University</div>
+                            <div class="case-study-badge">Featured Case Study</div>
                         </div>
+                        
                         <div class="case-study-metrics">
-                            <div class="metric">
-                                <div class="metric-value">$2.1M</div>
-                                <div class="metric-label">Additional Revenue</div>
+                            <div class="metric-row">
+                                <div class="metric">
+                                    <div class="metric-value">847%</div>
+                                    <div class="metric-label">ROI in Year 1</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">$2.1M</div>
+                                    <div class="metric-label">Additional Revenue</div>
+                                </div>
                             </div>
-                            <div class="metric">
-                                <div class="metric-value">85%</div>
-                                <div class="metric-label">Response Rate</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">2,100</div>
-                                <div class="metric-label">Hours Saved</div>
+                            <div class="metric-row">
+                                <div class="metric">
+                                    <div class="metric-value">94%</div>
+                                    <div class="metric-label">Contact Rate</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">2,100</div>
+                                    <div class="metric-label">Hours Saved</div>
+                                </div>
                             </div>
                         </div>
-                        <p class="case-study-description">
-                            Metro State transformed their admissions process, achieving industry-leading response times and conversion rates while reducing staff workload by 70%.
-                        </p>
-                        <a href="/resources.html" class="case-study-link">Read Full Case Study →</a>
+                        
+                        <div class="case-study-content">
+                            <blockquote>"Cory transformed our admissions process. We went from 40% contact rates to 94% overnight, and our conversion improved by 30% thanks to faster response times."</blockquote>
+                            <cite>
+                                <strong>Dr. Sarah Johnson</strong>
+                                <span>Director of Admissions, Metro State University</span>
+                            </cite>
+                        </div>
+                        
+                        <div class="case-study-highlights">
+                            <h4>Key Results</h4>
+                            <ul>
+                                <li>Contact rate increased from 40% to 94%</li>
+                                <li>Response time reduced from 4 hours to 30 seconds</li>
+                                <li>30% improvement in inquiry-to-application conversion</li>
+                                <li>Staff time reduced by 70% for initial outreach</li>
+                            </ul>
+                        </div>
                     </div>
                     
                     <div class="case-study-card">
                         <div class="case-study-header">
-                            <h3>Riverside Community College</h3>
-                            <div class="roi-badge">623% ROI</div>
+                            <div class="institution-logo">Tech Institute</div>
                         </div>
+                        
                         <div class="case-study-metrics">
-                            <div class="metric">
-                                <div class="metric-value">$890K</div>
-                                <div class="metric-label">Additional Revenue</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">78%</div>
-                                <div class="metric-label">Response Rate</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">1,200</div>
-                                <div class="metric-label">Hours Saved</div>
+                            <div class="metric-row">
+                                <div class="metric">
+                                    <div class="metric-value">623%</div>
+                                    <div class="metric-label">ROI</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">$890K</div>
+                                    <div class="metric-label">Revenue Lift</div>
+                                </div>
                             </div>
                         </div>
-                        <p class="case-study-description">
-                            Riverside CC increased enrollment by 35% while maintaining personalized communication with every prospective student.
-                        </p>
-                        <a href="/resources.html" class="case-study-link">Read Full Case Study →</a>
+                        
+                        <blockquote>"Our team can focus on relationship building instead of manual outreach. Cory handles the initial qualification perfectly."</blockquote>
+                        <cite>
+                            <strong>Michael Chen</strong>
+                            <span>VP Enrollment Management</span>
+                        </cite>
                     </div>
                     
                     <div class="case-study-card">
                         <div class="case-study-header">
-                            <h3>Tech Institute of Innovation</h3>
-                            <div class="roi-badge">1,200% ROI</div>
+                            <div class="institution-logo">Community College Network</div>
                         </div>
+                        
                         <div class="case-study-metrics">
-                            <div class="metric">
-                                <div class="metric-value">$3.2M</div>
-                                <div class="metric-label">Additional Revenue</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">92%</div>
-                                <div class="metric-label">Response Rate</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">3,500</div>
-                                <div class="metric-label">Hours Saved</div>
+                            <div class="metric-row">
+                                <div class="metric">
+                                    <div class="metric-value">1,200%</div>
+                                    <div class="metric-label">ROI</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">$2.4M</div>
+                                    <div class="metric-label">Revenue Lift</div>
+                                </div>
                             </div>
                         </div>
-                        <p class="case-study-description">
-                            TII achieved record-breaking enrollment numbers while providing 24/7 support to international students across multiple time zones.
-                        </p>
-                        <a href="/resources.html" class="case-study-link">Read Full Case Study →</a>
+                        
+                        <blockquote>"The 24/7 availability alone increased our inquiries by 20%. Weekend leads that we used to lose are now converting."</blockquote>
+                        <cite>
+                            <strong>Lisa Rodriguez</strong>
+                            <span>Enrollment Director</span>
+                        </cite>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROI Breakdown -->
+        <section class="roi-breakdown section">
+            <div class="container">
+                <h2 class="section-title">How Agent Cory Delivers ROI</h2>
+                <div class="breakdown-grid">
+                    <div class="breakdown-card">
+                        <div class="breakdown-icon">
+                            <i data-lucide="zap"></i>
+                        </div>
+                        <h3>Speed Advantage</h3>
+                        <div class="breakdown-stat">&lt; 60s</div>
+                        <p>Industry-leading response times create competitive advantage and capture leads before competitors.</p>
+                        <ul>
+                            <li>30-second average response time</li>
+                            <li>94% contact rate achievement</li>
+                            <li>25-30% conversion rate improvement</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="breakdown-card">
+                        <div class="breakdown-icon">
+                            <i data-lucide="clock"></i>
+                        </div>
+                        <h3>24/7 Availability</h3>
+                        <div class="breakdown-stat">100%</div>
+                        <p>Never miss a lead regardless of time or day. Capture weekend and evening inquiries that competitors lose.</p>
+                        <ul>
+                            <li>24/7 inquiry response</li>
+                            <li>Time zone intelligence</li>
+                            <li>Holiday and weekend coverage</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="breakdown-card">
+                        <div class="breakdown-icon">
+                            <i data-lucide="users"></i>
+                        </div>
+                        <h3>Staff Efficiency</h3>
+                        <div class="breakdown-stat">80-90%</div>
+                        <p>Reduce manual outreach workload so your team focuses on qualified prospects and relationship building.</p>
+                        <ul>
+                            <li>Automated initial outreach</li>
+                            <li>Intelligent lead qualification</li>
+                            <li>Context-rich handoffs</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="breakdown-card">
+                        <div class="breakdown-icon">
+                            <i data-lucide="trending-up"></i>
+                        </div>
+                        <h3>Conversion Optimization</h3>
+                        <div class="breakdown-stat">5-10x</div>
+                        <p>Multi-channel coordination and intelligent follow-up sequences maximize conversion at every stage.</p>
+                        <ul>
+                            <li>Multi-channel coordination</li>
+                            <li>Personalized follow-up sequences</li>
+                            <li>Appointment booking automation</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Implementation Timeline -->
-        <section class="timeline-section">
+        <section class="implementation-timeline section bg-light">
             <div class="container">
-                <div class="section-header">
-                    <h2>Your Path to Success</h2>
-                    <p>See how quickly you can start seeing results with Agent Cory</p>
-                </div>
+                <h2 class="section-title">Your Path to ROI</h2>
+                <p class="section-subtitle">See how quickly you can start seeing results</p>
                 
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="timeline-marker">1</div>
+                        <div class="timeline-marker">
+                            <div class="timeline-number">1</div>
+                        </div>
                         <div class="timeline-content">
-                            <h3>Week 1: Setup & Integration</h3>
+                            <div class="timeline-period">Week 1</div>
+                            <h3>Setup & Integration</h3>
                             <p>Connect your CRM, configure workflows, and train the AI on your specific programs and requirements.</p>
+                            <div class="timeline-deliverables">
+                                <span class="deliverable">CRM Integration</span>
+                                <span class="deliverable">AI Training</span>
+                                <span class="deliverable">Workflow Setup</span>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="timeline-marker">2</div>
+                        <div class="timeline-marker">
+                            <div class="timeline-number">2</div>
+                        </div>
                         <div class="timeline-content">
-                            <h3>Week 2-3: Testing & Optimization</h3>
+                            <div class="timeline-period">Week 2-3</div>
+                            <h3>Testing & Optimization</h3>
                             <p>Run parallel testing, fine-tune responses, and optimize conversation flows based on your data.</p>
+                            <div class="timeline-deliverables">
+                                <span class="deliverable">A/B Testing</span>
+                                <span class="deliverable">Response Tuning</span>
+                                <span class="deliverable">Flow Optimization</span>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="timeline-marker">3</div>
+                        <div class="timeline-marker">
+                            <div class="timeline-number">3</div>
+                        </div>
                         <div class="timeline-content">
-                            <h3>Week 4: Full Launch</h3>
-                            <p>Go live with 24/7 AI-powered admissions support and start seeing immediate improvements in response rates.</p>
+                            <div class="timeline-period">Week 4</div>
+                            <h3>Full Launch</h3>
+                            <p>Go live with 24/7 AI-powered admissions support and start seeing immediate improvements.</p>
+                            <div class="timeline-deliverables">
+                                <span class="deliverable">Live Deployment</span>
+                                <span class="deliverable">24/7 Monitoring</span>
+                                <span class="deliverable">Performance Tracking</span>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="timeline-marker">4</div>
+                        <div class="timeline-marker">
+                            <div class="timeline-number">4</div>
+                        </div>
                         <div class="timeline-content">
-                            <h3>Month 2-3: Results & ROI</h3>
+                            <div class="timeline-period">Month 2-3</div>
+                            <h3>Results & ROI</h3>
                             <p>Track performance metrics, measure ROI, and scale successful strategies across all programs.</p>
+                            <div class="timeline-deliverables">
+                                <span class="deliverable">ROI Analysis</span>
+                                <span class="deliverable">Performance Reports</span>
+                                <span class="deliverable">Strategy Scaling</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <div class="container">
-                <div class="cta-content">
-                    <h2>Ready to Transform Your Admissions Process?</h2>
-                    <p>Join hundreds of institutions already seeing incredible results with Agent Cory</p>
-                    <div class="cta-actions">
-                        <a href="/demo-and-pricing.html" class="btn btn-primary btn-large">Schedule Your Demo</a>
-                        <a href="/resources.html" class="btn btn-secondary btn-large">View More Case Studies</a>
-                    </div>
+        <!-- Final CTA -->
+        <section class="final-cta section">
+            <div class="container text-center">
+                <h2>Ready to Transform Your Admissions Process?</h2>
+                <p class="lead">See how Cory can boost your conversions and free up your team in just 30 minutes</p>
+                <div class="cta-button-wrapper">
+                    <a href="/demo-and-pricing.html" class="btn btn-primary btn-lg">Book a 30-min Demo</a>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-brand">
-                        <h3>Agent Cory</h3>
-                        <p>AI-powered admissions automation that transforms how educational institutions connect with prospective students.</p>
+            <div class="footer-main">
+                <!-- Logo Column -->
+                <div class="footer-brand">
+                    <img src="/src/assets/Logo_DarkMode_AgentCory.svg" alt="Agent Cory - AI-Powered Admissions Assistant" class="footer-logo-img" />
+                    <p class="footer-description">AI-powered admissions assistant that boosts conversions with lightning-fast, multi-channel outreach.</p>
+                    <div class="footer-social">
+                        <a href="https://linkedin.com/company/108149003" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://x.com/AgentCoryAI" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCw6XtSZQNiFcftHKEYNc3_A" target="_blank" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.instagram.com/agentcory.ai" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=61579324469233" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
                     </div>
                 </div>
                 
-                <div class="footer-section">
+                <!-- Product Column -->
+                <div class="footer-column">
                     <h4>Product</h4>
-                    <ul class="footer-links">
-                        <li><a href="/how-it-works.html">How It Works</a></li>
+                    <ul>
                         <li><a href="/features.html">Features</a></li>
-                        <li><a href="/demo-and-pricing.html">Pricing</a></li>
-                        <li><a href="/resources.html">Resources</a></li>
+                        <li><a href="/how-it-works.html">How It Works</a></li>
+                        <li><a href="/demo-and-pricing.html">Demo</a></li>
+                        <li><a href="/roi-and-case-studies.html">Case Studies</a></li>
                     </ul>
                 </div>
                 
-                <div class="footer-section">
+                <!-- Resources Column -->
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="/resources.html">Blog</a></li>
+                        <li><a href="/resources.html">Guides</a></li>
+                        <li><a href="/resources.html">Webinars</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Company Column -->
+                <div class="footer-column">
                     <h4>Company</h4>
-                    <ul class="footer-links">
-                        <li><a href="/about.html">About</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
                         <li><a href="/privacy.html">Privacy Policy</a></li>
                         <li><a href="/terms.html">Terms of Service</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-section">
-                    <h4>Connect</h4>
-                    <ul class="footer-links">
-                        <li><a href="mailto:hello@agentcory.com">hello@agentcory.com</a></li>
-                        <li><a href="tel:+1-555-0123">(555) 012-3456</a></li>
-                    </ul>
-                </div>
+            </div>
+            
+            <!-- Contact Section -->
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <p>
+                    <strong>Phone:</strong> 1-888-465-1991<br>
+                    <strong>Email:</strong> cory@agentcory.ai<br>
+                    <strong>Address:</strong> 200 Chisholm Pl<br>
+                    Plano, TX 75075
+                </p>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 Agent Cory. All rights reserved.</p>
+                <p>&copy; 2025 Agent Cory. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- LeadConnector Chat Widget -->
+    <script>
+        // Initialize Lucide icons after DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+    <script 
+      src="https://beta.leadconnectorhq.com/loader.js"  
+      data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js" 
+     data-widget-id="68b077f85dff15aa9384c4e9"   > 
+     </script>
+
     <script type="module" src="/assets/js/main.ts"></script>
     <script src="/assets/js/roi-calculator.js"></script>
 </body>
