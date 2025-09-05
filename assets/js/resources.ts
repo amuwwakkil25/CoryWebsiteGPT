@@ -720,7 +720,7 @@ class ResourcesPageManager {
     const formData = new FormData(form);
     const email = formData.get('email');
 
-    console.log('📧 Newsletter signup', { email });
+    if (this.debugMode) console.log('📧 Newsletter signup', { email });
     
     this.showToast('Successfully subscribed to newsletter!', 'success');
     form.reset();
