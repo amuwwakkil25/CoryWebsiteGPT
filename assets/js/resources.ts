@@ -1,76 +1,51 @@
-import type { Resource } from "../../src/types/resource";
-import { supabase } from "../../src/lib/supabaseClient";
-
-const useClient = (import.meta.env.VITE_USE_CLIENT_SUPABASE ?? "false") === "true";
-
-async function tryStatic(): Promise<Resource[] | null> {
-  try {
-    const bust = Date.now(); // avoid stale CDN edge during debug
-    const res = await fetch(`/data/resources.json?b=${bust}`, { headers: { accept: "application/json" } });
-    if (!res.ok) return null;
-    const json = await res.json();
-    if (!json?.ok || !Array.isArray(json.items)) return null;
-    console.info("[resources] static ok:", json.items.length, "generated_at:", json.generated_at);
-    return json.items as Resource[];
-  } catch {
-    return null;
-  }
-}
-
-async function tryFunction(): Promise<Resource[] | null> {
-  try {
-    const res = await fetch("/.netlify/functions/resources", { headers: { accept: "application/json" } });
-    if (!res.ok) return null;
-    const json = await res.json();
-    if (!json?.ok || !Array.isArray(json.items)) return null;
-    console.info("[resources] function ok:", json.items.length);
-    return json.items as Resource[];
-  } catch {
-    return null;
-  }
-}
-
-async function tryClient(): Promise<Resource[] | null> {
-  try {
-    const { data, error } = await supabase
-      .from("content_items")
-      .select("id,title,slug,excerpt as summary,featured_image_url as cover_image,reading_time_minutes as reading_minutes,tags,is_published as published,created_at")
-      .eq("is_published", true)
-      .order("created_at", { ascending: false })
-      .limit(100);
-    if (error) return null;
-    console.info("[resources] client ok:", data?.length ?? 0);
-    return (data ?? []) as Resource[];
-  } catch {
-    return null;
-  }
-}
-
-export async function fetchResources(): Promise<Resource[]> {
-  console.time("[resources] load");
-  try {
-    // 1) Prefer static JSON in production (fast & robust)
-    const a = await tryStatic();
-    if (a && a.length >= 0) return a;
-
-    // 2) Then Netlify function
-    const b = await tryFunction();
-    if (b && b.length >= 0) return b;
-
-    // 3) Finally, client-side (only if flag enabled or others failed)
-    if (useClient) {
-      const c = await tryClient();
-      if (c && c.length >= 0) return c;
+// Debug logger for troubleshooting
+class DiagnosticLogger {
+  static log(message, data = null) {
+    console.log(`🔍 [Resources Debug] ${message}`, data || '');
+    
+    // Create debug div if it doesn't exist
+    const debugDiv = document.getElementById('debug-info') || this.createDebugDiv();
+    const logEntry = document.createElement('div');
+    logEntry.style.cssText = 'padding: 0.5rem; border-bottom: 1px solid #eee; font-family: monospace; font-size: 0.75rem;';
+    logEntry.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
+    
+    if (data) {
+      logEntry.innerHTML += `<br><pre style="margin: 0.25rem 0; color: #666;">${JSON.stringify(data, null, 2)}</pre>`;
     }
-
-    throw new Error("No data available from any source");
-  } finally {
-    console.timeEnd("[resources] load");
+    
+    debugDiv.appendChild(logEntry);
+    debugDiv.scrollTop = debugDiv.scrollHeight;
+  }
+  
+  static createDebugDiv() {
+    const debugDiv = document.createElement('div');
+    debugDiv.id = 'debug-info';
+    debugDiv.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 400px;
+      max-height: 300px;
+      background: white;
+      border: 2px solid #333;
+      border-radius: 8px;
+      overflow-y: auto;
+      z-index: 9999;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    `;
+    
+    const header = document.createElement('div');
+    header.style.cssText = 'background: #333; color: white; padding: 0.5rem; font-weight: bold; position: sticky; top: 0;';
+    header.innerHTML = 'Debug Log <button onclick="this.parentElement.parentElement.remove()" style="float: right; background: none; border: none; color: white; cursor: pointer;">×</button>';
+    
+    debugDiv.appendChild(header);
+    document.body.appendChild(debugDiv);
+    return debugDiv;
   }
 }
 
 // Static fallback content for development
-const staticFallback: Resource[] = [
+const staticContent = [
   {
     id: "ai-guide-static",
     title: "The Complete Guide to AI in Admissions",
@@ -139,6 +114,128 @@ const staticFallback: Resource[] = [
   }
 ];
 
+// Database service with fallback
+class DatabaseService {
+  static async testConnection() {
+    try {
+      DiagnosticLogger.log('Testing database connection...');
+      
+      const supabaseUrl = 'https://wjtmdrjuheclgdzwprku.supabase.co';
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c';
+      
+      DiagnosticLogger.log('Environment check', {
+        hasUrl: !!supabaseUrl,
+        hasKey: !!supabaseKey,
+        urlPreview: supabaseUrl ? supabaseUrl.substring(0, 30) + '...' : 'missing',
+        keyPreview: supabaseKey ? supabaseKey.substring(0, 20) + '...' : 'missing'
+      });
+      
+      const response = await fetch(`${supabaseUrl}/rest/v1/`, {
+        headers: {
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`
+        }
+      });
+      
+      DiagnosticLogger.log('Connection test result', {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok
+      });
+      
+      return response.ok;
+    } catch (error) {
+      DiagnosticLogger.log('Connection test failed', {
+        error: error.message,
+        stack: error.stack
+      });
+      return false;
+    }
+  }
+  
+  static async getContent() {
+    try {
+      DiagnosticLogger.log('Starting database content fetch...');
+      
+      const supabaseUrl = 'https://wjtmdrjuheclgdzwprku.supabase.co';
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c';
+      
+      const url = `${supabaseUrl}/rest/v1/content_items?is_published=eq.true&order=published_at.desc`;
+      DiagnosticLogger.log('Fetching from URL', { url });
+      
+      const response = await fetch(url, {
+        headers: {
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+      
+      DiagnosticLogger.log('Database response', {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok,
+        headers: Object.fromEntries(response.headers.entries())
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        DiagnosticLogger.log('Database error response', { errorText });
+        throw new Error(`Database query failed: ${response.status} ${response.statusText} - ${errorText}`);
+      }
+      
+      const data = await response.json();
+      DiagnosticLogger.log('Database query success', {
+        itemCount: data.length,
+        firstItem: data[0] ? { title: data[0].title, type: data[0].content_type } : 'none'
+      });
+      
+      return data;
+    } catch (error) {
+      DiagnosticLogger.log('Database fetch error', {
+        error: error.message,
+        stack: error.stack
+      });
+      throw error;
+    }
+  }
+}
+
+// Content loader with fallback strategy
+class ContentLoader {
+  static async loadContent() {
+    DiagnosticLogger.log('🚀 Starting content loading process...');
+    
+    try {
+      // Test database connection first
+      DiagnosticLogger.log('Testing database connection...');
+      const isConnected = await DatabaseService.testConnection();
+      
+      if (isConnected) {
+        DiagnosticLogger.log('✅ Database connection successful, fetching content...');
+        const content = await DatabaseService.getContent();
+        
+        if (content && content.length > 0) {
+          DiagnosticLogger.log('✅ Database content loaded successfully', { count: content.length });
+          return content;
+        } else {
+          DiagnosticLogger.log('⚠️ Database is empty, using static content');
+        }
+      } else {
+        DiagnosticLogger.log('❌ Database connection failed, using static content');
+      }
+    } catch (error) {
+      DiagnosticLogger.log('❌ Database error, using static content', { error: error.message });
+    }
+    
+    // Fallback to static content
+    DiagnosticLogger.log('📦 Using static fallback content');
+    return staticContent;
+  }
+}
+
+// Resources page manager
 class ResourcesPageManager {
   constructor() {
     this.allContent = [];
@@ -151,37 +248,17 @@ class ResourcesPageManager {
   }
 
   async init() {
+    DiagnosticLogger.log('🚀 Initializing Resources Page Manager...');
+    
     try {
-      // Check environment variables with detailed logging
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-      
-      // Log all available environment variables (safely)
-      const envVars = {};
-      for (const key in import.meta.env) {
-        if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
-            ? `${import.meta.env[key]?.substring(0, 10)}...` 
-            : import.meta.env[key];
-        }
-      }
-
-      console.log('Environment check:', {
-        allEnvVars: envVars,
-        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
-        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        isDev: import.meta.env.DEV,
-        isProd: import.meta.env.PROD
-      });
-
       this.showLoadingState();
       
-      this.allContent = await fetchResources();
+      this.allContent = await ContentLoader.loadContent();
       
-      console.log('✅ Content loaded successfully', { count: this.allContent.length });
+      DiagnosticLogger.log('Content loaded', {
+        total: this.allContent.length,
+        featured: this.allContent.filter(item => item.is_featured).length
+      });
       
       this.filteredContent = [...this.allContent];
       
@@ -192,20 +269,10 @@ class ResourcesPageManager {
       this.renderFeaturedContent();
       this.renderAllContent();
       
-      console.log('✅ Resources page initialized successfully');
+      DiagnosticLogger.log('✅ Resources page initialized successfully');
     } catch (error) {
-      console.warn('All data sources failed, using static fallback:', error.message);
-      this.allContent = staticFallback;
-      this.filteredContent = [...this.allContent];
-      
-      // Bind event listeners
-      this.bindEvents();
-      
-      // Render content
-      this.renderFeaturedContent();
-      this.renderAllContent();
-      
-      console.log('✅ Resources page initialized with fallback data');
+      DiagnosticLogger.log('❌ Critical initialization error', { error: error.message });
+      this.showErrorState();
     }
   }
 
