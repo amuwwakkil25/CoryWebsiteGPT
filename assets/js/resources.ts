@@ -61,6 +61,16 @@ class ResourcesPageManager {
         }
       }
       
+      // Log all available environment variables (safely)
+      const envVars5 = {};
+      for (const key in import.meta.env) {
+        if (key.startsWith('VITE_')) {
+          envVars5[key] = key.includes('KEY') || key.includes('SECRET') 
+            ? `${import.meta.env[key]?.substring(0, 10)}...` 
+            : import.meta.env[key];
+        }
+      }
+      
       console.log('Environment check:', {
         allEnvVars: envVars,
         urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
@@ -84,8 +94,14 @@ class ResourcesPageManager {
         urlPreview4: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
         keyPreview4: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
         urlValid4: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        allEnvVars5: envVars5,
         keyValid4: supabaseKey && supabaseKey.startsWith('eyJ'),
         buildMode4: import.meta.env.MODE,
+        urlPreview5: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview5: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid5: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        keyValid5: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode5: import.meta.env.MODE,
         isDev: import.meta.env.DEV,
         isProd: import.meta.env.PROD
       });
@@ -128,7 +144,7 @@ class ResourcesPageManager {
         throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
       }
       const testUrl2 = `${supabaseUrl}/rest/v1/`;
-      console.log('Testing connection to:', { testUrl2 });
+      DiagnosticLogger.log('Testing connection to:', { testUrl: testUrl2 });
       
       if (!supabaseUrl || !supabaseKey) {
         throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
@@ -142,12 +158,26 @@ class ResourcesPageManager {
         throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
       }
       const testUrl3 = `${supabaseUrl}/rest/v1/`;
-      console.log('Testing connection to:', { testUrl3 });
+      DiagnosticLogger.log('Testing connection to:', { testUrl: testUrl3 });
       
+      if (!supabaseUrl || !supabaseKey) {
+        throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
+      }
+      
+      if (!supabaseUrl.includes('supabase.co')) {
+        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
+      }
+      
+      if (!supabaseKey.startsWith('eyJ')) {
+        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
+      }
       const testUrl4 = `${supabaseUrl}/rest/v1/`;
-      console.log('Testing connection to:', { testUrl4 });
+      DiagnosticLogger.log('Testing connection to:', { testUrl: testUrl4 });
       
-      const response = await fetch(testUrl4, {
+      const testUrl5 = `${supabaseUrl}/rest/v1/`;
+      DiagnosticLogger.log('Testing connection to:', { testUrl: testUrl5 });
+      
+      const response = await fetch(testUrl, {
         headers: {
           'Authorization': `Bearer ${supabaseKey}`,
           'Content-Type': 'application/json'
@@ -170,14 +200,18 @@ class ResourcesPageManager {
       this.filteredContent = [...this.allContent];
       
       console.log('Content loaded', { 
-        count: this.allContent.length
+        headers: {
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json'
+        },
+        method: 'GET'
       });
       
       // Bind event listeners
       this.bindEvents();
       
-      // Render content
       this.renderFeaturedContent();
+      
       this.renderAllContent();
       
       console.log('✅ Resources page initialized successfully');
