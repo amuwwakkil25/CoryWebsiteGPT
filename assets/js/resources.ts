@@ -31,13 +31,8 @@ class ResourcesPageManager {
         }
       }
       
-      // Log all available environment variables (safely)
-      const envVars = {};
-      for (const key in import.meta.env) {
-        if (key.startsWith('VITE_')) {
+      console.log('Environment check:', {
         allEnvVars: envVars,
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
-            ? `${import.meta.env[key]?.substring(0, 10)}...` 
         urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
         keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
         urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
@@ -45,7 +40,7 @@ class ResourcesPageManager {
         buildMode: import.meta.env.MODE,
         isDev: import.meta.env.DEV,
         isProd: import.meta.env.PROD
-      }
+      });
       
       if (!supabaseUrl || !supabaseKey) {
         throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
@@ -58,20 +53,9 @@ class ResourcesPageManager {
       if (!supabaseKey.startsWith('eyJ')) {
         throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
       }
-        throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
-      }
       
-      if (!supabaseUrl.includes('supabase.co')) {
-        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
-      }
-      
-      if (!supabaseKey.startsWith('eyJ')) {
-        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
       const testUrl = `${supabaseUrl}/rest/v1/`;
       console.log('Testing connection to:', { testUrl });
-      
-      const testUrl = `${supabaseUrl}/rest/v1/`;
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
       
       const response = await fetch(testUrl, {
         headers: {
@@ -96,14 +80,8 @@ class ResourcesPageManager {
       this.filteredContent = [...this.allContent];
       
       console.log('Content loaded', { 
-        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
-        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        isDev: import.meta.env.DEV,
-        isProd: import.meta.env.PROD,
-        allEnvVars: envVars
+        count: this.allContent.length,
+        types: [...new Set(this.allContent.map(item => item.content_type))]
       });
       
       // Bind event listeners
@@ -183,10 +161,8 @@ class ResourcesPageManager {
       btn.addEventListener('click', (e) => {
         const modal = e.target.closest('.modal');
         if (modal) {
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
+          this.closeModal(modal);
+        }
       });
     });
 
@@ -615,22 +591,14 @@ class ResourcesPageManager {
         this.fallbackCopyToClipboard(url, title);
       });
     } else {
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
+      this.fallbackCopyToClipboard(url, title);
     }
   }
-      if (!response.ok) {
-        const errorText = await response.text();
-        DiagnosticLogger.log('Connection test failed with response:', { errorText });
-      }
-      
 
   fallbackCopyToClipboard(url, title) {
     const textArea = document.createElement('textarea');
     textArea.value = url;
-        stack: error.stack,
-        name: error.name
+    textArea.style.position = 'fixed';
     textArea.style.left = '-999999px';
     textArea.style.top = '-999999px';
     document.body.appendChild(textArea);
