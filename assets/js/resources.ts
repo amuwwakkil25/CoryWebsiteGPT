@@ -120,14 +120,30 @@ class DatabaseService {
     try {
       DiagnosticLogger.log('Testing database connection...');
       
-      const supabaseUrl = 'https://wjtmdrjuheclgdzwprku.supabase.co';
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c';
+      // Check environment variables with detailed logging
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
       
+      // Log all available environment variables (safely)
+      const envVars = {};
+      for (const key in import.meta.env) {
+        if (key.startsWith('VITE_')) {
+          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+            ? `${import.meta.env[key]?.substring(0, 10)}...` 
+            : import.meta.env[key];
+        }
+      }
       DiagnosticLogger.log('Environment check', {
+        allEnvVars: envVars,
         hasUrl: !!supabaseUrl,
         hasKey: !!supabaseKey,
-        urlPreview: supabaseUrl ? supabaseUrl.substring(0, 30) + '...' : 'missing',
-        keyPreview: supabaseKey ? supabaseKey.substring(0, 20) + '...' : 'missing'
+        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode: import.meta.env.MODE,
+        isDev: import.meta.env.DEV,
+        isProd: import.meta.env.PROD
       });
       
       const response = await fetch(`${supabaseUrl}/rest/v1/`, {
@@ -182,7 +198,15 @@ class DatabaseService {
       if (!response.ok) {
         const errorText = await response.text();
         DiagnosticLogger.log('Database error response', { errorText });
-        throw new Error(`Database query failed: ${response.status} ${response.statusText} - ${errorText}`);
+        throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
+      }
+      
+      if (!supabaseUrl.includes('supabase.co')) {
+        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
+      }
+      
+      if (!supabaseKey.startsWith('eyJ')) {
+        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
       }
       
       const data = await response.json();
@@ -335,11 +359,16 @@ class ResourcesPageManager {
     // Close modal events
     const closeButtons = document.querySelectorAll('.modal-close');
     closeButtons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      const testUrl = `${supabaseUrl}/rest/v1/`;
+      DiagnosticLogger.log('Testing connection to:', { testUrl });
+      
+      const response = await fetch(testUrl, {
         const modal = e.target.closest('.modal');
         if (modal) {
-          this.closeModal(modal);
-        }
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json'
+        },
+        method: 'GET'
       });
     });
 
@@ -692,14 +721,22 @@ class ResourcesPageManager {
         this.fallbackCopyToClipboard(url, title);
       });
     } else {
-      this.fallbackCopyToClipboard(url, title);
+        ok: response.ok,
+        headers: Object.fromEntries(response.headers.entries()),
+        url: response.url
     }
   }
+      if (!response.ok) {
+        const errorText = await response.text();
+        DiagnosticLogger.log('Connection test failed with response:', { errorText });
+      }
+      
 
   fallbackCopyToClipboard(url, title) {
     const textArea = document.createElement('textarea');
     textArea.value = url;
-    textArea.style.position = 'fixed';
+        stack: error.stack,
+        name: error.name
     textArea.style.left = '-999999px';
     textArea.style.top = '-999999px';
     document.body.appendChild(textArea);
