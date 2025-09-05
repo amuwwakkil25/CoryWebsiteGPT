@@ -32,20 +32,20 @@ class ResourcesPageManager {
       }
       
       // Log all available environment variables (safely)
-      const envVars = {};
+      const envVars2 = {};
       for (const key in import.meta.env) {
         if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+          envVars2[key] = key.includes('KEY') || key.includes('SECRET') 
             ? `${import.meta.env[key]?.substring(0, 10)}...` 
             : import.meta.env[key];
         }
       }
       
       // Log all available environment variables (safely)
-      const envVars = {};
+      const envVars3 = {};
       for (const key in import.meta.env) {
         if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+          envVars3[key] = key.includes('KEY') || key.includes('SECRET') 
             ? `${import.meta.env[key]?.substring(0, 10)}...` 
             : import.meta.env[key];
         }
@@ -56,20 +56,20 @@ class ResourcesPageManager {
         urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
         keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
         urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        allEnvVars: envVars,
+        allEnvVars2: envVars2,
         keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
         buildMode: import.meta.env.MODE,
-        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
-        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        allEnvVars: envVars,
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
-        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
+        urlPreview2: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview2: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid2: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        allEnvVars3: envVars3,
+        keyValid2: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode2: import.meta.env.MODE,
+        urlPreview3: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview3: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid3: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        keyValid3: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode3: import.meta.env.MODE,
         isDev: import.meta.env.DEV,
         isProd: import.meta.env.PROD
       });
@@ -85,6 +85,8 @@ class ResourcesPageManager {
       if (!supabaseKey.startsWith('eyJ')) {
         throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
       }
+      
+      if (!supabaseUrl || !supabaseKey) {
         throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
       }
       
@@ -94,8 +96,11 @@ class ResourcesPageManager {
       
       if (!supabaseKey.startsWith('eyJ')) {
         throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
+      }
       const testUrl = `${supabaseUrl}/rest/v1/`;
       console.log('Testing connection to:', { testUrl });
+      
+      if (!supabaseUrl || !supabaseKey) {
         throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
       }
       
@@ -105,11 +110,12 @@ class ResourcesPageManager {
       
       if (!supabaseKey.startsWith('eyJ')) {
         throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
-      const testUrl = `${supabaseUrl}/rest/v1/`;
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
+      }
+      const testUrl2 = `${supabaseUrl}/rest/v1/`;
+      console.log('Testing connection to:', { testUrl2 });
       
-      const testUrl = `${supabaseUrl}/rest/v1/`;
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
+      const testUrl3 = `${supabaseUrl}/rest/v1/`;
+      console.log('Testing connection to:', { testUrl3 });
       
       const response = await fetch(testUrl, {
         headers: {
@@ -134,24 +140,16 @@ class ResourcesPageManager {
       this.filteredContent = [...this.allContent];
       
       console.log('Content loaded', { 
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
+        count: this.allContent.length,
+        types: [...new Set(this.allContent.map(item => item.content_type))]
       });
-      
+
       // Bind event listeners
       this.bindEvents();
       
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
+      // Render content
+      this.renderFeaturedContent();
       this.renderAllContent();
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        DiagnosticLogger.log('Connection test failed with response:', { errorText });
-      }
       
       console.log('✅ Resources page initialized successfully');
     } catch (error) {
@@ -227,10 +225,8 @@ class ResourcesPageManager {
       btn.addEventListener('click', (e) => {
         const modal = e.target.closest('.modal');
         if (modal) {
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
+          this.closeModal(modal);
+        }
       });
     });
 
@@ -659,23 +655,14 @@ class ResourcesPageManager {
         this.fallbackCopyToClipboard(url, title);
       });
     } else {
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
+      this.fallbackCopyToClipboard(url, title);
     }
   }
-      if (!response.ok) {
-        const errorText = await response.text();
-        DiagnosticLogger.log('Connection test failed with response:', { errorText });
-      }
-      
 
   fallbackCopyToClipboard(url, title) {
     const textArea = document.createElement('textarea');
     textArea.value = url;
-        stack: error.stack,
-        stack: error.stack,
-        name: error.name
+    textArea.style.position = 'fixed';
     textArea.style.left = '-999999px';
     textArea.style.top = '-999999px';
     document.body.appendChild(textArea);
