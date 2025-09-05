@@ -1,0 +1,1147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Content Manager - Agent Cory Admin</title>
+    <meta name="robots" content="noindex, nofollow" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1e40af;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--gray-700);
+            border: 1px solid var(--gray-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-50);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-error {
+            background: var(--error);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .main {
+            padding: 2rem 0;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--gray-200);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.5rem 0.5rem 0.5rem 2.5rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .filter-select {
+            padding: 0.5rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.5rem;
+            background: white;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 0.5rem;
+            border: 1px solid var(--gray-200);
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .content-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: var(--gray-100);
+        }
+
+        .content-body {
+            padding: 1rem;
+        }
+
+        .content-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .content-excerpt {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .content-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .content-tags {
+            display: flex;
+            gap: 0.25rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            padding: 0.125rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+        }
+
+        .content-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            padding: 0.125rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-published {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-draft {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-featured {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 0.5rem;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-400);
+        }
+
+        .modal-body {
+            padding: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .form-textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .form-checkbox {
+            margin-right: 0.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray-500);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray-500);
+        }
+
+        .toast {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            color: white;
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast-success {
+            background: var(--success);
+        }
+
+        .toast-error {
+            background: var(--error);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-filters {
+                flex-direction: column;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Agent Cory - Content Manager</div>
+                <button class="btn btn-primary" id="add-content-btn">
+                    <i data-lucide="plus"></i>
+                    Add Content
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- Dashboard Stats -->
+            <div class="dashboard" id="dashboard">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-content">0</div>
+                    <div class="stat-label">Total Content</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="published-content">0</div>
+                    <div class="stat-label">Published</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="featured-content">0</div>
+                    <div class="stat-label">Featured</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-views">0</div>
+                    <div class="stat-label">Total Views</div>
+                </div>
+            </div>
+
+            <!-- Content Management -->
+            <div class="content-header">
+                <h1>Content Management</h1>
+            </div>
+
+            <!-- Search and Filters -->
+            <div class="search-filters">
+                <div class="search-box">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="text" id="search-input" class="search-input" placeholder="Search content...">
+                </div>
+                <select id="type-filter" class="filter-select">
+                    <option value="all">All Types</option>
+                    <option value="blog">Blog</option>
+                    <option value="case_study">Case Study</option>
+                    <option value="guide">Guide</option>
+                    <option value="ebook">eBook</option>
+                    <option value="webinar">Webinar</option>
+                </select>
+                <select id="status-filter" class="filter-select">
+                    <option value="all">All Status</option>
+                    <option value="published">Published</option>
+                    <option value="draft">Draft</option>
+                    <option value="featured">Featured</option>
+                </select>
+                <button class="btn btn-secondary" id="clear-filters">
+                    <i data-lucide="x"></i>
+                    Clear
+                </button>
+            </div>
+
+            <!-- Content Grid -->
+            <div id="content-container">
+                <div class="loading">
+                    <i data-lucide="loader"></i>
+                    <p>Loading content...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit Content Modal -->
+    <div id="content-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Add New Content</h2>
+                <button class="modal-close" id="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="content-form">
+                    <input type="hidden" id="content-id">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Title *</label>
+                        <input type="text" id="title" class="form-input" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Content Type *</label>
+                            <select id="content-type" class="form-select" required>
+                                <option value="">Select type</option>
+                                <option value="blog">Blog Post</option>
+                                <option value="case_study">Case Study</option>
+                                <option value="guide">Guide</option>
+                                <option value="ebook">eBook</option>
+                                <option value="webinar">Webinar</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Category</label>
+                            <select id="category" class="form-select">
+                                <option value="general">General</option>
+                                <option value="ai">AI & Automation</option>
+                                <option value="admissions">Admissions</option>
+                                <option value="conversion">Conversion</option>
+                                <option value="crm">CRM & Technology</option>
+                                <option value="roi">ROI & Analytics</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Excerpt *</label>
+                        <textarea id="excerpt" class="form-textarea" rows="3" required placeholder="Brief description of the content..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Content *</label>
+                        <textarea id="content" class="form-textarea" rows="10" required placeholder="Write your content in Markdown format..."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Featured Image URL</label>
+                            <input type="url" id="featured-image" class="form-input" placeholder="https://...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Reading Time (minutes)</label>
+                            <input type="number" id="reading-time" class="form-input" min="1" max="120">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Author Name</label>
+                            <input type="text" id="author-name" class="form-input" value="Agent Cory Team">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Author Title</label>
+                            <input type="text" id="author-title" class="form-input" value="AI Admissions Experts">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tags (comma separated)</label>
+                        <input type="text" id="tags" class="form-input" placeholder="AI, Automation, Best Practices">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">SEO Title</label>
+                            <input type="text" id="seo-title" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">SEO Description</label>
+                            <input type="text" id="seo-description" class="form-input">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Download URL</label>
+                            <input type="url" id="download-url" class="form-input" placeholder="For eBooks and guides">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">External URL</label>
+                            <input type="url" id="external-url" class="form-input" placeholder="For webinars and external content">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="is-published" class="form-checkbox">
+                                Published
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="is-featured" class="form-checkbox">
+                                Featured
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="display: flex; gap: 1rem; justify-content: flex-end;">
+                        <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i data-lucide="save"></i>
+                            Save Content
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Supabase
+        const supabaseUrl = 'https://wjtmdrjuheclgdzwprku.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        class ContentManager {
+            constructor() {
+                this.content = [];
+                this.filteredContent = [];
+                this.currentContent = null;
+                this.init();
+            }
+
+            async init() {
+                try {
+                    await this.loadContent();
+                    this.bindEvents();
+                    this.renderContent();
+                    this.updateStats();
+                    
+                    // Initialize Lucide icons
+                    if (typeof lucide !== 'undefined') {
+                        lucide.createIcons();
+                    }
+                } catch (error) {
+                    console.error('Error initializing content manager:', error);
+                    this.showError('Failed to load content. Please refresh the page.');
+                }
+            }
+
+            async loadContent() {
+                try {
+                    const { data, error } = await supabase
+                        .from('content_items')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (error) throw error;
+
+                    this.content = data || [];
+                    this.filteredContent = [...this.content];
+                } catch (error) {
+                    console.error('Error loading content:', error);
+                    throw error;
+                }
+            }
+
+            bindEvents() {
+                // Add content button
+                document.getElementById('add-content-btn').addEventListener('click', () => {
+                    this.openModal();
+                });
+
+                // Search
+                document.getElementById('search-input').addEventListener('input', (e) => {
+                    this.handleSearch(e.target.value);
+                });
+
+                // Filters
+                document.getElementById('type-filter').addEventListener('change', () => {
+                    this.applyFilters();
+                });
+
+                document.getElementById('status-filter').addEventListener('change', () => {
+                    this.applyFilters();
+                });
+
+                document.getElementById('clear-filters').addEventListener('click', () => {
+                    this.clearFilters();
+                });
+
+                // Modal events
+                document.getElementById('modal-close').addEventListener('click', () => {
+                    this.closeModal();
+                });
+
+                document.getElementById('cancel-btn').addEventListener('click', () => {
+                    this.closeModal();
+                });
+
+                document.getElementById('content-form').addEventListener('submit', (e) => {
+                    this.handleSubmit(e);
+                });
+
+                // Auto-generate slug from title
+                document.getElementById('title').addEventListener('input', (e) => {
+                    const slug = this.generateSlug(e.target.value);
+                    // Could add a slug field if needed
+                });
+            }
+
+            handleSearch(query) {
+                const searchTerm = query.toLowerCase().trim();
+                
+                if (!searchTerm) {
+                    this.filteredContent = [...this.content];
+                } else {
+                    this.filteredContent = this.content.filter(item => 
+                        item.title.toLowerCase().includes(searchTerm) ||
+                        item.excerpt.toLowerCase().includes(searchTerm) ||
+                        item.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+                    );
+                }
+                
+                this.renderContent();
+            }
+
+            applyFilters() {
+                const typeFilter = document.getElementById('type-filter').value;
+                const statusFilter = document.getElementById('status-filter').value;
+
+                this.filteredContent = this.content.filter(item => {
+                    const typeMatch = typeFilter === 'all' || item.content_type === typeFilter;
+                    
+                    let statusMatch = true;
+                    if (statusFilter === 'published') {
+                        statusMatch = item.is_published;
+                    } else if (statusFilter === 'draft') {
+                        statusMatch = !item.is_published;
+                    } else if (statusFilter === 'featured') {
+                        statusMatch = item.is_featured;
+                    }
+                    
+                    return typeMatch && statusMatch;
+                });
+
+                this.renderContent();
+            }
+
+            clearFilters() {
+                document.getElementById('search-input').value = '';
+                document.getElementById('type-filter').value = 'all';
+                document.getElementById('status-filter').value = 'all';
+                this.filteredContent = [...this.content];
+                this.renderContent();
+            }
+
+            renderContent() {
+                const container = document.getElementById('content-container');
+                
+                if (this.filteredContent.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i data-lucide="file-text"></i>
+                            <h3>No content found</h3>
+                            <p>Try adjusting your search or filters, or add new content.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = `
+                    <div class="content-grid">
+                        ${this.filteredContent.map(item => this.createContentCard(item)).join('')}
+                    </div>
+                `;
+
+                // Bind action buttons
+                this.bindActionButtons();
+                
+                // Re-initialize Lucide icons
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            }
+
+            createContentCard(item) {
+                const statusBadges = [];
+                if (item.is_published) statusBadges.push('<span class="status-badge status-published">Published</span>');
+                else statusBadges.push('<span class="status-badge status-draft">Draft</span>');
+                if (item.is_featured) statusBadges.push('<span class="status-badge status-featured">Featured</span>');
+
+                return `
+                    <div class="content-card" data-id="${item.id}">
+                        ${item.featured_image_url ? `
+                            <img src="${item.featured_image_url}" alt="${item.title}" class="content-image">
+                        ` : `
+                            <div class="content-image" style="display: flex; align-items: center; justify-content: center; background: var(--gray-100); color: var(--gray-400);">
+                                <i data-lucide="image" style="width: 2rem; height: 2rem;"></i>
+                            </div>
+                        `}
+                        <div class="content-body">
+                            <h3 class="content-title">${item.title}</h3>
+                            <p class="content-excerpt">${item.excerpt}</p>
+                            
+                            <div class="content-meta">
+                                <span><i data-lucide="user"></i> ${item.author_name}</span>
+                                <span><i data-lucide="calendar"></i> ${this.formatDate(item.created_at)}</span>
+                                <span><i data-lucide="eye"></i> ${item.view_count || 0}</span>
+                            </div>
+
+                            <div class="content-tags">
+                                ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+
+                            <div style="margin-bottom: 1rem;">
+                                ${statusBadges.join(' ')}
+                            </div>
+
+                            <div class="content-actions">
+                                <button class="btn btn-sm btn-secondary edit-btn" data-id="${item.id}">
+                                    <i data-lucide="edit"></i>
+                                    Edit
+                                </button>
+                                <button class="btn btn-sm ${item.is_published ? 'btn-secondary' : 'btn-success'} publish-btn" data-id="${item.id}">
+                                    <i data-lucide="${item.is_published ? 'eye-off' : 'eye'}"></i>
+                                    ${item.is_published ? 'Unpublish' : 'Publish'}
+                                </button>
+                                <button class="btn btn-sm ${item.is_featured ? 'btn-secondary' : 'btn-primary'} feature-btn" data-id="${item.id}">
+                                    <i data-lucide="star"></i>
+                                    ${item.is_featured ? 'Unfeature' : 'Feature'}
+                                </button>
+                                <button class="btn btn-sm btn-error delete-btn" data-id="${item.id}">
+                                    <i data-lucide="trash"></i>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            bindActionButtons() {
+                // Edit buttons
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.closest('.edit-btn').dataset.id;
+                        this.editContent(id);
+                    });
+                });
+
+                // Publish buttons
+                document.querySelectorAll('.publish-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const id = e.target.closest('.publish-btn').dataset.id;
+                        await this.togglePublish(id);
+                    });
+                });
+
+                // Feature buttons
+                document.querySelectorAll('.feature-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const id = e.target.closest('.feature-btn').dataset.id;
+                        await this.toggleFeature(id);
+                    });
+                });
+
+                // Delete buttons
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const id = e.target.closest('.delete-btn').dataset.id;
+                        await this.deleteContent(id);
+                    });
+                });
+            }
+
+            openModal(content = null) {
+                this.currentContent = content;
+                const modal = document.getElementById('content-modal');
+                const title = document.getElementById('modal-title');
+                
+                if (content) {
+                    title.textContent = 'Edit Content';
+                    this.populateForm(content);
+                } else {
+                    title.textContent = 'Add New Content';
+                    this.resetForm();
+                }
+
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            closeModal() {
+                const modal = document.getElementById('content-modal');
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+                this.resetForm();
+                this.currentContent = null;
+            }
+
+            populateForm(content) {
+                document.getElementById('content-id').value = content.id;
+                document.getElementById('title').value = content.title;
+                document.getElementById('content-type').value = content.content_type;
+                document.getElementById('category').value = content.category;
+                document.getElementById('excerpt').value = content.excerpt;
+                document.getElementById('content').value = content.content || '';
+                document.getElementById('featured-image').value = content.featured_image_url || '';
+                document.getElementById('reading-time').value = content.reading_time_minutes || '';
+                document.getElementById('author-name').value = content.author_name;
+                document.getElementById('author-title').value = content.author_title;
+                document.getElementById('tags').value = content.tags.join(', ');
+                document.getElementById('seo-title').value = content.seo_title || '';
+                document.getElementById('seo-description').value = content.seo_description || '';
+                document.getElementById('download-url').value = content.download_url || '';
+                document.getElementById('external-url').value = content.external_url || '';
+                document.getElementById('is-published').checked = content.is_published;
+                document.getElementById('is-featured').checked = content.is_featured;
+            }
+
+            resetForm() {
+                document.getElementById('content-form').reset();
+                document.getElementById('content-id').value = '';
+                document.getElementById('author-name').value = 'Agent Cory Team';
+                document.getElementById('author-title').value = 'AI Admissions Experts';
+                document.getElementById('category').value = 'general';
+            }
+
+            async handleSubmit(e) {
+                e.preventDefault();
+                
+                try {
+                    const formData = this.getFormData();
+                    
+                    if (this.currentContent) {
+                        await this.updateContent(this.currentContent.id, formData);
+                        this.showSuccess('Content updated successfully!');
+                    } else {
+                        await this.createContent(formData);
+                        this.showSuccess('Content created successfully!');
+                    }
+
+                    this.closeModal();
+                    await this.loadContent();
+                    this.renderContent();
+                    this.updateStats();
+                } catch (error) {
+                    console.error('Error saving content:', error);
+                    this.showError('Failed to save content. Please try again.');
+                }
+            }
+
+            getFormData() {
+                const tags = document.getElementById('tags').value
+                    .split(',')
+                    .map(tag => tag.trim())
+                    .filter(tag => tag.length > 0);
+
+                return {
+                    title: document.getElementById('title').value,
+                    slug: this.generateSlug(document.getElementById('title').value),
+                    content_type: document.getElementById('content-type').value,
+                    category: document.getElementById('category').value,
+                    excerpt: document.getElementById('excerpt').value,
+                    content: document.getElementById('content').value,
+                    featured_image_url: document.getElementById('featured-image').value || null,
+                    reading_time_minutes: parseInt(document.getElementById('reading-time').value) || null,
+                    author_name: document.getElementById('author-name').value,
+                    author_title: document.getElementById('author-title').value,
+                    tags: tags,
+                    seo_title: document.getElementById('seo-title').value || null,
+                    seo_description: document.getElementById('seo-description').value || null,
+                    download_url: document.getElementById('download-url').value || null,
+                    external_url: document.getElementById('external-url').value || null,
+                    is_published: document.getElementById('is-published').checked,
+                    is_featured: document.getElementById('is-featured').checked,
+                    published_at: document.getElementById('is-published').checked ? new Date().toISOString() : null
+                };
+            }
+
+            async createContent(data) {
+                const { error } = await supabase
+                    .from('content_items')
+                    .insert([data]);
+
+                if (error) throw error;
+            }
+
+            async updateContent(id, data) {
+                const { error } = await supabase
+                    .from('content_items')
+                    .update({ ...data, updated_at: new Date().toISOString() })
+                    .eq('id', id);
+
+                if (error) throw error;
+            }
+
+            async togglePublish(id) {
+                try {
+                    const item = this.content.find(c => c.id === id);
+                    const newStatus = !item.is_published;
+                    
+                    const { error } = await supabase
+                        .from('content_items')
+                        .update({ 
+                            is_published: newStatus,
+                            published_at: newStatus ? new Date().toISOString() : null,
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', id);
+
+                    if (error) throw error;
+
+                    this.showSuccess(`Content ${newStatus ? 'published' : 'unpublished'} successfully!`);
+                    await this.loadContent();
+                    this.renderContent();
+                    this.updateStats();
+                } catch (error) {
+                    console.error('Error toggling publish status:', error);
+                    this.showError('Failed to update publish status.');
+                }
+            }
+
+            async toggleFeature(id) {
+                try {
+                    const item = this.content.find(c => c.id === id);
+                    const newStatus = !item.is_featured;
+                    
+                    const { error } = await supabase
+                        .from('content_items')
+                        .update({ 
+                            is_featured: newStatus,
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', id);
+
+                    if (error) throw error;
+
+                    this.showSuccess(`Content ${newStatus ? 'featured' : 'unfeatured'} successfully!`);
+                    await this.loadContent();
+                    this.renderContent();
+                    this.updateStats();
+                } catch (error) {
+                    console.error('Error toggling feature status:', error);
+                    this.showError('Failed to update feature status.');
+                }
+            }
+
+            async deleteContent(id) {
+                if (!confirm('Are you sure you want to delete this content? This action cannot be undone.')) {
+                    return;
+                }
+
+                try {
+                    const { error } = await supabase
+                        .from('content_items')
+                        .delete()
+                        .eq('id', id);
+
+                    if (error) throw error;
+
+                    this.showSuccess('Content deleted successfully!');
+                    await this.loadContent();
+                    this.renderContent();
+                    this.updateStats();
+                } catch (error) {
+                    console.error('Error deleting content:', error);
+                    this.showError('Failed to delete content.');
+                }
+            }
+
+            editContent(id) {
+                const content = this.content.find(c => c.id === id);
+                if (content) {
+                    this.openModal(content);
+                }
+            }
+
+            updateStats() {
+                const total = this.content.length;
+                const published = this.content.filter(c => c.is_published).length;
+                const featured = this.content.filter(c => c.is_featured).length;
+                const totalViews = this.content.reduce((sum, c) => sum + (c.view_count || 0), 0);
+
+                document.getElementById('total-content').textContent = total;
+                document.getElementById('published-content').textContent = published;
+                document.getElementById('featured-content').textContent = featured;
+                document.getElementById('total-views').textContent = totalViews.toLocaleString();
+            }
+
+            generateSlug(title) {
+                return title
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '-')
+                    .replace(/^-+|-+$/g, '');
+            }
+
+            formatDate(dateString) {
+                return new Date(dateString).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            }
+
+            showSuccess(message) {
+                this.showToast(message, 'success');
+            }
+
+            showError(message) {
+                this.showToast(message, 'error');
+            }
+
+            showToast(message, type) {
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.remove();
+                }, 4000);
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new ContentManager();
+        });
+    </script>
+</body>
+</html>
