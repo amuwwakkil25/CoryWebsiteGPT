@@ -312,7 +312,13 @@ class ResourcesPageManager {
       DiagnosticLogger.log('✅ Resources page initialized successfully');
     } catch (error) {
       DiagnosticLogger.log('❌ Critical initialization error', { error: error.message });
-      this.showErrorState();
+      // Use static fallback on any error
+      this.allContent = staticContent;
+      this.filteredContent = [...this.allContent];
+      
+      this.bindEvents();
+      this.renderFeaturedContent();
+      this.renderAllContent();
     }
   }
 
