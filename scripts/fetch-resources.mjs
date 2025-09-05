@@ -165,6 +165,26 @@ class ResourcesPageManager {
             : import.meta.env[key];
         }
       }
+      
+      // Log all available environment variables (safely)
+      const envVars = {};
+      for (const key in import.meta.env) {
+        if (key.startsWith('VITE_')) {
+          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+            ? `${import.meta.env[key]?.substring(0, 10)}...` 
+            : import.meta.env[key];
+        }
+      }
+      
+      // Log all available environment variables (safely)
+      const envVars = {};
+      for (const key in import.meta.env) {
+        if (key.startsWith('VITE_')) {
+          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+            ? `${import.meta.env[key]?.substring(0, 10)}...` 
+            : import.meta.env[key];
+        }
+      }
 
       console.log('Environment check:', {
         allEnvVars: envVars,
@@ -176,10 +196,22 @@ class ResourcesPageManager {
         isDev: import.meta.env.DEV,
         isProd: import.meta.env.PROD
       });
+        allEnvVars: envVars,
 
       this.showLoadingState();
-      
-      // Try the new fallback system
+        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        allEnvVars: envVars,
+        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode: import.meta.env.MODE,
+        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode: import.meta.env.MODE,
+        isDev: import.meta.env.DEV,
+        isProd: import.meta.env.PROD
       this.allContent = await fetchResources();
       
       if (!supabaseUrl || !supabaseKey) {
@@ -190,22 +222,42 @@ class ResourcesPageManager {
         throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
       }
       
+        throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
+      }
+      
       if (!supabaseUrl.includes('supabase.co')) {
         throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
       }
       
       if (!supabaseKey.startsWith('eyJ')) {
         throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
+        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
       }
       
-      this.filteredContent = [...this.allContent];
+      const testUrl = `${supabaseUrl}/rest/v1/`;
+      DiagnosticLogger.log('Testing connection to:', { testUrl });
+      
+      const response = await fetch(testUrl, {
+        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
+      }
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json'
+        },
+        method: 'GET'
       
       // Bind event listeners
       this.bindEvents();
       
       // Render content
-      this.renderFeaturedContent();
+        ok: response.ok,
+        headers: Object.fromEntries(response.headers.entries()),
+        url: response.url
       this.renderAllContent();
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        DiagnosticLogger.log('Connection test failed with response:', { errorText });
+      }
       
       console.log('✅ Resources page initialized successfully');
     } catch (error) {
@@ -270,15 +322,28 @@ class ResourcesPageManager {
     this.bindModalEvents();
   }
 
-  bindModalEvents() {
+        throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
+      }
+      
+      if (!supabaseUrl.includes('supabase.co')) {
+        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
+      }
+      
+      if (!supabaseKey.startsWith('eyJ')) {
+        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
     // Close modal events
     const closeButtons = document.querySelectorAll('.modal-close');
     closeButtons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      const testUrl = `${supabaseUrl}/rest/v1/`;
+      DiagnosticLogger.log('Testing connection to:', { testUrl });
+      
+      const response = await fetch(testUrl, {
         const modal = e.target.closest('.modal');
         if (modal) {
-          this.closeModal(modal);
-        }
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json'
+        },
+        method: 'GET'
       });
     });
 
@@ -631,14 +696,23 @@ class ResourcesPageManager {
         this.fallbackCopyToClipboard(url, title);
       });
     } else {
-      this.fallbackCopyToClipboard(url, title);
+        ok: response.ok,
+        headers: Object.fromEntries(response.headers.entries()),
+        url: response.url
     }
   }
+      if (!response.ok) {
+        const errorText = await response.text();
+        DiagnosticLogger.log('Connection test failed with response:', { errorText });
+      }
+      
 
   fallbackCopyToClipboard(url, title) {
     const textArea = document.createElement('textarea');
     textArea.value = url;
-    textArea.style.position = 'fixed';
+        stack: error.stack,
+        stack: error.stack,
+        name: error.name
     textArea.style.left = '-999999px';
     textArea.style.top = '-999999px';
     document.body.appendChild(textArea);
