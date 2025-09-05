@@ -1,946 +1,827 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Content Manager - Agent Cory Admin</title>
-    <meta name="description" content="Content management system for Agent Cory marketing team" />
-    <meta name="robots" content="noindex, nofollow" />
+// Debug logger for troubleshooting
+class DiagnosticLogger {
+  static log(message, data = null) {
+    console.log(`🔍 [Resources Debug] ${message}`, data || '');
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    // Create debug div if it doesn't exist
+    const debugDiv = document.getElementById('debug-info') || this.createDebugDiv();
+    const logEntry = document.createElement('div');
+    logEntry.style.cssText = 'padding: 0.5rem; border-bottom: 1px solid #eee; font-family: monospace; font-size: 0.75rem;';
+    logEntry.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/main.css" />
+    if (data) {
+      logEntry.innerHTML += `<br><pre style="margin: 0.25rem 0; color: #666;">${JSON.stringify(data, null, 2)}</pre>`;
+    }
     
-    <!-- Icon Libraries -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    debugDiv.appendChild(logEntry);
+    debugDiv.scrollTop = debugDiv.scrollHeight;
+  }
+  
+  static createDebugDiv() {
+    const debugDiv = document.createElement('div');
+    debugDiv.id = 'debug-info';
+    debugDiv.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 400px;
+      max-height: 300px;
+      background: white;
+      border: 2px solid #333;
+      border-radius: 8px;
+      overflow-y: auto;
+      z-index: 9999;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      display: none;
+    `;
     
-    <style>
-        /* Admin-specific styles */
-        .admin-header {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            color: white;
-            padding: 1.5rem 0;
-            border-bottom: 3px solid #3b82f6;
-        }
-        
-        .admin-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .admin-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0;
-        }
-        
-        .admin-subtitle {
-            font-size: 0.875rem;
-            opacity: 0.8;
-            margin: 0;
-        }
-        
-        .admin-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-        
-        .admin-main {
-            padding: 2rem 0;
-            min-height: calc(100vh - 200px);
-        }
-        
-        .content-toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border: 1px solid #e2e8f0;
-        }
-        
-        .toolbar-left {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-        
-        .search-input {
-            padding: 0.75rem 1rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            min-width: 300px;
-            transition: all 0.3s ease;
-        }
-        
-        .search-input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-        
-        .filter-select {
-            padding: 0.75rem 1rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            background: white;
-            min-width: 150px;
-        }
-        
-        .btn-admin {
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.875rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .btn-primary {
-            background: #3b82f6;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #2563eb;
-            transform: translateY(-1px);
-        }
-        
-        .btn-secondary {
-            background: #6b7280;
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            background: #4b5563;
-        }
-        
-        .btn-success {
-            background: #10b981;
-            color: white;
-        }
-        
-        .btn-success:hover {
-            background: #059669;
-        }
-        
-        .btn-danger {
-            background: #ef4444;
-            color: white;
-        }
-        
-        .btn-danger:hover {
-            background: #dc2626;
-        }
-        
-        .btn-sm {
-            padding: 0.5rem 1rem;
-            font-size: 0.75rem;
-        }
-        
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .content-item {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-        }
-        
-        .content-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-        }
-        
-        .content-image {
-            height: 200px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .content-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .content-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .badge-blog { background: #f59e0b; color: white; }
-        .badge-case_study { background: #10b981; color: white; }
-        .badge-guide { background: #3b82f6; color: white; }
-        .badge-ebook { background: #8b5cf6; color: white; }
-        .badge-webinar { background: #ef4444; color: white; }
-        
-        .content-body {
-            padding: 1.5rem;
-        }
-        
-        .content-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 0.75rem;
-            line-height: 1.3;
-        }
-        
-        .content-excerpt {
-            color: #64748b;
-            font-size: 0.875rem;
-            line-height: 1.5;
-            margin-bottom: 1rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .content-meta {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            font-size: 0.75rem;
-            color: #64748b;
-        }
-        
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-        
-        .content-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-        
-        .tag {
-            background: #f1f5f9;
-            color: #475569;
-            padding: 0.25rem 0.5rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-        
-        .content-actions {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: flex-end;
-        }
-        
-        .status-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        
-        .status-published {
-            background: #dcfce7;
-            color: #166534;
-        }
-        
-        .status-draft {
-            background: #fef3c7;
-            color: #92400e;
-        }
-        
-        .status-featured {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-        
-        /* Modal styles */
-        .admin-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 2rem;
-        }
-        
-        .admin-modal.active {
-            display: flex;
-        }
-        
-        .modal-content {
-            background: white;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 800px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .modal-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .modal-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1e293b;
-            margin: 0;
-        }
-        
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #64748b;
-            padding: 0.5rem;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-        
-        .modal-close:hover {
-            background: #f1f5f9;
-            color: #1e293b;
-        }
-        
-        .modal-body {
-            padding: 1.5rem;
-        }
-        
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-        
-        .form-label {
-            display: block;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-        }
-        
-        .form-input,
-        .form-select,
-        .form-textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            transition: all 0.3s ease;
-        }
-        
-        .form-input:focus,
-        .form-select:focus,
-        .form-textarea:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-        
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-            font-family: inherit;
-        }
-        
-        .form-textarea.large {
-            min-height: 300px;
-        }
-        
-        .form-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .form-checkbox input {
-            width: auto;
-        }
-        
-        .form-error {
-            color: #ef4444;
-            font-size: 0.75rem;
-            margin-top: 0.25rem;
-        }
-        
-        .modal-footer {
-            padding: 1.5rem;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-        }
-        
-        .loading-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.9);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-        }
-        
-        .loading-overlay.active {
-            display: flex;
-        }
-        
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid #e2e8f0;
-            border-top-color: #3b82f6;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: #64748b;
-        }
-        
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-        
-        .stats-bar {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border: 1px solid #e2e8f0;
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #3b82f6;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-label {
-            font-size: 0.875rem;
-            color: #64748b;
-            font-weight: 500;
-        }
-        
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            color: white;
-            font-weight: 600;
-            z-index: 1001;
-            animation: slideInRight 0.3s ease-out;
-            max-width: 400px;
-        }
-        
-        .toast.success { background: #10b981; }
-        .toast.error { background: #ef4444; }
-        .toast.info { background: #3b82f6; }
-        
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        @keyframes slideOutRight {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-        
-        /* Mobile responsiveness */
-        @media (max-width: 768px) {
-            .content-toolbar {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: stretch;
-            }
-            
-            .toolbar-left {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .search-input {
-                min-width: auto;
-            }
-            
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal-content {
-                margin: 1rem;
-                max-height: calc(100vh - 2rem);
-            }
-        }
-        
-        .image-preview {
-            max-width: 200px;
-            max-height: 120px;
-            border-radius: 8px;
-            margin-top: 0.5rem;
-            border: 1px solid #e2e8f0;
-        }
-        
-        .tag-input-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            padding: 0.75rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            min-height: 44px;
-            cursor: text;
-        }
-        
-        .tag-input-container:focus-within {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-        
-        .tag-item {
-            background: #3b82f6;
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .tag-remove {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            padding: 0;
-            font-size: 0.875rem;
-        }
-        
-        .tag-input {
-            border: none;
-            outline: none;
-            flex: 1;
-            min-width: 100px;
-            font-size: 0.875rem;
-        }
-        
-        .markdown-toolbar {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            padding: 0.5rem;
-            background: #f8fafc;
-            border-radius: 8px 8px 0 0;
-            border: 2px solid #e2e8f0;
-            border-bottom: none;
-        }
-        
-        .markdown-btn {
-            padding: 0.25rem 0.5rem;
-            border: none;
-            background: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            color: #64748b;
-            transition: all 0.3s ease;
-        }
-        
-        .markdown-btn:hover {
-            background: #e2e8f0;
-            color: #1e293b;
-        }
-        
-        .content-preview {
-            background: #f8fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1rem;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .preview-content h1, .preview-content h2, .preview-content h3 {
-            color: #1e293b;
-            margin-top: 1rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .preview-content h1 { font-size: 1.5rem; }
-        .preview-content h2 { font-size: 1.25rem; }
-        .preview-content h3 { font-size: 1.125rem; }
-        
-        .preview-content p {
-            margin-bottom: 1rem;
-            line-height: 1.6;
-        }
-        
-        .preview-content ul, .preview-content ol {
-            margin: 1rem 0;
-            padding-left: 1.5rem;
-        }
-        
-        .preview-content li {
-            margin-bottom: 0.5rem;
-        }
-    </style>
-</head>
-<body>
-    <!-- Admin Header -->
-    <header class="admin-header">
-        <div class="container">
-            <div class="admin-nav">
-                <div>
-                    <h1 class="admin-title">Content Manager</h1>
-                    <p class="admin-subtitle">Agent Cory Marketing Team</p>
-                </div>
-                <div class="admin-actions">
-                    <span id="connection-status" class="status-indicator">
-                        <i data-lucide="wifi"></i>
-                        <span>Checking connection...</span>
-                    </span>
-                    <button class="btn-admin btn-primary" id="add-content-btn">
-                        <i data-lucide="plus"></i>
-                        Add Content
-                    </button>
-                </div>
-            </div>
+    const header = document.createElement('div');
+    header.style.cssText = 'background: #333; color: white; padding: 0.5rem; font-weight: bold; position: sticky; top: 0;';
+    header.innerHTML = 'Debug Log <button onclick="this.parentElement.parentElement.style.display=\'none\'" style="float: right; background: none; border: none; color: white; cursor: pointer;">×</button> <button onclick="this.parentElement.parentElement.style.display=this.parentElement.parentElement.style.display===\'none\'?\'block\':\'none\'" style="float: right; margin-right: 10px; background: none; border: none; color: white; cursor: pointer;">👁</button>';
+    
+    debugDiv.appendChild(header);
+    document.body.appendChild(debugDiv);
+    return debugDiv;
+  }
+}
+
+// Static fallback content for development
+const staticContent = [
+  {
+    id: "ai-guide-static",
+    title: "The Complete Guide to AI in Admissions",
+    slug: "ai-admissions-guide",
+    summary: "Comprehensive 40-page guide covering implementation strategies, best practices, and ROI measurement for AI-powered admissions automation.",
+    cover_image: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800",
+    reading_minutes: 25,
+    tags: ["AI", "Implementation", "Best Practices"],
+    published: true,
+    created_at: new Date().toISOString()
+  },
+  {
+    id: "conversion-webinar-static",
+    title: "5 Strategies to Double Your Lead Conversion Rate",
+    slug: "double-conversion-strategies",
+    summary: "Join our upcoming webinar to learn proven tactics that top-performing institutions use to convert more inquiries into enrolled students.",
+    cover_image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
+    reading_minutes: 45,
+    tags: ["Webinar", "Conversion", "Strategy"],
+    published: true,
+    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: "metro-case-study-static",
+    title: "Case Study: Metro State University - 847% ROI in 12 Months",
+    slug: "metro-state-case-study",
+    summary: "How Metro State University transformed their admissions process and achieved record-breaking results with Agent Cory.",
+    cover_image: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800",
+    reading_minutes: 12,
+    tags: ["Case Study", "ROI", "University"],
+    published: true,
+    created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: "benchmarks-report-static",
+    title: "2024 Admissions Benchmarks Report",
+    slug: "admissions-benchmarks-2024",
+    summary: "Comprehensive industry data including response times, conversion rates, and ROI metrics from 500+ institutions.",
+    cover_image: "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800",
+    reading_minutes: 30,
+    tags: ["Benchmarks", "Industry Data", "Research"],
+    published: true,
+    created_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: "response-time-blog-static",
+    title: "The Psychology of Fast Response Times in Admissions",
+    slug: "psychology-fast-response-times",
+    summary: "Research-backed insights into why speed matters so much in admissions and how to leverage it for better conversion rates.",
+    cover_image: "https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800",
+    reading_minutes: 8,
+    tags: ["Psychology", "Response Time", "Conversion"],
+    published: true,
+    created_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: "crm-integration-guide-static",
+    title: "CRM Integration Best Practices for Higher Ed",
+    slug: "crm-integration-best-practices",
+    summary: "Step-by-step guide for seamless CRM integration, data mapping, and workflow automation setup.",
+    cover_image: "https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800",
+    reading_minutes: 20,
+    tags: ["CRM", "Integration", "Automation"],
+    published: true,
+    created_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString()
+  }
+];
+
+// Database service with fallback
+class DatabaseService {
+  static async testConnection() {
+    try {
+      DiagnosticLogger.log('Testing database connection...');
+      
+      // Check environment variables with detailed logging
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      
+      // Log all available environment variables (safely)
+      const envVars = {};
+      for (const key in import.meta.env) {
+        if (key.startsWith('VITE_')) {
+          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+            ? `${import.meta.env[key]?.substring(0, 10)}...` 
+            : import.meta.env[key];
+        }
+      }
+      
+      DiagnosticLogger.log('Environment check', {
+        allEnvVars: envVars,
+        hasUrl: !!supabaseUrl,
+        hasKey: !!supabaseKey,
+        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode: import.meta.env.MODE,
+        isDev: import.meta.env.DEV,
+        isProd: import.meta.env.PROD
+      });
+      
+      if (!supabaseUrl || !supabaseKey) {
+        throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
+      }
+      
+      if (!supabaseUrl.includes('supabase.co')) {
+        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
+      }
+      
+      if (!supabaseKey.startsWith('eyJ')) {
+        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
+      }
+      
+      const testUrl = `${supabaseUrl}/rest/v1/`;
+      DiagnosticLogger.log('Testing connection to:', { testUrl });
+      
+      const response = await fetch(testUrl, {
+        headers: {
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json'
+        },
+        method: 'GET'
+      });
+      
+      DiagnosticLogger.log('Connection test result', {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok,
+        headers: Object.fromEntries(response.headers.entries()),
+        url: response.url
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        DiagnosticLogger.log('Connection test failed with response:', { errorText });
+      }
+      
+      return response.ok;
+    } catch (error) {
+      DiagnosticLogger.log('Connection test failed', {
+        error: error.message,
+        stack: error.stack,
+        name: error.name
+      });
+      return false;
+    }
+  }
+  
+  static async getContent() {
+    try {
+      DiagnosticLogger.log('Starting database content fetch...');
+      
+      const supabaseUrl = 'https://wjtmdrjuheclgdzwprku.supabase.co';
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c';
+      
+      const url = `${supabaseUrl}/rest/v1/content_items?is_published=eq.true&order=published_at.desc`;
+      DiagnosticLogger.log('Fetching from URL', { url });
+      
+      const response = await fetch(url, {
+        headers: {
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+      
+      DiagnosticLogger.log('Database response', {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok,
+        headers: Object.fromEntries(response.headers.entries())
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        DiagnosticLogger.log('Database error response', { errorText });
+        throw new Error(`Database request failed: ${response.status} ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      DiagnosticLogger.log('Database query success', {
+        itemCount: data.length,
+        firstItem: data[0] ? { title: data[0].title, type: data[0].content_type } : 'none'
+      });
+      
+      return data;
+    } catch (error) {
+      DiagnosticLogger.log('Database fetch error', {
+        error: error.message,
+        stack: error.stack
+      });
+      throw error;
+    }
+  }
+}
+
+// Content loader with fallback strategy
+class ContentLoader {
+  static async loadContent() {
+    DiagnosticLogger.log('🚀 Starting content loading process...');
+    
+    try {
+      // Test database connection first
+      DiagnosticLogger.log('Testing database connection...');
+      const isConnected = await DatabaseService.testConnection();
+      
+      if (isConnected) {
+        DiagnosticLogger.log('✅ Database connection successful, fetching content...');
+        const content = await DatabaseService.getContent();
+        
+        if (content && content.length > 0) {
+          DiagnosticLogger.log('✅ Database content loaded successfully', { count: content.length });
+          return content;
+        } else {
+          DiagnosticLogger.log('⚠️ Database is empty, using static content');
+        }
+      } else {
+        DiagnosticLogger.log('❌ Database connection failed, using static content');
+      }
+    } catch (error) {
+      DiagnosticLogger.log('❌ Database error, using static content', { error: error.message });
+    }
+    
+    // Fallback to static content
+    DiagnosticLogger.log('📦 Using static fallback content');
+    return staticContent;
+  }
+}
+
+// Resources page manager
+class ResourcesPageManager {
+  constructor() {
+    this.allContent = [];
+    this.filteredContent = [];
+    this.currentView = 'grid';
+    this.currentPage = 1;
+    this.itemsPerPage = 12;
+    this.isLoading = false;
+    this.init();
+  }
+
+  async init() {
+    DiagnosticLogger.log('🚀 Initializing Resources Page Manager...');
+    
+    try {
+      this.showLoadingState();
+      
+      this.allContent = await ContentLoader.loadContent();
+      
+      DiagnosticLogger.log('Content loaded', {
+        total: this.allContent.length,
+        featured: this.allContent.filter(item => item.is_featured).length
+      });
+      
+      this.filteredContent = [...this.allContent];
+      
+      this.bindEvents();
+      this.renderFeaturedContent();
+      this.renderAllContent();
+      
+      DiagnosticLogger.log('✅ Resources page initialized successfully');
+    } catch (error) {
+      DiagnosticLogger.log('❌ Critical initialization error', { error: error.message });
+      this.showErrorState();
+    }
+  }
+
+  bindEvents() {
+    // Search functionality
+    const searchInput = document.getElementById('resource-search');
+    if (searchInput) {
+      let searchTimeout;
+      searchInput.addEventListener('input', () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          this.handleSearch(searchInput.value);
+        }, 300);
+      });
+    }
+
+    // Filter controls
+    const typeFilter = document.getElementById('type-filter');
+    const categoryFilter = document.getElementById('category-filter');
+    const clearFilters = document.getElementById('clear-filters');
+
+    if (typeFilter) {
+      typeFilter.addEventListener('change', () => this.applyFilters());
+    }
+
+    if (categoryFilter) {
+      categoryFilter.addEventListener('change', () => this.applyFilters());
+    }
+
+    if (clearFilters) {
+      clearFilters.addEventListener('click', () => this.clearAllFilters());
+    }
+
+    // View toggle
+    const viewButtons = document.querySelectorAll('.view-btn');
+    viewButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget;
+        const view = target.dataset.view;
+        this.toggleView(view);
+      });
+    });
+
+    // Load more button
+    const loadMoreBtn = document.getElementById('load-more');
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('click', () => this.loadMoreContent());
+    }
+
+    // Newsletter form
+    const newsletterForm = document.getElementById('newsletter-form');
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', (e) => this.handleNewsletterSignup(e));
+    }
+
+    this.bindModalEvents();
+  }
+
+  bindModalEvents() {
+    // Close modal events
+    const closeButtons = document.querySelectorAll('.modal-close');
+    closeButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const modal = e.target.closest('.modal');
+        if (modal) {
+          this.closeModal(modal);
+        }
+      });
+    });
+
+    // Close on backdrop click
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal')) {
+        this.closeModal(e.target);
+      }
+    });
+
+    // Lead magnet form
+    const magnetForm = document.getElementById('lead-magnet-form');
+    if (magnetForm) {
+      magnetForm.addEventListener('submit', (e) => this.handleLeadMagnetForm(e));
+    }
+  }
+
+  handleSearch(query) {
+    const searchTerm = query.toLowerCase().trim();
+    
+    if (!searchTerm) {
+      this.filteredContent = [...this.allContent];
+    } else {
+      this.filteredContent = this.allContent.filter(item => 
+        item.title.toLowerCase().includes(searchTerm) ||
+        (item.summary && item.summary.toLowerCase().includes(searchTerm)) ||
+        (item.tags && item.tags.some(tag => tag.toLowerCase().includes(searchTerm)))
+      );
+    }
+    
+    this.currentPage = 1;
+    this.renderAllContent();
+  }
+
+  applyFilters() {
+    const typeFilter = document.getElementById('type-filter');
+    const categoryFilter = document.getElementById('category-filter');
+    
+    const selectedType = typeFilter?.value || 'all';
+    const selectedCategory = categoryFilter?.value || 'all';
+    
+    this.filteredContent = this.allContent.filter(item => {
+      // For now, we'll use basic filtering since the Resource type doesn't have content_type/category
+      // This can be enhanced when the database schema is updated
+      return true; // Show all items for now
+    });
+    
+    this.currentPage = 1;
+    this.renderAllContent();
+  }
+
+  clearAllFilters() {
+    const typeFilter = document.getElementById('type-filter');
+    const categoryFilter = document.getElementById('category-filter');
+    const searchInput = document.getElementById('resource-search');
+    
+    if (typeFilter) typeFilter.value = 'all';
+    if (categoryFilter) categoryFilter.value = 'all';
+    if (searchInput) searchInput.value = '';
+    
+    this.filteredContent = [...this.allContent];
+    this.currentPage = 1;
+    this.renderAllContent();
+  }
+
+  toggleView(view) {
+    this.currentView = view;
+    
+    // Update button states
+    document.querySelectorAll('.view-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.dataset.view === view) {
+        btn.classList.add('active');
+      }
+    });
+    
+    // Update grid class
+    const resourcesGrid = document.getElementById('resources-content');
+    if (resourcesGrid) {
+      resourcesGrid.className = view === 'list' ? 'resources-grid list-view' : 'resources-grid';
+    }
+  }
+
+  renderFeaturedContent() {
+    const container = document.getElementById('featured-content');
+    if (!container) return;
+
+    // For now, show first 3 items as featured
+    const featuredItems = this.allContent.slice(0, 3);
+    
+    console.log('Rendering featured content', { count: featuredItems.length });
+    
+    if (featuredItems.length === 0) {
+      container.innerHTML = '<div class="empty-state"><p>No featured resources available.</p></div>';
+      return;
+    }
+
+    container.innerHTML = featuredItems.map(item => this.createFeaturedCard(item)).join('');
+    
+    // Bind click events
+    container.querySelectorAll('.featured-card').forEach((card, index) => {
+      card.addEventListener('click', () => {
+        this.openContentModal(featuredItems[index]);
+      });
+    });
+  }
+
+  renderAllContent() {
+    const container = document.getElementById('resources-content');
+    if (!container) return;
+
+    const startIndex = 0;
+    const endIndex = this.currentPage * this.itemsPerPage;
+    const itemsToShow = this.filteredContent.slice(startIndex, endIndex);
+    
+    console.log('Rendering all content', { 
+      total: this.filteredContent.length,
+      showing: itemsToShow.length,
+      page: this.currentPage
+    });
+    
+    if (itemsToShow.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <i data-lucide="search"></i>
+          <h3>No resources found</h3>
+          <p>Try adjusting your search or filter criteria.</p>
         </div>
-    </header>
+      `;
+      return;
+    }
 
-    <main class="admin-main">
-        <div class="container">
-            <!-- Stats Bar -->
-            <div class="stats-bar">
-                <div class="stat-card">
-                    <div class="stat-number" id="total-content">0</div>
-                    <div class="stat-label">Total Content</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="published-content">0</div>
-                    <div class="stat-label">Published</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="featured-content">0</div>
-                    <div class="stat-label">Featured</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="total-views">0</div>
-                    <div class="stat-label">Total Views</div>
-                </div>
-            </div>
+    container.innerHTML = itemsToShow.map(item => this.createResourceCard(item)).join('');
+    
+    // Bind click events
+    container.querySelectorAll('.resource-card').forEach((card, index) => {
+      card.addEventListener('click', () => {
+        this.openContentModal(itemsToShow[index]);
+      });
+    });
 
-            <!-- Content Toolbar -->
-            <div class="content-toolbar">
-                <div class="toolbar-left">
-                    <input type="text" id="search-content" class="search-input" placeholder="Search content..." />
-                    <select id="filter-type" class="filter-select">
-                        <option value="all">All Types</option>
-                        <option value="blog">Blog Posts</option>
-                        <option value="case_study">Case Studies</option>
-                        <option value="guide">Guides</option>
-                        <option value="ebook">eBooks</option>
-                        <option value="webinar">Webinars</option>
-                    </select>
-                    <select id="filter-status" class="filter-select">
-                        <option value="all">All Status</option>
-                        <option value="published">Published</option>
-                        <option value="draft">Draft</option>
-                        <option value="featured">Featured</option>
-                    </select>
-                </div>
-                <div class="toolbar-right">
-                    <button class="btn-admin btn-secondary" id="refresh-btn">
-                        <i data-lucide="refresh-cw"></i>
-                        Refresh
-                    </button>
-                </div>
-            </div>
+    // Update load more button
+    this.updateLoadMoreButton();
+    
+    // Re-initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  }
 
-            <!-- Content Grid -->
-            <div id="content-container">
-                <div class="loading-overlay active">
-                    <div class="loading-spinner"></div>
-                </div>
-                <div id="content-grid" class="content-grid">
-                    <!-- Content will be loaded here -->
-                </div>
-            </div>
+  createFeaturedCard(item) {
+    return `
+      <div class="featured-card" data-id="${item.id}">
+        <div class="featured-image">
+          <img src="${item.cover_image || 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="${item.title}" />
+          <div class="content-badge guide">Resource</div>
         </div>
-    </main>
-
-    <!-- Add/Edit Content Modal -->
-    <div id="content-modal" class="admin-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="modal-title">Add New Content</h2>
-                <button class="modal-close" id="modal-close">
-                    <i data-lucide="x"></i>
-                </button>
+        <div class="featured-content">
+          <h3>${item.title}</h3>
+          <p>${item.summary || 'No description available'}</p>
+          <div class="content-meta">
+            <div class="meta-item">
+              <i data-lucide="user" class="meta-icon"></i>
+              <span>Agent Cory Team</span>
             </div>
-            
-            <div class="modal-body">
-                <form id="content-form">
-                    <input type="hidden" id="content-id" />
-                    
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label" for="content-title">Title *</label>
-                            <input type="text" id="content-title" class="form-input" required />
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="content-type">Content Type *</label>
-                            <select id="content-type" class="form-select" required>
-                                <option value="">Select type</option>
-                                <option value="blog">Blog Post</option>
-                                <option value="case_study">Case Study</option>
-                                <option value="guide">Guide</option>
-                                <option value="ebook">eBook</option>
-                                <option value="webinar">Webinar</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="content-category">Category *</label>
-                            <select id="content-category" class="form-select" required>
-                                <option value="">Select category</option>
-                                <option value="ai">AI & Automation</option>
-                                <option value="admissions">Admissions Strategy</option>
-                                <option value="conversion">Lead Conversion</option>
-                                <option value="crm">CRM & Technology</option>
-                                <option value="roi">ROI & Analytics</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="reading-time">Reading Time (minutes)</label>
-                            <input type="number" id="reading-time" class="form-input" min="1" max="120" />
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="author-name">Author Name</label>
-                            <input type="text" id="author-name" class="form-input" value="Agent Cory Team" />
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="author-title">Author Title</label>
-                            <input type="text" id="author-title" class="form-input" value="AI Admissions Experts" />
-                        </div>
-                    </div>
-                    
-                    <div class="form-group full-width">
-                        <label class="form-label" for="content-excerpt">Excerpt *</label>
-                        <textarea id="content-excerpt" class="form-textarea" placeholder="Brief description of the content..." required></textarea>
-                    </div>
-                    
-                    <div class="form-group full-width">
-                        <label class="form-label" for="featured-image">Featured Image URL</label>
-                        <input type="url" id="featured-image" class="form-input" placeholder="https://images.pexels.com/..." />
-                        <img id="image-preview" class="image-preview" style="display: none;" />
-                    </div>
-                    
-                    <div class="form-group full-width">
-                        <label class="form-label">Tags</label>
-                        <div class="tag-input-container" id="tag-container">
-                            <input type="text" class="tag-input" id="tag-input" placeholder="Type and press Enter to add tags..." />
-                        </div>
-                    </div>
-                    
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label" for="download-url">Download URL (for eBooks)</label>
-                            <input type="url" id="download-url" class="form-input" placeholder="/downloads/filename.pdf" />
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="external-url">External URL (for Webinars)</label>
-                            <input type="url" id="external-url" class="form-input" placeholder="https://zoom.us/webinar/..." />
-                        </div>
-                    </div>
-                    
-                    <div class="form-group full-width">
-                        <label class="form-label">Content *</label>
-                        <div class="markdown-toolbar">
-                            <button type="button" class="markdown-btn" data-action="bold">
-                                <i data-lucide="bold"></i> Bold
-                            </button>
-                            <button type="button" class="markdown-btn" data-action="italic">
-                                <i data-lucide="italic"></i> Italic
-                            </button>
-                            <button type="button" class="markdown-btn" data-action="heading">
-                                <i data-lucide="heading"></i> Heading
-                            </button>
-                            <button type="button" class="markdown-btn" data-action="list">
-                                <i data-lucide="list"></i> List
-                            </button>
-                            <button type="button" class="markdown-btn" data-action="link">
-                                <i data-lucide="link"></i> Link
-                            </button>
-                            <button type="button" class="markdown-btn" id="preview-btn">
-                                <i data-lucide="eye"></i> Preview
-                            </button>
-                        </div>
-                        <textarea id="content-body" class="form-textarea large" placeholder="Write your content in Markdown format..." required></textarea>
-                        <div id="content-preview" class="content-preview" style="display: none;">
-                            <div class="preview-content"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label" for="seo-title">SEO Title</label>
-                            <input type="text" id="seo-title" class="form-input" placeholder="Auto-generated from title" />
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="seo-description">SEO Description</label>
-                            <input type="text" id="seo-description" class="form-input" placeholder="Auto-generated from excerpt" />
-                        </div>
-                    </div>
-                    
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <div class="form-checkbox">
-                                <input type="checkbox" id="is-published" />
-                                <label for="is-published">Published</label>
-                            </div>
-                            <div class="form-checkbox">
-                                <input type="checkbox" id="is-featured" />
-                                <label for="is-featured">Featured</label>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="published-date">Published Date</label>
-                            <input type="datetime-local" id="published-date" class="form-input" />
-                        </div>
-                    </div>
-                </form>
+            ${item.reading_minutes ? `
+              <div class="meta-item">
+                <i data-lucide="clock" class="meta-icon"></i>
+                <span>${item.reading_minutes} min read</span>
+              </div>
+            ` : ''}
+            <div class="meta-item">
+              <i data-lucide="calendar" class="meta-icon"></i>
+              <span>${this.formatDate(item.created_at)}</span>
             </div>
-            
-            <div class="modal-footer">
-                <button type="button" class="btn-admin btn-secondary" id="cancel-btn">Cancel</button>
-                <button type="button" class="btn-admin btn-success" id="save-btn">
-                    <i data-lucide="save"></i>
-                    Save Content
-                </button>
-            </div>
+          </div>
+          <div class="content-tags">
+            ${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
+          </div>
         </div>
-    </div>
+      </div>
+    `;
+  }
 
-    <!-- Delete Confirmation Modal -->
-    <div id="delete-modal" class="admin-modal">
-        <div class="modal-content" style="max-width: 500px;">
-            <div class="modal-header">
-                <h2 class="modal-title">Confirm Delete</h2>
-                <button class="modal-close" id="delete-modal-close">
-                    <i data-lucide="x"></i>
-                </button>
-            </div>
-            
-            <div class="modal-body">
-                <p>Are you sure you want to delete this content? This action cannot be undone.</p>
-                <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem; margin-top: 1rem;">
-                    <h4 style="color: #dc2626; margin: 0 0 0.5rem 0;" id="delete-content-title">Content Title</h4>
-                    <p style="color: #7f1d1d; margin: 0; font-size: 0.875rem;">This will permanently remove the content from the database and website.</p>
-                </div>
-            </div>
-            
-            <div class="modal-footer">
-                <button type="button" class="btn-admin btn-secondary" id="delete-cancel-btn">Cancel</button>
-                <button type="button" class="btn-admin btn-danger" id="delete-confirm-btn">
-                    <i data-lucide="trash-2"></i>
-                    Delete Content
-                </button>
-            </div>
+  createResourceCard(item) {
+    return `
+      <div class="resource-card" data-id="${item.id}">
+        <div class="resource-image">
+          <img src="${item.cover_image || 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="${item.title}" />
+          <div class="content-badge guide">Resource</div>
         </div>
-    </div>
+        <div class="resource-content">
+          <h3>${item.title}</h3>
+          <p>${item.summary || 'No description available'}</p>
+          <div class="resource-footer">
+            <div class="read-time">
+              <i data-lucide="clock"></i>
+              <span>${item.reading_minutes || 5} min read</span>
+            </div>
+            <div class="resource-action">
+              <span>View Resource</span>
+              <i data-lucide="arrow-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
 
-    <script type="module" src="/admin/content-manager.js"></script>
-</body>
-</html>
+  formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric' 
+    });
+  }
+
+  updateLoadMoreButton() {
+    const loadMoreBtn = document.getElementById('load-more');
+    if (!loadMoreBtn) return;
+
+    const hasMore = this.filteredContent.length > this.currentPage * this.itemsPerPage;
+    loadMoreBtn.style.display = hasMore ? 'block' : 'none';
+  }
+
+  loadMoreContent() {
+    this.currentPage++;
+    this.renderAllContent();
+  }
+
+  openContentModal(item) {
+    console.log('Opening content modal', { title: item.title });
+    
+    // For now, just show a simple modal with the item info
+    this.showContentModal(item);
+  }
+
+  showContentModal(item) {
+    const modal = document.getElementById('content-modal');
+    const title = document.getElementById('content-modal-title');
+    const body = document.getElementById('content-modal-body');
+    
+    if (!modal || !title || !body) return;
+
+    title.textContent = item.title;
+    
+    body.innerHTML = `
+      <div class="content-header">
+        <div class="content-meta">
+          <span class="content-type-badge guide">Resource</span>
+          <span class="content-author">By Agent Cory Team</span>
+          <span class="content-date">${this.formatDate(item.created_at)}</span>
+          ${item.reading_minutes ? `<span class="content-time">${item.reading_minutes} min read</span>` : ''}
+        </div>
+        ${item.cover_image ? `
+          <img src="${item.cover_image}" alt="${item.title}" class="content-featured-image" />
+        ` : ''}
+      </div>
+      <div class="content-body">
+        <p>${item.summary || 'No content available'}</p>
+      </div>
+      <div class="content-footer">
+        <div class="content-tags">
+          ${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
+        </div>
+        <div class="content-actions">
+          <button class="btn btn-secondary" onclick="window.print()">
+            <i data-lucide="printer"></i>
+            Print
+          </button>
+          <button class="btn btn-primary" onclick="window.resourcesManager.shareContent('${item.title}', window.location.href)">
+            <i data-lucide="share-2"></i>
+            Share
+          </button>
+        </div>
+      </div>
+    `;
+
+    this.openModal(modal);
+  }
+
+  openModal(modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    const firstInput = modal.querySelector('input, select, textarea');
+    if (firstInput) {
+      setTimeout(() => firstInput.focus(), 100);
+    }
+  }
+
+  closeModal(modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    
+    const forms = modal.querySelectorAll('form');
+    forms.forEach(form => form.reset());
+    
+    const successDivs = modal.querySelectorAll('[id$="-success"]');
+    successDivs.forEach(div => div.style.display = 'none');
+    
+    const formDivs = modal.querySelectorAll('form');
+    formDivs.forEach(div => div.style.display = 'block');
+  }
+
+  handleLeadMagnetForm(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    
+    if (data.website) return;
+
+    console.log('📝 Lead magnet request submitted', {
+      name: data.name,
+      email: data.email,
+      organization: data.organization,
+      resource_id: data.resourceId
+    });
+
+    form.style.display = 'none';
+    const successDiv = document.getElementById('magnet-success');
+    if (successDiv) {
+      successDiv.style.display = 'block';
+    }
+
+    this.showToast('Resource request submitted successfully!', 'success');
+  }
+
+  handleNewsletterSignup(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const formData = new FormData(form);
+    const email = formData.get('email');
+
+    if (this.debugMode) console.log('📧 Newsletter signup', { email });
+    
+    this.showToast('Successfully subscribed to newsletter!', 'success');
+    form.reset();
+  }
+
+  shareContent(title, url) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(() => {
+        this.showToast(`Link copied to clipboard: ${title}`, 'success');
+      }).catch(() => {
+        this.fallbackCopyToClipboard(url, title);
+      });
+    } else {
+      this.fallbackCopyToClipboard(url, title);
+    }
+  }
+
+  fallbackCopyToClipboard(url, title) {
+    const textArea = document.createElement('textarea');
+    textArea.value = url;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+      document.execCommand('copy');
+      this.showToast(`Link copied to clipboard: ${title}`, 'success');
+    } catch (err) {
+      this.showToast('Unable to copy link. Please copy manually.', 'error');
+    }
+    
+    document.body.removeChild(textArea);
+  }
+
+  showLoadingState() {
+    const containers = ['featured-content', 'resources-content'];
+    containers.forEach(id => {
+      const container = document.getElementById(id);
+      if (container) {
+        container.innerHTML = `
+          <div class="loading-placeholder">
+            <div class="loading-spinner"></div>
+            <p>Loading resources...</p>
+          </div>
+        `;
+      }
+    });
+  }
+
+  showErrorState() {
+    const containers = ['featured-content', 'resources-content'];
+    containers.forEach(id => {
+      const container = document.getElementById(id);
+      if (container) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i data-lucide="alert-circle"></i>
+            <h3>Unable to load resources</h3>
+            <p>Please try refreshing the page or contact support.</p>
+            <button class="btn btn-primary" onclick="window.location.reload()">Refresh Page</button>
+          </div>
+        `;
+      }
+    });
+  }
+
+  showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    toast.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: var(--shadow-lg);
+      z-index: 1001;
+      animation: slideInRight 0.3s ease-out;
+      max-width: 400px;
+    `;
+    
+    const colors = {
+      success: 'var(--success)',
+      error: 'var(--error)',
+      info: 'var(--sky-gradient-start)'
+    };
+    toast.style.background = colors[type];
+    toast.style.color = 'white';
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.style.animation = 'slideOutRight 0.3s ease-out';
+      setTimeout(() => toast.remove(), 300);
+    }, 4000);
+  }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  window.resourcesManager = new ResourcesPageManager();
+});
