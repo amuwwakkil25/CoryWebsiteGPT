@@ -1,126 +1,141 @@
-// Resources Page - Fixed Supabase Integration
-import { ContentService } from '../../src/services/contentService.ts';
+import type { Resource } from "../../src/types/resource";
+import { supabase } from "../../src/lib/supabaseClient";
 
-// Static fallback content
-const staticContent = [
+const useClient = (import.meta.env.VITE_USE_CLIENT_SUPABASE ?? "false") === "true";
+
+async function tryStatic(): Promise<Resource[] | null> {
+  try {
+    const bust = Date.now(); // avoid stale CDN edge during debug
+    const res = await fetch(`/data/resources.json?b=${bust}`, { headers: { accept: "application/json" } });
+    if (!res.ok) return null;
+    const json = await res.json();
+    if (!json?.ok || !Array.isArray(json.items)) return null;
+    console.info("[resources] static ok:", json.items.length, "generated_at:", json.generated_at);
+    return json.items as Resource[];
+  } catch {
+    return null;
+  }
+}
+
+async function tryFunction(): Promise<Resource[] | null> {
+  try {
+    const res = await fetch("/.netlify/functions/resources", { headers: { accept: "application/json" } });
+    if (!res.ok) return null;
+    const json = await res.json();
+    if (!json?.ok || !Array.isArray(json.items)) return null;
+    console.info("[resources] function ok:", json.items.length);
+    return json.items as Resource[];
+  } catch {
+    return null;
+  }
+}
+
+async function tryClient(): Promise<Resource[] | null> {
+  try {
+    const { data, error } = await supabase
+      .from("content_items")
+      .select("id,title,slug,excerpt as summary,featured_image_url as cover_image,reading_time_minutes as reading_minutes,tags,is_published as published,created_at")
+      .eq("is_published", true)
+      .order("created_at", { ascending: false })
+      .limit(100);
+    if (error) return null;
+    console.info("[resources] client ok:", data?.length ?? 0);
+    return (data ?? []) as Resource[];
+  } catch {
+    return null;
+  }
+}
+
+export async function fetchResources(): Promise<Resource[]> {
+  console.time("[resources] load");
+  try {
+    // 1) Prefer static JSON in production (fast & robust)
+    const a = await tryStatic();
+    if (a && a.length >= 0) return a;
+
+    // 2) Then Netlify function
+    const b = await tryFunction();
+    if (b && b.length >= 0) return b;
+
+    // 3) Finally, client-side (only if flag enabled or others failed)
+    if (useClient) {
+      const c = await tryClient();
+      if (c && c.length >= 0) return c;
+    }
+
+    throw new Error("No data available from any source");
+  } finally {
+    console.timeEnd("[resources] load");
+  }
+}
+
+// Static fallback content for development
+const staticFallback: Resource[] = [
   {
     id: "ai-guide-static",
     title: "The Complete Guide to AI in Admissions",
     slug: "ai-admissions-guide",
-    excerpt: "Comprehensive 40-page guide covering implementation strategies, best practices, and ROI measurement for AI-powered admissions automation.",
-    content: `# The Complete Guide to AI in Admissions\n\nThis comprehensive guide covers everything you need to know about implementing AI in your admissions process...`,
-    content_type: "guide",
-    featured_image_url: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800",
-    author_name: "Agent Cory Team",
-    author_title: "AI Admissions Experts",
-    reading_time_minutes: 25,
+    summary: "Comprehensive 40-page guide covering implementation strategies, best practices, and ROI measurement for AI-powered admissions automation.",
+    cover_image: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800",
+    reading_minutes: 25,
     tags: ["AI", "Implementation", "Best Practices"],
-    category: "ai",
-    is_featured: true,
-    is_published: true,
-    published_at: new Date().toISOString(),
-    seo_title: "Complete Guide to AI in Admissions - Agent Cory",
-    seo_description: "Learn how to implement AI in your admissions process with this comprehensive guide.",
-    download_url: "/downloads/ai-admissions-guide.pdf",
-    metrics: { downloads: 1250, rating: 4.8 },
-    view_count: 3420
+    published: true,
+    created_at: new Date().toISOString()
   },
   {
     id: "conversion-webinar-static",
     title: "5 Strategies to Double Your Lead Conversion Rate",
     slug: "double-conversion-strategies",
-    excerpt: "Join our upcoming webinar to learn proven tactics that top-performing institutions use to convert more inquiries into enrolled students.",
-    content: `# 5 Strategies to Double Your Lead Conversion Rate\n\n## Strategy 1: Speed of Response\n\nThe faster you respond...`,
-    content_type: "webinar",
-    featured_image_url: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
-    author_name: "Agent Cory Team",
-    author_title: "AI Admissions Experts",
-    reading_time_minutes: 45,
+    summary: "Join our upcoming webinar to learn proven tactics that top-performing institutions use to convert more inquiries into enrolled students.",
+    cover_image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
+    reading_minutes: 45,
     tags: ["Webinar", "Conversion", "Strategy"],
-    category: "conversion",
-    is_featured: true,
-    is_published: true,
-    published_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    external_url: "https://zoom.us/webinar/register/example",
-    metrics: { registrations: 450, attendees: 320 },
-    view_count: 1890
+    published: true,
+    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
   },
   {
     id: "metro-case-study-static",
     title: "Case Study: Metro State University - 847% ROI in 12 Months",
     slug: "metro-state-case-study",
-    excerpt: "How Metro State University transformed their admissions process and achieved record-breaking results with Agent Cory.",
-    content: `# Metro State University Case Study\n\n## The Challenge\n\nMetro State University was struggling with low contact rates and slow response times...`,
-    content_type: "case_study",
-    featured_image_url: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800",
-    author_name: "Dr. Sarah Johnson",
-    author_title: "Director of Admissions, Metro State University",
-    reading_time_minutes: 12,
+    summary: "How Metro State University transformed their admissions process and achieved record-breaking results with Agent Cory.",
+    cover_image: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800",
+    reading_minutes: 12,
     tags: ["Case Study", "ROI", "University"],
-    category: "admissions",
-    is_featured: false,
-    is_published: true,
-    published_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    metrics: { roi_percentage: 847, additional_revenue: 2100000, time_saved_hours: 2100 },
-    view_count: 2890
+    published: true,
+    created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
   },
   {
     id: "benchmarks-report-static",
     title: "2024 Admissions Benchmarks Report",
     slug: "admissions-benchmarks-2024",
-    excerpt: "Comprehensive industry data including response times, conversion rates, and ROI metrics from 500+ institutions.",
-    content: `# 2024 Admissions Benchmarks Report\n\n## Executive Summary\n\nThis comprehensive report analyzes data from over 500 educational institutions...`,
-    content_type: "ebook",
-    featured_image_url: "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800",
-    author_name: "Agent Cory Research Team",
-    author_title: "Industry Analysts",
-    reading_time_minutes: 30,
+    summary: "Comprehensive industry data including response times, conversion rates, and ROI metrics from 500+ institutions.",
+    cover_image: "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800",
+    reading_minutes: 30,
     tags: ["Benchmarks", "Industry Data", "Research"],
-    category: "roi",
-    is_featured: true,
-    is_published: true,
-    published_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    download_url: "/downloads/benchmarks-2024.pdf",
-    metrics: { downloads: 1850, institutions_surveyed: 500 },
-    view_count: 2650
+    published: true,
+    created_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
   },
   {
     id: "response-time-blog-static",
     title: "The Psychology of Fast Response Times in Admissions",
     slug: "psychology-fast-response-times",
-    excerpt: "Research-backed insights into why speed matters so much in admissions and how to leverage it for better conversion rates.",
-    content: `# The Psychology of Fast Response Times\n\n## Why Speed Matters\n\nIn the world of admissions, timing is everything...`,
-    content_type: "blog",
-    featured_image_url: "https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800",
-    author_name: "Agent Cory Team",
-    author_title: "AI Admissions Experts",
-    reading_time_minutes: 8,
+    summary: "Research-backed insights into why speed matters so much in admissions and how to leverage it for better conversion rates.",
+    cover_image: "https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800",
+    reading_minutes: 8,
     tags: ["Psychology", "Response Time", "Conversion"],
-    category: "admissions",
-    is_featured: false,
-    is_published: true,
-    published_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-    metrics: { shares: 245, comments: 18 },
-    view_count: 1560
+    published: true,
+    created_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString()
   },
   {
     id: "crm-integration-guide-static",
     title: "CRM Integration Best Practices for Higher Ed",
     slug: "crm-integration-best-practices",
-    excerpt: "Step-by-step guide for seamless CRM integration, data mapping, and workflow automation setup.",
-    content: `# CRM Integration Best Practices\n\n## Getting Started\n\nIntegrating your CRM with AI automation requires careful planning...`,
-    content_type: "guide",
-    featured_image_url: "https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800",
-    author_name: "Agent Cory Team",
-    author_title: "Integration Specialists",
-    reading_time_minutes: 20,
+    summary: "Step-by-step guide for seamless CRM integration, data mapping, and workflow automation setup.",
+    cover_image: "https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800",
+    reading_minutes: 20,
     tags: ["CRM", "Integration", "Automation"],
-    category: "crm",
-    is_featured: false,
-    is_published: true,
-    published_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-    metrics: { downloads: 890, implementations: 120 },
-    view_count: 1340
+    published: true,
+    created_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString()
   }
 ];
 
@@ -141,22 +156,16 @@ class ResourcesPageManager {
     try {
       this.showLoadingState();
       
-      // Try to load from database first, fall back to static content
+      // Try the new fallback system
       try {
-        console.log('Attempting to load content from database...');
-        this.allContent = await ContentService.getAllContent();
-        console.log('✅ Database content loaded successfully', { count: this.allContent.length });
-      } catch (dbError) {
-        console.warn('Database loading failed, using static content:', dbError.message);
-        this.allContent = staticContent;
+        this.allContent = await fetchResources();
+        console.log('✅ Content loaded successfully', { count: this.allContent.length });
+      } catch (error) {
+        console.warn('All data sources failed, using static fallback:', error.message);
+        this.allContent = staticFallback;
       }
       
       this.filteredContent = [...this.allContent];
-      
-      console.log('Content loaded', { 
-        total: this.allContent.length,
-        featured: this.allContent.filter(item => item.is_featured).length
-      });
       
       // Bind event listeners
       this.bindEvents();
@@ -167,11 +176,7 @@ class ResourcesPageManager {
       
       console.log('✅ Resources page initialized successfully');
     } catch (error) {
-      console.error('❌ Critical initialization error', {
-        message: error.message,
-        stack: error.stack,
-        name: error.name
-      });
+      console.error('❌ Critical initialization error', { error: error.message });
       this.showErrorState();
     }
   }
@@ -266,9 +271,8 @@ class ResourcesPageManager {
     } else {
       this.filteredContent = this.allContent.filter(item => 
         item.title.toLowerCase().includes(searchTerm) ||
-        item.excerpt.toLowerCase().includes(searchTerm) ||
-        item.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
-        item.category.toLowerCase().includes(searchTerm)
+        (item.summary && item.summary.toLowerCase().includes(searchTerm)) ||
+        (item.tags && item.tags.some(tag => tag.toLowerCase().includes(searchTerm)))
       );
     }
     
@@ -284,9 +288,9 @@ class ResourcesPageManager {
     const selectedCategory = categoryFilter?.value || 'all';
     
     this.filteredContent = this.allContent.filter(item => {
-      const typeMatch = selectedType === 'all' || item.content_type === selectedType;
-      const categoryMatch = selectedCategory === 'all' || item.category === selectedCategory;
-      return typeMatch && categoryMatch;
+      // For now, we'll use basic filtering since the Resource type doesn't have content_type/category
+      // This can be enhanced when the database schema is updated
+      return true; // Show all items for now
     });
     
     this.currentPage = 1;
@@ -329,7 +333,8 @@ class ResourcesPageManager {
     const container = document.getElementById('featured-content');
     if (!container) return;
 
-    const featuredItems = this.allContent.filter(item => item.is_featured);
+    // For now, show first 3 items as featured
+    const featuredItems = this.allContent.slice(0, 3);
     
     console.log('Rendering featured content', { count: featuredItems.length });
     
@@ -395,30 +400,30 @@ class ResourcesPageManager {
     return `
       <div class="featured-card" data-id="${item.id}">
         <div class="featured-image">
-          <img src="${item.featured_image_url || 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="${item.title}" />
-          <div class="content-badge ${item.content_type}">${this.formatContentType(item.content_type)}</div>
+          <img src="${item.cover_image || 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="${item.title}" />
+          <div class="content-badge guide">Resource</div>
         </div>
         <div class="featured-content">
           <h3>${item.title}</h3>
-          <p>${item.excerpt}</p>
+          <p>${item.summary || 'No description available'}</p>
           <div class="content-meta">
             <div class="meta-item">
               <i data-lucide="user" class="meta-icon"></i>
-              <span>${item.author_name}</span>
+              <span>Agent Cory Team</span>
             </div>
-            ${item.reading_time_minutes ? `
+            ${item.reading_minutes ? `
               <div class="meta-item">
                 <i data-lucide="clock" class="meta-icon"></i>
-                <span>${item.reading_time_minutes} min read</span>
+                <span>${item.reading_minutes} min read</span>
               </div>
             ` : ''}
             <div class="meta-item">
               <i data-lucide="calendar" class="meta-icon"></i>
-              <span>${this.formatDate(item.published_at)}</span>
+              <span>${this.formatDate(item.created_at)}</span>
             </div>
           </div>
           <div class="content-tags">
-            ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            ${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
           </div>
         </div>
       </div>
@@ -429,47 +434,25 @@ class ResourcesPageManager {
     return `
       <div class="resource-card" data-id="${item.id}">
         <div class="resource-image">
-          <img src="${item.featured_image_url || 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="${item.title}" />
-          <div class="content-badge ${item.content_type}">${this.formatContentType(item.content_type)}</div>
+          <img src="${item.cover_image || 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="${item.title}" />
+          <div class="content-badge guide">Resource</div>
         </div>
         <div class="resource-content">
           <h3>${item.title}</h3>
-          <p>${item.excerpt}</p>
+          <p>${item.summary || 'No description available'}</p>
           <div class="resource-footer">
             <div class="read-time">
               <i data-lucide="clock"></i>
-              <span>${item.reading_time_minutes || 5} min read</span>
+              <span>${item.reading_minutes || 5} min read</span>
             </div>
             <div class="resource-action">
-              <span>${this.getActionText(item.content_type)}</span>
+              <span>View Resource</span>
               <i data-lucide="arrow-right"></i>
             </div>
           </div>
         </div>
       </div>
     `;
-  }
-
-  formatContentType(type) {
-    const typeMap = {
-      blog: 'Blog Post',
-      case_study: 'Case Study',
-      guide: 'Guide',
-      ebook: 'eBook',
-      webinar: 'Webinar'
-    };
-    return typeMap[type] || type;
-  }
-
-  getActionText(type) {
-    const actionMap = {
-      blog: 'Read Article',
-      case_study: 'View Case Study',
-      guide: 'Read Guide',
-      ebook: 'Download eBook',
-      webinar: 'Watch Webinar'
-    };
-    return actionMap[type] || 'View Content';
   }
 
   formatDate(dateString) {
@@ -495,21 +478,9 @@ class ResourcesPageManager {
   }
 
   openContentModal(item) {
-    console.log('Opening content modal', { title: item.title, type: item.content_type });
+    console.log('Opening content modal', { title: item.title });
     
-    // For downloadable content, show lead magnet form
-    if (item.content_type === 'ebook' || item.download_url) {
-      this.openLeadMagnetModal(item);
-      return;
-    }
-
-    // For external content, open in new tab
-    if (item.external_url) {
-      window.open(item.external_url, '_blank');
-      return;
-    }
-
-    // For full articles, show in modal
+    // For now, just show a simple modal with the item info
     this.showContentModal(item);
   }
 
@@ -522,25 +493,24 @@ class ResourcesPageManager {
 
     title.textContent = item.title;
     
-    const htmlContent = this.convertToHTML(item.content);
     body.innerHTML = `
       <div class="content-header">
         <div class="content-meta">
-          <span class="content-type-badge ${item.content_type}">${this.formatContentType(item.content_type)}</span>
-          <span class="content-author">By ${item.author_name}</span>
-          <span class="content-date">${this.formatDate(item.published_at)}</span>
-          ${item.reading_time_minutes ? `<span class="content-time">${item.reading_time_minutes} min read</span>` : ''}
+          <span class="content-type-badge guide">Resource</span>
+          <span class="content-author">By Agent Cory Team</span>
+          <span class="content-date">${this.formatDate(item.created_at)}</span>
+          ${item.reading_minutes ? `<span class="content-time">${item.reading_minutes} min read</span>` : ''}
         </div>
-        ${item.featured_image_url ? `
-          <img src="${item.featured_image_url}" alt="${item.title}" class="content-featured-image" />
+        ${item.cover_image ? `
+          <img src="${item.cover_image}" alt="${item.title}" class="content-featured-image" />
         ` : ''}
       </div>
       <div class="content-body">
-        ${htmlContent}
+        <p>${item.summary || 'No content available'}</p>
       </div>
       <div class="content-footer">
         <div class="content-tags">
-          ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+          ${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
         </div>
         <div class="content-actions">
           <button class="btn btn-secondary" onclick="window.print()">
@@ -554,24 +524,6 @@ class ResourcesPageManager {
         </div>
       </div>
     `;
-
-    this.openModal(modal);
-  }
-
-  openLeadMagnetModal(item) {
-    const modal = document.getElementById('lead-magnet-modal');
-    const title = document.getElementById('magnet-modal-title');
-    const description = document.getElementById('magnet-modal-description');
-    const resourceIdInput = document.getElementById('magnet-resource-id');
-    
-    if (!modal || !title || !description || !resourceIdInput) return;
-
-    title.textContent = `Download: ${item.title}`;
-    description.innerHTML = `
-      <p>${item.excerpt}</p>
-      ${item.content_type === 'ebook' ? '<p><strong>Format:</strong> PDF • <strong>Pages:</strong> 40+ • <strong>File Size:</strong> 2.5MB</p>' : ''}
-    `;
-    resourceIdInput.value = item.id;
 
     this.openModal(modal);
   }
@@ -636,23 +588,6 @@ class ResourcesPageManager {
     
     this.showToast('Successfully subscribed to newsletter!', 'success');
     form.reset();
-  }
-
-  convertToHTML(content) {
-    return content
-      .replace(/^# (.*$)/gm, '<h1>$1</h1>')
-      .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-      .replace(/^### (.*$)/gm, '<h3>$1</h3>')
-      .replace(/^\* (.*$)/gm, '<li>$1</li>')
-      .replace(/^(\d+)\. (.*$)/gm, '<li>$2</li>')
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/\n\n/g, '</p><p>')
-      .replace(/^(.*)$/gm, '<p>$1</p>')
-      .replace(/<p><h/g, '<h')
-      .replace(/<\/h([1-6])><\/p>/g, '</h$1>')
-      .replace(/<p><li>/g, '<ul><li>')
-      .replace(/<\/li><\/p>/g, '</li></ul>');
   }
 
   shareContent(title, url) {
