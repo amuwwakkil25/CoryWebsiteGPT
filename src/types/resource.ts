@@ -32,60 +32,60 @@ class ResourcesPageManager {
       }
       
       // Log all available environment variables (safely)
-      const envVars = {};
+      const envVars2 = {};
       for (const key in import.meta.env) {
         if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+          envVars2[key] = key.includes('KEY') || key.includes('SECRET') 
             ? `${import.meta.env[key]?.substring(0, 10)}...` 
             : import.meta.env[key];
         }
       }
       
       // Log all available environment variables (safely)
-      const envVars = {};
+      const envVars3 = {};
       for (const key in import.meta.env) {
         if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+          envVars3[key] = key.includes('KEY') || key.includes('SECRET') 
             ? `${import.meta.env[key]?.substring(0, 10)}...` 
             : import.meta.env[key];
         }
       }
       
       // Log all available environment variables (safely)
-      const envVars = {};
+      const envVars4 = {};
       for (const key in import.meta.env) {
         if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+          envVars4[key] = key.includes('KEY') || key.includes('SECRET') 
             ? `${import.meta.env[key]?.substring(0, 10)}...` 
             : import.meta.env[key];
         }
       }
       
       // Log all available environment variables (safely)
-      const envVars = {};
+      const envVars5 = {};
       for (const key in import.meta.env) {
         if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+          envVars5[key] = key.includes('KEY') || key.includes('SECRET') 
             ? `${import.meta.env[key]?.substring(0, 10)}...` 
             : import.meta.env[key];
         }
       }
       
       // Log all available environment variables (safely)
-      const envVars = {};
+      const envVars6 = {};
       for (const key in import.meta.env) {
         if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+          envVars6[key] = key.includes('KEY') || key.includes('SECRET') 
             ? `${import.meta.env[key]?.substring(0, 10)}...` 
             : import.meta.env[key];
         }
       }
       
       // Log all available environment variables (safely)
-      const envVars = {};
+      const envVars7 = {};
       for (const key in import.meta.env) {
         if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+          envVars7[key] = key.includes('KEY') || key.includes('SECRET') 
             ? `${import.meta.env[key]?.substring(0, 10)}...` 
             : import.meta.env[key];
         }
@@ -96,44 +96,44 @@ class ResourcesPageManager {
         urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
         keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
         urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        allEnvVars: envVars,
+        allEnvVars2: envVars2,
         keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
         buildMode: import.meta.env.MODE,
-        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
-        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        allEnvVars: envVars,
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
-        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        allEnvVars: envVars,
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
-        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        allEnvVars: envVars,
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
-        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        allEnvVars: envVars,
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
-        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        allEnvVars: envVars,
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
-        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
+        urlPreview2: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview2: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid2: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        allEnvVars3: envVars3,
+        keyValid2: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode2: import.meta.env.MODE,
+        urlPreview3: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview3: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid3: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        allEnvVars4: envVars4,
+        keyValid3: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode3: import.meta.env.MODE,
+        urlPreview4: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview4: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid4: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        allEnvVars5: envVars5,
+        keyValid4: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode4: import.meta.env.MODE,
+        urlPreview5: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview5: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid5: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        allEnvVars6: envVars6,
+        keyValid5: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode5: import.meta.env.MODE,
+        urlPreview6: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview6: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid6: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        allEnvVars7: envVars7,
+        keyValid6: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode6: import.meta.env.MODE,
+        urlPreview7: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview7: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid7: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        keyValid7: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode7: import.meta.env.MODE,
         isDev: import.meta.env.DEV,
         isProd: import.meta.env.PROD
       });
@@ -157,6 +157,8 @@ class ResourcesPageManager {
       if (!supabaseKey.startsWith('eyJ')) {
         throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
       }
+      
+      if (!supabaseUrl || !supabaseKey) {
         throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
       }
       
@@ -166,8 +168,11 @@ class ResourcesPageManager {
       
       if (!supabaseKey.startsWith('eyJ')) {
         throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
+      }
       const testUrl = `${supabaseUrl}/rest/v1/`;
       console.log('Testing connection to:', { testUrl });
+      
+      if (!supabaseUrl || !supabaseKey) {
         throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
       }
       
@@ -177,8 +182,11 @@ class ResourcesPageManager {
       
       if (!supabaseKey.startsWith('eyJ')) {
         throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
-      const testUrl = `${supabaseUrl}/rest/v1/`;
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
+      }
+      const testUrl2 = `${supabaseUrl}/rest/v1/`;
+      DiagnosticLogger.log('Testing connection to:', { testUrl: testUrl2 });
+      
+      if (!supabaseUrl || !supabaseKey) {
         throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
       }
       
@@ -188,8 +196,11 @@ class ResourcesPageManager {
       
       if (!supabaseKey.startsWith('eyJ')) {
         throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
-      const testUrl = `${supabaseUrl}/rest/v1/`;
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
+      }
+      const testUrl3 = `${supabaseUrl}/rest/v1/`;
+      DiagnosticLogger.log('Testing connection to:', { testUrl: testUrl3 });
+      
+      if (!supabaseUrl || !supabaseKey) {
         throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
       }
       
@@ -212,58 +223,16 @@ class ResourcesPageManager {
       this.filteredContent = [...this.allContent];
       
       console.log('Content loaded', { 
-          'Authorization': `Bearer ${supabaseKey}`,
+        count: this.allContent.length,
+        featured: this.allContent.filter(item => item.is_featured).length
+      });
+      
       // Bind event listeners
       this.bindEvents();
       
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
-        url: response.url
+      // Render content
+      this.renderFeaturedContent();
       this.renderAllContent();
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-      console.error('❌ Critical initialization error', {
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
-        url: response.url
-      }
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
-        url: response.url
-      }
-      const testUrl = `${supabaseUrl}/rest/v1/`;
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
-      
-      const response = await fetch(testUrl, {
-      if (!response.ok) {
-        const errorText = await response.text();
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
-        url: response.url
-      }
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
-      }
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        DiagnosticLogger.log('Connection test failed with response:', { errorText });
-      }
       
       console.log('✅ Resources page initialized successfully');
     } catch (error) {
@@ -339,10 +308,8 @@ class ResourcesPageManager {
       btn.addEventListener('click', (e) => {
         const modal = e.target.closest('.modal');
         if (modal) {
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
+          this.closeModal(modal);
+        }
       });
     });
 
@@ -771,27 +738,14 @@ class ResourcesPageManager {
         this.fallbackCopyToClipboard(url, title);
       });
     } else {
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
+      this.fallbackCopyToClipboard(url, title);
     }
   }
-      if (!response.ok) {
-        const errorText = await response.text();
-        DiagnosticLogger.log('Connection test failed with response:', { errorText });
-      }
-      
 
   fallbackCopyToClipboard(url, title) {
     const textArea = document.createElement('textarea');
     textArea.value = url;
-        stack: error.stack,
-        stack: error.stack,
-        stack: error.stack,
-        stack: error.stack,
-        stack: error.stack,
-        stack: error.stack,
-        name: error.name
+    textArea.style.position = 'fixed';
     textArea.style.left = '-999999px';
     textArea.style.top = '-999999px';
     document.body.appendChild(textArea);
@@ -799,69 +753,6 @@ class ResourcesPageManager {
     textArea.select();
     
     try {
-    view_count: 2890
-  },
-  {
-    id: "benchmarks-report-static",
-    title: "2024 Admissions Benchmarks Report",
-    slug: "admissions-benchmarks-2024",
-    excerpt: "Comprehensive industry data including response times, conversion rates, and ROI metrics from 500+ institutions.",
-    content: `# 2024 Admissions Benchmarks Report\n\n## Executive Summary\n\nThis comprehensive report analyzes data from over 500 educational institutions...`,
-    content_type: "ebook",
-    featured_image_url: "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800",
-    author_name: "Agent Cory Research Team",
-    author_title: "Industry Analysts",
-    reading_time_minutes: 30,
-    tags: ["Benchmarks", "Industry Data", "Research"],
-    category: "roi",
-    is_featured: true,
-    is_published: true,
-    published_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    download_url: "/downloads/benchmarks-2024.pdf",
-    metrics: { downloads: 1850, institutions_surveyed: 500 },
-    view_count: 2650
-  },
-  {
-    id: "response-time-blog-static",
-    title: "The Psychology of Fast Response Times in Admissions",
-    slug: "psychology-fast-response-times",
-    excerpt: "Research-backed insights into why speed matters so much in admissions and how to leverage it for better conversion rates.",
-    content: `# The Psychology of Fast Response Times\n\n## Why Speed Matters\n\nIn the world of admissions, timing is everything...`,
-    content_type: "blog",
-    featured_image_url: "https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800",
-    author_name: "Agent Cory Team",
-    author_title: "AI Admissions Experts",
-    reading_time_minutes: 8,
-    tags: ["Psychology", "Response Time", "Conversion"],
-    category: "admissions",
-    is_featured: false,
-    is_published: true,
-    published_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-    metrics: { shares: 245, comments: 18 },
-    view_count: 1560
-  },
-  {
-    id: "crm-integration-guide-static",
-    title: "CRM Integration Best Practices for Higher Ed",
-    slug: "crm-integration-best-practices",
-    excerpt: "Step-by-step guide for seamless CRM integration, data mapping, and workflow automation setup.",
-    content: `# CRM Integration Best Practices\n\n## Getting Started\n\nIntegrating your CRM with AI automation requires careful planning...`,
-    content_type: "guide",
-    featured_image_url: "https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800",
-    author_name: "Agent Cory Team",
-    author_title: "Integration Specialists",
-    reading_time_minutes: 20,
-    tags: ["CRM", "Integration", "Automation"],
-    category: "crm",
-    is_featured: false,
-    is_published: true,
-    published_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-    metrics: { downloads: 890, implementations: 120 },
-    view_count: 1340
-  }
-];
-
-class ResourcesPageManager {
       document.execCommand('copy');
       this.showToast(`Link copied to clipboard: ${title}`, 'success');
     } catch (err) {
@@ -935,6 +826,87 @@ class ResourcesPageManager {
     }, 4000);
   }
 }
+
+// Static content fallback
+const staticContent = [
+  {
+    id: "ai-admissions-guide-static",
+    title: "Complete Guide to AI in Admissions",
+    slug: "ai-admissions-complete-guide",
+    excerpt: "Everything you need to know about implementing AI in your admissions process, from lead qualification to enrollment.",
+    content: `# Complete Guide to AI in Admissions\n\n## Introduction\n\nArtificial Intelligence is transforming higher education admissions...`,
+    content_type: "guide",
+    featured_image_url: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author_name: "Agent Cory Team",
+    author_title: "AI Admissions Experts",
+    reading_time_minutes: 15,
+    tags: ["AI", "Admissions", "Guide", "Implementation"],
+    category: "admissions",
+    is_featured: true,
+    is_published: true,
+    published_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    metrics: { downloads: 1250, shares: 89 },
+    view_count: 2890
+  },
+  {
+    id: "benchmarks-report-static",
+    title: "2024 Admissions Benchmarks Report",
+    slug: "admissions-benchmarks-2024",
+    excerpt: "Comprehensive industry data including response times, conversion rates, and ROI metrics from 500+ institutions.",
+    content: `# 2024 Admissions Benchmarks Report\n\n## Executive Summary\n\nThis comprehensive report analyzes data from over 500 educational institutions...`,
+    content_type: "ebook",
+    featured_image_url: "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author_name: "Agent Cory Research Team",
+    author_title: "Industry Analysts",
+    reading_time_minutes: 30,
+    tags: ["Benchmarks", "Industry Data", "Research"],
+    category: "roi",
+    is_featured: true,
+    is_published: true,
+    published_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    download_url: "/downloads/benchmarks-2024.pdf",
+    metrics: { downloads: 1850, institutions_surveyed: 500 },
+    view_count: 2650
+  },
+  {
+    id: "response-time-blog-static",
+    title: "The Psychology of Fast Response Times in Admissions",
+    slug: "psychology-fast-response-times",
+    excerpt: "Research-backed insights into why speed matters so much in admissions and how to leverage it for better conversion rates.",
+    content: `# The Psychology of Fast Response Times\n\n## Why Speed Matters\n\nIn the world of admissions, timing is everything...`,
+    content_type: "blog",
+    featured_image_url: "https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author_name: "Agent Cory Team",
+    author_title: "AI Admissions Experts",
+    reading_time_minutes: 8,
+    tags: ["Psychology", "Response Time", "Conversion"],
+    category: "admissions",
+    is_featured: false,
+    is_published: true,
+    published_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+    metrics: { shares: 245, comments: 18 },
+    view_count: 1560
+  },
+  {
+    id: "crm-integration-guide-static",
+    title: "CRM Integration Best Practices for Higher Ed",
+    slug: "crm-integration-best-practices",
+    excerpt: "Step-by-step guide for seamless CRM integration, data mapping, and workflow automation setup.",
+    content: `# CRM Integration Best Practices\n\n## Getting Started\n\nIntegrating your CRM with AI automation requires careful planning...`,
+    content_type: "guide",
+    featured_image_url: "https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author_name: "Agent Cory Team",
+    author_title: "Integration Specialists",
+    reading_time_minutes: 20,
+    tags: ["CRM", "Integration", "Automation"],
+    category: "crm",
+    is_featured: false,
+    is_published: true,
+    published_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    metrics: { downloads: 890, implementations: 120 },
+    view_count: 1340
+  }
+];
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
