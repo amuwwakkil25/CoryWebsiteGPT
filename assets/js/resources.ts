@@ -1,5 +1,9 @@
-// Resources Page - Simplified database integration
-import { supabase } from '../../src/lib/supabase.ts';
+// Resources Page - Reliable database integration with Netlify Functions
+import type { Resource } from "../../src/types/resource";
+import { supabase } from "../../src/lib/supabaseClient";
+
+// Feature flag: default to serverless unless explicitly overridden
+const useClient = (import.meta.env.VITE_USE_CLIENT_SUPABASE ?? "false") === "true";
 
 // Static fallback content
 const staticContent = [
@@ -124,35 +128,57 @@ const staticContent = [
   }
 ];
 
-class ContentLoader {
-  static async loadContent() {
-    console.log('🚀 Starting content loading process...');
-    
-    try {
-      console.log('Attempting to load from database...');
+export async function fetchResources() {
+  console.time("[resources] load");
+  console.log("[resources] useClient flag:", useClient);
+  
+  try {
+    if (!useClient) {
+      console.log("[resources] attempting serverless fetch...");
+      const res = await fetch("/.netlify/functions/resources", {
+        headers: { accept: "application/json" },
+      });
       
-      const { data, error } = await supabase
-        .from('content_items')
-        .select('*')
-        .eq('is_published', true)
-        .order('published_at', { ascending: false });
+      console.log("[resources] serverless response:", res.status, res.statusText);
       
-      if (error) {
-        console.error('Database error:', error);
-        throw error;
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("[resources] serverless error:", errorText);
+        throw new Error(`HTTP ${res.status}: ${errorText}`);
       }
       
-      if (data && data.length > 0) {
-        console.log('✅ Database content loaded successfully', { count: data.length });
-        return data;
-      } else {
-        console.log('⚠️ Database is empty, using static content');
-        return staticContent;
+      const json = await res.json();
+      if (!json.ok) {
+        console.error("[resources] serverless returned error:", json.error);
+        throw new Error(json.error || "Unknown error from serverless");
       }
-    } catch (error) {
-      console.error('❌ Database error, using static content', { error: error.message });
-      return staticContent;
+      
+      console.info("[resources] serverless success:", json.items?.length ?? 0, "items");
+      return json.items || [];
     }
+
+    // Client-side code path (anon key; requires permissive RLS)
+    console.log("[resources] attempting client-side fetch...");
+    const { data, error } = await supabase
+      .from("content_items")
+      .select("id,title,slug,excerpt,featured_image_url,reading_time_minutes,tags,is_published,published_at,content_type,author_name,category,is_featured")
+      .eq("is_published", true)
+      .order("published_at", { ascending: false })
+      .limit(50);
+
+    if (error) {
+      console.error("[resources] client-side error:", error);
+      throw error;
+    }
+    
+    console.info("[resources] client-side success:", data?.length ?? 0, "items");
+    return data ?? [];
+  } catch (e) {
+    console.error("[resources] fetch failed, using static fallback:", e?.message || e);
+    console.info("[resources] static fallback:", staticContent.length, "items");
+    return staticContent;
+  } finally {
+    console.timeEnd("[resources] load");
   }
 }
 
@@ -168,15 +194,15 @@ class ResourcesPageManager {
   }
 
   async init() {
-    console.log('🚀 Initializing Resources Page Manager...');
+    console.log('[resources] 🚀 Initializing Resources Page Manager...');
     
     try {
       this.showLoadingState();
       
-      this.allContent = await ContentLoader.loadContent();
+      this.allContent = await fetchResources();
       this.filteredContent = [...this.allContent];
       
-      console.log('Content loaded', { 
+      console.log('[resources] Content loaded', { 
         total: this.allContent.length,
         featured: this.allContent.filter(item => item.is_featured).length
       });
@@ -185,9 +211,9 @@ class ResourcesPageManager {
       this.renderFeaturedContent();
       this.renderAllContent();
       
-      console.log('✅ Resources page initialized successfully');
+      console.log('[resources] ✅ Resources page initialized successfully');
     } catch (error) {
-      console.error('❌ Critical initialization error', { error: error.message });
+      console.error('[resources] ❌ Critical initialization error', { error: error.message });
       this.showErrorState();
     }
   }
@@ -283,7 +309,7 @@ class ResourcesPageManager {
       this.filteredContent = this.allContent.filter(item => 
         item.title.toLowerCase().includes(searchTerm) ||
         item.excerpt.toLowerCase().includes(searchTerm) ||
-        item.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
+        (item.tags && item.tags.some(tag => tag.toLowerCase().includes(searchTerm))) ||
         item.category.toLowerCase().includes(searchTerm)
       );
     }
@@ -347,7 +373,7 @@ class ResourcesPageManager {
 
     const featuredItems = this.allContent.filter(item => item.is_featured);
     
-    console.log('Rendering featured content', { count: featuredItems.length });
+    console.log('[resources] Rendering featured content', { count: featuredItems.length });
     
     if (featuredItems.length === 0) {
       container.innerHTML = '<div class="empty-state"><p>No featured resources available.</p></div>';
@@ -372,7 +398,7 @@ class ResourcesPageManager {
     const endIndex = this.currentPage * this.itemsPerPage;
     const itemsToShow = this.filteredContent.slice(startIndex, endIndex);
     
-    console.log('Rendering all content', { 
+    console.log('[resources] Rendering all content', { 
       total: this.filteredContent.length,
       showing: itemsToShow.length,
       page: this.currentPage
@@ -434,7 +460,7 @@ class ResourcesPageManager {
             </div>
           </div>
           <div class="content-tags">
-            ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            ${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
           </div>
         </div>
       </div>
@@ -511,7 +537,7 @@ class ResourcesPageManager {
   }
 
   openContentModal(item) {
-    console.log('Opening content modal', { title: item.title, type: item.content_type });
+    console.log('[resources] Opening content modal', { title: item.title, type: item.content_type });
     
     // For downloadable content, show lead magnet form
     if (item.content_type === 'ebook' || item.download_url) {
@@ -538,7 +564,7 @@ class ResourcesPageManager {
 
     title.textContent = item.title;
     
-    const htmlContent = this.convertToHTML(item.content);
+    const htmlContent = this.convertToHTML(item.content || item.excerpt);
     body.innerHTML = `
       <div class="content-header">
         <div class="content-meta">
@@ -556,7 +582,7 @@ class ResourcesPageManager {
       </div>
       <div class="content-footer">
         <div class="content-tags">
-          ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+          ${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
         </div>
         <div class="content-actions">
           <button class="btn btn-secondary" onclick="window.print()">
@@ -625,7 +651,7 @@ class ResourcesPageManager {
     
     if (data.website) return;
 
-    console.log('📝 Lead magnet request submitted', {
+    console.log('[resources] 📝 Lead magnet request submitted', {
       name: data.name,
       email: data.email,
       organization: data.organization,
@@ -648,7 +674,7 @@ class ResourcesPageManager {
     const formData = new FormData(form);
     const email = formData.get('email');
 
-    console.log('📧 Newsletter signup', { email });
+    console.log('[resources] 📧 Newsletter signup', { email });
     
     this.showToast('Successfully subscribed to newsletter!', 'success');
     form.reset();
