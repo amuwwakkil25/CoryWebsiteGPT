@@ -251,14 +251,22 @@ class ContentLoader {
     DiagnosticLogger.log('🚀 Starting content loading process...');
     
     try {
-      // Try database first
-      const content = await DatabaseService.getContent();
+      // Test database connection first
+      DiagnosticLogger.log('Testing database connection...');
+      const isConnected = await DatabaseService.testConnection();
       
-      if (content && content.length > 0) {
-        DiagnosticLogger.log('✅ Database content loaded successfully', { count: content.length });
-        return content;
+      if (isConnected) {
+        DiagnosticLogger.log('✅ Database connection successful, fetching content...');
+        const content = await DatabaseService.getContent();
+        
+        if (content && content.length > 0) {
+          DiagnosticLogger.log('✅ Database content loaded successfully', { count: content.length });
+          return content;
+        } else {
+          DiagnosticLogger.log('⚠️ Database is empty, using static content');
+        }
       } else {
-        DiagnosticLogger.log('⚠️ Database is empty, using static content');
+        DiagnosticLogger.log('❌ Database connection failed, using static content');
       }
     } catch (error) {
       DiagnosticLogger.log('❌ Database error, using static content', { error: error.message });
@@ -297,10 +305,7 @@ class ResourcesPageManager {
       
       this.filteredContent = [...this.allContent];
       
-      // Bind event listeners
       this.bindEvents();
-      
-      // Render content
       this.renderFeaturedContent();
       this.renderAllContent();
       
