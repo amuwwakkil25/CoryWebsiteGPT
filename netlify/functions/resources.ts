@@ -150,24 +150,15 @@ class ResourcesPageManager {
     this.init();
   }
 
-  async init() {
-    try {
       // Check environment variables with detailed logging
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
       const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
       
       // Log all available environment variables (safely)
       const envVars = {};
+        allEnvVars: envVars,
       for (const key in import.meta.env) {
         if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
-            ? `${import.meta.env[key]?.substring(0, 10)}...` 
-            : import.meta.env[key];
-        }
-      }
-
-      console.log('Environment check:', {
-        allEnvVars: envVars,
         urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
         keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
         urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
@@ -175,21 +166,47 @@ class ResourcesPageManager {
         buildMode: import.meta.env.MODE,
         isDev: import.meta.env.DEV,
         isProd: import.meta.env.PROD
-      });
-
-      this.showLoadingState();
-      
-      // Try the new fallback system
-      this.allContent = await fetchResources();
-      
-      if (!this.allContent || this.allContent.length === 0) {
-        console.log('✅ Content loaded successfully', { count: this.allContent.length });
-      } else {
-        console.warn('All data sources failed, using static fallback:', error.message);
-        this.allContent = staticFallback;
+            : import.meta.env[key];
+        }
+      }
+        throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
       }
       
-      if (!supabaseUrl || !supabaseKey) {
+      if (!supabaseUrl.includes('supabase.co')) {
+        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
+      }
+      
+      if (!supabaseKey.startsWith('eyJ')) {
+        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
+      // Log all available environment variables (safely)
+      const envVars = {};
+      for (const key in import.meta.env) {
+      const testUrl = `${supabaseUrl}/rest/v1/`;
+      DiagnosticLogger.log('Testing connection to:', { testUrl });
+      
+      const response = await fetch(testUrl, {
+          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+            ? `${import.meta.env[key]?.substring(0, 10)}...` 
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json'
+        },
+        method: 'GET'
+      }
+    try {
+      this.showLoadingState();
+        allEnvVars: envVars,
+      
+      // Try the new fallback system
+        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode: import.meta.env.MODE,
+        isDev: import.meta.env.DEV,
+        isProd: import.meta.env.PROD
+        console.log('✅ Content loaded successfully', { count: this.allContent.length });
+      } catch (error) {
+        console.warn('All data sources failed, using static fallback:', error.message);
         throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
       }
       
@@ -207,8 +224,15 @@ class ResourcesPageManager {
       this.bindEvents();
       
       // Render content
-      this.renderFeaturedContent();
+        ok: response.ok,
+        headers: Object.fromEntries(response.headers.entries()),
+        url: response.url
       this.renderAllContent();
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        DiagnosticLogger.log('Connection test failed with response:', { errorText });
+      }
       
       console.log('✅ Resources page initialized successfully');
     } catch (error) {
@@ -277,11 +301,16 @@ class ResourcesPageManager {
     // Close modal events
     const closeButtons = document.querySelectorAll('.modal-close');
     closeButtons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      const testUrl = `${supabaseUrl}/rest/v1/`;
+      DiagnosticLogger.log('Testing connection to:', { testUrl });
+      
+      const response = await fetch(testUrl, {
         const modal = e.target.closest('.modal');
         if (modal) {
-          this.closeModal(modal);
-        }
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json'
+        },
+        method: 'GET'
       });
     });
 
@@ -634,49 +663,23 @@ class ResourcesPageManager {
         this.fallbackCopyToClipboard(url, title);
       });
     } else {
-      this.fallbackCopyToClipboard(url, title);
-    }
-  }
-
-  async testSupabaseConnection() {
-    try {
-      const testUrl = `${supabaseUrl}/rest/v1/`;
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
-      
-      const response = await fetch(testUrl, {
-        headers: {
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
-      });
-
-      DiagnosticLogger.log('Connection test response:', {
         ok: response.ok,
         headers: Object.fromEntries(response.headers.entries()),
         url: response.url
-      });
-
+    }
+  }
       if (!response.ok) {
         const errorText = await response.text();
         DiagnosticLogger.log('Connection test failed with response:', { errorText });
       }
       
-      return response.ok;
-    } catch (error) {
-      DiagnosticLogger.log('Connection test failed with error:', {
-        message: error.message,
-        stack: error.stack,
-        name: error.name
-      });
-      return false;
-    }
-  }
 
   fallbackCopyToClipboard(url, title) {
     const textArea = document.createElement('textarea');
     textArea.value = url;
-    textArea.style.position = 'fixed';
+        stack: error.stack,
+        stack: error.stack,
+        name: error.name
     textArea.style.left = '-999999px';
     textArea.style.top = '-999999px';
     document.body.appendChild(textArea);
