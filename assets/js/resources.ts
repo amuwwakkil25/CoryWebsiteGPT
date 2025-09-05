@@ -32,11 +32,12 @@ class DiagnosticLogger {
       overflow-y: auto;
       z-index: 9999;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      display: none;
     `;
     
     const header = document.createElement('div');
     header.style.cssText = 'background: #333; color: white; padding: 0.5rem; font-weight: bold; position: sticky; top: 0;';
-    header.innerHTML = 'Debug Log <button onclick="this.parentElement.parentElement.remove()" style="float: right; background: none; border: none; color: white; cursor: pointer;">×</button>';
+    header.innerHTML = 'Debug Log <button onclick="this.parentElement.parentElement.style.display=\'none\'" style="float: right; background: none; border: none; color: white; cursor: pointer;">×</button> <button onclick="this.parentElement.parentElement.style.display=this.parentElement.parentElement.style.display===\'none\'?\'block\':\'none\'" style="float: right; margin-right: 10px; background: none; border: none; color: white; cursor: pointer;">👁</button>';
     
     debugDiv.appendChild(header);
     document.body.appendChild(debugDiv);
@@ -121,8 +122,8 @@ class DatabaseService {
       DiagnosticLogger.log('Testing database connection...');
       
       // Check environment variables with detailed logging
-      const supabaseUrl = 'https://wjtmdrjuheclgdzwprku.supabase.co';
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c';
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
       
       // Log all available environment variables (safely)
       const envVars = {};
@@ -147,14 +148,28 @@ class DatabaseService {
         isProd: import.meta.env.PROD
       });
       
+      if (!supabaseUrl || !supabaseKey) {
+        throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
+      }
+      
+      if (!supabaseUrl.includes('supabase.co')) {
+        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
+      }
+      
+      if (!supabaseKey.startsWith('eyJ')) {
+        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
+      }
+      
       const testUrl = `${supabaseUrl}/rest/v1/`;
       DiagnosticLogger.log('Testing connection to:', { testUrl });
       
-      const response = await fetch(`${supabaseUrl}/rest/v1/`, {
+      const response = await fetch(testUrl, {
         headers: {
-          apikey: supabaseKey,
-          Authorization: `Bearer ${supabaseKey}`
-        }
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json'
+        },
+        method: 'GET'
       });
       
       DiagnosticLogger.log('Connection test result', {
@@ -193,10 +208,10 @@ class DatabaseService {
       
       const response = await fetch(url, {
         headers: {
-          apikey: supabaseKey,
-          Authorization: `Bearer ${supabaseKey}`,
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
           'Content-Type': 'application/json',
-          Accept: 'application/json'
+          'Accept': 'application/json'
         }
       });
       
@@ -290,10 +305,7 @@ class ResourcesPageManager {
       
       this.filteredContent = [...this.allContent];
       
-      // Bind event listeners
       this.bindEvents();
-      
-      // Render content
       this.renderFeaturedContent();
       this.renderAllContent();
       
@@ -458,6 +470,8 @@ class ResourcesPageManager {
     // For now, show first 3 items as featured
     const featuredItems = this.allContent.slice(0, 3);
     
+    console.log('Rendering featured content', { count: featuredItems.length });
+    
     if (featuredItems.length === 0) {
       container.innerHTML = '<div class="empty-state"><p>No featured resources available.</p></div>';
       return;
@@ -480,6 +494,12 @@ class ResourcesPageManager {
     const startIndex = 0;
     const endIndex = this.currentPage * this.itemsPerPage;
     const itemsToShow = this.filteredContent.slice(startIndex, endIndex);
+    
+    console.log('Rendering all content', { 
+      total: this.filteredContent.length,
+      showing: itemsToShow.length,
+      page: this.currentPage
+    });
     
     if (itemsToShow.length === 0) {
       container.innerHTML = `
@@ -592,6 +612,8 @@ class ResourcesPageManager {
   }
 
   openContentModal(item) {
+    console.log('Opening content modal', { title: item.title });
+    
     // For now, just show a simple modal with the item info
     this.showContentModal(item);
   }
@@ -673,6 +695,13 @@ class ResourcesPageManager {
     
     if (data.website) return;
 
+    console.log('📝 Lead magnet request submitted', {
+      name: data.name,
+      email: data.email,
+      organization: data.organization,
+      resource_id: data.resourceId
+    });
+
     form.style.display = 'none';
     const successDiv = document.getElementById('magnet-success');
     if (successDiv) {
@@ -689,6 +718,8 @@ class ResourcesPageManager {
     const formData = new FormData(form);
     const email = formData.get('email');
 
+    if (this.debugMode) console.log('📧 Newsletter signup', { email });
+    
     this.showToast('Successfully subscribed to newsletter!', 'success');
     form.reset();
   }
