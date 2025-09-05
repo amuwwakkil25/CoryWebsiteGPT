@@ -71,8 +71,24 @@ class ResourcesPageManager {
         }
       }
       
+      // Log all available environment variables (safely)
+      const envVars = {};
+      for (const key in import.meta.env) {
+        if (key.startsWith('VITE_')) {
+          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
+            ? `${import.meta.env[key]?.substring(0, 10)}...` 
+            : import.meta.env[key];
+        }
+      }
+      
       console.log('Environment check:', {
         allEnvVars: envVars,
+        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
+        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
+        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
+        allEnvVars: envVars,
+        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
+        buildMode: import.meta.env.MODE,
         urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
         keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
         urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
@@ -157,43 +173,22 @@ class ResourcesPageManager {
         throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
       }
       
-      if (!supabaseKey.startsWith('eyJ')) {
-        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
-      const testUrl = `${supabaseUrl}/rest/v1/`;
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
+      this.showLoadingState();
       
-      const testUrl = `${supabaseUrl}/rest/v1/`;
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
-      
-      const response = await fetch(testUrl, {
-        headers: {
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
-      });
-      
-      console.log('Connection test result:', {
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
-      });
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.log('Connection test failed with response:', { errorText });
+      // Try to load from database first, fall back to static content
+      try {
+        console.log('Attempting to load content from database...');
+        this.allContent = await ContentService.getAllContent();
+        console.log('✅ Database content loaded successfully', { count: this.allContent.length });
+      } catch (dbError) {
+        console.warn('Database loading failed, using static content:', dbError.message);
+        this.allContent = staticContent;
       }
       
-      this.allContent = await ContentService.getAllContent();
       this.filteredContent = [...this.allContent];
       
       console.log('Content loaded', { 
           'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
-      });
-      
       // Bind event listeners
       this.bindEvents();
       
@@ -203,6 +198,15 @@ class ResourcesPageManager {
         method: 'GET'
         url: response.url
       this.renderAllContent();
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+      console.error('❌ Critical initialization error', {
+          'Content-Type': 'application/json'
+        },
+        method: 'GET'
+        url: response.url
+      }
       
       if (!response.ok) {
         const errorText = await response.text();
@@ -749,6 +753,7 @@ class ResourcesPageManager {
         stack: error.stack,
         stack: error.stack,
         stack: error.stack,
+        stack: error.stack,
         name: error.name
     textArea.style.left = '-999999px';
     textArea.style.top = '-999999px';
@@ -757,6 +762,69 @@ class ResourcesPageManager {
     textArea.select();
     
     try {
+    view_count: 2890
+  },
+  {
+    id: "benchmarks-report-static",
+    title: "2024 Admissions Benchmarks Report",
+    slug: "admissions-benchmarks-2024",
+    excerpt: "Comprehensive industry data including response times, conversion rates, and ROI metrics from 500+ institutions.",
+    content: `# 2024 Admissions Benchmarks Report\n\n## Executive Summary\n\nThis comprehensive report analyzes data from over 500 educational institutions...`,
+    content_type: "ebook",
+    featured_image_url: "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author_name: "Agent Cory Research Team",
+    author_title: "Industry Analysts",
+    reading_time_minutes: 30,
+    tags: ["Benchmarks", "Industry Data", "Research"],
+    category: "roi",
+    is_featured: true,
+    is_published: true,
+    published_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    download_url: "/downloads/benchmarks-2024.pdf",
+    metrics: { downloads: 1850, institutions_surveyed: 500 },
+    view_count: 2650
+  },
+  {
+    id: "response-time-blog-static",
+    title: "The Psychology of Fast Response Times in Admissions",
+    slug: "psychology-fast-response-times",
+    excerpt: "Research-backed insights into why speed matters so much in admissions and how to leverage it for better conversion rates.",
+    content: `# The Psychology of Fast Response Times\n\n## Why Speed Matters\n\nIn the world of admissions, timing is everything...`,
+    content_type: "blog",
+    featured_image_url: "https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author_name: "Agent Cory Team",
+    author_title: "AI Admissions Experts",
+    reading_time_minutes: 8,
+    tags: ["Psychology", "Response Time", "Conversion"],
+    category: "admissions",
+    is_featured: false,
+    is_published: true,
+    published_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+    metrics: { shares: 245, comments: 18 },
+    view_count: 1560
+  },
+  {
+    id: "crm-integration-guide-static",
+    title: "CRM Integration Best Practices for Higher Ed",
+    slug: "crm-integration-best-practices",
+    excerpt: "Step-by-step guide for seamless CRM integration, data mapping, and workflow automation setup.",
+    content: `# CRM Integration Best Practices\n\n## Getting Started\n\nIntegrating your CRM with AI automation requires careful planning...`,
+    content_type: "guide",
+    featured_image_url: "https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author_name: "Agent Cory Team",
+    author_title: "Integration Specialists",
+    reading_time_minutes: 20,
+    tags: ["CRM", "Integration", "Automation"],
+    category: "crm",
+    is_featured: false,
+    is_published: true,
+    published_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    metrics: { downloads: 890, implementations: 120 },
+    view_count: 1340
+  }
+];
+
+class ResourcesPageManager {
       document.execCommand('copy');
       this.showToast(`Link copied to clipboard: ${title}`, 'success');
     } catch (err) {
