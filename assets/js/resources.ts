@@ -165,16 +165,6 @@ class ResourcesPageManager {
             : import.meta.env[key];
         }
       }
-      
-      // Log all available environment variables (safely)
-      const envVars = {};
-      for (const key in import.meta.env) {
-        if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
-            ? `${import.meta.env[key]?.substring(0, 10)}...` 
-            : import.meta.env[key];
-        }
-      }
 
       console.log('Environment check:', {
         allEnvVars: envVars,
@@ -268,41 +258,21 @@ class ResourcesPageManager {
     // Newsletter form
     const newsletterForm = document.getElementById('newsletter-form');
     if (newsletterForm) {
-        allEnvVars: envVars,
       newsletterForm.addEventListener('submit', (e) => this.handleNewsletterSignup(e));
     }
-        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
-        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        isDev: import.meta.env.DEV,
-        isProd: import.meta.env.PROD
+
     this.bindModalEvents();
   }
 
-        throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
-      }
-      
-      if (!supabaseUrl.includes('supabase.co')) {
-        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
-      }
-      
-      if (!supabaseKey.startsWith('eyJ')) {
-        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
+  bindModalEvents() {
     // Close modal events
     const closeButtons = document.querySelectorAll('.modal-close');
     closeButtons.forEach(btn => {
-      const testUrl = `${supabaseUrl}/rest/v1/`;
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
-      
-      const response = await fetch(testUrl, {
+      btn.addEventListener('click', (e) => {
         const modal = e.target.closest('.modal');
         if (modal) {
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
+          this.closeModal(modal);
+        }
       });
     });
 
@@ -654,22 +624,15 @@ class ResourcesPageManager {
       }).catch(() => {
         this.fallbackCopyToClipboard(url, title);
       });
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
+    } else {
       this.fallbackCopyToClipboard(url, title);
     }
-      if (!response.ok) {
-        const errorText = await response.text();
-        DiagnosticLogger.log('Connection test failed with response:', { errorText });
-      }
-      
   }
 
   fallbackCopyToClipboard(url, title) {
     const textArea = document.createElement('textarea');
-        stack: error.stack,
-        name: error.name
+    textArea.value = url;
+    textArea.style.position = 'fixed';
     textArea.style.left = '-999999px';
     textArea.style.top = '-999999px';
     document.body.appendChild(textArea);
