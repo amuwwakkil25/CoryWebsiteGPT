@@ -32,11 +32,12 @@ class DiagnosticLogger {
       overflow-y: auto;
       z-index: 9999;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      display: none;
     `;
     
     const header = document.createElement('div');
     header.style.cssText = 'background: #333; color: white; padding: 0.5rem; font-weight: bold; position: sticky; top: 0;';
-    header.innerHTML = 'Debug Log <button onclick="this.parentElement.parentElement.remove()" style="float: right; background: none; border: none; color: white; cursor: pointer;">×</button>';
+    header.innerHTML = 'Debug Log <button onclick="this.parentElement.parentElement.style.display=\'none\'" style="float: right; background: none; border: none; color: white; cursor: pointer;">×</button> <button onclick="this.parentElement.parentElement.style.display=this.parentElement.parentElement.style.display===\'none\'?\'block\':\'none\'" style="float: right; margin-right: 10px; background: none; border: none; color: white; cursor: pointer;">👁</button>';
     
     debugDiv.appendChild(header);
     document.body.appendChild(debugDiv);
@@ -472,6 +473,8 @@ class ResourcesPageManager {
     // For now, show first 3 items as featured
     const featuredItems = this.allContent.slice(0, 3);
     
+    console.log('Rendering featured content', { count: featuredItems.length });
+    
     if (featuredItems.length === 0) {
       container.innerHTML = '<div class="empty-state"><p>No featured resources available.</p></div>';
       return;
@@ -494,6 +497,12 @@ class ResourcesPageManager {
     const startIndex = 0;
     const endIndex = this.currentPage * this.itemsPerPage;
     const itemsToShow = this.filteredContent.slice(startIndex, endIndex);
+    
+    console.log('Rendering all content', { 
+      total: this.filteredContent.length,
+      showing: itemsToShow.length,
+      page: this.currentPage
+    });
     
     if (itemsToShow.length === 0) {
       container.innerHTML = `
@@ -606,6 +615,8 @@ class ResourcesPageManager {
   }
 
   openContentModal(item) {
+    console.log('Opening content modal', { title: item.title });
+    
     // For now, just show a simple modal with the item info
     this.showContentModal(item);
   }
@@ -687,6 +698,13 @@ class ResourcesPageManager {
     
     if (data.website) return;
 
+    console.log('📝 Lead magnet request submitted', {
+      name: data.name,
+      email: data.email,
+      organization: data.organization,
+      resource_id: data.resourceId
+    });
+
     form.style.display = 'none';
     const successDiv = document.getElementById('magnet-success');
     if (successDiv) {
@@ -703,6 +721,8 @@ class ResourcesPageManager {
     const formData = new FormData(form);
     const email = formData.get('email');
 
+    if (this.debugMode) console.log('📧 Newsletter signup', { email });
+    
     this.showToast('Successfully subscribed to newsletter!', 'success');
     form.reset();
   }
