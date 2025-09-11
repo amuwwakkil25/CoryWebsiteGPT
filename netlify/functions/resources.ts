@@ -1,11 +1,11 @@
-      'Content-Type': 'application/json'
-    headers: {
-    }
-  }), {
-  });
-    items: []
-}
-    ok: true,
-  return new Response(JSON.stringify({
+      // Simple Netlify function for resources
 export default async function handler(req, res) {
-// Simple Netlify function for resources
+  return new Response(JSON.stringify({
+    ok: true,
+    items: []
+  }), {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+}
