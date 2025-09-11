@@ -13,9 +13,10 @@ export default defineConfig({
         'voice-demo': 'voice-demo.html',
         terms: 'terms.html',
         'roi-and-case-studies': 'roi-and-case-studies.html',
-        'content-slug': 'content/[slug].html',
         'ai-admissions-guide': 'content/ai-admissions-guide.html',
-        'double-conversion-strategies': 'content/double-conversion-strategies.html'
+        'double-conversion-strategies': 'content/double-conversion-strategies.html',
+        'psychology-fast-response-times': 'content/psychology-fast-response-times.html',
+        'crm-integration-best-practices': 'content/crm-integration-best-practices.html'
       }
     }
   }
