@@ -549,6 +549,7 @@ class ResourcesPageManager {
         <div class="featured-image">
           <img src="${item.featured_image_url || 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="${item.title}" />
           <div class="content-badge ${item.content_type}">${this.formatContentType(item.content_type)}</div>
+          ${item.podcast_url ? '<div class="podcast-indicator">🎧</div>' : ''}
         </div>
         <div class="featured-content">
           <h3>${item.title}</h3>
@@ -562,6 +563,7 @@ class ResourcesPageManager {
               <div class="meta-item">
                 <i data-lucide="clock" class="meta-icon"></i>
                 <span>${item.reading_time_minutes} min read</span>
+                ${item.podcast_url ? '<span class="podcast-available">• 🎙️ Podcast</span>' : ''}
               </div>
             ` : ''}
             <div class="meta-item">
@@ -814,11 +816,11 @@ class ResourcesPageManager {
     const existingScripts = document.querySelectorAll('script[src*="buzzsprout.com"]');
     existingScripts.forEach(script => script.remove());
     
-    // Create and load the Buzzsprout script
+    // Create and load the Buzzsprout script for single episode
     const script = document.createElement('script');
     script.type = 'text/javascript';
     script.charset = 'utf-8';
-    script.src = `https://www.buzzsprout.com/2456315.js?artist=&container_id=${containerId}&limit=5&player=small`;
+    script.src = `https://www.buzzsprout.com/2456315.js?artist=&container_id=${containerId}&limit=1&player=small`;
     
     // Add script to document head
     document.head.appendChild(script);
