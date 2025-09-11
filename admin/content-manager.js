@@ -748,6 +748,9 @@ class ResourcesPageManager {
     
     const contentHTML = this.convertToHTML(item.content);
     
+    // Generate unique container ID for this podcast
+    const podcastContainerId = `buzzsprout-player-${item.id}`;
+    
     body.innerHTML = `
       <div class="content-header">
         <div class="content-meta">
@@ -769,7 +772,7 @@ class ResourcesPageManager {
           <div class="podcast-content">
             <h3>🎧 Listen to the Podcast Episode</h3>
             <p>Prefer to listen? This content is also available as a podcast episode.</p>
-            <a href="${item.podcast_url}" target="_blank" class="btn btn-primary btn-lg">
+            <div id="${podcastContainerId}" style="margin: 1rem 0; min-height: 200px; background: #f8f9fa; border-radius: 8px; padding: 1rem;"></div>
               <i data-lucide="play"></i>
               🎙️ Listen Now
             </a>
@@ -801,7 +804,27 @@ class ResourcesPageManager {
       </div>
     `;
 
+    // Load the Buzzsprout widget after the modal content is rendered
+    this.loadBuzzsproutWidget(podcastContainerId);
     this.openModal(modal);
+  }
+
+  loadBuzzsproutWidget(containerId) {
+    // Remove any existing Buzzsprout scripts to avoid conflicts
+    const existingScripts = document.querySelectorAll('script[src*="buzzsprout.com"]');
+    existingScripts.forEach(script => script.remove());
+    
+    // Create and load the Buzzsprout script
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.charset = 'utf-8';
+    script.src = `https://www.buzzsprout.com/2456315.js?artist=&container_id=${containerId}&limit=5&player=small`;
+    
+    // Add script to document head
+    document.head.appendChild(script);
+    
+    // Log for debugging
+    console.log('Loading Buzzsprout widget in container:', containerId);
   }
 
   openModal(modal) {
