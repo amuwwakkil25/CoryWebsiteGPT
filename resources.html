@@ -1204,6 +1204,359 @@
      data-widget-id="68b077f85dff15aa9384c4e9"   > 
      </script>
 
-    <script src="/admin/content-manager.js"></script>
+    <script>
+        // Simplified resources manager for deployment
+        class SimpleResourcesManager {
+            constructor() {
+                this.staticContent = [
+                    {
+                        id: "ai-guide-static",
+                        title: "The Complete Guide to AI in Admissions",
+                        slug: "ai-admissions-guide",
+                        excerpt: "Comprehensive 40-page guide covering implementation strategies, best practices, and ROI measurement for AI-powered admissions automation.",
+                        content_type: "guide",
+                        featured_image_url: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800",
+                        author_name: "Agent Cory Team",
+                        author_title: "AI Admissions Experts",
+                        reading_time_minutes: 25,
+                        tags: ["AI", "Implementation", "Best Practices"],
+                        category: "ai",
+                        is_featured: true,
+                        is_published: true,
+                        published_at: new Date().toISOString(),
+                        view_count: 3420
+                    },
+                    {
+                        id: "conversion-webinar-static",
+                        title: "5 Strategies to Double Your Lead Conversion Rate",
+                        slug: "double-conversion-strategies",
+                        excerpt: "Join our upcoming webinar to learn proven tactics that top-performing institutions use to convert more inquiries into enrolled students.",
+                        content_type: "webinar",
+                        featured_image_url: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
+                        author_name: "Agent Cory Team",
+                        author_title: "AI Admissions Experts",
+                        reading_time_minutes: 45,
+                        tags: ["Webinar", "Conversion", "Strategy"],
+                        category: "conversion",
+                        is_featured: true,
+                        is_published: true,
+                        published_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+                        external_url: "https://zoom.us/webinar/register/example",
+                        view_count: 1890
+                    },
+                    {
+                        id: "metro-case-study-static",
+                        title: "Case Study: Metro State University - 847% ROI in 12 Months",
+                        slug: "metro-state-case-study",
+                        excerpt: "How Metro State University transformed their admissions process and achieved record-breaking results with Agent Cory.",
+                        content_type: "case_study",
+                        featured_image_url: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800",
+                        author_name: "Dr. Sarah Johnson",
+                        author_title: "Director of Admissions, Metro State University",
+                        reading_time_minutes: 12,
+                        tags: ["Case Study", "ROI", "University"],
+                        category: "admissions",
+                        is_featured: false,
+                        is_published: true,
+                        published_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+                        view_count: 2890
+                    },
+                    {
+                        id: "benchmarks-report-static",
+                        title: "2024 Admissions Benchmarks Report",
+                        slug: "admissions-benchmarks-2024",
+                        excerpt: "Comprehensive industry data including response times, conversion rates, and ROI metrics from 500+ institutions.",
+                        content_type: "ebook",
+                        featured_image_url: "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800",
+                        author_name: "Agent Cory Research Team",
+                        author_title: "Industry Analysts",
+                        reading_time_minutes: 30,
+                        tags: ["Benchmarks", "Industry Data", "Research"],
+                        category: "roi",
+                        is_featured: true,
+                        is_published: true,
+                        published_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+                        download_url: "/downloads/benchmarks-2024.pdf",
+                        view_count: 2650
+                    },
+                    {
+                        id: "response-time-blog-static",
+                        title: "The Psychology of Fast Response Times in Admissions",
+                        slug: "psychology-fast-response-times",
+                        excerpt: "Research-backed insights into why speed matters so much in admissions and how to leverage it for better conversion rates.",
+                        content_type: "blog",
+                        featured_image_url: "https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800",
+                        author_name: "Agent Cory Team",
+                        author_title: "AI Admissions Experts",
+                        reading_time_minutes: 8,
+                        tags: ["Psychology", "Response Time", "Conversion"],
+                        category: "admissions",
+                        is_featured: false,
+                        is_published: true,
+                        published_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+                        view_count: 1560
+                    },
+                    {
+                        id: "crm-integration-guide-static",
+                        title: "CRM Integration Best Practices for Higher Ed",
+                        slug: "crm-integration-best-practices",
+                        excerpt: "Step-by-step guide for seamless CRM integration, data mapping, and workflow automation setup.",
+                        content_type: "guide",
+                        featured_image_url: "https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800",
+                        author_name: "Agent Cory Team",
+                        author_title: "Integration Specialists",
+                        reading_time_minutes: 20,
+                        tags: ["CRM", "Integration", "Automation"],
+                        category: "crm",
+                        is_featured: false,
+                        is_published: true,
+                        published_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+                        view_count: 1340
+                    }
+                ];
+                this.init();
+            }
+
+            init() {
+                console.log('Initializing Simple Resources Manager...');
+                this.renderContent();
+                this.bindEvents();
+            }
+
+            renderContent() {
+                this.renderFeaturedContent();
+                this.renderAllContent();
+            }
+
+            renderFeaturedContent() {
+                const container = document.getElementById('featured-content');
+                if (!container) return;
+
+                const featuredItems = this.staticContent.filter(item => item.is_featured);
+                
+                if (featuredItems.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><p>No featured resources available.</p></div>';
+                    return;
+                }
+
+                container.innerHTML = featuredItems.map(item => this.createFeaturedCard(item)).join('');
+                
+                // Bind click events
+                container.querySelectorAll('.featured-card').forEach((card, index) => {
+                    card.addEventListener('click', () => {
+                        this.navigateToContent(featuredItems[index]);
+                    });
+                });
+            }
+
+            renderAllContent() {
+                const container = document.getElementById('resources-content');
+                if (!container) return;
+
+                container.innerHTML = this.staticContent.map(item => this.createResourceCard(item)).join('');
+                
+                // Bind click events
+                container.querySelectorAll('.resource-card').forEach((card, index) => {
+                    card.addEventListener('click', () => {
+                        this.navigateToContent(this.staticContent[index]);
+                    });
+                });
+
+                // Re-initialize Lucide icons
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            }
+
+            createFeaturedCard(item) {
+                return `
+                    <div class="featured-card" data-id="${item.id}">
+                        <div class="featured-image">
+                            <img src="${item.featured_image_url}" alt="${item.title}" />
+                            <div class="content-badge ${item.content_type}">${this.formatContentType(item.content_type)}</div>
+                        </div>
+                        <div class="featured-content">
+                            <h3>${item.title}</h3>
+                            <p>${item.excerpt}</p>
+                            <div class="content-meta">
+                                <div class="meta-item">
+                                    <i data-lucide="user" class="meta-icon"></i>
+                                    <span>${item.author_name}</span>
+                                </div>
+                                ${item.reading_time_minutes ? `
+                                    <div class="meta-item">
+                                        <i data-lucide="clock" class="meta-icon"></i>
+                                        <span>${item.reading_time_minutes} min read</span>
+                                    </div>
+                                ` : ''}
+                                <div class="meta-item">
+                                    <i data-lucide="calendar" class="meta-icon"></i>
+                                    <span>${this.formatDate(item.published_at)}</span>
+                                </div>
+                            </div>
+                            <div class="content-tags">
+                                ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            createResourceCard(item) {
+                return `
+                    <div class="resource-card" data-id="${item.id}">
+                        <div class="resource-image">
+                            <img src="${item.featured_image_url}" alt="${item.title}" />
+                            <div class="content-badge ${item.content_type}">${this.formatContentType(item.content_type)}</div>
+                        </div>
+                        <div class="resource-content">
+                            <h3>${item.title}</h3>
+                            <p>${item.excerpt}</p>
+                            <div class="resource-footer">
+                                <div class="read-time">
+                                    <i data-lucide="clock"></i>
+                                    <span>${item.reading_time_minutes || 5} min read</span>
+                                </div>
+                                <div class="resource-action">
+                                    <span>${this.getActionText(item.content_type)}</span>
+                                    <i data-lucide="arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            navigateToContent(item) {
+                // Check if it's a downloadable resource
+                if (item.content_type === 'ebook' || item.download_url) {
+                    this.openLeadMagnetModal(item);
+                    return;
+                }
+                
+                // Check if it's an external resource
+                if (item.external_url) {
+                    window.open(item.external_url, '_blank');
+                    return;
+                }
+                
+                // Navigate to individual page
+                window.location.href = `/${item.slug}.html`;
+            }
+
+            openLeadMagnetModal(item) {
+                const modal = document.getElementById('lead-magnet-modal');
+                const title = document.getElementById('magnet-modal-title');
+                const description = document.getElementById('magnet-modal-description');
+                const resourceId = document.getElementById('magnet-resource-id');
+                
+                if (!modal || !title || !description || !resourceId) return;
+
+                title.textContent = `Download: ${item.title}`;
+                description.innerHTML = `
+                    <p>${item.excerpt}</p>
+                    ${item.content_type === 'ebook' ? '<p><strong>Format:</strong> PDF • <strong>Pages:</strong> 40+ • <strong>File Size:</strong> 2.5MB</p>' : ''}
+                `;
+                resourceId.value = item.id;
+
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            bindEvents() {
+                // Modal close events
+                document.querySelectorAll('.modal-close').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const modal = e.target.closest('.modal');
+                        if (modal) {
+                            modal.classList.remove('active');
+                            document.body.style.overflow = '';
+                        }
+                    });
+                });
+
+                // Close on backdrop click
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal')) {
+                        e.target.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+
+                // Lead magnet form
+                const magnetForm = document.getElementById('lead-magnet-form');
+                if (magnetForm) {
+                    magnetForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        
+                        const formData = new FormData(e.target);
+                        const data = Object.fromEntries(formData.entries());
+                        
+                        if (data.website) return; // Honeypot check
+
+                        console.log('Lead magnet request:', data);
+                        
+                        e.target.style.display = 'none';
+                        const successDiv = document.getElementById('magnet-success');
+                        if (successDiv) {
+                            successDiv.style.display = 'block';
+                        }
+                    });
+                }
+
+                // Newsletter form
+                const newsletterForm = document.getElementById('newsletter-form');
+                if (newsletterForm) {
+                    newsletterForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        console.log('Newsletter signup');
+                        e.target.reset();
+                    });
+                }
+            }
+
+            formatContentType(type) {
+                const typeMap = {
+                    blog: 'Blog Post',
+                    case_study: 'Case Study',
+                    guide: 'Guide',
+                    ebook: 'eBook',
+                    webinar: 'Webinar'
+                };
+                return typeMap[type] || type;
+            }
+
+            getActionText(type) {
+                const actionMap = {
+                    blog: 'Read Article',
+                    case_study: 'View Case Study',
+                    guide: 'Read Guide',
+                    ebook: 'Download eBook',
+                    webinar: 'Watch Webinar'
+                };
+                return actionMap[type] || 'View Content';
+            }
+
+            formatDate(dateString) {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Initializing Simple Resources Manager...');
+            window.resourcesManager = new SimpleResourcesManager();
+            
+            // Initialize Lucide icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
 </body>
 </html>
