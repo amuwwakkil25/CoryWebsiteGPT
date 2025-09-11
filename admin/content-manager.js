@@ -671,8 +671,8 @@ class ResourcesPageManager {
       return;
     }
     
-    // Show content in modal instead of navigating
-    this.showContentModal(item);
+    // Navigate to the individual blog page
+    window.location.href = `/${item.slug}.html`;
   }
 
   showContentModal(item) {
