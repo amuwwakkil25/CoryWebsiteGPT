@@ -661,9 +661,8 @@ class ResourcesPageManager {
       return;
     }
     
-    // Navigate to individual content page
-    console.log('Navigating to:', `/${item.slug}.html`);
-    window.location.href = `/${item.slug}.html`;
+    // Show content in modal instead of navigating
+    this.showContentModal(item);
   }
 
   showContentModal(item) {

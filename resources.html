@@ -304,7 +304,7 @@
 
     <!-- Content Detail Modal -->
     <div id="content-modal" class="modal">
-        <div class="modal-content large">
+        <div class="modal-content extra-large">
             <div class="modal-header">
                 <h3 id="content-modal-title">Resource Title</h3>
                 <button class="modal-close" aria-label="Close modal">
@@ -911,44 +911,127 @@
         }
         
         /* Modal Enhancements */
-        .modal-content.large {
-            max-width: 800px;
-            max-height: 90vh;
+        .modal-content.extra-large {
+            max-width: 1200px;
+            width: 95vw;
+            max-height: 95vh;
         }
         
-        .content-modal-body {
+        .modal-content.extra-large .modal-body {
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: var(--space-6);
+        }
+        
+        .modal-content.extra-large .modal-header {
+            padding: var(--space-4) var(--space-6);
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .modal-content.extra-large .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        #content-modal-body {
             max-height: 70vh;
             overflow-y: auto;
             padding: var(--space-4);
         }
         
-        .content-modal-body h1,
-        .content-modal-body h2,
-        .content-modal-body h3 {
+        #content-modal-body h1,
+        #content-modal-body h2,
+        #content-modal-body h3 {
             color: var(--midnight-navy);
             margin-top: var(--space-4);
             margin-bottom: var(--space-2);
+            line-height: 1.3;
         }
         
-        .content-modal-body h1 {
-            font-size: 2rem;
+        #content-modal-body h1 {
+            font-size: 2.5rem;
             margin-top: 0;
+            margin-bottom: var(--space-4);
         }
         
-        .content-modal-body p {
+        #content-modal-body h2 {
+            font-size: 1.875rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: var(--space-2);
+            margin-top: var(--space-6);
+        }
+        
+        #content-modal-body h3 {
+            font-size: 1.5rem;
+            margin-top: var(--space-5);
+        }
+        
+        #content-modal-body p {
             line-height: 1.7;
-            margin-bottom: var(--space-3);
+            margin-bottom: var(--space-4);
+            font-size: 1.1rem;
         }
         
-        .content-modal-body ul,
-        .content-modal-body ol {
-            margin: var(--space-3) 0;
+        #content-modal-body ul,
+        #content-modal-body ol {
+            margin: var(--space-4) 0;
             padding-left: var(--space-4);
         }
         
-        .content-modal-body li {
-            margin-bottom: var(--space-1);
+        #content-modal-body li {
+            margin-bottom: var(--space-2);
             line-height: 1.6;
+            font-size: 1rem;
+        }
+        
+        .content-header {
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-4);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .content-meta {
+            display: flex;
+            gap: var(--space-3);
+            margin-bottom: var(--space-4);
+            flex-wrap: wrap;
+        }
+        
+        .content-type-badge {
+            background: var(--sky-gradient-start);
+            color: white;
+            padding: 0.5rem var(--space-2);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .content-author,
+        .content-date,
+        .content-time {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .content-featured-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: var(--radius-lg);
+            margin-top: var(--space-4);
+        }
+        
+        .content-footer {
+            margin-top: var(--space-6);
+            padding-top: var(--space-4);
+            border-top: 1px solid var(--border);
+        }
+        
+        .content-actions {
+            display: flex;
+            gap: var(--space-3);
+            margin-top: var(--space-4);
         }
         
         /* Mobile Responsiveness */
