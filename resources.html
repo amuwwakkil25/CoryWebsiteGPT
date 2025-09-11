@@ -532,17 +532,687 @@
         .filter-group label {
             font-size: 0.875rem;
             font-weight: 500;
+            color: var(--text-secondary);
+        }
+        
+        .filter-select {
+            padding: var(--space-2) var(--space-3);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg-primary);
+            font-size: 0.875rem;
+            min-width: 140px;
+        }
+        
+        /* Featured Resources */
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-6);
+        }
+        
+        .featured-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .featured-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--sky-gradient-start);
+        }
+        
+        .featured-image {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+        }
+        
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .featured-card:hover .featured-image img {
+            transform: scale(1.05);
+        }
+        
+        .content-badge {
+            position: absolute;
+            top: var(--space-3);
+            left: var(--space-3);
+            padding: 0.5rem var(--space-2);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .content-badge.blog {
+            background: var(--warm-coral);
+            color: var(--text-inverse);
+        }
+        
+        .content-badge.case_study {
+            background: var(--fresh-lime);
+            color: var(--midnight-navy);
+        }
+        
+        .content-badge.guide {
+            background: var(--sky-gradient-start);
+            color: var(--text-inverse);
+        }
+        
+        .content-badge.ebook {
+            background: var(--midnight-navy);
+            color: var(--text-inverse);
+        }
+        
+        .content-badge.webinar {
+            background: var(--success);
+            color: var(--text-inverse);
+        }
+        
+        .featured-content {
+            padding: var(--space-5);
+        }
+        
+        .featured-content h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--midnight-navy);
+            margin-bottom: var(--space-2);
+            line-height: 1.3;
+        }
+        
+        .featured-content p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-4);
+            line-height: 1.6;
+        }
+        
+        .content-meta {
+            display: flex;
+            gap: var(--space-3);
+            align-items: center;
+            margin-bottom: var(--space-4);
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .meta-icon {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .content-tags {
+            display: flex;
+            gap: var(--space-1);
+            flex-wrap: wrap;
+            margin-top: var(--space-3);
+        }
+        
+        .tag {
+            background: var(--silver-mist);
+            color: var(--midnight-navy);
+            padding: 0.25rem var(--space-2);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        /* Resources Grid */
+        .resources-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-6);
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: var(--space-1);
+            background: var(--bg-primary);
+            padding: 0.25rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+        
+        .view-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            padding: var(--space-1) var(--space-2);
+            border: none;
+            background: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .view-btn.active {
+            background: var(--gradient-sky);
+            color: var(--text-inverse);
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-4);
+            margin-top: var(--space-6);
+        }
+        
+        .resources-grid.list-view {
+            grid-template-columns: 1fr;
+            gap: var(--space-3);
+        }
+        
+        .resource-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--sky-gradient-start);
+        }
+        
+        .resources-grid.list-view .resource-card {
+            flex-direction: row;
+            align-items: center;
+        }
+        
+        .resource-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .resources-grid.list-view .resource-image {
+            width: 200px;
+            height: 120px;
+            flex-shrink: 0;
+        }
+        
+        .resource-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .resource-card:hover .resource-image img {
+            transform: scale(1.05);
+        }
+        
+        .resource-content {
+            padding: var(--space-4);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .resource-content h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--midnight-navy);
+            margin-bottom: var(--space-2);
+            line-height: 1.3;
+        }
+        
+        .resource-content p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-3);
+            line-height: 1.5;
+            flex: 1;
+        }
+        
+        .resource-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        
+        .read-time {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+        
+        .resource-action {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--sky-gradient-start);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            transition: all 0.3s ease;
+        }
+        
+        .resource-card:hover .resource-action {
+            color: var(--midnight-navy);
+            transform: translateX(4px);
+        }
+        
+        /* Newsletter Section */
+        .newsletter-section {
+            background: var(--gradient-sky);
+            color: var(--text-inverse);
+        }
+        
+        .newsletter-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-3);
+        }
+        
+        .newsletter-icon i {
+            font-size: 1.75rem;
+            color: var(--text-inverse);
+        }
+        
+        .newsletter-content h3 {
+            color: var(--text-inverse);
+            margin-bottom: var(--space-2);
+        }
+        
+        .newsletter-content p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: var(--space-4);
+        }
+        
+        .newsletter-inputs {
+            display: flex;
+            gap: var(--space-2);
+            margin-bottom: var(--space-2);
+        }
+        
+        .newsletter-inputs input {
+            flex: 1;
+            padding: var(--space-3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+        
+        .newsletter-note {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+        }
+        
+        /* Loading States */
+        .loading-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-8);
+            color: var(--text-secondary);
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--sky-gradient-start);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: var(--space-3);
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Modal Enhancements */
+        .modal-content.extra-large {
+            max-width: 1200px;
+            width: 95vw;
+            max-height: 95vh;
+        }
+        
+        .modal-content.extra-large .modal-body {
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: var(--space-6);
+        }
+        
+        /* Podcast Section Styles */
+        .podcast-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+            margin-bottom: var(--space-6);
+            border: 2px solid var(--sky-gradient-start);
+        }
+        
+        .podcast-card {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+        
+        .podcast-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--sky-gradient-start);
+            color: white;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .podcast-icon i {
+            font-size: 1.5rem;
+        }
+        
+        .podcast-content h3 {
+            color: var(--midnight-navy);
+            margin-bottom: var(--space-2);
+            font-size: 1.25rem;
+        }
+        
+        .podcast-content p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-3);
+        }
+        
+        .podcast-indicator {
+            position: absolute;
+            top: var(--space-2);
+            right: var(--space-2);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+        }
+        
+        .podcast-available {
+            color: var(--sky-gradient-start);
+            font-weight: 600;
+        }
+        
+        .modal-content.extra-large .modal-header {
+            padding: var(--space-4) var(--space-6);
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .modal-content.extra-large .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        #content-modal-body {
+            max-height: 70vh;
+            overflow-y: auto;
+            padding: var(--space-4);
+        }
+        
+        #content-modal-body h1,
+        #content-modal-body h2,
+        #content-modal-body h3 {
+            color: var(--midnight-navy);
+            margin-top: var(--space-4);
+            margin-bottom: var(--space-2);
+            line-height: 1.3;
+        }
+        
+        #content-modal-body h1 {
+            font-size: 2.5rem;
+            margin-top: 0;
+            margin-bottom: var(--space-4);
+        }
+        
+        #content-modal-body h2 {
+            font-size: 1.875rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: var(--space-2);
+            margin-top: var(--space-6);
+        }
+        
+        #content-modal-body h3 {
+            font-size: 1.5rem;
+            margin-top: var(--space-5);
+        }
+        
+        #content-modal-body p {
+            line-height: 1.7;
+            margin-bottom: var(--space-4);
+            font-size: 1.1rem;
+        }
+        
+        #content-modal-body ul,
+        #content-modal-body ol {
+            margin: var(--space-4) 0;
+            padding-left: var(--space-4);
+        }
+        
+        #content-modal-body li {
+            margin-bottom: var(--space-2);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        
+        .content-header {
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-4);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .content-meta {
+            display: flex;
+            gap: var(--space-3);
+            margin-bottom: var(--space-4);
+            flex-wrap: wrap;
+        }
+        
+        .content-type-badge {
+            background: var(--sky-gradient-start);
+            color: white;
+            padding: 0.5rem var(--space-2);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .content-author,
+        .content-date,
+        .content-time {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .content-featured-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: var(--radius-lg);
+            margin-top: var(--space-4);
+        }
+        
+        .content-footer {
+            margin-top: var(--space-6);
+            padding-top: var(--space-4);
+            border-top: 1px solid var(--border);
+        }
+        
+        .content-actions {
+            display: flex;
+            gap: var(--space-3);
+            margin-top: var(--space-4);
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .resources-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: var(--space-3);
+            }
+            
+            .filters-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: var(--space-3);
+            }
+            
+            .filter-controls {
+                flex-direction: column;
+                gap: var(--space-2);
+            }
+            
+            .newsletter-inputs {
+                flex-direction: column;
+            }
+            
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .resources-grid.list-view .resource-card {
+                flex-direction: column;
+            }
+            
+            .resources-grid.list-view .resource-image {
+                width: 100%;
+                height: 200px;
+            }
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: var(--space-8);
+            color: var(--text-secondary);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: var(--space-3);
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-2);
+        }
+        
+        /* Filter Active States */
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--sky-gradient-start);
+            box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.1);
+        }
+        
+        .active-filters {
+            display: flex;
+            gap: var(--space-2);
+            margin-top: var(--space-3);
+            flex-wrap: wrap;
+        }
+        
+        .active-filter {
+            background: var(--sky-gradient-start);
+            color: var(--text-inverse);
+            padding: 0.25rem var(--space-2);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+        
+        .active-filter button {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            padding: 0;
+            margin-left: var(--space-1);
+        }
+    </style>
 
     <!-- LeadConnector Chat Widget -->
     <script>
-        // Database service for content loading
-        class ContentService {
-            static async getAllContent() {
+        // Initialize Lucide icons after DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+    <script 
+      src="https://beta.leadconnectorhq.com/loader.js"  
+      data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js" 
+     data-widget-id="68b077f85dff15aa9384c4e9"></script>
+
+    <script>
+        // Initialize Supabase client
+        const supabaseUrl = 'https://wjtmdrjuheclgdzwprku.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c';
+        
+        // Database service
+        class DatabaseService {
+            static async getContent() {
                 try {
                     console.log('Fetching content from database...');
-                    
-                    const supabaseUrl = 'https://wjtmdrjuheclgdzwprku.supabase.co';
-                    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c';
                     
                     const response = await fetch(`${supabaseUrl}/rest/v1/content_items?is_published=eq.true&order=published_at.desc`, {
                         headers: {
@@ -553,11 +1223,11 @@
                     });
                     
                     if (!response.ok) {
-                        throw new Error(`Database error: ${response.status}`);
+                        throw new Error(`Database request failed: ${response.status}`);
                     }
                     
                     const data = await response.json();
-                    console.log('Loaded content items:', data.length);
+                    console.log('Database content loaded:', data.length, 'items');
                     return data;
                 } catch (error) {
                     console.error('Database error:', error);
@@ -566,166 +1236,34 @@
             }
         }
 
-        // Resources page manager
         class ResourcesManager {
             constructor() {
                 this.allContent = [];
                 this.filteredContent = [];
+                this.currentPage = 1;
+                this.itemsPerPage = 12;
+                this.currentView = 'grid';
                 this.init();
             }
 
             async init() {
                 try {
-                    console.log('Initializing resources page...');
                     this.showLoadingState();
                     
                     // Load content from database
-                    this.allContent = await ContentService.getAllContent();
+                    this.allContent = await DatabaseService.getContent();
                     this.filteredContent = [...this.allContent];
                     
-                    console.log('Content loaded successfully:', this.allContent.length, 'items');
+                    console.log('Resources loaded:', this.allContent.length, 'items');
                     
                     this.bindEvents();
                     this.renderFeaturedContent();
                     this.renderAllContent();
-                    
+                    this.hideLoadingState();
                 } catch (error) {
-                    console.error('Failed to load content:', error);
-                    this.showErrorState();
-                }
-            }
-
-            bindEvents() {
-                // Search functionality
-                const searchInput = document.getElementById('resource-search');
-                if (searchInput) {
-                    let searchTimeout;
-                    searchInput.addEventListener('input', () => {
-                        clearTimeout(searchTimeout);
-                        searchTimeout = setTimeout(() => {
-                            this.handleSearch(searchInput.value);
-                        }, 300);
-                    });
-                }
-
-                // Filter controls
-                const typeFilter = document.getElementById('type-filter');
-                const categoryFilter = document.getElementById('category-filter');
-                const clearFilters = document.getElementById('clear-filters');
-
-                if (typeFilter) {
-                    typeFilter.addEventListener('change', () => this.applyFilters());
-                }
-                if (categoryFilter) {
-                    categoryFilter.addEventListener('change', () => this.applyFilters());
-                }
-                if (clearFilters) {
-                    clearFilters.addEventListener('click', () => this.clearAllFilters());
-                }
-
-                // View toggle
-                const viewButtons = document.querySelectorAll('.view-btn');
-                viewButtons.forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const view = e.currentTarget.dataset.view;
-                        this.toggleView(view);
-                    });
-                });
-
-                // Newsletter form
-                const newsletterForm = document.getElementById('newsletter-form');
-                if (newsletterForm) {
-                    newsletterForm.addEventListener('submit', (e) => this.handleNewsletterSignup(e));
-                }
-
-                this.bindModalEvents();
-            }
-
-            bindModalEvents() {
-                // Close modal events
-                const closeButtons = document.querySelectorAll('.modal-close');
-                closeButtons.forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const modal = e.target.closest('.modal');
-                        if (modal) {
-                            this.closeModal(modal);
-                        }
-                    });
-                });
-
-                // Close on backdrop click
-                document.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('modal')) {
-                        this.closeModal(e.target);
-                    }
-                });
-
-                // Lead magnet form
-                const magnetForm = document.getElementById('lead-magnet-form');
-                if (magnetForm) {
-                    magnetForm.addEventListener('submit', (e) => this.handleLeadMagnetForm(e));
-                }
-            }
-
-            handleSearch(query) {
-                const searchTerm = query.toLowerCase().trim();
-                
-                if (!searchTerm) {
-                    this.filteredContent = [...this.allContent];
-                } else {
-                    this.filteredContent = this.allContent.filter(item => 
-                        item.title.toLowerCase().includes(searchTerm) ||
-                        item.excerpt.toLowerCase().includes(searchTerm) ||
-                        (item.tags && item.tags.some(tag => tag.toLowerCase().includes(searchTerm))) ||
-                        (item.category && item.category.toLowerCase().includes(searchTerm))
-                    );
-                }
-                
-                this.renderAllContent();
-            }
-
-            applyFilters() {
-                const typeFilter = document.getElementById('type-filter');
-                const categoryFilter = document.getElementById('category-filter');
-                
-                const selectedType = typeFilter?.value || 'all';
-                const selectedCategory = categoryFilter?.value || 'all';
-                
-                this.filteredContent = this.allContent.filter(item => {
-                    const typeMatch = selectedType === 'all' || item.content_type === selectedType;
-                    const categoryMatch = selectedCategory === 'all' || item.category === selectedCategory;
-                    return typeMatch && categoryMatch;
-                });
-                
-                this.renderAllContent();
-            }
-
-            clearAllFilters() {
-                const typeFilter = document.getElementById('type-filter');
-                const categoryFilter = document.getElementById('category-filter');
-                const searchInput = document.getElementById('resource-search');
-                
-                if (typeFilter) typeFilter.value = 'all';
-                if (categoryFilter) categoryFilter.value = 'all';
-                if (searchInput) searchInput.value = '';
-                
-                this.filteredContent = [...this.allContent];
-                this.renderAllContent();
-            }
-
-            toggleView(view) {
-                // Update button states
-                document.querySelectorAll('.view-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.dataset.view === view) {
-                        btn.classList.add('active');
-                    }
-                });
-                
-                // Update grid class
-                const resourcesGrid = document.getElementById('resources-content');
-                if (resourcesGrid) {
-                    resourcesGrid.className = view === 'list' ? 'resources-grid list-view' : 'resources-grid';
+                    console.error('Error initializing resources:', error);
+                    // Show error with retry option
+                    this.showErrorState(error.message);
                 }
             }
 
@@ -754,34 +1292,43 @@
                 const container = document.getElementById('resources-content');
                 if (!container) return;
 
-                if (this.filteredContent.length === 0) {
-                    container.innerHTML = `
-                        <div class="empty-state">
-                            <i data-lucide="search"></i>
-                            <h3>No resources found</h3>
-                            <p>Try adjusting your search or filter criteria.</p>
-                        </div>
-                    `;
+                const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+                const endIndex = startIndex + this.itemsPerPage;
+                const itemsToShow = this.filteredContent.slice(0, endIndex);
+
+                if (itemsToShow.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><i data-lucide="search"></i><h3>No resources found</h3><p>Try adjusting your search or filters.</p></div>';
                     return;
                 }
 
-                container.innerHTML = this.filteredContent.map(item => this.createResourceCard(item)).join('');
+                container.innerHTML = itemsToShow.map(item => this.createResourceCard(item)).join('');
                 
                 // Bind click events
                 container.querySelectorAll('.resource-card').forEach((card, index) => {
                     card.addEventListener('click', () => {
-                        this.navigateToContent(this.filteredContent[index]);
+                        this.navigateToContent(itemsToShow[index]);
                     });
                 });
-                
-                // Re-initialize Lucide icons
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
+
+                // Show/hide load more button
+                const loadMoreBtn = document.getElementById('load-more');
+                if (loadMoreBtn) {
+                    if (endIndex < this.filteredContent.length) {
+                        loadMoreBtn.style.display = 'block';
+                    } else {
+                        loadMoreBtn.style.display = 'none';
+                    }
                 }
             }
 
             navigateToContent(item) {
-                console.log('Navigating to content:', item.title, 'slug:', item.slug);
+                console.log('Navigating to content:', item.title, 'type:', item.content_type);
+                
+                // Check if it's a podcast episode
+                if (item.podcast_url) {
+                    this.openPodcastModal(item);
+                    return;
+                }
                 
                 // Check if it's a downloadable resource (ebook)
                 if (item.content_type === 'ebook' || item.download_url) {
@@ -796,65 +1343,65 @@
                 }
                 
                 // Navigate to the individual content page
-                window.location.href = `/${item.slug}.html`;
+                window.location.href = `/content/${item.slug}.html`;
             }
 
             createFeaturedCard(item) {
                 return `
-                    <div class="featured-card" data-id="${item.id}">
-                        <div class="featured-image">
-                            <img src="${item.featured_image_url || 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="${item.title}" />
-                            <div class="content-badge ${item.content_type}">${this.formatContentType(item.content_type)}</div>
-                        </div>
-                        <div class="featured-content">
-                            <h3>${item.title}</h3>
-                            <p>${item.excerpt}</p>
-                            <div class="content-meta">
-                                <div class="meta-item">
-                                    <i data-lucide="user" class="meta-icon"></i>
-                                    <span>${item.author_name}</span>
-                                </div>
-                                ${item.reading_time_minutes ? `
-                                    <div class="meta-item">
-                                        <i data-lucide="clock" class="meta-icon"></i>
-                                        <span>${item.reading_time_minutes} min read</span>
-                                    </div>
-                                ` : ''}
-                                <div class="meta-item">
-                                    <i data-lucide="calendar" class="meta-icon"></i>
-                                    <span>${this.formatDate(item.published_at)}</span>
-                                </div>
-                            </div>
-                            <div class="content-tags">
-                                ${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
-                            </div>
-                        </div>
+                  <div class="featured-card" data-id="${item.id}">
+                    <div class="featured-image">
+                      <img src="${item.featured_image_url}" alt="${item.title}" />
+                      <div class="content-badge ${item.content_type}">${this.formatContentType(item.content_type)}</div>
                     </div>
+                    <div class="featured-content">
+                      <h3>${item.title}</h3>
+                      <p>${item.excerpt}</p>
+                      <div class="content-meta">
+                        <div class="meta-item">
+                          <i data-lucide="user" class="meta-icon"></i>
+                          <span>${item.author_name}</span>
+                        </div>
+                        ${item.reading_time_minutes ? `
+                          <div class="meta-item">
+                            <i data-lucide="clock" class="meta-icon"></i>
+                            <span>${item.reading_time_minutes} min read</span>
+                          </div>
+                        ` : ''}
+                        <div class="meta-item">
+                          <i data-lucide="calendar" class="meta-icon"></i>
+                          <span>${this.formatDate(item.published_at)}</span>
+                        </div>
+                      </div>
+                      <div class="content-tags">
+                        ${item.tags ? item.tags.map(tag => `<span class="tag">${tag}</span>`).join('') : ''}
+                      </div>
+                    </div>
+                  </div>
                 `;
             }
 
             createResourceCard(item) {
                 return `
-                    <div class="resource-card" data-id="${item.id}">
-                        <div class="resource-image">
-                            <img src="${item.featured_image_url || 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="${item.title}" />
-                            <div class="content-badge ${item.content_type}">${this.formatContentType(item.content_type)}</div>
-                        </div>
-                        <div class="resource-content">
-                            <h3>${item.title}</h3>
-                            <p>${item.excerpt}</p>
-                            <div class="resource-footer">
-                                <div class="read-time">
-                                    <i data-lucide="clock"></i>
-                                    <span>${item.reading_time_minutes || 5} min read</span>
-                                </div>
-                                <div class="resource-action">
-                                    <span>${this.getActionText(item.content_type)}</span>
-                                    <i data-lucide="arrow-right"></i>
-                                </div>
-                            </div>
-                        </div>
+                  <div class="resource-card" data-id="${item.id}">
+                    <div class="resource-image">
+                      <img src="${item.featured_image_url}" alt="${item.title}" />
+                      <div class="content-badge ${item.content_type}">${this.formatContentType(item.content_type)}</div>
                     </div>
+                    <div class="resource-content">
+                      <h3>${item.title}</h3>
+                      <p>${item.excerpt}</p>
+                      <div class="resource-footer">
+                        <div class="read-time">
+                          <i data-lucide="clock"></i>
+                          <span>${item.reading_time_minutes || 5} min read</span>
+                        </div>
+                        <div class="resource-action">
+                          <span>${this.getActionText(item.content_type)}</span>
+                          <i data-lucide="arrow-right"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 `;
             }
 
@@ -868,10 +1415,58 @@
 
                 title.textContent = `Download: ${item.title}`;
                 description.innerHTML = `
-                    <p>${item.excerpt}</p>
-                    ${item.content_type === 'ebook' ? '<p><strong>Format:</strong> PDF • <strong>Pages:</strong> 40+ • <strong>File Size:</strong> 2.5MB</p>' : ''}
+                  <p>${item.excerpt}</p>
+                  ${item.content_type === 'ebook' ? '<p><strong>Format:</strong> PDF • <strong>Pages:</strong> 40+ • <strong>File Size:</strong> 2.5MB</p>' : ''}
                 `;
                 resourceId.value = item.id;
+
+                this.openModal(modal);
+            }
+
+            openPodcastModal(item) {
+                const modal = document.getElementById('content-modal');
+                const title = document.getElementById('content-modal-title');
+                const body = document.getElementById('content-modal-body');
+                
+                if (!modal || !title || !body) return;
+
+                title.textContent = item.title;
+                
+                const podcastContainerId = `buzzsprout-player-${item.id}`;
+                
+                body.innerHTML = `
+                  <div class="content-header">
+                    <div class="content-meta">
+                      <span class="content-type-badge ${item.content_type}">${this.formatContentType(item.content_type)}</span>
+                      <span class="content-author">By ${item.author_name}</span>
+                      <span class="content-date">${this.formatDate(item.published_at)}</span>
+                    </div>
+                    ${item.featured_image_url ? `
+                      <img src="${item.featured_image_url}" alt="${item.title}" class="content-featured-image" />
+                    ` : ''}
+                  </div>
+                  
+                  <div class="podcast-section">
+                    <div class="podcast-card">
+                      <div class="podcast-icon">
+                        <i data-lucide="headphones"></i>
+                      </div>
+                      <div class="podcast-content">
+                        <h3>🎧 Listen to the Podcast Episode</h3>
+                        <p>Prefer to listen? This content is also available as a podcast episode.</p>
+                        <a href="${item.podcast_url}" target="_blank" class="btn btn-primary btn-lg">
+                          <i data-lucide="play"></i>
+                          🎙️ Listen Now
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="content-body">
+                    <p>${item.excerpt}</p>
+                    ${item.content ? this.convertToHTML(item.content) : ''}
+                  </div>
+                `;
 
                 this.openModal(modal);
             }
@@ -900,73 +1495,20 @@
                 formDivs.forEach(div => div.style.display = 'block');
             }
 
-            handleLeadMagnetForm(e) {
-                e.preventDefault();
-                
-                const form = e.target;
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData.entries());
-                
-                if (data.website) return; // Honeypot check
-
-                console.log('Lead magnet request submitted:', {
-                    name: data.name,
-                    email: data.email,
-                    organization: data.organization,
-                    resource_id: data.resourceId
-                });
-
-                form.style.display = 'none';
-                const successDiv = document.getElementById('magnet-success');
-                if (successDiv) {
-                    successDiv.style.display = 'block';
-                }
-
-                this.showToast('Resource request submitted successfully!', 'success');
-            }
-
-            handleNewsletterSignup(e) {
-                e.preventDefault();
-                
-                const form = e.target;
-                const formData = new FormData(form);
-                const email = formData.get('email');
-
-                console.log('Newsletter signup:', { email });
-                
-                this.showToast('Successfully subscribed to newsletter!', 'success');
-                form.reset();
-            }
-
-            formatContentType(type) {
-                const typeMap = {
-                    blog: 'Blog Post',
-                    case_study: 'Case Study',
-                    guide: 'Guide',
-                    ebook: 'eBook',
-                    webinar: 'Webinar'
-                };
-                return typeMap[type] || type;
-            }
-
-            getActionText(type) {
-                const actionMap = {
-                    blog: 'Read Article',
-                    case_study: 'View Case Study',
-                    guide: 'Read Guide',
-                    ebook: 'Download eBook',
-                    webinar: 'Watch Webinar'
-                };
-                return actionMap[type] || 'View Content';
-            }
-
-            formatDate(dateString) {
-                const date = new Date(dateString);
-                return date.toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'short', 
-                    day: 'numeric' 
-                });
+            convertToHTML(content) {
+                return content
+                    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+                    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+                    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+                    .replace(/^\* (.*$)/gm, '<li>$1</li>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/\n\n/g, '</p><p>')
+                    .replace(/^(.*)$/gm, '<p>$1</p>')
+                    .replace(/<p><h/g, '<h')
+                    .replace(/<\/h([1-6])><\/p>/g, '</h$1>')
+                    .replace(/<p><li>/g, '<ul><li>')
+                    .replace(/<\/li><\/p>/g, '</li></ul>');
             }
 
             showLoadingState() {
@@ -975,337 +1517,35 @@
                     const container = document.getElementById(id);
                     if (container) {
                         container.innerHTML = `
-                            <div class="loading-placeholder">
-                                <div class="loading-spinner"></div>
-                                <p>Loading resources...</p>
-                            </div>
+                          <div class="loading-placeholder">
+                            <div class="loading-spinner"></div>
+                            <p>Loading resources...</p>
+                          </div>
                         `;
                     }
                 });
             }
 
-            showErrorState() {
+            hideLoadingState() {
+                // Loading state is replaced by content
+            }
+
+            showErrorState(errorMessage = 'Unable to load resources') {
                 const containers = ['featured-content', 'resources-content'];
                 containers.forEach(id => {
                     const container = document.getElementById(id);
                     if (container) {
                         container.innerHTML = `
-                            <div class="empty-state">
-                                <i data-lucide="alert-circle"></i>
-                                <h3>Unable to load resources</h3>
-                                <p>Please try refreshing the page or contact support.</p>
-                                <button class="btn btn-primary" onclick="window.location.reload()">Refresh Page</button>
-                            </div>
+                          <div class="empty-state">
+                            <i data-lucide="alert-circle"></i>
+                            <h3>Unable to load resources</h3>
+                            <p>${errorMessage}</p>
+                            <p>Please try refreshing the page or contact support.</p>
+                            <button class="btn btn-primary" onclick="window.location.reload()">Refresh Page</button>
+                          </div>
                         `;
                     }
                 });
-            }
-
-            showToast(message, type = 'info') {
-                const toast = document.createElement('div');
-                toast.className = `toast toast-${type}`;
-                toast.textContent = message;
-                toast.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    padding: 1rem 1.5rem;
-                    border-radius: 8px;
-                    box-shadow: var(--shadow-lg);
-                    z-index: 1001;
-                    animation: slideInRight 0.3s ease-out;
-                    max-width: 400px;
-                    background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
-                    color: white;
-                `;
-                
-                document.body.appendChild(toast);
-                
-                setTimeout(() => {
-                    toast.style.animation = 'slideOutRight 0.3s ease-out';
-                    setTimeout(() => toast.remove(), 300);
-                }, 4000);
-            }
-        }
-
-        // Initialize when DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            window.resourcesManager = new ResourcesManager();
-        });
-
-        // Initialize Lucide icons after DOM is loaded
-    <script>
-        // Initialize Lucide icons after DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
-        });
-    </script>
-    </script>
-    <script 
-      src="https://beta.leadconnectorhq.com/loader.js"  
-      data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js" 
-     data-widget-id="68b077f85dff15aa9384c4e9"   > 
-     </script>
-
-    <script>
-        // Simplified resources manager for deployment
-        class SimpleResourcesManager {
-            constructor() {
-                this.staticContent = [
-                    {
-                        id: "ai-guide-static",
-                        title: "The Complete Guide to AI in Admissions",
-                        slug: "ai-admissions-guide",
-                        excerpt: "Comprehensive 40-page guide covering implementation strategies, best practices, and ROI measurement for AI-powered admissions automation.",
-                        content_type: "guide",
-                        featured_image_url: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800",
-                        author_name: "Agent Cory Team",
-                        author_title: "AI Admissions Experts",
-                        reading_time_minutes: 25,
-                        tags: ["AI", "Implementation", "Best Practices"],
-                        category: "ai",
-                        is_featured: true,
-                        is_published: true,
-                        published_at: new Date().toISOString(),
-                        view_count: 3420
-                    },
-                    {
-                        id: "conversion-webinar-static",
-                        title: "5 Strategies to Double Your Lead Conversion Rate",
-                        slug: "double-conversion-strategies",
-                        excerpt: "Join our upcoming webinar to learn proven tactics that top-performing institutions use to convert more inquiries into enrolled students.",
-                        content_type: "webinar",
-                        featured_image_url: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
-                        author_name: "Agent Cory Team",
-                        author_title: "AI Admissions Experts",
-                        reading_time_minutes: 45,
-                        tags: ["Webinar", "Conversion", "Strategy"],
-                        category: "conversion",
-                        is_featured: true,
-                        is_published: true,
-                        published_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-                        external_url: "https://zoom.us/webinar/register/example",
-                        view_count: 1890
-                    },
-                    {
-                        id: "metro-case-study-static",
-                        title: "Case Study: Metro State University - 847% ROI in 12 Months",
-                        slug: "metro-state-case-study",
-                        excerpt: "How Metro State University transformed their admissions process and achieved record-breaking results with Agent Cory.",
-                        content_type: "case_study",
-                        featured_image_url: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800",
-                        author_name: "Dr. Sarah Johnson",
-                        author_title: "Director of Admissions, Metro State University",
-                        reading_time_minutes: 12,
-                        tags: ["Case Study", "ROI", "University"],
-                        category: "admissions",
-                        is_featured: false,
-                        is_published: true,
-                        published_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-                        view_count: 2890
-                    },
-                    {
-                        id: "benchmarks-report-static",
-                        title: "2024 Admissions Benchmarks Report",
-                        slug: "admissions-benchmarks-2024",
-                        excerpt: "Comprehensive industry data including response times, conversion rates, and ROI metrics from 500+ institutions.",
-                        content_type: "ebook",
-                        featured_image_url: "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800",
-                        author_name: "Agent Cory Research Team",
-                        author_title: "Industry Analysts",
-                        reading_time_minutes: 30,
-                        tags: ["Benchmarks", "Industry Data", "Research"],
-                        category: "roi",
-                        is_featured: true,
-                        is_published: true,
-                        published_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-                        download_url: "/downloads/benchmarks-2024.pdf",
-                        view_count: 2650
-                    },
-                    {
-                        id: "response-time-blog-static",
-                        title: "The Psychology of Fast Response Times in Admissions",
-                        slug: "psychology-fast-response-times",
-                        excerpt: "Research-backed insights into why speed matters so much in admissions and how to leverage it for better conversion rates.",
-                        content_type: "blog",
-                        featured_image_url: "https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=800",
-                        author_name: "Agent Cory Team",
-                        author_title: "AI Admissions Experts",
-                        reading_time_minutes: 8,
-                        tags: ["Psychology", "Response Time", "Conversion"],
-                        category: "admissions",
-                        is_featured: false,
-                        is_published: true,
-                        published_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-                        view_count: 1560
-                    },
-                    {
-                        id: "crm-integration-guide-static",
-                        title: "CRM Integration Best Practices for Higher Ed",
-                        slug: "crm-integration-best-practices",
-                        excerpt: "Step-by-step guide for seamless CRM integration, data mapping, and workflow automation setup.",
-                        content_type: "guide",
-                        featured_image_url: "https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800",
-                        author_name: "Agent Cory Team",
-                        author_title: "Integration Specialists",
-                        reading_time_minutes: 20,
-                        tags: ["CRM", "Integration", "Automation"],
-                        category: "crm",
-                        is_featured: false,
-                        is_published: true,
-                        published_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-                        view_count: 1340
-                    }
-                ];
-                this.init();
-            }
-
-            init() {
-                console.log('Initializing Simple Resources Manager...');
-                this.renderContent();
-                this.bindEvents();
-            }
-
-            renderContent() {
-                this.renderFeaturedContent();
-                this.renderAllContent();
-            }
-
-            renderFeaturedContent() {
-                const container = document.getElementById('featured-content');
-                if (!container) return;
-
-                const featuredItems = this.staticContent.filter(item => item.is_featured);
-                
-                if (featuredItems.length === 0) {
-                    container.innerHTML = '<div class="empty-state"><p>No featured resources available.</p></div>';
-                    return;
-                }
-
-                container.innerHTML = featuredItems.map(item => this.createFeaturedCard(item)).join('');
-                
-                // Bind click events
-                container.querySelectorAll('.featured-card').forEach((card, index) => {
-                    card.addEventListener('click', () => {
-                        this.navigateToContent(featuredItems[index]);
-                    });
-                });
-            }
-
-            renderAllContent() {
-                const container = document.getElementById('resources-content');
-                if (!container) return;
-
-                container.innerHTML = this.staticContent.map(item => this.createResourceCard(item)).join('');
-                
-                // Bind click events
-                container.querySelectorAll('.resource-card').forEach((card, index) => {
-                    card.addEventListener('click', () => {
-                        this.navigateToContent(this.staticContent[index]);
-                    });
-                });
-
-                // Re-initialize Lucide icons
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
-            }
-
-            createFeaturedCard(item) {
-                return `
-                    <div class="featured-card" data-id="${item.id}">
-                        <div class="featured-image">
-                            <img src="${item.featured_image_url}" alt="${item.title}" />
-                            <div class="content-badge ${item.content_type}">${this.formatContentType(item.content_type)}</div>
-                        </div>
-                        <div class="featured-content">
-                            <h3>${item.title}</h3>
-                            <p>${item.excerpt}</p>
-                            <div class="content-meta">
-                                <div class="meta-item">
-                                    <i data-lucide="user" class="meta-icon"></i>
-                                    <span>${item.author_name}</span>
-                                </div>
-                                ${item.reading_time_minutes ? `
-                                    <div class="meta-item">
-                                        <i data-lucide="clock" class="meta-icon"></i>
-                                        <span>${item.reading_time_minutes} min read</span>
-                                    </div>
-                                ` : ''}
-                                <div class="meta-item">
-                                    <i data-lucide="calendar" class="meta-icon"></i>
-                                    <span>${this.formatDate(item.published_at)}</span>
-                                </div>
-                            </div>
-                            <div class="content-tags">
-                                ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-
-            createResourceCard(item) {
-                return `
-                    <div class="resource-card" data-id="${item.id}">
-                        <div class="resource-image">
-                            <img src="${item.featured_image_url}" alt="${item.title}" />
-                            <div class="content-badge ${item.content_type}">${this.formatContentType(item.content_type)}</div>
-                        </div>
-                        <div class="resource-content">
-                            <h3>${item.title}</h3>
-                            <p>${item.excerpt}</p>
-                            <div class="resource-footer">
-                                <div class="read-time">
-                                    <i data-lucide="clock"></i>
-                                    <span>${item.reading_time_minutes || 5} min read</span>
-                                </div>
-                                <div class="resource-action">
-                                    <span>${this.getActionText(item.content_type)}</span>
-                                    <i data-lucide="arrow-right"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-
-            navigateToContent(item) {
-                // Check if it's a downloadable resource
-                if (item.content_type === 'ebook' || item.download_url) {
-                    this.openLeadMagnetModal(item);
-                    return;
-                }
-                
-                // Check if it's an external resource
-                if (item.external_url) {
-                    window.open(item.external_url, '_blank');
-                    return;
-                }
-                
-                // Navigate to individual page
-                window.location.href = `/${item.slug}.html`;
-            }
-
-            openLeadMagnetModal(item) {
-                const modal = document.getElementById('lead-magnet-modal');
-                const title = document.getElementById('magnet-modal-title');
-                const description = document.getElementById('magnet-modal-description');
-                const resourceId = document.getElementById('magnet-resource-id');
-                
-                if (!modal || !title || !description || !resourceId) return;
-
-                title.textContent = `Download: ${item.title}`;
-                description.innerHTML = `
-                    <p>${item.excerpt}</p>
-                    ${item.content_type === 'ebook' ? '<p><strong>Format:</strong> PDF • <strong>Pages:</strong> 40+ • <strong>File Size:</strong> 2.5MB</p>' : ''}
-                `;
-                resourceId.value = item.id;
-
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
             }
 
             bindEvents() {
@@ -1314,8 +1554,7 @@
                     btn.addEventListener('click', (e) => {
                         const modal = e.target.closest('.modal');
                         if (modal) {
-                            modal.classList.remove('active');
-                            document.body.style.overflow = '';
+                            this.closeModal(modal);
                         }
                     });
                 });
@@ -1323,8 +1562,7 @@
                 // Close on backdrop click
                 document.addEventListener('click', (e) => {
                     if (e.target.classList.contains('modal')) {
-                        e.target.classList.remove('active');
-                        document.body.style.overflow = '';
+                        this.closeModal(e.target);
                     }
                 });
 
@@ -1394,12 +1632,13 @@
 
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('Initializing Simple Resources Manager...');
-            window.resourcesManager = new SimpleResourcesManager();
+            console.log('DOM loaded, initializing resources manager...');
+            window.resourcesManager = new ResourcesManager();
             
             // Initialize Lucide icons
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
+                console.log('Lucide icons initialized');
             }
         });
     </script>
