@@ -194,33 +194,13 @@ Integrating your CRM with AI automation requires careful planning...`,
 class DatabaseService {
   static async testConnection() {
     try {
-      DiagnosticLogger.log('Testing database connection...');
+      console.log('Testing database connection...');
       
       // Check environment variables with detailed logging
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      const supabaseUrl = 'https://wjtmdrjuheclgdzwprku.supabase.co';
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c';
       
-      // Log all available environment variables (safely)
-      const envVars = {};
-      for (const key in import.meta.env) {
-        if (key.startsWith('VITE_')) {
-          envVars[key] = key.includes('KEY') || key.includes('SECRET') 
-            ? `${import.meta.env[key]?.substring(0, 10)}...` 
-            : import.meta.env[key];
-        }
-      }
-      DiagnosticLogger.log('Environment check', {
-        allEnvVars: envVars,
-        hasUrl: !!supabaseUrl,
-        hasKey: !!supabaseKey,
-        urlPreview: supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'MISSING',
-        keyPreview: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'MISSING',
-        urlValid: supabaseUrl && supabaseUrl.includes('supabase.co'),
-        keyValid: supabaseKey && supabaseKey.startsWith('eyJ'),
-        buildMode: import.meta.env.MODE,
-        isDev: import.meta.env.DEV,
-        isProd: import.meta.env.PROD
-      });
+      console.log('Testing connection to Supabase...');
       
       const response = await fetch(`${supabaseUrl}/rest/v1/`, {
         headers: {
@@ -229,32 +209,24 @@ class DatabaseService {
         }
       });
       
-      DiagnosticLogger.log('Connection test result', {
-        status: response.status,
-        statusText: response.statusText,
-        ok: response.ok
-      });
+      console.log('Connection test result:', response.ok);
       
       return response.ok;
     } catch (error) {
-      DiagnosticLogger.log('Connection test failed', {
-        error: error.message,
-        stack: error.stack
-      });
+      console.error('Connection test failed:', error);
       return false;
     }
   }
   
   static async getContent() {
     try {
-      DiagnosticLogger.log('Starting database content fetch...');
+      console.log('Starting database content fetch...');
       
       const supabaseUrl = 'https://wjtmdrjuheclgdzwprku.supabase.co';
       const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c';
       
       const url = `${supabaseUrl}/rest/v1/content_items?is_published=eq.true&order=published_at.desc&limit=1000`;
-      const url = `${supabaseUrl}/rest/v1/content_items?is_published=eq.true&order=published_at.desc&limit=1000`;
-      DiagnosticLogger.log('Fetching from URL', { url });
+      console.log('Fetching from URL:', url);
       
       const response = await fetch(url, {
         headers: {
@@ -265,39 +237,21 @@ class DatabaseService {
         }
       });
       
-      DiagnosticLogger.log('Database response', {
-        status: response.status,
-        statusText: response.statusText,
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries())
-      });
+      console.log('Database response status:', response.status, response.ok);
       
       if (!response.ok) {
         const errorText = await response.text();
-        DiagnosticLogger.log('Database error response', { errorText });
-        throw new Error(`Missing Supabase environment variables: URL=${!!supabaseUrl}, KEY=${!!supabaseKey}`);
-      }
-      
-      if (!supabaseUrl.includes('supabase.co')) {
-        throw new Error(`Invalid Supabase URL format: ${supabaseUrl}`);
-      }
-      
-      if (!supabaseKey.startsWith('eyJ')) {
-        throw new Error(`Invalid Supabase key format: ${supabaseKey.substring(0, 10)}...`);
+        console.error('Database error:', errorText);
+        throw new Error(`Database request failed: ${response.status} ${response.statusText} - ${errorText}`);
       }
       
       const data = await response.json();
-      DiagnosticLogger.log('Database query success', {
-        itemCount: data.length,
-        firstItem: data[0] ? { title: data[0].title, type: data[0].content_type } : 'none'
-      });
+      console.log('Database query success - items found:', data.length);
+      console.log('First item:', data[0] ? data[0].title : 'none');
       
       return data;
     } catch (error) {
-      DiagnosticLogger.log('Database fetch error', {
-        error: error.message,
-        stack: error.stack
-      });
+      console.error('Database fetch error:', error);
       throw error;
     }
   }
@@ -306,32 +260,32 @@ class DatabaseService {
 // Content loader with fallback strategy
 class ContentLoader {
   static async loadContent() {
-    DiagnosticLogger.log('🚀 Starting content loading process...');
+    console.log('🚀 Starting content loading process...');
     
     try {
       // Test database connection first
-      DiagnosticLogger.log('Testing database connection...');
+      console.log('Testing database connection...');
       const isConnected = await DatabaseService.testConnection();
       
       if (isConnected) {
-        DiagnosticLogger.log('✅ Database connection successful, fetching content...');
+        console.log('✅ Database connection successful, fetching content...');
         const content = await DatabaseService.getContent();
         
         if (content && content.length > 0) {
-          DiagnosticLogger.log('✅ Database content loaded successfully', { count: content.length });
+          console.log('✅ Database content loaded successfully, count:', content.length);
           return content;
         } else {
-          DiagnosticLogger.log('⚠️ Database is empty, using static content');
+          console.log('⚠️ Database is empty, using static content');
         }
       } else {
-        DiagnosticLogger.log('❌ Database connection failed, using static content');
+        console.log('❌ Database connection failed, using static content');
       }
     } catch (error) {
-      DiagnosticLogger.log('❌ Database error, using static content', { error: error.message });
+      console.log('❌ Database error, using static content:', error.message);
     }
     
     // Fallback to static content
-    DiagnosticLogger.log('📦 Using static fallback content');
+    console.log('📦 Using static fallback content');
     return staticContent;
   }
 }
@@ -432,16 +386,11 @@ class ResourcesPageManager {
     // Close modal events
     const closeButtons = document.querySelectorAll('.modal-close');
     closeButtons.forEach(btn => {
-      const testUrl = `${supabaseUrl}/rest/v1/`;
-      DiagnosticLogger.log('Testing connection to:', { testUrl });
-      
-      const response = await fetch(testUrl, {
+      btn.addEventListener('click', (e) => {
         const modal = e.target.closest('.modal');
         if (modal) {
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
+          this.closeModal(modal);
+        }
       });
     });
 
@@ -553,13 +502,14 @@ class ResourcesPageManager {
     const container = document.getElementById('resources-content');
     if (!container) return;
 
-    // Show all items instead of paginating
-    const itemsToShow = this.filteredContent;
+    const startIndex = 0;
+    const endIndex = this.currentPage * this.itemsPerPage;
+    const itemsToShow = this.filteredContent.slice(startIndex, endIndex);
     
     DiagnosticLogger.log('Rendering all content', { 
       total: this.filteredContent.length,
       showing: itemsToShow.length,
-      showingAll: true
+      page: this.currentPage
     });
     
     if (itemsToShow.length === 0) {
@@ -582,11 +532,8 @@ class ResourcesPageManager {
       });
     });
 
-    // Hide load more button since we're showing all items
-    const loadMoreBtn = document.getElementById('load-more');
-    if (loadMoreBtn) {
-      loadMoreBtn.style.display = 'none';
-    }
+    // Update load more button
+    this.updateLoadMoreButton();
     
     // Re-initialize Lucide icons
     if (typeof lucide !== 'undefined') {
@@ -693,12 +640,12 @@ class ResourcesPageManager {
   }
 
   loadMoreContent() {
-    // No longer needed since we show all content
-    console.log('Load more not needed - showing all content');
+    this.currentPage++;
+    this.renderAllContent();
   }
 
   openContentModal(item) {
-    console.log('Opening content modal', { title: item.title });
+    console.log('Opening content for:', item.title, 'slug:', item.slug);
     
     // Check if it's a downloadable resource (ebook)
     if (item.content_type === 'ebook' || item.download_url) {
@@ -713,6 +660,7 @@ class ResourcesPageManager {
     }
     
     // Navigate to individual content page
+    console.log('Navigating to:', `/${item.slug}.html`);
     window.location.href = `/${item.slug}.html`;
   }
 
@@ -876,22 +824,14 @@ class ResourcesPageManager {
         this.fallbackCopyToClipboard(url, title);
       });
     } else {
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url
+      this.fallbackCopyToClipboard(url, title);
     }
   }
-      if (!response.ok) {
-        const errorText = await response.text();
-        DiagnosticLogger.log('Connection test failed with response:', { errorText });
-      }
-      
 
   fallbackCopyToClipboard(url, title) {
     const textArea = document.createElement('textarea');
     textArea.value = url;
-        stack: error.stack,
-        name: error.name
+    textArea.style.position = 'fixed';
     textArea.style.left = '-999999px';
     textArea.style.top = '-999999px';
     document.body.appendChild(textArea);
