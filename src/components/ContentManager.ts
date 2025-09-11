@@ -407,7 +407,7 @@ export class ContentManager {
     try {
       // Temporarily disable analytics tracking to prevent RLS errors
       console.log('Analytics tracking disabled - would track:', { eventType, eventData })
-      return
+      return Promise.resolve()
       
       await WebsiteService.trackEvent({
         page_slug: window.location.pathname.replace('/', '') || 'home',
@@ -425,7 +425,7 @@ export class ContentManager {
   async trackPageView(): Promise<void> {
     // Temporarily disable page view tracking to prevent RLS errors
     console.log('Page view tracking disabled - would track:', window.location.pathname)
-    return
+    return Promise.resolve()
     await this.trackEvent('page_view', {
       title: document.title,
       url: window.location.href
