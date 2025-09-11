@@ -583,6 +583,7 @@ class ResourcesPageManager {
         <div class="resource-image">
           <img src="${item.featured_image_url || 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="${item.title}" />
           <div class="content-badge ${item.content_type}">${this.formatContentType(item.content_type)}</div>
+          ${item.podcast_url ? '<div class="podcast-indicator">🎧</div>' : ''}
         </div>
         <div class="resource-content">
           <h3>${item.title}</h3>
@@ -591,9 +592,10 @@ class ResourcesPageManager {
             <div class="read-time">
               <i data-lucide="clock"></i>
               <span>${item.reading_time_minutes || 5} min read</span>
+              ${item.podcast_url ? '<span class="podcast-available">• 🎙️ Podcast</span>' : ''}
             </div>
             <div class="resource-action">
-              <span>${this.getActionText(item.content_type)}</span>
+              <span>${item.podcast_url ? '🎧 Listen' : this.getActionText(item.content_type)}</span>
               <i data-lucide="arrow-right"></i>
             </div>
           </div>
@@ -648,6 +650,12 @@ class ResourcesPageManager {
 
   openContentModal(item) {
     console.log('Opening content for:', item.title, 'slug:', item.slug);
+    
+    // Check if it's a podcast episode
+    if (item.podcast_url) {
+      this.openPodcastModal(item);
+      return;
+    }
     
     // Check if it's a downloadable resource (ebook)
     if (item.content_type === 'ebook' || item.download_url) {
@@ -725,6 +733,73 @@ class ResourcesPageManager {
       ${item.content_type === 'ebook' ? '<p><strong>Format:</strong> PDF • <strong>Pages:</strong> 40+ • <strong>File Size:</strong> 2.5MB</p>' : ''}
     `;
     resourceId.value = item.id;
+
+    this.openModal(modal);
+  }
+
+  openPodcastModal(item) {
+    const modal = document.getElementById('content-modal');
+    const title = document.getElementById('content-modal-title');
+    const body = document.getElementById('content-modal-body');
+    
+    if (!modal || !title || !body) return;
+
+    title.textContent = item.title;
+    
+    const contentHTML = this.convertToHTML(item.content);
+    
+    body.innerHTML = `
+      <div class="content-header">
+        <div class="content-meta">
+          <span class="content-type-badge ${item.content_type}">${this.formatContentType(item.content_type)}</span>
+          <span class="content-author">By ${item.author_name}</span>
+          <span class="content-date">${this.formatDate(item.published_at)}</span>
+          ${item.reading_time_minutes ? `<span class="content-time">${item.reading_time_minutes} min read</span>` : ''}
+        </div>
+        ${item.featured_image_url ? `
+          <img src="${item.featured_image_url}" alt="${item.title}" class="content-featured-image" />
+        ` : ''}
+      </div>
+      
+      <div class="podcast-section">
+        <div class="podcast-card">
+          <div class="podcast-icon">
+            <i data-lucide="headphones"></i>
+          </div>
+          <div class="podcast-content">
+            <h3>🎧 Listen to the Podcast Episode</h3>
+            <p>Prefer to listen? This content is also available as a podcast episode.</p>
+            <a href="${item.podcast_url}" target="_blank" class="btn btn-primary btn-lg">
+              <i data-lucide="play"></i>
+              🎙️ Listen Now
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="content-body">
+        ${contentHTML}
+      </div>
+      <div class="content-footer">
+        <div class="content-tags">
+          ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+        </div>
+        <div class="content-actions">
+          <button class="btn btn-secondary" onclick="window.print()">
+            <i data-lucide="printer"></i>
+            Print
+          </button>
+          <a href="${item.podcast_url}" target="_blank" class="btn btn-secondary">
+            <i data-lucide="headphones"></i>
+            🎧 Listen to Podcast
+          </a>
+          <button class="btn btn-primary" onclick="window.resourcesManager.shareContent('${item.title}', window.location.href)">
+            <i data-lucide="share-2"></i>
+            Share
+          </button>
+        </div>
+      </div>
+    `;
 
     this.openModal(modal);
   }
