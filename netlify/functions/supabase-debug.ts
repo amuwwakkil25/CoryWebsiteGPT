@@ -37,7 +37,7 @@ async function tryClient(): Promise<Resource[] | null> {
       .select("id,title,slug,excerpt as summary,featured_image_url as cover_image,reading_time_minutes as reading_minutes,tags,is_published as published,created_at")
       .eq("is_published", true)
       .order("created_at", { ascending: false })
-      .limit(100);
+      .limit(1000);
     if (error) return null;
     console.info("[resources] client ok:", data?.length ?? 0);
     return (data ?? []) as Resource[];
