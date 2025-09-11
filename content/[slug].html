@@ -384,6 +384,101 @@
             margin: var(--space-4) 0;
         }
         
+        /* Related Posts Section */
+        .related-posts-section {
+            background: var(--bg-light);
+            padding: var(--space-10) 0;
+        }
+        
+        .related-posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-6);
+        }
+        
+        .related-post-card {
+            background: var(--midnight-navy);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            height: 300px;
+        }
+        
+        .related-post-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .related-post-image {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .related-post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .related-post-card:hover .related-post-image img {
+            transform: scale(1.05);
+        }
+        
+        .related-post-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: var(--space-6) var(--space-4) var(--space-4);
+            color: white;
+        }
+        
+        .related-post-overlay h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+            line-height: 1.3;
+        }
+        
+        .related-post-overlay p {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .related-post-content {
+            position: absolute;
+            bottom: var(--space-3);
+            left: var(--space-4);
+            right: var(--space-4);
+        }
+        
+        .related-post-meta {
+            margin-bottom: var(--space-2);
+        }
+        
+        .post-author {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--fresh-lime);
+            letter-spacing: 0.5px;
+        }
+        
+        .related-post-content h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: white;
+            margin: 0;
+            line-height: 1.3;
+        }
+        
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
             .content-hero h1 {
@@ -404,7 +499,78 @@
                 align-items: flex-start;
                 gap: var(--space-2);
             }
+            
+            .related-posts-grid {
+                grid-template-columns: 1fr;
+            }
         }
+        
+        /* CTA Section Styles */
+        .content-cta-section {
+            background: var(--gradient-brand);
+            padding: var(--space-8) 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .content-cta-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: var(--space-3);
+        }
+        
+        .content-cta-section p {
+            font-size: 1.125rem;
+            margin-bottom: var(--space-4);
+            opacity: 0.9;
+        }
+        
+        .share-section {
+            background: white;
+            padding: var(--space-6) 0;
+            border-top: 1px solid var(--border);
+        }
+        
+        .share-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+        }
+        
+        .share-text {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: var(--space-2);
+        }
+        
+        .share-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .share-btn.facebook { background: #1877f2; }
+        .share-btn.linkedin { background: #0077b5; }
+        .share-btn.twitter { background: #1da1f2; }
+        .share-btn.pinterest { background: #bd081c; }
+        .share-btn.email { background: var(--text-secondary); }
     </style>
 
     <script type="module">
@@ -578,6 +744,46 @@
                   </div>
                 </div>
               </section>
+
+              <!-- CTA Section -->
+              <section class="content-cta-section">
+                <div class="container">
+                  <h2>Ready to Transform Your Admissions Process?</h2>
+                  <p>See how Cory can boost your conversions and free up your team in just 30 minutes</p>
+                  <a href="/demo-and-pricing.html" class="btn btn-primary btn-lg" style="background: #dc2626; border: none;">
+                    Book a Demo
+                  </a>
+                </div>
+              </section>
+
+              <!-- Share Section -->
+              <section class="share-section">
+                <div class="container">
+                  <div class="share-content">
+                    <span class="share-text">SHARE:</span>
+                    <div class="share-buttons">
+                      <a href="#" class="share-btn facebook" onclick="this.shareOnFacebook()" title="Share on Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                      </a>
+                      <a href="#" class="share-btn linkedin" onclick="this.shareOnLinkedIn()" title="Share on LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                      </a>
+                      <a href="#" class="share-btn twitter" onclick="this.shareOnTwitter()" title="Share on Twitter">
+                        <i class="fab fa-twitter"></i>
+                      </a>
+                      <a href="#" class="share-btn pinterest" onclick="this.shareOnPinterest()" title="Share on Pinterest">
+                        <i class="fab fa-pinterest-p"></i>
+                      </a>
+                      <a href="#" class="share-btn email" onclick="this.shareViaEmail()" title="Share via Email">
+                        <i class="fas fa-envelope"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Related Posts Section -->
+              ${this.createRelatedPostsSection()}
             `
           }
 
@@ -721,6 +927,38 @@
             `
           }
 
+          createRelatedPostsSection() {
+            if (this.relatedContent.length === 0) return ''
+
+            return `
+              <!-- Related Posts Section -->
+              <section class="related-posts-section">
+                <div class="container">
+                  <h2 class="section-title">Related posts</h2>
+                  <div class="related-posts-grid">
+                    ${this.relatedContent.slice(0, 3).map(item => `
+                      <div class="related-post-card" onclick="window.location.href='/content/${item.slug}.html'">
+                        <div class="related-post-image">
+                          <img src="${item.featured_image_url || 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="${item.title}" />
+                          <div class="related-post-overlay">
+                            <h3>${item.title}</h3>
+                            <p>${item.excerpt}</p>
+                          </div>
+                        </div>
+                        <div class="related-post-content">
+                          <div class="related-post-meta">
+                            <span class="post-author">AGENT CORY</span>
+                          </div>
+                          <h4>${item.title}</h4>
+                        </div>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              </section>
+            `
+          }
+
           bindContentEvents() {
             const downloadBtn = document.getElementById('download-content-btn')
             if (downloadBtn) {
@@ -731,7 +969,7 @@
               item.addEventListener('click', () => {
                 const slug = item.getAttribute('data-slug')
                 if (slug) {
-                  window.location.href = `/content/${slug}`
+                  window.location.href = `/content/${slug}.html`
                 }
               })
             })
@@ -868,6 +1106,36 @@
             }
           }
 
+          shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href)
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank')
+          }
+
+          shareOnLinkedIn() {
+            const url = encodeURIComponent(window.location.href)
+            const title = encodeURIComponent(this.content?.title || '')
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}&title=${title}`, '_blank')
+          }
+
+          shareOnTwitter() {
+            const url = encodeURIComponent(window.location.href)
+            const text = encodeURIComponent(this.content?.title || '')
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank')
+          }
+
+          shareOnPinterest() {
+            const url = encodeURIComponent(window.location.href)
+            const description = encodeURIComponent(this.content?.excerpt || '')
+            const media = encodeURIComponent(this.content?.featured_image_url || '')
+            window.open(`https://pinterest.com/pin/create/button/?url=${url}&description=${description}&media=${media}`, '_blank')
+          }
+
+          shareViaEmail() {
+            const subject = encodeURIComponent(`Check out: ${this.content?.title || ''}`)
+            const body = encodeURIComponent(`I thought you might find this interesting: ${window.location.href}`)
+            window.location.href = `mailto:?subject=${subject}&body=${body}`
+          }
+
           showToast(message, type = 'info') {
             const toast = document.createElement('div')
             toast.className = `toast toast-${type}`
@@ -902,10 +1170,10 @@
 
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
-          new ContentPageManager()
+          window.contentPageManager = new ContentPageManager()
         })
 
-        // Make shareContent available globally
+        // Make sharing functions available globally
         window.shareContent = function() {
           if (window.contentPageManager) {
             window.contentPageManager.shareContent()

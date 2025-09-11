@@ -231,8 +231,8 @@ export class ResourcesManager {
       return
     }
     
-    // Navigate to dynamic content page
-    window.location.href = `/content/${item.slug}`
+    // Navigate to content page
+    window.location.href = `/content/${item.slug}.html`
   }
 
   private openLeadMagnetModal(item: any): void {

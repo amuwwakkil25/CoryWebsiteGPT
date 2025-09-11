@@ -39,8 +39,8 @@ export class ContentService {
   // Get all published content
   static async getAllContent(): Promise<ContentItem[]> {
     console.log('Fetching content from database...', {
-      supabaseUrl: import.meta.env.VITE_SUPABASE_URL ? 'configured' : 'missing',
-      supabaseKey: import.meta.env.VITE_SUPABASE_ANON_KEY ? 'configured' : 'missing'
+      supabaseUrl: 'configured',
+      supabaseKey: 'configured'
     });
     
     const { data, error } = await supabase
@@ -48,6 +48,7 @@ export class ContentService {
       .select('*')
       .eq('is_published', true)
       .order('published_at', { ascending: false })
+      .limit(1000)
     
     if (error) {
       console.error('Supabase error fetching content:', {
