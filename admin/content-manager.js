@@ -1017,4 +1017,9 @@ class ResourcesPageManager {
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   window.resourcesManager = new ResourcesPageManager();
+  
+  // Also initialize Lucide icons
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
 });
