@@ -13,7 +13,9 @@ export default defineConfig({
         'voice-demo': 'voice-demo.html',
         terms: 'terms.html',
         'roi-and-case-studies': 'roi-and-case-studies.html',
-        'content-slug': 'content/[slug].html'
+        'content-slug': 'content/[slug].html',
+        'ai-admissions-guide': 'content/ai-admissions-guide.html',
+        'double-conversion-strategies': 'content/double-conversion-strategies.html'
       }
     }
   }

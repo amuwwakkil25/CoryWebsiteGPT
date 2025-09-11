@@ -669,20 +669,8 @@ class ResourcesPageManager {
   openContentModal(item) {
     DiagnosticLogger.log('Opening content modal', { title: item.title, type: item.content_type });
     
-    // Check if it's a downloadable resource
-    if (item.content_type === 'ebook' || item.download_url) {
-      this.openLeadMagnetModal(item);
-      return;
-    }
-    
-    // Check if it's an external resource
-    if (item.external_url) {
-      window.open(item.external_url, '_blank');
-      return;
-    }
-    
-    // Show content modal
-    this.showContentModal(item);
+    // Navigate to individual content page
+    window.location.href = `/content/${item.slug}.html`;
   }
 
   showContentModal(item) {
