@@ -696,7 +696,7 @@ class ResourcesPageManager {
   }
 
   openContentModal(item) {
-    DiagnosticLogger.log('Opening content modal', { title: item.title, type: item.content_type });
+    console.log('Opening content modal', { title: item.title, type: item.content_type });
     
     // Check if it's a downloadable resource
     if (item.content_type === 'ebook' || item.download_url) {
@@ -710,8 +710,8 @@ class ResourcesPageManager {
       return;
     }
     
-    // Show content modal
-    this.showContentModal(item);
+    // Navigate to individual content page
+    window.location.href = `/${item.slug}.html`;
   }
 
   showContentModal(item) {
