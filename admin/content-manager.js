@@ -502,14 +502,13 @@ class ResourcesPageManager {
     const container = document.getElementById('resources-content');
     if (!container) return;
 
-    const startIndex = 0;
-    const endIndex = this.currentPage * this.itemsPerPage;
-    const itemsToShow = this.filteredContent.slice(startIndex, endIndex);
+    // Show ALL items, no pagination
+    const itemsToShow = this.filteredContent;
     
     DiagnosticLogger.log('Rendering all content', { 
       total: this.filteredContent.length,
       showing: itemsToShow.length,
-      page: this.currentPage
+      showingAll: true
     });
     
     if (itemsToShow.length === 0) {
@@ -533,7 +532,11 @@ class ResourcesPageManager {
     });
 
     // Update load more button
-    this.updateLoadMoreButton();
+    // Hide load more button since we show all items
+    const loadMoreBtn = document.getElementById('load-more');
+    if (loadMoreBtn) {
+      loadMoreBtn.style.display = 'none';
+    }
     
     // Re-initialize Lucide icons
     if (typeof lucide !== 'undefined') {
@@ -640,8 +643,8 @@ class ResourcesPageManager {
   }
 
   loadMoreContent() {
-    this.currentPage++;
-    this.renderAllContent();
+    // No longer needed since we show all items
+    console.log('Load more disabled - showing all items');
   }
 
   openContentModal(item) {
