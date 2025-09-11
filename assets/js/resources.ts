@@ -246,7 +246,6 @@ class DatabaseService {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Range': '0-999'
-          'Range': '0-999'
         }
       });
       
