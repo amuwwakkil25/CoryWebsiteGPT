@@ -236,7 +236,7 @@ class DatabaseService {
       const supabaseUrl = 'https://wjtmdrjuheclgdzwprku.supabase.co';
       const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c';
       
-      const url = `${supabaseUrl}/rest/v1/content_items?is_published=eq.true&order=published_at.desc&limit=1000`;
+      const url = `${supabaseUrl}/rest/v1/content_items?is_published=eq.true&order=published_at.desc`;
       DiagnosticLogger.log('Fetching from URL', { url });
       
       const response = await fetch(url, {
@@ -244,7 +244,8 @@ class DatabaseService {
           'apikey': supabaseKey,
           'Authorization': `Bearer ${supabaseKey}`,
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Range': '0-999'
         }
       });
       
