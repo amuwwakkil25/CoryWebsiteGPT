@@ -246,6 +246,7 @@ class DatabaseService {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Range': '0-999'
+          'Range': '0-999'
         }
       });
       
@@ -259,7 +260,7 @@ class DatabaseService {
       if (!response.ok) {
         const errorText = await response.text();
         DiagnosticLogger.log('Database error response', { errorText });
-        throw new Error(`Database query failed: ${response.status} ${response.statusText} - ${errorText}`);
+        throw new Error(`Database request failed: ${response.status} ${response.statusText}`);
       }
       
       const data = await response.json();
