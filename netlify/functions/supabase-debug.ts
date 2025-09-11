@@ -38,6 +38,7 @@ async function tryClient(): Promise<Resource[] | null> {
       .eq("is_published", true)
       .order("created_at", { ascending: false })
       .limit(1000);
+      .limit(1000);
     if (error) return null;
     console.info("[resources] client ok:", data?.length ?? 0);
     return (data ?? []) as Resource[];
