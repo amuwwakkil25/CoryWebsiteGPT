@@ -696,22 +696,28 @@ class ResourcesPageManager {
   }
 
   openContentModal(item) {
-    console.log('Opening content modal', { title: item.title, type: item.content_type });
+    console.log('Opening content modal', { title: item.title });
     
-    // Check if it's a downloadable resource
-    if (item.content_type === 'ebook' || item.download_url) {
+    // Navigate to individual content page
+    if (item.slug) {
+      window.location.href = `/${item.slug}.html`;
+      return;
+    }
+    
+    // Fallback: Check if it's a downloadable resource
+    if (item.download_url) {
       this.openLeadMagnetModal(item);
       return;
     }
     
-    // Check if it's an external resource
+    // Check if it's an external resource  
     if (item.external_url) {
       window.open(item.external_url, '_blank');
       return;
     }
     
-    // Navigate to individual content page
-    window.location.href = `/${item.slug}.html`;
+    // For now, just show a simple modal with the item info
+    this.showContentModal(item);
   }
 
   showContentModal(item) {
