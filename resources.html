@@ -1258,10 +1258,94 @@
             margin-bottom: 1rem;
         }
         
+        .case-study-metrics {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .case-study-metrics h3 {
+            color: #1e293b;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #059669;
+            margin-bottom: 0.25rem;
+        }
+        
+        .metric-label {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+        
+        .content-featured-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .content-type-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: 1rem;
+        }
+        
+        .content-type-badge.blog {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .content-type-badge.case_study {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .content-type-badge.guide {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .content-author, .content-date, .content-time {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-right: 1rem;
+        }
+        
         @media (max-width: 768px) {
             .podcast-card {
                 flex-direction: column;
                 text-align: center;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
     </style>
@@ -1409,8 +1493,8 @@
                     return;
                 }
                 
-                // Check if it's an external resource (webinar)
-                if (item.external_url) {
+                // For all other content types (blog, case_study, guide), show in modal
+                this.showContentModal(item);
                     window.open(item.external_url, '_blank');
                     return;
                 }
@@ -1612,6 +1696,78 @@
                 `;
 
                 this.openModal(modal);
+            }
+
+            showContentModal(item) {
+                const modal = document.getElementById('content-modal');
+                const title = document.getElementById('content-modal-title');
+                const body = document.getElementById('content-modal-body');
+                
+                if (!modal || !title || !body) return;
+
+                title.textContent = item.title;
+                
+                body.innerHTML = `
+                    <div class="content-header">
+                        <div class="content-meta">
+                            <span class="content-type-badge ${item.content_type}">${this.formatContentType(item.content_type)}</span>
+                            <span class="content-author">By ${item.author_name}</span>
+                            <span class="content-date">${this.formatDate(item.published_at)}</span>
+                            ${item.reading_time_minutes ? `<span class="content-time">${item.reading_time_minutes} min read</span>` : ''}
+                        </div>
+                        ${item.featured_image_url ? `
+                            <img src="${item.featured_image_url}" alt="${item.title}" class="content-featured-image" />
+                        ` : ''}
+                    </div>
+                    <div class="content-body">
+                        <p>${item.excerpt}</p>
+                        ${item.content ? this.convertToHTML(item.content) : '<p>Full content coming soon...</p>'}
+                    </div>
+                    ${item.content_type === 'case_study' && item.metrics ? this.createMetricsSection(item.metrics) : ''}
+                    <div class="content-footer">
+                        <div class="content-tags">
+                            ${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <div class="content-actions">
+                            <button class="btn btn-secondary" onclick="window.print()">
+                                <i data-lucide="printer"></i>
+                                Print
+                            </button>
+                            <button class="btn btn-primary" onclick="window.resourcesManager.shareContent('${item.title}', window.location.href)">
+                                <i data-lucide="share-2"></i>
+                                Share
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                this.openModal(modal);
+            }
+
+            createMetricsSection(metrics) {
+                if (!metrics || Object.keys(metrics).length === 0) return '';
+                
+                const metricsHTML = Object.entries(metrics).map(([key, value]) => `
+                    <div class="metric-item">
+                        <div class="metric-value">${value}</div>
+                        <div class="metric-label">${this.formatMetricLabel(key)}</div>
+                    </div>
+                `).join('');
+
+                return `
+                    <div class="case-study-metrics">
+                        <h3>Key Results</h3>
+                        <div class="metrics-grid">
+                            ${metricsHTML}
+                        </div>
+                    </div>
+                `;
+            }
+
+            formatMetricLabel(key) {
+                return key
+                    .replace(/_/g, ' ')
+                    .replace(/\b\w/g, l => l.toUpperCase());
             }
 
             convertToHTML(content) {
