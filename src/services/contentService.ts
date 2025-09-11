@@ -48,8 +48,6 @@ export class ContentService {
       .select('*')
       .eq('is_published', true)
       .order('published_at', { ascending: false })
-      .limit(1000)
-      .limit(1000)
     
     if (error) {
       console.error('Supabase error fetching content:', {
