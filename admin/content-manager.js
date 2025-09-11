@@ -502,9 +502,8 @@ class ResourcesPageManager {
     const container = document.getElementById('resources-content');
     if (!container) return;
 
-    // Show ALL items, no pagination
+    // Show ALL items without pagination
     const itemsToShow = this.filteredContent;
-    
     DiagnosticLogger.log('Rendering all content', { 
       total: this.filteredContent.length,
       showing: itemsToShow.length,
@@ -638,8 +637,8 @@ class ResourcesPageManager {
     const loadMoreBtn = document.getElementById('load-more');
     if (!loadMoreBtn) return;
 
-    const hasMore = this.filteredContent.length > this.currentPage * this.itemsPerPage;
-    loadMoreBtn.style.display = hasMore ? 'block' : 'none';
+    // Hide load more button since we show all items
+    loadMoreBtn.style.display = 'none';
   }
 
   loadMoreContent() {
