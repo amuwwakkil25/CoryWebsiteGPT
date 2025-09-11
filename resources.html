@@ -1198,6 +1198,73 @@
             }
         });
     </script>
+
+    <style>
+        /* Podcast indicator styles */
+        .podcast-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .podcast-available {
+            color: #10b981;
+            font-weight: 600;
+        }
+        
+        .podcast-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 2px solid #0ea5e9;
+        }
+        
+        .podcast-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .podcast-icon {
+            width: 64px;
+            height: 64px;
+            background: #0ea5e9;
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .podcast-icon i {
+            font-size: 1.5rem;
+        }
+        
+        .podcast-content h3 {
+            color: #0c4a6e;
+            margin-bottom: 0.5rem;
+        }
+        
+        .podcast-content p {
+            color: #0369a1;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .podcast-card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
     <script 
       src="https://beta.leadconnectorhq.com/loader.js"  
       data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js" 
@@ -1324,6 +1391,12 @@
             navigateToContent(item) {
                 console.log('Navigating to content:', item.title, 'type:', item.content_type);
                 
+                // Check if it's a podcast - open podcast modal
+                if (item.podcast_url) {
+                    this.openPodcastModal(item);
+                    return;
+                }
+                
                 // Check if it's a podcast episode
                 if (item.podcast_url) {
                     this.openPodcastModal(item);
@@ -1352,6 +1425,7 @@
                     <div class="featured-image">
                       <img src="${item.featured_image_url}" alt="${item.title}" />
                       <div class="content-badge ${item.content_type}">${this.formatContentType(item.content_type)}</div>
+                            ${item.podcast_url ? '<div class="podcast-indicator">🎧</div>' : ''}
                     </div>
                     <div class="featured-content">
                       <h3>${item.title}</h3>
@@ -1365,6 +1439,7 @@
                           <div class="meta-item">
                             <i data-lucide="clock" class="meta-icon"></i>
                             <span>${item.reading_time_minutes} min read</span>
+                                        ${item.podcast_url ? ' • <span class="podcast-available">🎙️ Podcast</span>' : ''}
                           </div>
                         ` : ''}
                         <div class="meta-item">
@@ -1386,6 +1461,7 @@
                     <div class="resource-image">
                       <img src="${item.featured_image_url}" alt="${item.title}" />
                       <div class="content-badge ${item.content_type}">${this.formatContentType(item.content_type)}</div>
+                            ${item.podcast_url ? '<div class="podcast-indicator">🎧</div>' : ''}
                     </div>
                     <div class="resource-content">
                       <h3>${item.title}</h3>
@@ -1394,9 +1470,10 @@
                         <div class="read-time">
                           <i data-lucide="clock"></i>
                           <span>${item.reading_time_minutes || 5} min read</span>
+                                    ${item.podcast_url ? ' • <span class="podcast-available">🎙️ Podcast</span>' : ''}
                         </div>
                         <div class="resource-action">
-                          <span>${this.getActionText(item.content_type)}</span>
+                                    <span>${item.podcast_url ? '🎧 Listen' : this.getActionText(item.content_type)}</span>
                           <i data-lucide="arrow-right"></i>
                         </div>
                       </div>
@@ -1469,6 +1546,89 @@
                 `;
 
                 this.openModal(modal);
+            }
+
+            openPodcastModal(item) {
+                const modal = document.getElementById('content-modal');
+                const title = document.getElementById('content-modal-title');
+                const body = document.getElementById('content-modal-body');
+                
+                if (!modal || !title || !body) return;
+
+                title.textContent = item.title;
+                
+                body.innerHTML = `
+                    <div class="content-header">
+                        <div class="content-meta">
+                            <span class="content-type-badge ${item.content_type}">${this.formatContentType(item.content_type)}</span>
+                            <span class="content-author">By ${item.author_name}</span>
+                            <span class="content-date">${this.formatDate(item.published_at)}</span>
+                            ${item.reading_time_minutes ? `<span class="content-time">${item.reading_time_minutes} min read</span>` : ''}
+                        </div>
+                        ${item.featured_image_url ? `
+                            <img src="${item.featured_image_url}" alt="${item.title}" class="content-featured-image" />
+                        ` : ''}
+                    </div>
+                    
+                    <div class="podcast-section">
+                        <div class="podcast-card">
+                            <div class="podcast-icon">
+                                <i data-lucide="headphones"></i>
+                            </div>
+                            <div class="podcast-content">
+                                <h3>🎧 Listen to the Podcast Episode</h3>
+                                <p>Prefer to listen? This content is also available as a podcast episode.</p>
+                                <a href="${item.podcast_url}" target="_blank" class="btn btn-primary btn-lg">
+                                    <i data-lucide="play"></i>
+                                    🎙️ Listen Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-body">
+                        <p>${item.excerpt}</p>
+                        ${item.content ? this.convertToHTML(item.content) : ''}
+                    </div>
+                    <div class="content-footer">
+                        <div class="content-tags">
+                            ${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <div class="content-actions">
+                            <button class="btn btn-secondary" onclick="window.print()">
+                                <i data-lucide="printer"></i>
+                                Print
+                            </button>
+                            <a href="${item.podcast_url}" target="_blank" class="btn btn-secondary">
+                                <i data-lucide="headphones"></i>
+                                🎧 Listen to Podcast
+                            </a>
+                            <button class="btn btn-primary" onclick="window.resourcesManager.shareContent('${item.title}', window.location.href)">
+                                <i data-lucide="share-2"></i>
+                                Share
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                this.openModal(modal);
+            }
+
+            convertToHTML(content) {
+                return content
+                    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+                    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+                    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+                    .replace(/^\* (.*$)/gm, '<li>$1</li>')
+                    .replace(/^(\d+)\. (.*$)/gm, '<li>$2</li>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/\n\n/g, '</p><p>')
+                    .replace(/^(.*)$/gm, '<p>$1</p>')
+                    .replace(/<p><h/g, '<h')
+                    .replace(/<\/h([1-6])><\/p>/g, '</h$1>')
+                    .replace(/<p><li>/g, '<ul><li>')
+                    .replace(/<\/li><\/p>/g, '</li></ul>');
             }
 
             openModal(modal) {
@@ -1627,6 +1787,38 @@
                     month: 'short', 
                     day: 'numeric' 
                 });
+            }
+
+            shareContent(title, url) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url).then(() => {
+                        this.showToast(`Link copied to clipboard: ${title}`, 'success');
+                    }).catch(() => {
+                        this.fallbackCopyToClipboard(url, title);
+                    });
+                } else {
+                    this.fallbackCopyToClipboard(url, title);
+                }
+            }
+
+            fallbackCopyToClipboard(url, title) {
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                textArea.style.top = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    this.showToast(`Link copied to clipboard: ${title}`, 'success');
+                } catch (err) {
+                    this.showToast('Unable to copy link. Please copy manually.', 'error');
+                }
+                
+                document.body.removeChild(textArea);
             }
         }
 
