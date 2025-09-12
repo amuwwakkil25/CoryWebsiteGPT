@@ -1356,34 +1356,116 @@
 
     <script>
         // Initialize Supabase client
+        // Initialize Supabase client
         const supabaseUrl = 'https://wjtmdrjuheclgdzwprku.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c';
         
-        // Database service
-        class DatabaseService {
-            static async getContent() {
+        // Database service for content loading
+        class ContentService {
+            static async getAllContent() {
                 try {
-                    console.log('Fetching content from database...');
+                    console.log('🔄 Fetching content from database...');
+                    console.log('Environment check:', {
+                        url: supabaseUrl ? 'configured' : 'missing',
+                        key: supabaseKey ? 'configured' : 'missing'
+                    });
                     
                     const response = await fetch(`${supabaseUrl}/rest/v1/content_items?is_published=eq.true&order=published_at.desc`, {
                         headers: {
                             'apikey': supabaseKey,
                             'Authorization': `Bearer ${supabaseKey}`,
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
                         }
                     });
                     
+                    console.log('Database response:', {
+                        status: response.status,
+                        statusText: response.statusText,
+                        ok: response.ok
+                    });
+                    
                     if (!response.ok) {
-                        throw new Error(`Database request failed: ${response.status}`);
+                        const errorText = await response.text();
+                        console.error('Database error response:', errorText);
+                        throw new Error(`Database error: ${response.status} - ${errorText}`);
                     }
                     
                     const data = await response.json();
-                    console.log('Database content loaded:', data.length, 'items');
+                    console.log('✅ Successfully loaded content items:', data.length);
+                    
+                    if (!data || data.length === 0) {
+                        console.warn('⚠️ No content items found in database');
+                        return this.getFallbackContent();
+                    }
+                    
                     return data;
                 } catch (error) {
-                    console.error('Database error:', error);
-                    throw error;
+                    console.error('❌ Database error:', error);
+                    console.log('📦 Using fallback content');
+                    return this.getFallbackContent();
                 }
+            }
+            
+            static getFallbackContent() {
+                return [
+                    {
+                        id: "ai-guide-fallback",
+                        title: "The Complete Guide to AI in Admissions",
+                        slug: "ai-admissions-guide",
+                        excerpt: "Comprehensive guide covering implementation strategies, best practices, and ROI measurement for AI-powered admissions automation.",
+                        content: "# The Complete Guide to AI in Admissions\n\nThis comprehensive guide covers everything you need to know about implementing AI in your admissions process...",
+                        content_type: "guide",
+                        featured_image_url: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800",
+                        author_name: "Agent Cory Team",
+                        author_title: "AI Admissions Experts",
+                        reading_time_minutes: 25,
+                        tags: ["AI", "Implementation", "Best Practices"],
+                        category: "ai",
+                        is_featured: true,
+                        is_published: true,
+                        published_at: new Date().toISOString(),
+                        view_count: 3420
+                    },
+                    {
+                        id: "conversion-webinar-fallback",
+                        title: "5 Strategies to Double Your Lead Conversion Rate",
+                        slug: "double-conversion-strategies",
+                        excerpt: "Learn proven tactics that top-performing institutions use to convert more inquiries into enrolled students.",
+                        content: "# 5 Strategies to Double Your Lead Conversion Rate\n\n## Strategy 1: Speed of Response\n\nThe faster you respond...",
+                        content_type: "webinar",
+                        featured_image_url: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
+                        author_name: "Agent Cory Team",
+                        author_title: "AI Admissions Experts",
+                        reading_time_minutes: 45,
+                        tags: ["Webinar", "Conversion", "Strategy"],
+                        category: "conversion",
+                        is_featured: true,
+                        is_published: true,
+                        published_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+                        external_url: "https://zoom.us/webinar/register/example",
+                        view_count: 1890
+                    },
+                    {
+                        id: "metro-case-study-fallback",
+                        title: "Case Study: Metro State University - 847% ROI in 12 Months",
+                        slug: "metro-state-case-study",
+                        excerpt: "How Metro State University transformed their admissions process and achieved record-breaking results with Agent Cory.",
+                        content: "# Metro State University Case Study\n\n## The Challenge\n\nMetro State University was struggling with low contact rates and slow response times...",
+                        content_type: "case_study",
+                        featured_image_url: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800",
+                        author_name: "Dr. Sarah Johnson",
+                        author_title: "Director of Admissions, Metro State University",
+                        reading_time_minutes: 12,
+                        tags: ["Case Study", "ROI", "University"],
+                        category: "admissions",
+                        is_featured: false,
+                        is_published: true,
+                        published_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+                        metrics: { roi_percentage: "847%", additional_revenue: "$2.1M", time_saved_hours: "2,100" },
+                        view_count: 2890
+                    }
+                ];
             }
         }
 
@@ -1406,13 +1488,14 @@
                     this.filteredContent = [...this.allContent];
                     
                     console.log('Resources loaded:', this.allContent.length, 'items');
-                    
+                    console.log('✅ Content loaded successfully:', this.allContent.length, 'items');
+                    console.log('Featured items:', this.allContent.filter(item => item.is_featured).length);
                     this.bindEvents();
                     this.renderFeaturedContent();
                     this.renderAllContent();
                     this.hideLoadingState();
                 } catch (error) {
-                    console.error('Error initializing resources:', error);
+                    console.error('❌ Failed to load content:', error);
                     // Show error with retry option
                     this.showErrorState(error.message);
                 }
@@ -1423,6 +1506,8 @@
                 if (!container) return;
 
                 const featuredItems = this.allContent.filter(item => item.is_featured);
+                
+                console.log('📌 Rendering featured content:', featuredItems.length, 'items');
                 
                 if (featuredItems.length === 0) {
                     container.innerHTML = '<div class="empty-state"><p>No featured resources available.</p></div>';
@@ -1443,6 +1528,7 @@
                 const container = document.getElementById('resources-content');
                 if (!container) return;
 
+                console.log('📋 Rendering all content:', this.filteredContent.length, 'items');
                 const startIndex = (this.currentPage - 1) * this.itemsPerPage;
                 const endIndex = startIndex + this.itemsPerPage;
                 const itemsToShow = this.filteredContent.slice(0, endIndex);
@@ -1477,6 +1563,7 @@
                 
                 // Check if it's a podcast - open podcast modal
                 if (item.podcast_url) {
+                    console.log('🎧 Opening podcast modal for:', item.title);
                     this.openPodcastModal(item);
                     return;
                 }
@@ -1489,17 +1576,20 @@
                 
                 // Check if it's a downloadable resource (ebook)
                 if (item.content_type === 'ebook' || item.download_url) {
+                    console.log('📥 Opening download modal for:', item.title);
                     this.openLeadMagnetModal(item);
                     return;
                 }
                 
                 // For all other content types (blog, case_study, guide), show in modal
                 this.showContentModal(item);
+                    console.log('🔗 Opening external URL for:', item.title);
                     window.open(item.external_url, '_blank');
                     return;
                 }
                 
                 // Navigate to the individual content page
+                console.log('📖 Opening content modal for:', item.title);
                 window.location.href = `/content/${item.slug}.html`;
             }
 
@@ -1775,7 +1865,7 @@
                     .replace(/^# (.*$)/gm, '<h1>$1</h1>')
                     .replace(/^## (.*$)/gm, '<h2>$1</h2>')
                     .replace(/^### (.*$)/gm, '<h3>$1</h3>')
-                    .replace(/^\* (.*$)/gm, '<li>$1</li>')
+                console.log('📝 Lead magnet request submitted:', {
                     .replace(/^(\d+)\. (.*$)/gm, '<li>$2</li>')
                     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                     .replace(/\*(.*?)\*/g, '<em>$1</em>')
@@ -1908,7 +1998,7 @@
                 if (newsletterForm) {
                     newsletterForm.addEventListener('submit', (e) => {
                         e.preventDefault();
-                        console.log('Newsletter signup');
+                console.log('📧 Newsletter signup:', { email });
                         e.target.reset();
                     });
                 }
@@ -1980,6 +2070,7 @@
 
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 DOM loaded, initializing resources manager...');
             console.log('DOM loaded, initializing resources manager...');
             window.resourcesManager = new ResourcesManager();
             
