@@ -12,6 +12,7 @@ export default defineConfig({
         privacy: 'privacy.html',
         'voice-demo': 'voice-demo.html',
         terms: 'terms.html',
+        'partnership-program': 'partnership-program.html',
         'ai-admissions-guide': 'ai-admissions-guide.html',
         'double-conversion-strategies': 'double-conversion-strategies.html',
         'psychology-fast-response-times': 'psychology-fast-response-times.html',
