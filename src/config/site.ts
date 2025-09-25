@@ -34,7 +34,8 @@ export const NAVIGATION_ITEMS = [
   { label: 'Features', href: '/features.html', id: 'features' },
   { label: 'ROI & Cases', href: '/roi-and-case-studies.html', id: 'roi-cases' },
   { label: 'Demo', href: '/demo-and-pricing.html', id: 'demo' },
-  { label: 'Resources', href: '/resources.html', id: 'resources' }
+  { label: 'Resources', href: '/resources.html', id: 'resources' },
+  { label: 'Partners', href: '/partnership-program.html', id: 'partners' }
 ]
 
 export const FOOTER_LINKS = {
