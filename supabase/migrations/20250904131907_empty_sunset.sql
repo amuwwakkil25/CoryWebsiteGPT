@@ -37,8 +37,13 @@
     - Include realistic content and metadata
 */
 
--- Create content type enum
-CREATE TYPE content_type_enum AS ENUM ('blog', 'case_study', 'ebook', 'guide', 'webinar');
+-- Create content type enum if not exists
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'content_type_enum') THEN
+    CREATE TYPE content_type_enum AS ENUM ('blog', 'case_study', 'ebook', 'guide', 'webinar');
+  END IF;
+END $$;
 
 -- Create content items table
 CREATE TABLE IF NOT EXISTS content_items (
