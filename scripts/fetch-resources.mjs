@@ -79,9 +79,9 @@ const staticContent = [
 ];
 
 try {
-  // Create data directory if it doesn't exist
-  mkdirSync('dist/data', { recursive: true });
-  
+  // Create data directory in public folder (Vite will copy it to dist)
+  mkdirSync('public/data', { recursive: true });
+
   // Generate static resources JSON
   const output = {
     ok: true,
@@ -89,8 +89,8 @@ try {
     generated_at: new Date().toISOString(),
     source: 'static_build'
   };
-  
-  writeFileSync('dist/data/resources.json', JSON.stringify(output, null, 2));
+
+  writeFileSync('public/data/resources.json', JSON.stringify(output, null, 2));
   console.log('✅ Generated static resources data:', staticContent.length, 'items');
 } catch (error) {
   console.error('❌ Error generating static resources:', error.message);
