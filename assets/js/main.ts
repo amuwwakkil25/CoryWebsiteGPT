@@ -577,12 +577,14 @@ class NavigationHandler {
         this.bindNavToggle();
         this.bindSmoothScroll();
         this.updateActiveNav();
+        this.bindStickyHeader();
+        this.bindDropdown();
     }
 
     bindNavToggle() {
         const toggle = document.querySelector('.nav-toggle');
         const menu = document.querySelector('.nav-menu');
-        
+
         if (toggle && menu) {
             toggle.addEventListener('click', () => {
                 toggle.classList.toggle('active');
@@ -597,6 +599,54 @@ class NavigationHandler {
                 }
             });
         }
+    }
+
+    bindStickyHeader() {
+        const header = document.querySelector('.header');
+        if (!header) return;
+
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            lastScroll = currentScroll;
+        });
+    }
+
+    bindDropdown() {
+        const dropdown = document.querySelector('.nav-dropdown');
+        const dropdownToggle = document.querySelector('.nav-dropdown-toggle');
+
+        if (!dropdown || !dropdownToggle) return;
+
+        // Toggle on click (mobile/touch)
+        dropdownToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isExpanded = dropdown.getAttribute('aria-expanded') === 'true';
+            dropdown.setAttribute('aria-expanded', !isExpanded);
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target)) {
+                dropdown.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Close dropdown when menu item is clicked
+        const dropdownLinks = dropdown.querySelectorAll('.nav-dropdown-link');
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                dropdown.setAttribute('aria-expanded', 'false');
+            });
+        });
     }
 
     bindSmoothScroll() {
