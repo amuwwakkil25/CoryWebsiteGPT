@@ -322,6 +322,8 @@ html, body {
   align-items: center;
   gap: var(--space-1);
   padding: var(--space-2) var(--space-4);
+  min-height: 44px;
+  min-width: 44px;
   border-radius: var(--radius-md);
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
@@ -332,6 +334,7 @@ html, body {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  justify-content: center;
 }
 
 .btn::before {
@@ -1095,6 +1098,7 @@ html, body {
 .input-group input {
   width: 100%;
   padding: var(--space-2);
+  min-height: 44px;
   border: 2px solid var(--border);
   border-radius: var(--radius);
   font-size: 1rem;
@@ -1129,12 +1133,22 @@ html, body {
 
 .slider-group input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   background: var(--gradient-sky);
   border-radius: 50%;
   cursor: pointer;
   box-shadow: var(--shadow);
+}
+
+.slider-group input[type="range"]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: var(--gradient-sky);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  border: none;
 }
 
 .result-cards {
@@ -1378,6 +1392,7 @@ cite span {
 .form-group textarea {
   width: 100%;
   padding: var(--space-2);
+  min-height: 44px;
   border: 2px solid var(--border);
   border-radius: var(--radius);
   font-size: 1rem;
@@ -2579,12 +2594,15 @@ cite span {
     color: var(--sky-gradient-start);
 }
 
+.voice-demo-btn {
     width: 60px;
     height: 60px;
     position: relative;
     overflow: hidden;
+}
 
 .voice-demo-btn::before {
+    content: '';
     transform: scale(1.05);
     position: absolute;
     top: 0;
@@ -3515,6 +3533,251 @@ cite span {
   text-decoration: underline;
 }
 
+/* Mobile Responsiveness Enhancements */
+@media (max-width: 768px) {
+  /* Enhanced Button Tap Targets on Mobile */
+  .btn {
+    min-height: 48px;
+    padding: var(--space-2) var(--space-3);
+    font-size: 1rem;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .btn-lg {
+    min-height: 52px;
+    padding: var(--space-3) var(--space-4);
+    font-size: 1.125rem;
+  }
+
+  .btn-sm {
+    min-height: 44px;
+    padding: var(--space-2) var(--space-3);
+    font-size: 0.9375rem;
+  }
+
+  /* Form Fields Mobile Optimization */
+  .input-group input,
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    min-height: 48px;
+    padding: var(--space-2) var(--space-3);
+    font-size: 16px;
+    -webkit-appearance: none;
+    border-radius: var(--radius-md);
+  }
+
+  .form-group textarea {
+    min-height: 120px;
+  }
+
+  /* ROI Calculator Mobile Layout */
+  .calculator-widget {
+    grid-template-columns: 1fr;
+    padding: var(--space-3);
+    gap: var(--space-4);
+  }
+
+  .calculator-inputs,
+  .calculator-assumptions,
+  .calculator-results {
+    width: 100%;
+  }
+
+  .input-group {
+    margin-bottom: var(--space-4);
+  }
+
+  .input-group label,
+  .slider-group label {
+    font-size: 0.9375rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .slider-group input[type="range"] {
+    height: 8px;
+    margin: var(--space-2) 0;
+  }
+
+  .slider-group input[type="range"]::-webkit-slider-thumb {
+    width: 28px;
+    height: 28px;
+  }
+
+  .slider-group input[type="range"]::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+  }
+
+  .result-cards {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .result-card {
+    padding: var(--space-4);
+  }
+
+  .result-value {
+    font-size: 1.75rem;
+  }
+
+  /* Hero Section Mobile */
+  .hero-ctas {
+    flex-direction: column;
+    gap: var(--space-2);
+    width: 100%;
+  }
+
+  .hero-ctas .btn {
+    width: 100%;
+  }
+
+  .hero-stats {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .stat-chip {
+    width: 100%;
+    justify-content: center;
+    padding: var(--space-3);
+    min-height: 48px;
+  }
+
+  /* Navigation Mobile */
+  .nav-toggle {
+    display: flex;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Demo Cards Mobile */
+  .demo-cards {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .demo-card {
+    padding: var(--space-4);
+  }
+
+  /* Process Cards Mobile */
+  .process-steps-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  /* Benefits Grid Mobile */
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  /* Feature Rows Mobile */
+  .feature-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  /* Modal Mobile */
+  .modal-content {
+    width: 95%;
+    margin: var(--space-2);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  /* Form Actions Mobile */
+  .form-actions {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+
+  /* Footer Mobile */
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  /* Testimonials Mobile */
+  .testimonials {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  /* Checkbox Mobile Touch Target */
+  .checkbox-label input[type="checkbox"] {
+    min-width: 20px;
+    min-height: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Prevent Zoom on Input Focus */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="password"],
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra Small Screens */
+  .btn {
+    min-height: 50px;
+    font-size: 1rem;
+  }
+
+  .input-group input,
+  .form-group input,
+  .form-group select {
+    min-height: 50px;
+    font-size: 16px;
+  }
+
+  .result-value {
+    font-size: 1.5rem;
+  }
+
+  .container {
+    padding: 0 var(--space-2);
+  }
+
+  .section {
+    padding: var(--space-6) 0;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Ensure all interactive elements have adequate tap targets */
+  a, button, input, select, textarea, label {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Remove hover effects on touch devices */
+  .btn:hover::before {
+    display: none;
+  }
+
+  /* Increase spacing between tappable elements */
+  .nav-menu {
+    gap: var(--space-3);
+  }
+}
+
 /* Print Styles for Accessibility */
 @media print {
   .header,
@@ -3524,17 +3787,17 @@ cite span {
   .btn {
     display: none !important;
   }
-  
+
   .hero,
   .page-hero {
     background: none !important;
     color: var(--text-primary) !important;
   }
-  
+
   .section {
     padding: var(--space-4) 0;
   }
-  
+
   a {
     color: var(--text-primary) !important;
     text-decoration: underline !important;
