@@ -3,7 +3,18 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-console.log('ENV CHECK:', { url: supabaseUrl, hasKey: !!supabaseKey });
+console.log('ENV CHECK:', {
+  url: supabaseUrl,
+  urlType: typeof supabaseUrl,
+  hasKey: !!supabaseKey,
+  keyType: typeof supabaseKey,
+  keyLength: supabaseKey?.length
+});
+
+if (!supabaseUrl || !supabaseKey) {
+  console.error('MISSING ENV VARS:', { supabaseUrl, supabaseKey });
+  throw new Error('Supabase configuration is missing. Please check environment variables.');
+}
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
