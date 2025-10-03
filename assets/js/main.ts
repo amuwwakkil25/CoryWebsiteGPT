@@ -1,7 +1,4 @@
 // Main JavaScript for Agent Cory Marketing Site
-import { WebsiteIntegration } from '../../src/utils/websiteIntegration.ts';
-import { ROICalculator as DatabaseROICalculator } from '../../src/components/ROICalculator.ts';
-import { DemoService } from '../../src/services/demoService.ts';
 
 // Global state
 let leadBus = {
