@@ -356,11 +356,27 @@ html, body {
   background: var(--gradient-sky);
   color: var(--text-inverse);
   box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
+  animation: pulse 2s infinite;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 4px 16px rgba(30, 144, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 24px rgba(30, 144, 255, 0.5);
+  }
 }
 
 .btn-secondary {
@@ -860,6 +876,65 @@ html, body {
   box-shadow: var(--shadow-xl);
 }
 
+/* Cory Personality Elements */
+.section-header-with-cory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.section-cory-avatar {
+  width: 80px;
+  height: 80px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+  animation: float 6s ease-in-out infinite;
+}
+
+.section-subtitle {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  margin-top: var(--space-2);
+  font-weight: 400;
+}
+
+.cta-content-with-cory {
+  position: relative;
+  text-align: center;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.cta-cory-avatar {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto var(--space-4);
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Demo Cards */
 .demo-row {
   background: var(--bg-light);
@@ -882,13 +957,27 @@ html, body {
   text-align: center;
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
   min-width: 0;
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.demo-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.demo-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.demo-card:nth-child(3) {
+  animation-delay: 0.3s;
 }
 
 .demo-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-8px) scale(1.02);
   box-shadow: var(--shadow-xl);
 }
 
@@ -4121,6 +4210,27 @@ cite span {
   .hero-video-section {
     margin-top: var(--space-6);
     max-width: 100%;
+  }
+
+  /* Cory Personality Mobile */
+  .section-header-with-cory {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-3);
+  }
+
+  .section-cory-avatar {
+    width: 60px;
+    height: 60px;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+  }
+
+  .cta-cory-avatar {
+    width: 90px;
+    height: 90px;
   }
 
   .hero-badge {
