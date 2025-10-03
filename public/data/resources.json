@@ -14,7 +14,7 @@
         "Best Practices"
       ],
       "published": true,
-      "created_at": "2025-10-03T16:11:05.441Z"
+      "created_at": "2025-10-03T16:14:04.940Z"
     },
     {
       "id": "conversion-webinar-static",
@@ -29,7 +29,7 @@
         "Strategy"
       ],
       "published": true,
-      "created_at": "2025-10-01T16:11:05.442Z"
+      "created_at": "2025-10-01T16:14:04.940Z"
     },
     {
       "id": "metro-case-study-static",
@@ -44,7 +44,7 @@
         "University"
       ],
       "published": true,
-      "created_at": "2025-09-26T16:11:05.442Z"
+      "created_at": "2025-09-26T16:14:04.940Z"
     },
     {
       "id": "benchmarks-report-static",
@@ -59,7 +59,7 @@
         "Research"
       ],
       "published": true,
-      "created_at": "2025-10-02T16:11:05.442Z"
+      "created_at": "2025-10-02T16:14:04.940Z"
     },
     {
       "id": "response-time-blog-static",
@@ -74,7 +74,7 @@
         "Conversion"
       ],
       "published": true,
-      "created_at": "2025-09-19T16:11:05.442Z"
+      "created_at": "2025-09-19T16:14:04.940Z"
     },
     {
       "id": "crm-integration-guide-static",
@@ -89,9 +89,9 @@
         "Automation"
       ],
       "published": true,
-      "created_at": "2025-09-23T16:11:05.442Z"
+      "created_at": "2025-09-23T16:14:04.940Z"
     }
   ],
-  "generated_at": "2025-10-03T16:11:05.442Z",
+  "generated_at": "2025-10-03T16:14:04.940Z",
   "source": "static_build"
 }

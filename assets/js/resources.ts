@@ -2,11 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-let supabase: any = null;
-
-if (supabaseUrl && supabaseKey) {
-  supabase = createClient(supabaseUrl, supabaseKey);
-}
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 interface ContentItem {
   id: string;
@@ -44,60 +40,27 @@ class ResourcesManager {
 
   async loadResources() {
     try {
-      // Try to load from static JSON first (always available)
-      const staticResponse = await fetch('/data/resources.json');
-      if (staticResponse.ok) {
-        const staticData = await staticResponse.json();
-        console.log('Loaded static resources:', staticData.items?.length || 0);
+      console.log('Loading resources from Supabase...');
+      console.log('Supabase URL:', supabaseUrl);
 
-        // Convert static format to content_items format
-        this.allResources = staticData.items.map((item: any) => ({
-          id: item.id,
-          title: item.title,
-          slug: item.slug,
-          excerpt: item.summary,
-          content_type: this.guessContentType(item.tags),
-          featured_image_url: item.cover_image,
-          author_name: 'Agent Cory Team',
-          reading_time_minutes: item.reading_minutes,
-          tags: item.tags,
-          category: item.tags?.[0] || 'General',
-          is_featured: staticData.items.indexOf(item) < 3,
-          is_published: item.published,
-          published_at: item.created_at
-        }));
-        this.filteredResources = this.allResources;
-        return;
+      const { data, error } = await supabase
+        .from('content_items')
+        .select('*')
+        .eq('is_published', true)
+        .order('published_at', { ascending: false });
+
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
       }
 
-      // Fallback to Supabase if static data not available
-      if (supabase) {
-        console.log('Loading resources from Supabase...');
-        const { data, error } = await supabase
-          .from('content_items')
-          .select('*')
-          .eq('is_published', true)
-          .order('published_at', { ascending: false });
-
-        if (error) throw error;
-
-        console.log('Loaded Supabase resources:', data?.length || 0);
-        this.allResources = data || [];
-        this.filteredResources = this.allResources;
-      }
+      console.log('Loaded resources:', data?.length || 0);
+      this.allResources = data || [];
+      this.filteredResources = this.allResources;
     } catch (error) {
       console.error('Error loading resources:', error);
       this.showError();
     }
-  }
-
-  guessContentType(tags: string[]): string {
-    if (!tags) return 'blog';
-    const tagLower = tags.join(' ').toLowerCase();
-    if (tagLower.includes('case study')) return 'case_study';
-    if (tagLower.includes('webinar')) return 'webinar';
-    if (tagLower.includes('guide')) return 'guide';
-    return 'blog';
   }
 
   setupEventListeners() {
