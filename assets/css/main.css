@@ -742,6 +742,13 @@ html, body {
   letter-spacing: 0.05em;
 }
 
+.hero-video-section {
+  margin-top: var(--space-8);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .hero-visual {
   position: relative;
   display: flex;
@@ -4109,6 +4116,11 @@ cite span {
 
   .hero-stats .stat-label {
     font-size: 0.75rem;
+  }
+
+  .hero-video-section {
+    margin-top: var(--space-6);
+    max-width: 100%;
   }
 
   .hero-badge {
