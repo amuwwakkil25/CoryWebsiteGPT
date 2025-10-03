@@ -40,14 +40,21 @@ class ResourcesManager {
 
   async loadResources() {
     try {
+      console.log('Loading resources from Supabase...');
+      console.log('Supabase URL:', supabaseUrl);
+
       const { data, error } = await supabase
         .from('content_items')
         .select('*')
         .eq('is_published', true)
         .order('published_at', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
 
+      console.log('Loaded resources:', data?.length || 0);
       this.allResources = data || [];
       this.filteredResources = this.allResources;
     } catch (error) {
