@@ -33,8 +33,8 @@ class ResourcesManager {
   }
 
   async init() {
-    await this.loadResources();
     this.setupEventListeners();
+    await this.loadResources();
     this.render();
   }
 
@@ -42,12 +42,20 @@ class ResourcesManager {
     try {
       console.log('Loading resources from Supabase...');
       console.log('Supabase URL:', supabaseUrl);
+      console.log('Supabase Key exists:', !!supabaseKey);
+
+      if (!supabaseUrl || !supabaseKey) {
+        console.error('Missing Supabase credentials');
+        console.error('URL:', supabaseUrl);
+        console.error('Key exists:', !!supabaseKey);
+        throw new Error('Supabase credentials not configured');
+      }
 
       const { data, error } = await supabase
         .from('content_items')
         .select('*')
         .eq('is_published', true)
-        .order('published_at', { ascending: false });
+        .order('published_at', { ascending: false});
 
       if (error) {
         console.error('Supabase error:', error);
@@ -55,6 +63,7 @@ class ResourcesManager {
       }
 
       console.log('Loaded resources:', data?.length || 0);
+      console.log('First resource:', data?.[0]);
       this.allResources = data || [];
       this.filteredResources = this.allResources;
     } catch (error) {
