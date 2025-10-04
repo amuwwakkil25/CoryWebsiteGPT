@@ -35,6 +35,16 @@ function createModal(item: ContentItem) {
           ${item.author_name ? `<span>By ${item.author_name}</span>` : ''}
           <span>${item.reading_time_minutes || 5} min read</span>
         </div>
+        ${item.podcast_url ? `
+          <div class="modal-video-link">
+            <a href="${item.podcast_url}" target="_blank" rel="noopener noreferrer" class="video-link-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Watch Video/Podcast
+            </a>
+          </div>
+        ` : ''}
         <div class="modal-text">${item.content || item.excerpt || '<p>Content not available.</p>'}</div>
       </div>
     </div>
@@ -86,6 +96,7 @@ interface ContentItem {
   reading_time_minutes?: number;
   author_name?: string;
   published_at?: string;
+  podcast_url?: string;
 }
 
 async function loadAndDisplayResources() {
