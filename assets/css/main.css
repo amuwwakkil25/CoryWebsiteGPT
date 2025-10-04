@@ -4666,27 +4666,39 @@ cite span {
   }
 }
 
-/* Modal Media Link Styles - Discrete and subtle */
-.modal-meta .media-link {
+/* Modal Media Link Styles - Discrete button at top */
+.modal-media-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.375rem;
+  gap: var(--space-2);
   color: var(--sky-gradient-start);
   text-decoration: none;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   transition: all 0.2s ease;
-  padding: 0.25rem 0.5rem;
-  border-radius: var(--radius);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--bg-light);
+  margin-bottom: var(--space-4);
 }
 
-.modal-meta .media-link:hover {
+.modal-media-link:hover {
   color: var(--midnight-navy);
   background: var(--silver-mist);
+  border-color: var(--sky-gradient-start);
+  transform: translateY(-1px);
 }
 
-.modal-meta .media-link svg {
-  width: 16px;
-  height: 16px;
+.modal-media-link svg {
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .modal-media-link {
+    width: 100%;
+    justify-content: center;
+  }
 }
