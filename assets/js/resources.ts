@@ -18,6 +18,117 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+function createLeadCaptureModal(item: ContentItem) {
+  const modal = document.createElement('div');
+  modal.className = 'content-modal';
+  modal.innerHTML = `
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close">&times;</button>
+      <div class="modal-body" style="padding: 3rem 2rem;">
+        <h2 style="margin-bottom: 1rem; font-size: 1.75rem;">Get Your Free ${item.content_type === 'guide' ? 'Guide' : 'eBook'}</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;">${item.title}</p>
+        <form id="lead-capture-form" class="lead-form">
+          <div class="form-group">
+            <label for="first_name">First Name *</label>
+            <input type="text" id="first_name" name="first_name" required />
+          </div>
+          <div class="form-group">
+            <label for="last_name">Last Name *</label>
+            <input type="text" id="last_name" name="last_name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" />
+          </div>
+          <div class="form-group">
+            <label for="institution">Institution/Organization</label>
+            <input type="text" id="institution" name="institution" />
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Download Now</button>
+          <div id="form-message" style="margin-top: 1rem; display: none;"></div>
+        </form>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+  document.body.style.overflow = 'hidden';
+
+  setTimeout(() => modal.classList.add('active'), 10);
+
+  const form = modal.querySelector('#lead-capture-form') as HTMLFormElement;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = {
+      first_name: formData.get('first_name'),
+      last_name: formData.get('last_name'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      institution: formData.get('institution'),
+      content_item_id: item.id,
+      content_title: item.title
+    };
+
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const messageDiv = form.querySelector('#form-message') as HTMLDivElement;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    try {
+      const { error } = await supabase
+        .from('lead_captures')
+        .insert([data]);
+
+      if (error) throw error;
+
+      messageDiv.style.display = 'block';
+      messageDiv.style.color = 'var(--success)';
+      messageDiv.textContent = 'Success! Check your email for the download link.';
+
+      form.reset();
+
+      setTimeout(() => {
+        closeModal();
+      }, 2000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      messageDiv.style.display = 'block';
+      messageDiv.style.color = 'var(--error)';
+      messageDiv.textContent = 'Something went wrong. Please try again.';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Download Now';
+    }
+  });
+
+  const closeModal = () => {
+    modal.classList.remove('active');
+    setTimeout(() => {
+      document.body.removeChild(modal);
+      document.body.style.overflow = '';
+    }, 300);
+  };
+
+  modal.querySelector('.modal-close')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    closeModal();
+  });
+
+  modal.querySelector('.modal-overlay')?.addEventListener('click', (e) => {
+    if (e.target === modal.querySelector('.modal-overlay')) {
+      closeModal();
+    }
+  });
+}
+
 function createModal(item: ContentItem) {
   const modal = document.createElement('div');
   modal.className = 'content-modal';
@@ -91,14 +202,16 @@ function attachClickHandlers(items: ContentItem[]) {
     const itemId = card.getAttribute('data-id');
     const itemType = card.getAttribute('data-type');
 
-    if (itemType === 'blog' || itemType === 'case_study') {
-      card.addEventListener('click', () => {
-        const item = items.find(i => i.id === itemId);
-        if (item) {
+    card.addEventListener('click', () => {
+      const item = items.find(i => i.id === itemId);
+      if (item) {
+        if (itemType === 'guide' || itemType === 'ebook') {
+          createLeadCaptureModal(item);
+        } else if (itemType === 'blog' || itemType === 'case_study') {
           createModal(item);
         }
-      });
-    }
+      }
+    });
   });
 }
 
