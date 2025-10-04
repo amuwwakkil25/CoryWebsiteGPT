@@ -2,11 +2,12 @@
   command = "npm run build"
   publish = "dist"
 
-# IMPORTANT: Update these in Netlify Dashboard → Site Settings → Environment Variables
-# These build-time variables are only used during build, but should match your current Supabase credentials
+# Environment variables are set in Netlify Dashboard → Site Settings → Environment Variables
+# These values in netlify.toml are NOT used if environment variables are set in Netlify Dashboard
+# Netlify Dashboard variables take precedence during build
 [build.environment]
+  # These are fallback values only - set in Netlify Dashboard for production
   VITE_SUPABASE_URL = "https://0ec90b57d6e95fcbda19832f.supabase.co"
-  VITE_SUPABASE_ANON_KEY = "YOUR_NEW_ANON_KEY_HERE"
 
 [functions]
   node_bundler = "esbuild"
