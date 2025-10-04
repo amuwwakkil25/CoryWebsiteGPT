@@ -18,15 +18,74 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+function createModal(item: ContentItem) {
+  const modal = document.createElement('div');
+  modal.className = 'content-modal';
+  modal.innerHTML = `
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close">&times;</button>
+      <div class="modal-header">
+        <img src="${item.featured_image_url || 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="${item.title}">
+        <span class="content-badge ${item.content_type}">${item.content_type}</span>
+      </div>
+      <div class="modal-body">
+        <h2>${item.title}</h2>
+        <div class="modal-meta">
+          ${item.author_name ? `<span>By ${item.author_name}</span>` : ''}
+          <span>${item.reading_time_minutes || 5} min read</span>
+        </div>
+        <div class="modal-text">${item.content || item.excerpt || '<p>Content not available.</p>'}</div>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+  document.body.style.overflow = 'hidden';
+
+  setTimeout(() => modal.classList.add('active'), 10);
+
+  const closeModal = () => {
+    modal.classList.remove('active');
+    setTimeout(() => {
+      document.body.removeChild(modal);
+      document.body.style.overflow = '';
+    }, 300);
+  };
+
+  modal.querySelector('.modal-close')?.addEventListener('click', closeModal);
+  modal.querySelector('.modal-overlay')?.addEventListener('click', closeModal);
+}
+
+function attachClickHandlers(items: ContentItem[]) {
+  const cards = document.querySelectorAll('.resource-card, .featured-card');
+  cards.forEach(card => {
+    const itemId = card.getAttribute('data-id');
+    const itemType = card.getAttribute('data-type');
+
+    if (itemType === 'blog' || itemType === 'case_study') {
+      card.addEventListener('click', () => {
+        const item = items.find(i => i.id === itemId);
+        if (item) {
+          createModal(item);
+        }
+      });
+    }
+  });
+}
+
 interface ContentItem {
   id: string;
   title: string;
   excerpt: string;
+  content: string;
   content_type: string;
   is_featured?: boolean;
   featured_image_url?: string;
   tags?: string[];
   reading_time_minutes?: number;
+  author_name?: string;
+  published_at?: string;
 }
 
 async function loadAndDisplayResources() {
@@ -75,7 +134,7 @@ async function loadAndDisplayResources() {
         featuredContainer.innerHTML = '<p>No featured resources.</p>';
       } else {
         featuredContainer.innerHTML = featured.map(item => `
-          <div class="featured-card">
+          <div class="featured-card" data-id="${item.id}" data-type="${item.content_type}" style="cursor: pointer;">
             <div class="featured-image">
               <img src="${item.featured_image_url || 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="${item.title}">
               <span class="content-badge ${item.content_type}">${item.content_type}</span>
@@ -89,12 +148,14 @@ async function loadAndDisplayResources() {
             </div>
           </div>
         `).join('');
+
+        attachClickHandlers(data);
       }
     }
 
     if (allContainer) {
       allContainer.innerHTML = all.map(item => `
-        <div class="resource-card">
+        <div class="resource-card" data-id="${item.id}" data-type="${item.content_type}" style="cursor: pointer;">
           <div class="resource-image">
             <img src="${item.featured_image_url || 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="${item.title}">
             <span class="content-badge ${item.content_type}">${item.content_type}</span>
@@ -108,6 +169,8 @@ async function loadAndDisplayResources() {
           </div>
         </div>
       `).join('');
+
+      attachClickHandlers(data);
     }
 
     console.log('RENDERING COMPLETE');
