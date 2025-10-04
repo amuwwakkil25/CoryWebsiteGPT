@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/fetch-resources.mjs",
     "build": "vite build",
     "preview": "vite preview"
   },
