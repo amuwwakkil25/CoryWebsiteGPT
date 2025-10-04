@@ -35,12 +35,23 @@ function createModal(item: ContentItem) {
           ${item.author_name ? `<span>By ${item.author_name}</span>` : ''}
           <span>${item.reading_time_minutes || 5} min read</span>
         </div>
-        ${item.podcast_url ? `
-          <a href="${item.podcast_url}" target="_blank" rel="noopener noreferrer" class="modal-media-link">
+        ${item.video_podcast_url ? `
+          <a href="${item.video_podcast_url}" target="_blank" rel="noopener noreferrer" class="modal-media-link">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="5 3 19 12 5 21 5 3"></polygon>
             </svg>
             <span>Watch Video/Podcast</span>
+          </a>
+        ` : ''}
+        ${item.podcast_url ? `
+          <a href="${item.podcast_url}" target="_blank" rel="noopener noreferrer" class="modal-media-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" y1="19" x2="12" y2="23"></line>
+              <line x1="8" y1="23" x2="16" y2="23"></line>
+            </svg>
+            <span>Listen to Audio Podcast</span>
           </a>
         ` : ''}
         <div class="modal-text">${item.content || item.excerpt || '<p>Content not available.</p>'}</div>
@@ -104,6 +115,7 @@ interface ContentItem {
   author_name?: string;
   published_at?: string;
   podcast_url?: string;
+  video_podcast_url?: string;
 }
 
 async function loadAndDisplayResources() {
