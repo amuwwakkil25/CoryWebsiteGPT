@@ -166,8 +166,6 @@ async function loadAndDisplayResources() {
             </div>
           </div>
         `).join('');
-
-        attachClickHandlers(data);
       }
     }
 
@@ -187,9 +185,9 @@ async function loadAndDisplayResources() {
           </div>
         </div>
       `).join('');
-
-      attachClickHandlers(data);
     }
+
+    attachClickHandlers(data);
 
     console.log('RENDERING COMPLETE');
 
