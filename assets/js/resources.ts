@@ -23,34 +23,38 @@ function createLeadCaptureModal(item: ContentItem) {
   modal.className = 'content-modal';
   modal.innerHTML = `
     <div class="modal-overlay"></div>
-    <div class="modal-content">
+    <div class="modal-content lead-capture-content">
       <button class="modal-close">&times;</button>
-      <div class="modal-body" style="padding: 3rem 2rem;">
-        <h2 style="margin-bottom: 1rem; font-size: 1.75rem;">Get Your Free ${item.content_type === 'guide' ? 'Guide' : 'eBook'}</h2>
-        <p style="color: var(--text-secondary); margin-bottom: 2rem;">${item.title}</p>
+      <div class="modal-body">
+        <h2>Get Your Free ${item.content_type === 'guide' ? 'Guide' : 'eBook'}</h2>
+        <p class="lead-subtitle">${item.title}</p>
         <form id="lead-capture-form" class="lead-form">
-          <div class="form-group">
-            <label for="first_name">First Name *</label>
-            <input type="text" id="first_name" name="first_name" required />
-          </div>
-          <div class="form-group">
-            <label for="last_name">Last Name *</label>
-            <input type="text" id="last_name" name="last_name" required />
+          <div class="form-row">
+            <div class="form-group">
+              <label for="first_name">First Name *</label>
+              <input type="text" id="first_name" name="first_name" required />
+            </div>
+            <div class="form-group">
+              <label for="last_name">Last Name *</label>
+              <input type="text" id="last_name" name="last_name" required />
+            </div>
           </div>
           <div class="form-group">
             <label for="email">Email *</label>
             <input type="email" id="email" name="email" required />
           </div>
-          <div class="form-group">
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" />
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" />
+            </div>
+            <div class="form-group">
+              <label for="institution">Institution</label>
+              <input type="text" id="institution" name="institution" />
+            </div>
           </div>
-          <div class="form-group">
-            <label for="institution">Institution/Organization</label>
-            <input type="text" id="institution" name="institution" />
-          </div>
-          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Download Now</button>
-          <div id="form-message" style="margin-top: 1rem; display: none;"></div>
+          <button type="submit" class="btn btn-primary">Download Now</button>
+          <div id="form-message"></div>
         </form>
       </div>
     </div>
