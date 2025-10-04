@@ -62,10 +62,16 @@ function createModal(item: ContentItem) {
   };
 
   modal.querySelector('.modal-close')?.addEventListener('click', (e) => {
+    e.preventDefault();
     e.stopPropagation();
     closeModal();
   });
-  modal.querySelector('.modal-overlay')?.addEventListener('click', closeModal);
+
+  modal.querySelector('.modal-overlay')?.addEventListener('click', (e) => {
+    if (e.target === modal.querySelector('.modal-overlay')) {
+      closeModal();
+    }
+  });
 }
 
 function attachClickHandlers(items: ContentItem[]) {
