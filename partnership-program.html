@@ -108,52 +108,80 @@
             </div>
         </section>
 
-        <!-- The Challenge -->
-        <section class="executive-summary section">
+        <!-- Challenge & Opportunity -->
+        <section class="challenge-opportunity-section section">
             <div class="container">
-                <div class="summary-content">
-                    <h2>The Challenge</h2>
-                    <p class="lead">Modern businesses face three key barriers to AI adoption:</p>
+                <div class="challenge-opportunity-grid">
+                    <!-- The Challenge -->
+                    <div class="challenge-block">
+                        <div class="section-badge" style="background: var(--warm-coral); color: white; display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); border-radius: var(--radius-full); font-size: 0.8125rem; font-weight: 600; margin-bottom: var(--space-4);">
+                            <i data-lucide="alert-circle"></i>
+                            <span>The Challenge</span>
+                        </div>
+                        <h2 style="color: var(--midnight-navy); margin-bottom: var(--space-4); font-size: 1.75rem;">Modern Businesses Face Key Barriers</h2>
 
-                    <div class="challenge-items" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4); margin-top: var(--space-6); text-align: left;">
-                        <div style="padding: var(--space-4); background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow);">
-                            <h4 style="color: var(--warm-coral); margin-bottom: var(--space-2);">Manual & Inefficient Reporting</h4>
-                            <p style="color: var(--text-secondary); margin: 0;">40% of analyst time lost to repetitive tasks</p>
+                        <div class="challenge-list">
+                            <div class="challenge-item">
+                                <div class="challenge-icon">
+                                    <i data-lucide="clock"></i>
+                                </div>
+                                <div>
+                                    <h4>Manual & Inefficient Reporting</h4>
+                                    <p>40% of analyst time lost to repetitive tasks</p>
+                                </div>
+                            </div>
+
+                            <div class="challenge-item">
+                                <div class="challenge-icon">
+                                    <i data-lucide="trending-up"></i>
+                                </div>
+                                <div>
+                                    <h4>Rapid AI Evolution</h4>
+                                    <p>Capabilities double every few months</p>
+                                </div>
+                            </div>
+
+                            <div class="challenge-item">
+                                <div class="challenge-icon">
+                                    <i data-lucide="puzzle"></i>
+                                </div>
+                                <div>
+                                    <h4>Fragmented Talent & Tools</h4>
+                                    <p>Hard to scale or integrate AI effectively</p>
+                                </div>
+                            </div>
                         </div>
-                        <div style="padding: var(--space-4); background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow);">
-                            <h4 style="color: var(--warm-coral); margin-bottom: var(--space-2);">Rapid AI Evolution</h4>
-                            <p style="color: var(--text-secondary); margin: 0;">Capabilities double every few months</p>
-                        </div>
-                        <div style="padding: var(--space-4); background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow);">
-                            <h4 style="color: var(--warm-coral); margin-bottom: var(--space-2);">Fragmented Talent & Tools</h4>
-                            <p style="color: var(--text-secondary); margin: 0;">Hard to scale or integrate AI effectively</p>
+
+                        <div class="challenge-result">
+                            <i data-lucide="arrow-right"></i>
+                            <strong>Result:</strong> Organizations fall behind competitors who embed AI early
                         </div>
                     </div>
 
-                    <p style="margin-top: var(--space-6); font-weight: 600; color: var(--text-primary);">Result: Organizations fall behind competitors who embed AI early.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- The Opportunity -->
-        <section class="market-analysis section bg-light">
-            <div class="container">
-                <div style="max-width: 900px; margin: 0 auto; text-align: center;">
-                    <h2 class="section-title">The Opportunity</h2>
-                    <p class="lead" style="color: var(--text-primary); margin-bottom: var(--space-6);">The world's most successful companies are automating intelligence — not just reports. Colaberry helps you leap from data to AI-driven decision-making, starting with your BI and expanding across the enterprise.</p>
-
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); text-align: left; margin-top: var(--space-6);">
-                        <div>
-                            <h3 style="color: var(--midnight-navy); margin-bottom: var(--space-3); font-size: 1.25rem;">Immediate Wins</h3>
-                            <ul class="opportunity-list" style="list-style: none; padding: 0;">
-                                <li style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--text-primary);"><span style="color: var(--sky-gradient-start); font-weight: 700;">→</span> AI-powered reporting agents (voice, chat, email)</li>
-                                <li style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--text-primary);"><span style="color: var(--sky-gradient-start); font-weight: 700;">→</span> Automated compliance & analytics pipelines</li>
-                                <li style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--text-primary);"><span style="color: var(--sky-gradient-start); font-weight: 700;">→</span> AI copilots inside dashboards</li>
-                            </ul>
+                    <!-- The Opportunity -->
+                    <div class="opportunity-block">
+                        <div class="section-badge" style="background: var(--success); color: white; display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); border-radius: var(--radius-full); font-size: 0.8125rem; font-weight: 600; margin-bottom: var(--space-4);">
+                            <i data-lucide="lightbulb"></i>
+                            <span>The Opportunity</span>
                         </div>
-                        <div>
-                            <h3 style="color: var(--midnight-navy); margin-bottom: var(--space-3); font-size: 1.25rem;">Long-term Transformation</h3>
-                            <p style="color: var(--text-secondary); line-height: 1.6;">Full AI lifecycle integration — strategy, development, upskilling, and managed delivery.</p>
+                        <h2 style="color: var(--midnight-navy); margin-bottom: var(--space-4); font-size: 1.75rem;">Automate Intelligence, Not Just Reports</h2>
+
+                        <p style="color: var(--text-primary); line-height: 1.6; margin-bottom: var(--space-6);">The world's most successful companies are automating intelligence. Colaberry helps you leap from data to AI-driven decision-making, starting with your BI and expanding across the enterprise.</p>
+
+                        <div class="opportunity-benefits">
+                            <div class="benefit-section">
+                                <h4 style="color: var(--sky-gradient-start); margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);"><i data-lucide="zap"></i> Immediate Wins</h4>
+                                <ul style="list-style: none; padding: 0; margin: 0;">
+                                    <li style="display: flex; align-items: flex-start; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--text-primary);"><i data-lucide="check-circle" style="color: var(--success); flex-shrink: 0; margin-top: 2px; width: 20px; height: 20px;"></i> AI-powered reporting agents (voice, chat, email)</li>
+                                    <li style="display: flex; align-items: flex-start; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--text-primary);"><i data-lucide="check-circle" style="color: var(--success); flex-shrink: 0; margin-top: 2px; width: 20px; height: 20px;"></i> Automated compliance & analytics pipelines</li>
+                                    <li style="display: flex; align-items: flex-start; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--text-primary);"><i data-lucide="check-circle" style="color: var(--success); flex-shrink: 0; margin-top: 2px; width: 20px; height: 20px;"></i> AI copilots inside dashboards</li>
+                                </ul>
+                            </div>
+
+                            <div class="benefit-section" style="margin-top: var(--space-4);">
+                                <h4 style="color: var(--sky-gradient-start); margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2);"><i data-lucide="target"></i> Long-term Transformation</h4>
+                                <p style="color: var(--text-secondary); line-height: 1.6; margin: 0;">Full AI lifecycle integration — strategy, development, upskilling, and managed delivery to keep you competitive.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -329,43 +357,87 @@
                 <h2 class="section-title">Core Service Programs</h2>
                 <p class="section-subtitle">Tailored solutions for every stage of your AI journey</p>
 
-                <div style="overflow-x: auto; margin-top: var(--space-6);">
-                    <table style="width: 100%; border-collapse: collapse; background: white; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow);">
-                        <thead>
-                            <tr style="background: var(--midnight-navy); color: white;">
-                                <th style="padding: var(--space-4); text-align: left; font-weight: 600;">Program</th>
-                                <th style="padding: var(--space-4); text-align: left; font-weight: 600;">Description</th>
-                                <th style="padding: var(--space-4); text-align: left; font-weight: 600;">Ideal For</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="border-bottom: 1px solid var(--border);">
-                                <td style="padding: var(--space-4); font-weight: 600; color: var(--midnight-navy);">AI Strategy & Readiness</td>
-                                <td style="padding: var(--space-4); color: var(--text-primary);">Define your roadmap, maturity model, and business case</td>
-                                <td style="padding: var(--space-4); color: var(--text-secondary);">Leadership teams beginning AI adoption</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--border);">
-                                <td style="padding: var(--space-4); font-weight: 600; color: var(--midnight-navy);">AI Reporting & Copilot Program</td>
-                                <td style="padding: var(--space-4); color: var(--text-primary);">Automate reporting and create conversational BI</td>
-                                <td style="padding: var(--space-4); color: var(--text-secondary);">Operations & Analytics leaders</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--border);">
-                                <td style="padding: var(--space-4); font-weight: 600; color: var(--midnight-navy);">Enterprise AI Transformation</td>
-                                <td style="padding: var(--space-4); color: var(--text-primary);">Deploy custom AI models, copilots, and automation agents</td>
-                                <td style="padding: var(--space-4); color: var(--text-secondary);">Mid–Large Enterprises</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid var(--border);">
-                                <td style="padding: var(--space-4); font-weight: 600; color: var(--midnight-navy);">AI Talent & Upskilling</td>
-                                <td style="padding: var(--space-4); color: var(--text-primary);">Develop internal AI-literate teams and reduce outsourcing</td>
-                                <td style="padding: var(--space-4); color: var(--text-secondary);">HR, L&D, IT leaders</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: var(--space-4); font-weight: 600; color: var(--midnight-navy);">AI Managed Services</td>
-                                <td style="padding: var(--space-4); color: var(--text-primary);">Continuous AI monitoring, maintenance, and model evolution</td>
-                                <td style="padding: var(--space-4); color: var(--text-secondary);">Companies scaling AI programs</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="programs-grid">
+                    <div class="program-card">
+                        <div class="program-header">
+                            <div class="program-icon">
+                                <i data-lucide="compass"></i>
+                            </div>
+                            <div>
+                                <h3>AI Strategy & Readiness</h3>
+                                <span class="program-tag">Discovery Phase</span>
+                            </div>
+                        </div>
+                        <p class="program-description">Define your roadmap, maturity model, and business case</p>
+                        <div class="program-ideal">
+                            <strong>Ideal For:</strong> Leadership teams beginning AI adoption
+                        </div>
+                    </div>
+
+                    <div class="program-card">
+                        <div class="program-header">
+                            <div class="program-icon">
+                                <i data-lucide="bot"></i>
+                            </div>
+                            <div>
+                                <h3>AI Reporting & Copilot Program</h3>
+                                <span class="program-tag">Quick Wins</span>
+                            </div>
+                        </div>
+                        <p class="program-description">Automate reporting and create conversational BI</p>
+                        <div class="program-ideal">
+                            <strong>Ideal For:</strong> Operations & Analytics leaders
+                        </div>
+                    </div>
+
+                    <div class="program-card featured">
+                        <div class="program-badge">Most Popular</div>
+                        <div class="program-header">
+                            <div class="program-icon">
+                                <i data-lucide="rocket"></i>
+                            </div>
+                            <div>
+                                <h3>Enterprise AI Transformation</h3>
+                                <span class="program-tag">Full Scale</span>
+                            </div>
+                        </div>
+                        <p class="program-description">Deploy custom AI models, copilots, and automation agents</p>
+                        <div class="program-ideal">
+                            <strong>Ideal For:</strong> Mid–Large Enterprises
+                        </div>
+                    </div>
+
+                    <div class="program-card">
+                        <div class="program-header">
+                            <div class="program-icon">
+                                <i data-lucide="users"></i>
+                            </div>
+                            <div>
+                                <h3>AI Talent & Upskilling</h3>
+                                <span class="program-tag">Team Development</span>
+                            </div>
+                        </div>
+                        <p class="program-description">Develop internal AI-literate teams and reduce outsourcing</p>
+                        <div class="program-ideal">
+                            <strong>Ideal For:</strong> HR, L&D, IT leaders
+                        </div>
+                    </div>
+
+                    <div class="program-card">
+                        <div class="program-header">
+                            <div class="program-icon">
+                                <i data-lucide="headphones"></i>
+                            </div>
+                            <div>
+                                <h3>AI Managed Services</h3>
+                                <span class="program-tag">Ongoing Support</span>
+                            </div>
+                        </div>
+                        <p class="program-description">Continuous AI monitoring, maintenance, and model evolution</p>
+                        <div class="program-ideal">
+                            <strong>Ideal For:</strong> Companies scaling AI programs
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -818,41 +890,200 @@
             color: rgba(255, 255, 255, 0.8);
         }
 
-        .executive-summary {
+        .challenge-opportunity-section {
             padding: var(--space-8) 0;
         }
 
-        .summary-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .summary-content h2 {
-            color: var(--midnight-navy);
-            margin-bottom: var(--space-4);
-        }
-
-        .summary-content .lead {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: var(--space-4);
-        }
-
-        .summary-content p {
-            color: var(--text-primary);
-            margin-bottom: var(--space-3);
-            line-height: 1.6;
-        }
-
-        .market-analysis {
-            padding: var(--space-8) 0;
-        }
-
-        .analysis-grid {
+        .challenge-opportunity-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: var(--space-8);
+        }
+
+        .challenge-block,
+        .opportunity-block {
+            background: white;
+            padding: var(--space-6);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .challenge-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .challenge-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            background: var(--bg-light);
+            border-radius: var(--radius-lg);
+            border-left: 4px solid var(--warm-coral);
+        }
+
+        .challenge-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--warm-coral);
+            color: white;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .challenge-icon i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .challenge-item h4 {
+            color: var(--midnight-navy);
+            margin: 0 0 var(--space-1) 0;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .challenge-item p {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 0.875rem;
+        }
+
+        .challenge-result {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-4);
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: var(--radius-lg);
+            color: var(--midnight-navy);
+            font-size: 0.9375rem;
+        }
+
+        .challenge-result i {
+            color: var(--warm-coral);
+            width: 20px;
+            height: 20px;
+        }
+
+        .opportunity-benefits {
+            background: var(--bg-light);
+            padding: var(--space-4);
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--success);
+        }
+
+        .benefit-section h4 i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .benefit-section li i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-6);
+        }
+
+        .program-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            box-shadow: var(--shadow);
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .program-card.featured {
+            border-color: var(--sky-gradient-start);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+
+        .program-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .program-badge {
+            position: absolute;
+            top: -12px;
+            right: var(--space-4);
+            background: var(--sky-gradient-start);
+            color: white;
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .program-header {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-3);
+            margin-bottom: var(--space-4);
+        }
+
+        .program-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--gradient-sky);
+            color: white;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .program-icon i {
+            width: 28px;
+            height: 28px;
+        }
+
+        .program-header h3 {
+            color: var(--midnight-navy);
+            margin: 0 0 var(--space-1) 0;
+            font-size: 1.125rem;
+        }
+
+        .program-tag {
+            display: inline-block;
+            background: var(--bg-light);
+            color: var(--text-secondary);
+            padding: 0.25rem var(--space-2);
+            border-radius: var(--radius);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .program-description {
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: var(--space-4);
+        }
+
+        .program-ideal {
+            padding-top: var(--space-4);
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .program-ideal strong {
+            color: var(--midnight-navy);
         }
 
         .problem-section h2,
@@ -1383,25 +1614,29 @@
             .professional-services-hero h1 {
                 font-size: 2.5rem;
             }
-            
+
             .hero-stats {
                 flex-direction: column;
                 gap: var(--space-3);
             }
-            
+
             .services-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .journey-steps {
                 flex-direction: column;
             }
-            
+
             .journey-step::after {
                 display: none;
             }
 
-            .analysis-grid {
+            .challenge-opportunity-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .programs-grid {
                 grid-template-columns: 1fr;
             }
 
