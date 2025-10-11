@@ -304,48 +304,83 @@
         </section>
 
         <!-- Why Colaberry -->
-        <section class="why-colaberry section bg-light">
+        <section class="why-colaberry section">
             <div class="container">
-                <h2 class="section-title">Why Colaberry</h2>
-                <div class="why-grid">
-                    <div class="why-item">
-                        <div class="why-icon">
+                <div class="why-header">
+                    <div class="section-badge" style="background: var(--midnight-navy); color: white; display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); border-radius: var(--radius-full); font-size: 0.8125rem; font-weight: 600; margin-bottom: var(--space-4);">
+                        <i data-lucide="star"></i>
+                        <span>Your Strategic Partner</span>
+                    </div>
+                    <h2 class="section-title">Why Partner with Colaberry</h2>
+                    <p class="section-subtitle" style="max-width: 700px; margin: 0 auto;">We combine deep data expertise with innovative AI solutions to deliver measurable business transformation</p>
+                </div>
+
+                <div class="why-features">
+                    <div class="why-feature-card featured-card">
+                        <div class="feature-badge">Core Strength</div>
+                        <div class="feature-icon-large" style="background: var(--gradient-sky);">
+                            <i data-lucide="database"></i>
+                        </div>
+                        <h3>Data & Analytics Mastery</h3>
+                        <p>Decades of proven expertise in data engineering, BI modernization, and analytics transformation across diverse industries</p>
+                    </div>
+
+                    <div class="why-feature-card">
+                        <div class="feature-icon-large" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                            <i data-lucide="shield-check"></i>
+                        </div>
+                        <h3>Mission-First Execution</h3>
+                        <p>Led by Marine Corps veterans who bring discipline, integrity, and results-driven leadership to every engagement</p>
+                    </div>
+
+                    <div class="why-feature-card">
+                        <div class="feature-icon-large" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
                             <i data-lucide="award"></i>
                         </div>
-                        <h4>25 Years in Data</h4>
-                        <p>Deep expertise in data and analytics transformation</p>
+                        <h3>Award-Winning Programs</h3>
+                        <p>Recognized for innovative training and consulting that combines hands-on delivery with team upskilling</p>
                     </div>
-                    
-                    <div class="why-item">
-                        <div class="why-icon">
-                            <i data-lucide="shield"></i>
+                </div>
+
+                <div class="why-stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i data-lucide="building-2"></i>
                         </div>
-                        <h4>Marine Corps Leadership</h4>
-                        <p>Veteran leadership with mission-first execution</p>
+                        <div class="stat-content">
+                            <h4>Fortune 500 Proven</h4>
+                            <p>Successful implementations with Monsanto, Duke Energy, and leading enterprises</p>
+                        </div>
                     </div>
-                    
-                    <div class="why-item">
-                        <div class="why-icon">
-                            <i data-lucide="trophy"></i>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i data-lucide="users"></i>
                         </div>
-                        <h4>Award-Winning Training</h4>
-                        <p>Consulting + training hybrid model with proven results</p>
+                        <div class="stat-content">
+                            <h4>Hybrid Delivery Model</h4>
+                            <p>Expert consultants who implement and train your team for long-term success</p>
+                        </div>
                     </div>
-                    
-                    <div class="why-item">
-                        <div class="why-icon">
-                            <i data-lucide="building"></i>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i data-lucide="globe-2"></i>
                         </div>
-                        <h4>Fortune 500 Experience</h4>
-                        <p>Proven track record with Monsanto, Duke Energy, and more</p>
+                        <div class="stat-content">
+                            <h4>Global Reach</h4>
+                            <p>Flexible delivery with U.S. and offshore teams to optimize cost and quality</p>
+                        </div>
                     </div>
-                    
-                    <div class="why-item">
-                        <div class="why-icon">
-                            <i data-lucide="globe"></i>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i data-lucide="trending-up"></i>
                         </div>
-                        <h4>Global Flexibility</h4>
-                        <p>U.S. and offshore delivery teams</p>
+                        <div class="stat-content">
+                            <h4>AI-First Mindset</h4>
+                            <p>Early adopters who continuously evolve with emerging AI capabilities</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1403,50 +1438,137 @@
             flex-shrink: 0;
         }
 
-        .why-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--space-4);
+        .why-colaberry {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
         }
-        
-        .why-item {
+
+        .why-header {
             text-align: center;
-            padding: var(--space-4);
-            background: var(--bg-primary);
+            margin-bottom: var(--space-8);
+        }
+
+        .why-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .why-feature-card {
+            background: white;
             border-radius: var(--radius-lg);
-            border: 1px solid var(--border);
+            padding: var(--space-6);
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--border);
             transition: all 0.3s ease;
+            position: relative;
         }
-        
-        .why-item:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
+
+        .why-feature-card.featured-card {
+            border-color: var(--sky-gradient-start);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
         }
-        
-        .why-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--gradient-sky);
+
+        .why-feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .feature-badge {
+            position: absolute;
+            top: -12px;
+            right: var(--space-4);
+            background: var(--sky-gradient-start);
             color: white;
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .feature-icon-large {
+            width: 80px;
+            height: 80px;
             border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto var(--space-3);
+            margin: 0 auto var(--space-4);
+            color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
-        
-        .why-icon i {
-            font-size: 1.75rem;
+
+        .feature-icon-large i {
+            width: 40px;
+            height: 40px;
         }
-        
-        .why-item h4 {
+
+        .why-feature-card h3 {
             color: var(--midnight-navy);
-            margin-bottom: var(--space-2);
+            font-size: 1.375rem;
+            margin-bottom: var(--space-3);
         }
-        
-        .why-item p {
+
+        .why-feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .why-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-4);
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+            display: flex;
+            gap: var(--space-4);
+            align-items: flex-start;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--sky-gradient-start);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--bg-light);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sky-gradient-start);
+            flex-shrink: 0;
+        }
+
+        .stat-icon i {
+            width: 28px;
+            height: 28px;
+        }
+
+        .stat-content h4 {
+            color: var(--midnight-navy);
+            margin: 0 0 var(--space-2) 0;
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .stat-content p {
             color: var(--text-secondary);
             margin: 0;
+            font-size: 0.9375rem;
+            line-height: 1.5;
         }
 
         .value-grid {
@@ -1850,6 +1972,23 @@
 
             .phase-details h3 {
                 font-size: 1.125rem;
+            }
+
+            .why-features {
+                grid-template-columns: 1fr;
+            }
+
+            .why-stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .stat-icon {
+                margin: 0 auto;
             }
 
             .cta-buttons {
