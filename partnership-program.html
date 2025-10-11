@@ -387,50 +387,98 @@
         </section>
 
         <!-- Partnership Benefits -->
-        <section class="value-proposition section">
+        <section class="partnership-benefits section bg-light">
             <div class="container">
-                <h2 class="section-title">Partnership Benefits</h2>
-                <p class="section-subtitle">Partnering with Colaberry enables organizations to:</p>
-                
-                <div class="value-grid">
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i data-lucide="focus"></i>
-                        </div>
-                        <h3>Focus on Core Business</h3>
-                        <p>We manage BI/AI transitions while you focus on your core mission</p>
+                <div class="benefits-header">
+                    <div class="section-badge" style="background: var(--success); color: white; display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); border-radius: var(--radius-full); font-size: 0.8125rem; font-weight: 600; margin-bottom: var(--space-4);">
+                        <i data-lucide="gift"></i>
+                        <span>Partnership Value</span>
                     </div>
-                    
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i data-lucide="dollar-sign"></i>
+                    <h2 class="section-title">What You Gain as Our Partner</h2>
+                    <p class="section-subtitle">Transform your organization with measurable outcomes and strategic advantages</p>
+                </div>
+
+                <div class="benefits-showcase">
+                    <div class="benefits-main">
+                        <div class="benefit-highlight">
+                            <div class="highlight-icon">
+                                <i data-lucide="rocket"></i>
+                            </div>
+                            <div class="highlight-content">
+                                <h3>Accelerate Your AI Journey</h3>
+                                <p>Move from strategy to execution in weeks, not months. Our proven methodology eliminates common pitfalls and delivers quick wins while building toward long-term transformation.</p>
+                                <ul class="highlight-list">
+                                    <li><i data-lucide="check"></i> Rapid proof-of-concept delivery</li>
+                                    <li><i data-lucide="check"></i> Pre-built frameworks and templates</li>
+                                    <li><i data-lucide="check"></i> Reduced time-to-value by 60%</li>
+                                </ul>
+                            </div>
                         </div>
-                        <h3>Reduce Costs</h3>
-                        <p>Through automation and optimized platforms</p>
+
+                        <div class="benefit-highlight">
+                            <div class="highlight-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                                <i data-lucide="dollar-sign"></i>
+                            </div>
+                            <div class="highlight-content">
+                                <h3>Optimize Costs & Resources</h3>
+                                <p>Achieve more with less through intelligent automation and strategic resource allocation. Replace expensive manual processes with AI-powered efficiency.</p>
+                                <ul class="highlight-list">
+                                    <li><i data-lucide="check"></i> Reduce reporting costs by 40%</li>
+                                    <li><i data-lucide="check"></i> Flexible offshore/onshore delivery</li>
+                                    <li><i data-lucide="check"></i> No need for large internal AI teams</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i data-lucide="zap"></i>
+
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i data-lucide="target"></i>
+                            </div>
+                            <h4>Stay Focused on Core Business</h4>
+                            <p>We handle the technical complexity of AI/BI transformation while you concentrate on strategic initiatives</p>
                         </div>
-                        <h3>Increase Speed-to-Insight</h3>
-                        <p>With AI copilots and real-time analytics</p>
-                    </div>
-                    
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i data-lucide="trending-up"></i>
+
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i data-lucide="zap"></i>
+                            </div>
+                            <h4>Real-Time Intelligence</h4>
+                            <p>AI copilots and conversational analytics deliver insights at the speed of business decisions</p>
                         </div>
-                        <h3>Build Future-Proof Teams</h3>
-                        <p>Equipped with modern AI/ML skills</p>
-                    </div>
-                    
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i data-lucide="shield-check"></i>
+
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i data-lucide="users-round"></i>
+                            </div>
+                            <h4>Build Internal Capability</h4>
+                            <p>Our training programs upskill your team, reducing long-term dependency on external consultants</p>
                         </div>
-                        <h3>Ensure Scalability</h3>
-                        <p>With proven enterprise-grade solutions</p>
+
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i data-lucide="shield-check"></i>
+                            </div>
+                            <h4>Enterprise-Grade Security</h4>
+                            <p>Proven solutions with Fortune 500 security standards and compliance frameworks built-in</p>
+                        </div>
+
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i data-lucide="arrow-up-right"></i>
+                            </div>
+                            <h4>Scalable Solutions</h4>
+                            <p>Start with one department, scale across the enterprise with flexible architecture</p>
+                        </div>
+
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i data-lucide="brain"></i>
+                            </div>
+                            <h4>Stay Ahead of AI Evolution</h4>
+                            <p>Continuous updates keep you competitive as AI capabilities advance rapidly</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1617,7 +1665,149 @@
             color: var(--text-secondary);
             line-height: 1.6;
         }
-        
+
+        .partnership-benefits {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        }
+
+        .benefits-header {
+            text-align: center;
+            margin-bottom: var(--space-8);
+        }
+
+        .benefits-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-8);
+        }
+
+        .benefits-main {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--space-6);
+        }
+
+        .benefit-highlight {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--border);
+            display: flex;
+            gap: var(--space-5);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-highlight:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--success);
+        }
+
+        .highlight-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-sky);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .highlight-icon i {
+            width: 40px;
+            height: 40px;
+        }
+
+        .highlight-content h3 {
+            color: var(--midnight-navy);
+            font-size: 1.5rem;
+            margin: 0 0 var(--space-3) 0;
+            font-weight: 600;
+        }
+
+        .highlight-content > p {
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: var(--space-4);
+        }
+
+        .highlight-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .highlight-list li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) 0;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .highlight-list li i {
+            color: var(--success);
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-4);
+        }
+
+        .benefit-item {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--success);
+        }
+
+        .benefit-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--success);
+            margin-bottom: var(--space-3);
+        }
+
+        .benefit-icon i {
+            width: 28px;
+            height: 28px;
+        }
+
+        .benefit-item h4 {
+            color: var(--midnight-navy);
+            font-size: 1.125rem;
+            margin: 0 0 var(--space-2) 0;
+            font-weight: 600;
+        }
+
+        .benefit-item p {
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.6;
+        }
+
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -1989,6 +2179,22 @@
 
             .stat-icon {
                 margin: 0 auto;
+            }
+
+            .benefits-main {
+                grid-template-columns: 1fr;
+            }
+
+            .benefit-highlight {
+                flex-direction: column;
+            }
+
+            .highlight-icon {
+                margin: 0 auto;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
             }
 
             .cta-buttons {
