@@ -2889,66 +2889,6 @@ cite span {
     line-height: 1.4;
 }
 
-.demo-process-flow {
-    background: var(--gradient-brand);
-    color: var(--text-inverse);
-    padding: var(--space-5);
-    border-radius: var(--radius-lg);
-    margin-top: var(--space-4);
-}
-
-.demo-process-flow h3 {
-    text-align: center;
-    color: var(--text-inverse);
-    margin-bottom: var(--space-4);
-    font-size: 1.5rem;
-}
-
-.process-timeline {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-2);
-}
-
-.timeline-step {
-    text-align: center;
-    flex: 1;
-}
-
-.step-number {
-    width: 40px;
-    height: 40px;
-    background: var(--fresh-lime);
-    color: var(--midnight-navy);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    margin: 0 auto var(--space-2);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.step-content h4 {
-    color: var(--text-inverse);
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-}
-
-.step-content p {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.875rem;
-    margin: 0;
-}
-
-.timeline-connector {
-    width: 40px;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.3);
-    margin: 0 var(--space-1);
-}
 
 .voice-demo-showcase {
     padding: var(--space-10) 0;
