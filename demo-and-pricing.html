@@ -245,19 +245,70 @@
                                 <input type="text" id="demo-institution" name="institution" required />
                                 <div class="form-error" id="demo-institution-error"></div>
                             </div>
-                            
+
+                            <div class="form-group">
+                                <label for="demo-interest">What are you most interested in? *</label>
+                                <select id="demo-interest" name="interest_area" required>
+                                    <option value="">Select your interest</option>
+                                    <option value="non-profit">Non Profit - Educating in AI</option>
+                                    <option value="implementing-cory">Implementing Cory in your Organization</option>
+                                    <option value="ai-transformation">AI Transformation Roadmap</option>
+                                    <option value="custom-ai">Custom AI Solutions</option>
+                                </select>
+                                <div class="form-error" id="demo-interest-error"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="demo-interest-details">Please describe your specific interests in detail *</label>
+                                <textarea id="demo-interest-details" name="interest_details" rows="4" required placeholder="Tell us more about your needs and what you'd like to accomplish..."></textarea>
+                                <div class="form-error" id="demo-interest-details-error"></div>
+                            </div>
+
                             <div class="form-group">
                                 <label for="demo-occupation">Occupation/Role *</label>
                                 <select id="demo-occupation" name="occupation" required>
                                     <option value="">Select your role</option>
-                                    <option value="director-admissions">Director of Admissions</option>
-                                    <option value="vp-enrollment">VP of Enrollment</option>
-                                    <option value="admissions-counselor">Admissions Counselor</option>
-                                    <option value="marketing-director">Marketing Director</option>
-                                    <option value="president-ceo">President/CEO</option>
-                                    <option value="dean">Dean</option>
-                                    <option value="it-director">IT Director</option>
-                                    <option value="other">Other</option>
+                                    <optgroup label="Education Leadership">
+                                        <option value="president-ceo">President/CEO</option>
+                                        <option value="provost">Provost</option>
+                                        <option value="dean">Dean</option>
+                                        <option value="department-chair">Department Chair</option>
+                                    </optgroup>
+                                    <optgroup label="Admissions & Enrollment">
+                                        <option value="vp-enrollment">VP of Enrollment Management</option>
+                                        <option value="director-admissions">Director of Admissions</option>
+                                        <option value="admissions-counselor">Admissions Counselor</option>
+                                        <option value="enrollment-coordinator">Enrollment Coordinator</option>
+                                    </optgroup>
+                                    <optgroup label="Marketing & Communications">
+                                        <option value="cmo">Chief Marketing Officer</option>
+                                        <option value="marketing-director">Marketing Director</option>
+                                        <option value="communications-director">Communications Director</option>
+                                        <option value="digital-marketing">Digital Marketing Specialist</option>
+                                    </optgroup>
+                                    <optgroup label="Technology & IT">
+                                        <option value="cio-cto">CIO/CTO</option>
+                                        <option value="it-director">IT Director</option>
+                                        <option value="systems-administrator">Systems Administrator</option>
+                                        <option value="data-analyst">Data Analyst</option>
+                                    </optgroup>
+                                    <optgroup label="Student Services">
+                                        <option value="student-affairs">VP Student Affairs</option>
+                                        <option value="registrar">Registrar</option>
+                                        <option value="financial-aid">Financial Aid Director</option>
+                                        <option value="student-success">Student Success Coordinator</option>
+                                    </optgroup>
+                                    <optgroup label="Non-Profit & Training">
+                                        <option value="nonprofit-director">Non-Profit Director</option>
+                                        <option value="program-manager">Program Manager</option>
+                                        <option value="training-coordinator">Training Coordinator</option>
+                                        <option value="consultant">Consultant</option>
+                                    </optgroup>
+                                    <optgroup label="Other">
+                                        <option value="faculty">Faculty/Instructor</option>
+                                        <option value="board-member">Board Member</option>
+                                        <option value="other">Other</option>
+                                    </optgroup>
                                 </select>
                                 <div class="form-error" id="demo-occupation-error"></div>
                             </div>
@@ -772,31 +823,68 @@
                         <label for="custom-institution">Institution/Organization *</label>
                         <input type="text" id="custom-institution" name="institution" required />
                     </div>
-                    
+
+                    <div class="form-group">
+                        <label for="custom-interest">What are you most interested in? *</label>
+                        <select id="custom-interest" name="interest_area" required>
+                            <option value="">Select your interest</option>
+                            <option value="non-profit">Non Profit - Educating in AI</option>
+                            <option value="implementing-cory">Implementing Cory in your Organization</option>
+                            <option value="ai-transformation">AI Transformation Roadmap</option>
+                            <option value="custom-ai">Custom AI Solutions</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="custom-interest-details">Please describe your specific interests in detail *</label>
+                        <textarea id="custom-interest-details" name="interest_details" rows="4" required placeholder="Tell us more about your needs and what you'd like to accomplish..."></textarea>
+                    </div>
+
                     <div class="form-group">
                         <label for="custom-occupation">Occupation/Role *</label>
                         <select id="custom-occupation" name="occupation" required>
                             <option value="">Select your role</option>
-                            <option value="director-admissions">Director of Admissions</option>
-                            <option value="vp-enrollment">VP of Enrollment</option>
-                            <option value="president-ceo">President/CEO</option>
-                            <option value="dean">Dean</option>
-                            <option value="it-director">IT Director</option>
-                            <option value="faculty">Faculty</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="custom-interest">AI Interest Area</label>
-                        <select id="custom-interest" name="interest_area">
-                            <option value="">Select area of interest</option>
-                            <option value="admissions">Admissions Automation</option>
-                            <option value="student-support">Student Support & Retention</option>
-                            <option value="academic">Academic & Grading Automation</option>
-                            <option value="administrative">Administrative Workflows</option>
-                            <option value="multiple">Multiple Areas</option>
-                            <option value="other">Other Custom Project</option>
+                            <optgroup label="Education Leadership">
+                                <option value="president-ceo">President/CEO</option>
+                                <option value="provost">Provost</option>
+                                <option value="dean">Dean</option>
+                                <option value="department-chair">Department Chair</option>
+                            </optgroup>
+                            <optgroup label="Admissions & Enrollment">
+                                <option value="vp-enrollment">VP of Enrollment Management</option>
+                                <option value="director-admissions">Director of Admissions</option>
+                                <option value="admissions-counselor">Admissions Counselor</option>
+                                <option value="enrollment-coordinator">Enrollment Coordinator</option>
+                            </optgroup>
+                            <optgroup label="Marketing & Communications">
+                                <option value="cmo">Chief Marketing Officer</option>
+                                <option value="marketing-director">Marketing Director</option>
+                                <option value="communications-director">Communications Director</option>
+                                <option value="digital-marketing">Digital Marketing Specialist</option>
+                            </optgroup>
+                            <optgroup label="Technology & IT">
+                                <option value="cio-cto">CIO/CTO</option>
+                                <option value="it-director">IT Director</option>
+                                <option value="systems-administrator">Systems Administrator</option>
+                                <option value="data-analyst">Data Analyst</option>
+                            </optgroup>
+                            <optgroup label="Student Services">
+                                <option value="student-affairs">VP Student Affairs</option>
+                                <option value="registrar">Registrar</option>
+                                <option value="financial-aid">Financial Aid Director</option>
+                                <option value="student-success">Student Success Coordinator</option>
+                            </optgroup>
+                            <optgroup label="Non-Profit & Training">
+                                <option value="nonprofit-director">Non-Profit Director</option>
+                                <option value="program-manager">Program Manager</option>
+                                <option value="training-coordinator">Training Coordinator</option>
+                                <option value="consultant">Consultant</option>
+                            </optgroup>
+                            <optgroup label="Other">
+                                <option value="faculty">Faculty/Instructor</option>
+                                <option value="board-member">Board Member</option>
+                                <option value="other">Other</option>
+                            </optgroup>
                         </select>
                     </div>
                     
