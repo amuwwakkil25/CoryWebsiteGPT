@@ -1,4 +1,5 @@
 // Main JavaScript for Agent Cory Marketing Site
+import { WebhookService } from './webhook-service';
 
 // Global state
 let leadBus = {
@@ -325,38 +326,24 @@ class FormHandler {
 
     async saveDemoRequest(data) {
         try {
-            const demoRequest = {
-                first_name: data.firstName,
-                last_name: data.lastName,
-                email: data.email,
-                phone: data.phone,
-                institution: data.institution,
-                occupation: data.occupation,
-                request_type: 'demo',
-                metadata: {
-                    source: 'demo_page',
-                    user_agent: navigator.userAgent,
-                    timestamp: new Date().toISOString()
-                }
-            };
+            // Send webhook
+            await WebhookService.sendDemoRequest(data);
 
-            await DemoService.createDemoRequest(demoRequest);
-            
-            console.log('Demo request saved to database:', demoRequest);
-            
+            console.log('Demo request sent to webhook:', data);
+
             // Show success message
             document.getElementById('demo-request-form').style.display = 'none';
             document.getElementById('demo-success').style.display = 'block';
-            
+
             // Add to lead bus for chat integration
             leadBus.addLead({
                 type: 'demo',
-                name: `${data.firstName} ${data.lastName}`,
+                name: `${data.first_name} ${data.last_name}`,
                 email: data.email,
                 institution: data.institution,
                 timestamp: new Date()
             });
-            
+
         } catch (error) {
             console.error('Error saving demo request:', error);
             this.showToast('Error submitting request. Please try again.', 'error');
@@ -365,44 +352,29 @@ class FormHandler {
 
     async handleCustomAIForm(e) {
         e.preventDefault();
-        
+
         if (!this.validateForm(e.target)) {
             return;
         }
 
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
-        
+
         // Check honeypot
         if (data.website) {
             return;
         }
 
         try {
-            const customAIRequest = {
-                first_name: data.firstName,
-                last_name: data.lastName,
-                email: data.email,
-                phone: data.phone,
-                institution: data.institution,
-                occupation: data.occupation,
-                interest_area: data.interest,
-                request_type: 'custom_ai',
-                metadata: {
-                    source: 'custom_ai_modal',
-                    user_agent: navigator.userAgent,
-                    timestamp: new Date().toISOString()
-                }
-            };
+            // Send webhook
+            await WebhookService.sendDemoRequest(data);
 
-            await DemoService.createDemoRequest(customAIRequest);
-            
-            console.log('Custom AI request saved to database:', customAIRequest);
+            console.log('Custom AI request sent to webhook:', data);
 
             // Show success message
             e.target.style.display = 'none';
             document.getElementById('custom-ai-success').style.display = 'block';
-            
+
         } catch (error) {
             console.error('Error saving custom AI request:', error);
             this.showToast('Error submitting request. Please try again.', 'error');
@@ -808,8 +780,9 @@ document.addEventListener('DOMContentLoaded', () => {
     window.accordionHandler = new AccordionHandler();
     window.resourceFilter = new ResourceFilter();
 
-    // Initialize website integration
-    const websiteIntegration = new WebsiteIntegration();
-    
+    // Make WebhookService available globally for testing
+    (window as any).WebhookService = WebhookService;
+
     console.log('Agent Cory Marketing Site initialized');
+    console.log('To send a test webhook, run: WebhookService.sendTestWebhook()');
 });
