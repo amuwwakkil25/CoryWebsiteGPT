@@ -732,7 +732,7 @@
 
                     // Update button text to provide feedback
                     const originalText = chatBtn.innerHTML;
-                    chatBtn.innerHTML = 'Opening chat...';
+                    chatBtn.innerHTML = 'Look for chat icon below →';
                     chatBtn.disabled = true;
 
                     // Try to open immediately
@@ -745,20 +745,57 @@
                             if (!opened) {
                                 // Last attempt with longer delay
                                 setTimeout(() => {
-                                    opened = tryOpenChatWidget();
-                                    if (!opened) {
-                                        alert('Please click the chat icon in the lower right corner of the screen to start chatting with Agent Cory!');
-                                    }
+                                    tryOpenChatWidget();
                                 }, 500);
                             }
                         }, 300);
                     }
 
-                    // Reset button after 2 seconds
+                    // Create visual indicator pointing to chat widget
+                    const indicator = document.createElement('div');
+                    indicator.id = 'chat-indicator';
+                    indicator.innerHTML = '↓ Click the chat icon here';
+                    indicator.style.cssText = `
+                        position: fixed;
+                        bottom: 100px;
+                        right: 20px;
+                        background: var(--brand);
+                        color: white;
+                        padding: 12px 20px;
+                        border-radius: 8px;
+                        font-weight: 600;
+                        z-index: 999999;
+                        animation: bounce 1s infinite;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                    `;
+
+                    // Add animation keyframes if not already present
+                    if (!document.getElementById('chat-indicator-style')) {
+                        const style = document.createElement('style');
+                        style.id = 'chat-indicator-style';
+                        style.textContent = `
+                            @keyframes bounce {
+                                0%, 100% { transform: translateY(0); }
+                                50% { transform: translateY(-10px); }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                    }
+
+                    document.body.appendChild(indicator);
+
+                    // Remove indicator after 5 seconds
+                    setTimeout(() => {
+                        indicator.style.opacity = '0';
+                        indicator.style.transition = 'opacity 0.5s';
+                        setTimeout(() => indicator.remove(), 500);
+                    }, 5000);
+
+                    // Reset button after 3 seconds
                     setTimeout(() => {
                         chatBtn.innerHTML = originalText;
                         chatBtn.disabled = false;
-                    }, 2000);
+                    }, 3000);
                 });
             }
         });
