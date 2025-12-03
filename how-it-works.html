@@ -1268,3 +1268,47 @@
             </div>
         </div>
     </footer>
+
+    <script type="module" src="/assets/js/main.ts"></script>
+    <script>
+        // Initialize Lucide icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+
+        // Play Conversation Demo functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const playButton = document.getElementById('play-conversation');
+            const conversationFlow = document.getElementById('conversation-flow');
+
+            if (playButton && conversationFlow) {
+                playButton.addEventListener('click', function() {
+                    // Hide the button
+                    playButton.style.display = 'none';
+
+                    // Show the conversation flow
+                    conversationFlow.style.display = 'block';
+
+                    // Animate messages appearing one by one
+                    const messages = conversationFlow.querySelectorAll('.conversation-message');
+                    messages.forEach((message, index) => {
+                        message.style.opacity = '0';
+                        message.style.transform = 'translateY(20px)';
+                        message.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+                        setTimeout(() => {
+                            message.style.opacity = '1';
+                            message.style.transform = 'translateY(0)';
+                        }, index * 800);
+                    });
+
+                    // Scroll to the conversation
+                    setTimeout(() => {
+                        conversationFlow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 300);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
