@@ -1,12 +1,8 @@
 export class WebhookService {
-    private static webhookUrl = import.meta.env.VITE_WEBHOOK_URL || '';
+    // Use Netlify Function as proxy to avoid CORS issues
+    private static webhookUrl = '/api/webhook';
 
     static async sendDemoRequest(formData: any): Promise<void> {
-        if (!this.webhookUrl) {
-            console.warn('Webhook URL not configured. Skipping webhook call.');
-            return;
-        }
-
         const payload = {
             first_name: formData.first_name || '',
             last_name: formData.last_name || '',
@@ -32,10 +28,12 @@ export class WebhookService {
                 throw new Error(`Webhook failed with status: ${response.status}`);
             }
 
-            console.log('Webhook sent successfully:', payload);
+            const result = await response.json();
+            console.log('Webhook sent successfully:', payload, 'Response:', result);
         } catch (error) {
             console.error('Error sending webhook:', error);
-            throw error;
+            // Don't throw - allow form submission to succeed even if webhook fails
+            console.warn('Webhook failed but form submission will continue');
         }
     }
 
@@ -52,11 +50,6 @@ export class WebhookService {
             marketing_text_consent: "true"
         };
 
-        if (!this.webhookUrl) {
-            console.warn('Webhook URL not configured. Test payload:', testPayload);
-            return;
-        }
-
         try {
             const response = await fetch(this.webhookUrl, {
                 method: 'POST',
@@ -70,10 +63,11 @@ export class WebhookService {
                 throw new Error(`Test webhook failed with status: ${response.status}`);
             }
 
-            console.log('Test webhook sent successfully:', testPayload);
+            const result = await response.json();
+            console.log('Test webhook sent successfully:', testPayload, 'Response:', result);
         } catch (error) {
             console.error('Error sending test webhook:', error);
-            throw error;
+            console.warn('Webhook failed but continuing');
         }
     }
 }
