@@ -9,6 +9,7 @@
   # These are fallback values only - set in Netlify Dashboard for production
   VITE_SUPABASE_URL = "https://wjtmdrjuheclgdzwprku.supabase.co"
   VITE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqdG1kcmp1aGVjbGdkendwcmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMjM5NTUsImV4cCI6MjA2OTc5OTk1NX0.Yk4ZCqbZ45Of7fmxDitJfDroBtCUK0D_PS7LWhmM26c"
+  VITE_WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/2937706/ukqlrbi/"
 
 [functions]
   node_bundler = "esbuild"
