@@ -8,6 +8,7 @@ export default defineConfig({
         'how-it-works': 'how-it-works.html',
         features: 'features.html',
         'demo-and-pricing': 'demo-and-pricing.html',
+        'roi-and-case-studies': 'roi-and-case-studies.html',
         resources: 'resources.html',
         privacy: 'privacy.html',
         'voice-demo': 'voice-demo.html',
