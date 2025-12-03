@@ -335,6 +335,9 @@ class FormHandler {
             document.getElementById('demo-request-form').style.display = 'none';
             document.getElementById('demo-success').style.display = 'block';
 
+            // Scroll to top of the page to show success message
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
             // Add to lead bus for chat integration
             leadBus.addLead({
                 type: 'demo',
