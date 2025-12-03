@@ -663,6 +663,15 @@ class NavigationHandler {
                 }
             });
         });
+
+        // AI Roadmap Assessment button - navigate to demo page with pre-selected option
+        const assessmentButton = document.getElementById('free-assessment-btn');
+        if (assessmentButton) {
+            assessmentButton.addEventListener('click', () => {
+                // Navigate to demo page with query parameter
+                window.location.href = '/demo-and-pricing.html?interest=ai-transformation';
+            });
+        }
     }
 
     updateActiveNav() {
@@ -804,6 +813,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Make WebhookService available globally for testing
     (window as any).WebhookService = WebhookService;
+
+    // Check for URL parameters to pre-populate form
+    const urlParams = new URLSearchParams(window.location.search);
+    const interestParam = urlParams.get('interest');
+
+    if (interestParam) {
+        const demoInterestSelect = document.getElementById('demo-interest') as HTMLSelectElement;
+        if (demoInterestSelect) {
+            demoInterestSelect.value = interestParam;
+            // Add visual highlight to show it was pre-selected
+            demoInterestSelect.style.backgroundColor = '#e3f2fd';
+            setTimeout(() => {
+                demoInterestSelect.style.backgroundColor = '';
+            }, 2000);
+
+            // Scroll to the form after a brief delay
+            setTimeout(() => {
+                const demoForm = document.getElementById('demo-request-form');
+                if (demoForm) {
+                    demoForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                    // Focus the first input after scrolling
+                    setTimeout(() => {
+                        const firstInput = demoForm.querySelector('input[type="text"]') as HTMLElement;
+                        if (firstInput) {
+                            firstInput.focus();
+                        }
+                    }, 500);
+                }
+            }, 100);
+        }
+    }
 
     console.log('Agent Cory Marketing Site initialized');
     console.log('To send a test webhook, run: WebhookService.sendTestWebhook()');
