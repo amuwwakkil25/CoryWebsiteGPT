@@ -333,10 +333,11 @@ class FormHandler {
 
             // Show success message
             document.getElementById('demo-request-form').style.display = 'none';
-            document.getElementById('demo-success').style.display = 'block';
+            const successElement = document.getElementById('demo-success');
+            successElement.style.display = 'block';
 
-            // Scroll to top of the page to show success message
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Scroll to the success message to show "Grab Your Phone"
+            successElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
             // Add to lead bus for chat integration
             leadBus.addLead({
