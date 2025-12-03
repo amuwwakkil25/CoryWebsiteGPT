@@ -201,11 +201,11 @@
                 <div class="demo-cards">
                     <div class="demo-card">
                         <div class="demo-card-icon">
-                            <i data-lucide="message-circle"></i>
+                            <i data-lucide="calculator"></i>
                         </div>
-                        <h3>Chat with me</h3>
-                        <p>I'll show you how I answer questions and qualify leads instantly</p>
-                        <button class="btn btn-primary" id="demo-chat-btn">Start Chat Demo</button>
+                        <h3>See your ROI</h3>
+                        <p>Let's calculate how much I can save your team</p>
+                        <button class="btn btn-primary" onclick="document.getElementById('roi-calculator').scrollIntoView({behavior: 'smooth'})">Calculate ROI</button>
                     </div>
 
                     <div class="demo-card">
@@ -219,11 +219,11 @@
 
                     <div class="demo-card">
                         <div class="demo-card-icon">
-                            <i data-lucide="calculator"></i>
+                            <i data-lucide="message-circle"></i>
                         </div>
-                        <h3>See your ROI</h3>
-                        <p>Let's calculate how much I can save your team</p>
-                        <button class="btn btn-primary" onclick="document.getElementById('roi-calculator').scrollIntoView({behavior: 'smooth'})">Calculate ROI</button>
+                        <h3>Chat with me</h3>
+                        <p>Click the chat icon in the lower right corner to see how I answer questions and qualify leads instantly</p>
+                        <button class="btn btn-primary" id="demo-chat-btn">Open Chat Widget →</button>
                     </div>
                 </div>
             </div>
@@ -681,29 +681,84 @@
         // Chat widget integration
         document.addEventListener('DOMContentLoaded', function() {
             const chatBtn = document.getElementById('demo-chat-btn');
-            if (chatBtn) {
-                chatBtn.addEventListener('click', function() {
-                    // Try multiple methods to open the chat widget
-                    if (window.leadConnectorWidget && window.leadConnectorWidget.open) {
-                        window.leadConnectorWidget.open();
-                    } else if (window.parent && window.parent.postMessage) {
-                        window.parent.postMessage({ type: 'OPEN_CHAT_WIDGET' }, '*');
-                    } else if (document.querySelector('.leadconnector-chat-widget')) {
-                        const widget = document.querySelector('.leadconnector-chat-widget');
-                        if (widget) {
-                            widget.click();
-                        }
-                    } else {
-                        // Fallback: try to find and click the chat bubble
-                        setTimeout(() => {
-                            const chatBubble = document.querySelector('[data-testid="chat-bubble"], .chat-widget-bubble, .leadconnector-widget');
-                            if (chatBubble) {
-                                chatBubble.click();
-                            } else {
-                                console.log('Chat widget not found - it may still be loading');
+
+            function tryOpenChatWidget() {
+                // Method 1: Try LeadConnector API
+                if (window.leadConnectorWidget && typeof window.leadConnectorWidget.open === 'function') {
+                    window.leadConnectorWidget.open();
+                    return true;
+                }
+
+                // Method 2: Try to find and click the iframe or chat bubble
+                const selectors = [
+                    'iframe[src*="leadconnectorhq"]',
+                    'iframe[src*="chat-widget"]',
+                    '[data-testid="chat-bubble"]',
+                    '.chat-widget-bubble',
+                    '.leadconnector-widget',
+                    '#chat-widget-container iframe',
+                    'iframe[title*="chat"]'
+                ];
+
+                for (const selector of selectors) {
+                    const element = document.querySelector(selector);
+                    if (element) {
+                        if (element.tagName === 'IFRAME') {
+                            // Try to click inside the iframe
+                            try {
+                                const iframeDoc = element.contentDocument || element.contentWindow.document;
+                                const chatButton = iframeDoc.querySelector('button, [role="button"], .chat-bubble');
+                                if (chatButton) {
+                                    chatButton.click();
+                                    return true;
+                                }
+                            } catch (e) {
+                                // Cross-origin iframe, try clicking the iframe itself
+                                element.click();
                             }
-                        }, 100);
+                        } else {
+                            element.click();
+                            return true;
+                        }
                     }
+                }
+
+                return false;
+            }
+
+            if (chatBtn) {
+                chatBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Update button text to provide feedback
+                    const originalText = chatBtn.innerHTML;
+                    chatBtn.innerHTML = 'Opening chat...';
+                    chatBtn.disabled = true;
+
+                    // Try to open immediately
+                    let opened = tryOpenChatWidget();
+
+                    // If not opened, try again after a short delay (widget might be loading)
+                    if (!opened) {
+                        setTimeout(() => {
+                            opened = tryOpenChatWidget();
+                            if (!opened) {
+                                // Last attempt with longer delay
+                                setTimeout(() => {
+                                    opened = tryOpenChatWidget();
+                                    if (!opened) {
+                                        alert('Please click the chat icon in the lower right corner of the screen to start chatting with Agent Cory!');
+                                    }
+                                }, 500);
+                            }
+                        }, 300);
+                    }
+
+                    // Reset button after 2 seconds
+                    setTimeout(() => {
+                        chatBtn.innerHTML = originalText;
+                        chatBtn.disabled = false;
+                    }, 2000);
                 });
             }
         });
