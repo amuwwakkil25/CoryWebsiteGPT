@@ -632,12 +632,34 @@ class NavigationHandler {
             });
         });
         
-        // Custom AI buttons
+        // Custom AI buttons - scroll to demo form and pre-select Custom AI Solutions
         const customAIButtons = document.querySelectorAll('[id*="custom-ai"]');
         customAIButtons.forEach(btn => {
             btn.addEventListener('click', () => {
-                if (window.chatWidget) {
-                    window.chatWidget.openModal('custom-ai-modal');
+                // Find the demo form section
+                const demoForm = document.getElementById('demo-request-form');
+                if (demoForm) {
+                    // Pre-select "Custom AI Solutions" in the interest dropdown
+                    const interestSelect = document.getElementById('demo-interest');
+                    if (interestSelect) {
+                        interestSelect.value = 'custom-ai';
+                        // Add visual highlight to show it was pre-selected
+                        interestSelect.style.backgroundColor = '#e3f2fd';
+                        setTimeout(() => {
+                            interestSelect.style.backgroundColor = '';
+                        }, 2000);
+                    }
+
+                    // Scroll to the form smoothly
+                    demoForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                    // Focus the first input after scrolling
+                    setTimeout(() => {
+                        const firstInput = demoForm.querySelector('input[type="text"]');
+                        if (firstInput) {
+                            firstInput.focus();
+                        }
+                    }, 500);
                 }
             });
         });
