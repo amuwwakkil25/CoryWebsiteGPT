@@ -5,7 +5,7 @@ export class WebhookService {
     // Map interest keys to display values
     private static interestMap: Record<string, string> = {
         'NonProfit': 'Non Profit - Educating in AI',
-        'Coy': 'Implementing Cory in your Organization',
+        'Cory': 'Implementing Cory in your Organization',
         'AI_Roadmap': 'AI Transformation Roadmap',
         'CustomAI': 'Custom AI Solutions'
     };
