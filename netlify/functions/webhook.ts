@@ -20,6 +20,9 @@ export default async function handler(req: Request) {
     // Parse the request body
     const body = await req.json();
 
+    // Log the payload being sent
+    console.log('Webhook payload being sent:', JSON.stringify(body, null, 2));
+
     // Forward the request to Zapier
     const response = await fetch(webhookUrl, {
       method: 'POST',
