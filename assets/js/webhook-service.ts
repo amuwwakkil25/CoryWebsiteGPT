@@ -22,7 +22,7 @@ export class WebhookService {
             institution_organization: formData.institution || '',
             what_are_you_most_interested_in_key: interestKey,
             what_are_you_most_interested_in_value: interestValue,
-            please_describe_your_specific_interests_in_detail: formData.interest_details || '',
+            interest_description: formData.interest_details || '',
             occupation_role: formData.occupation || '',
             marketing_text_consent: formData.marketing_consent === 'on' ? 'true' : 'false'
         };
@@ -58,7 +58,7 @@ export class WebhookService {
             institution_organization: "ABC University",
             what_are_you_most_interested_in_key: "AI_Roadmap",
             what_are_you_most_interested_in_value: "AI Transformation Roadmap",
-            please_describe_your_specific_interests_in_detail: "I'm looking to implement AI solutions across our organization to improve efficiency in our data analysis processes and automate routine tasks.",
+            interest_description: "I'm looking to implement AI solutions across our organization to improve efficiency in our data analysis processes and automate routine tasks.",
             occupation_role: "Data Analyst",
             marketing_text_consent: "true"
         };
