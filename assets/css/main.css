@@ -4966,3 +4966,50 @@ cite span {
     gap: 1rem;
   }
 }
+
+/* International Phone Input Styles */
+.iti {
+  width: 100%;
+}
+
+.iti__flag-container {
+  padding: 0;
+}
+
+.iti__selected-flag {
+  padding: 0 0 0 var(--space-2);
+  border-right: 2px solid var(--border);
+}
+
+.iti__country-list {
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  max-height: 250px;
+}
+
+.iti__country {
+  padding: var(--space-2);
+}
+
+.iti__country:hover {
+  background-color: var(--bg-light);
+}
+
+.iti__country.iti__highlight {
+  background-color: var(--sky-gradient-start);
+  color: white;
+}
+
+.iti__selected-dial-code {
+  color: var(--text-secondary);
+  margin-left: var(--space-1);
+}
+
+.form-group .iti input[type="tel"] {
+  padding-left: calc(52px + var(--space-3));
+}
+
+.form-group.error .iti input[type="tel"] {
+  border-color: var(--warm-coral);
+}

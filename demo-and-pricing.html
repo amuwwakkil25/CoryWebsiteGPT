@@ -24,7 +24,10 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/main.css" />
-    
+
+    <!-- International Phone Input -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.11/build/css/intlTelInput.css">
+
     <!-- Icon Libraries -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -235,8 +238,8 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="demo-phone">Phone Number</label>
-                                <input type="tel" id="demo-phone" name="phone" placeholder="+1 (555) 123-4567" />
+                                <label for="demo-phone">Phone Number *</label>
+                                <input type="tel" id="demo-phone" name="phone" required />
                                 <div class="form-error" id="demo-phone-error"></div>
                             </div>
                             
@@ -267,33 +270,16 @@
                             <div class="form-group">
                                 <label for="demo-occupation">Occupation/Role *</label>
                                 <select id="demo-occupation" name="occupation" required>
-                                    <option value="">Select your role</option>
-                                    <option value="president-ceo">President/CEO</option>
-                                    <option value="provost">Provost</option>
-                                    <option value="cio-cto">CIO/CTO</option>
-                                    <option value="cmo">Chief Marketing Officer</option>
-                                    <option value="dean">Dean</option>
-                                    <option value="vp-enrollment">VP of Enrollment Management</option>
-                                    <option value="student-affairs">VP Student Affairs</option>
-                                    <option value="director-admissions">Director of Admissions</option>
-                                    <option value="it-director">IT Director</option>
-                                    <option value="marketing-director">Marketing Director</option>
-                                    <option value="communications-director">Communications Director</option>
-                                    <option value="financial-aid">Financial Aid Director</option>
-                                    <option value="department-chair">Department Chair</option>
-                                    <option value="registrar">Registrar</option>
-                                    <option value="nonprofit-director">Non-Profit Director</option>
-                                    <option value="program-manager">Program Manager</option>
-                                    <option value="admissions-counselor">Admissions Counselor</option>
-                                    <option value="systems-administrator">Systems Administrator</option>
-                                    <option value="digital-marketing">Digital Marketing Specialist</option>
-                                    <option value="enrollment-coordinator">Enrollment Coordinator</option>
-                                    <option value="student-success">Student Success Coordinator</option>
-                                    <option value="training-coordinator">Training Coordinator</option>
-                                    <option value="data-analyst">Data Analyst</option>
-                                    <option value="consultant">Consultant</option>
+                                    <option value="">Select your level</option>
+                                    <option value="executive-leadership">Executive Leadership (C-Suite, President, CEO)</option>
+                                    <option value="senior-leadership">Senior Leadership (VP, Provost, Dean)</option>
+                                    <option value="director">Director</option>
+                                    <option value="manager">Manager/Department Chair</option>
+                                    <option value="program-manager">Program/Project Manager</option>
+                                    <option value="specialist">Specialist/Coordinator</option>
+                                    <option value="staff">Staff/Counselor</option>
+                                    <option value="analyst">Analyst/Technical Staff</option>
                                     <option value="faculty">Faculty/Instructor</option>
-                                    <option value="board-member">Board Member</option>
                                     <option value="other">Other</option>
                                 </select>
                                 <div class="form-error" id="demo-occupation-error"></div>
@@ -879,7 +865,7 @@
                     
                     <div class="form-group">
                         <label for="custom-phone">Phone Number *</label>
-                        <input type="tel" id="custom-phone" name="phone" required placeholder="+1 (555) 123-4567" />
+                        <input type="tel" id="custom-phone" name="phone" required />
                     </div>
                     
                     <div class="form-group">
@@ -906,33 +892,16 @@
                     <div class="form-group">
                         <label for="custom-occupation">Occupation/Role *</label>
                         <select id="custom-occupation" name="occupation" required>
-                            <option value="">Select your role</option>
-                            <option value="president-ceo">President/CEO</option>
-                            <option value="provost">Provost</option>
-                            <option value="cio-cto">CIO/CTO</option>
-                            <option value="cmo">Chief Marketing Officer</option>
-                            <option value="dean">Dean</option>
-                            <option value="vp-enrollment">VP of Enrollment Management</option>
-                            <option value="student-affairs">VP Student Affairs</option>
-                            <option value="director-admissions">Director of Admissions</option>
-                            <option value="it-director">IT Director</option>
-                            <option value="marketing-director">Marketing Director</option>
-                            <option value="communications-director">Communications Director</option>
-                            <option value="financial-aid">Financial Aid Director</option>
-                            <option value="department-chair">Department Chair</option>
-                            <option value="registrar">Registrar</option>
-                            <option value="nonprofit-director">Non-Profit Director</option>
-                            <option value="program-manager">Program Manager</option>
-                            <option value="admissions-counselor">Admissions Counselor</option>
-                            <option value="systems-administrator">Systems Administrator</option>
-                            <option value="digital-marketing">Digital Marketing Specialist</option>
-                            <option value="enrollment-coordinator">Enrollment Coordinator</option>
-                            <option value="student-success">Student Success Coordinator</option>
-                            <option value="training-coordinator">Training Coordinator</option>
-                            <option value="data-analyst">Data Analyst</option>
-                            <option value="consultant">Consultant</option>
+                            <option value="">Select your level</option>
+                            <option value="executive-leadership">Executive Leadership (C-Suite, President, CEO)</option>
+                            <option value="senior-leadership">Senior Leadership (VP, Provost, Dean)</option>
+                            <option value="director">Director</option>
+                            <option value="manager">Manager/Department Chair</option>
+                            <option value="program-manager">Program/Project Manager</option>
+                            <option value="specialist">Specialist/Coordinator</option>
+                            <option value="staff">Staff/Counselor</option>
+                            <option value="analyst">Analyst/Technical Staff</option>
                             <option value="faculty">Faculty/Instructor</option>
-                            <option value="board-member">Board Member</option>
                             <option value="other">Other</option>
                         </select>
                     </div>
@@ -963,12 +932,35 @@
      data-widget-id="68b077f85dff15aa9384c4e9"   > 
      </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.11/build/js/intlTelInput.min.js"></script>
     <script type="module" src="/assets/js/main.ts"></script>
     <script>
         // Initialize Lucide icons after DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
+            }
+
+            // Initialize international phone input
+            const demoPhone = document.querySelector('#demo-phone');
+            const customPhone = document.querySelector('#custom-phone');
+
+            if (demoPhone) {
+                window.demoPhoneIti = window.intlTelInput(demoPhone, {
+                    initialCountry: 'us',
+                    preferredCountries: ['us', 'ca', 'gb', 'au'],
+                    separateDialCode: true,
+                    utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.11/build/js/utils.js'
+                });
+            }
+
+            if (customPhone) {
+                window.customPhoneIti = window.intlTelInput(customPhone, {
+                    initialCountry: 'us',
+                    preferredCountries: ['us', 'ca', 'gb', 'au'],
+                    separateDialCode: true,
+                    utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.11/build/js/utils.js'
+                });
             }
         });
     </script>

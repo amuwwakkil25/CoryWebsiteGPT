@@ -307,17 +307,22 @@ class FormHandler {
 
     handleDemoForm(e) {
         e.preventDefault();
-        
+
         if (!this.validateForm(e.target)) {
             return;
         }
 
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
-        
+
         // Check honeypot
         if (data.website) {
             return;
+        }
+
+        // Get properly formatted phone number from intl-tel-input
+        if ((window as any).demoPhoneIti) {
+            data.phone = (window as any).demoPhoneIti.getNumber();
         }
 
         // Save to Supabase
@@ -367,6 +372,11 @@ class FormHandler {
         // Check honeypot
         if (data.website) {
             return;
+        }
+
+        // Get properly formatted phone number from intl-tel-input
+        if ((window as any).customPhoneIti) {
+            data.phone = (window as any).customPhoneIti.getNumber();
         }
 
         try {
@@ -486,11 +496,22 @@ class FormHandler {
                 }
             }
 
-            // Phone validation
+            // Phone validation using intl-tel-input
             if (field.type === 'tel' && field.value) {
-                const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-                const cleanPhone = field.value.replace(/\D/g, '');
-                if (cleanPhone.length < 10) {
+                let phoneIsValid = false;
+
+                // Try to get the appropriate intl-tel-input instance
+                if (field.id === 'demo-phone' && (window as any).demoPhoneIti) {
+                    phoneIsValid = (window as any).demoPhoneIti.isValidNumber();
+                } else if (field.id === 'custom-phone' && (window as any).customPhoneIti) {
+                    phoneIsValid = (window as any).customPhoneIti.isValidNumber();
+                } else {
+                    // Fallback validation if intl-tel-input is not available
+                    const cleanPhone = field.value.replace(/\D/g, '');
+                    phoneIsValid = cleanPhone.length >= 10;
+                }
+
+                if (!phoneIsValid) {
                     isValid = false;
                     formGroup?.classList.add('error');
                     if (errorDiv) {
